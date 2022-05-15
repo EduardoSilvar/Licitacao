@@ -39,7 +39,7 @@ public class ContratoManager {
     }
 
     public void Deletar(Long id) {
-        Contrato novoContrato = contratoServico.Find(id);
+        Contrato novoContrato = contratoServico.find(id);
         novoContrato.setAtivo(false);
         contratoServico.Update(novoContrato);
     }
@@ -49,7 +49,7 @@ public class ContratoManager {
     }
 
     public Contrato Pegar(Long id) {
-        return contratoServico.Find(id);
+        return contratoServico.find(id);
     }
 
     public void PegarTodos() {

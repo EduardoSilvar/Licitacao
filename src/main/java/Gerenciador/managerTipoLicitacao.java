@@ -23,19 +23,13 @@ import util.Msg;
  */
 @ManagedBean
 @ViewScoped
-public class managerTipoLicitacao implements Serializable {
+public class managerTipoLicitacao extends ManagerPrincipal implements Serializable {
 
     @EJB
     private TipoLicitacaoServico tipoLicitacaoServico;
 
     private TipoLicitacao tipoLicitacao;
     private List<TipoLicitacao> tiposLicitacoes;
-
-    @PostConstruct
-    public void init() {
-        instanciarTipoLicitacao();
-        instanciarListaTipoLicitacao();
-    }
 
     public void salvar() {
         tipoLicitacaoServico.Save(this.tipoLicitacao);
@@ -44,13 +38,23 @@ public class managerTipoLicitacao implements Serializable {
     }
 
     public void deletar(Long id) {
-        TipoLicitacao novoTipoLicitacao = tipoLicitacaoServico.Find(id);
+        TipoLicitacao novoTipoLicitacao = tipoLicitacaoServico.find(id);
         novoTipoLicitacao.setAtivo(false);
         tipoLicitacaoServico.Update(novoTipoLicitacao);
     }
 
+    public void atualizar() {
+        tipoLicitacaoServico.Update(this.tipoLicitacao);
+        Msg.messagemInfoRedirect("Operação realizada com sucesso !", "tipoLicitacao.xhtml?visualizar=" + this.tipoLicitacao.getId());
+    }
+
     public void pesquisar() {
         this.tiposLicitacoes = tipoLicitacaoServico.pesquisar(tipoLicitacao);
+        if (this.tiposLicitacoes.size() > 0) {
+            Msg.messagemInfo("Pesquisa realizada com suceso !");
+        } else {
+            Msg.messagemError("Nenhum tipo de licitação encontrada !");
+        }
 
     }
 
@@ -76,6 +80,27 @@ public class managerTipoLicitacao implements Serializable {
 
     public void setTiposLicitacoes(List<TipoLicitacao> tiposLicitacoes) {
         this.tiposLicitacoes = tiposLicitacoes;
+    }
+
+    @Override
+    public void carregar(String param) {
+        this.tipoLicitacao = tipoLicitacaoServico.find(Long.parseLong(param));
+    }
+
+    @Override
+    public void instanciar() {
+        instanciarTipoLicitacao();
+        instanciarListaTipoLicitacao();
+    }
+
+    @Override
+    public String getUrlPesquisar() {
+        return "pesquisarTipoLicitacao.xhtml";
+    }
+
+    @Override
+    public String getUrlVisualizar() {
+        return "tipoLicitacao.xhtml?visualizar=" + this.tipoLicitacao.getId();
     }
 
 }

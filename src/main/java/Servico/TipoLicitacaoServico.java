@@ -9,6 +9,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.Query;
 import modelo.TipoLicitacao;
+import util.Utils;
 
 /**
  *
@@ -16,31 +17,30 @@ import modelo.TipoLicitacao;
  */
 @Stateless
 public class TipoLicitacaoServico extends ServicoGenerico<TipoLicitacao> {
-
+    
     public TipoLicitacaoServico() {
         super(TipoLicitacao.class);
     }
-
+    
     public List<TipoLicitacao> pesquisar(TipoLicitacao tipo) {
         String sql = "select a from TipoLicitacao a where ";
-        if (tipo.getDescricao() != null && tipo != null) {
+        if (Utils.isNotEmpty(tipo.getDescricao())) {
             sql += "a.descricao = :desc and ";
         }
-        if (tipo.getTipo() != null && tipo != null) {
+        if (Utils.isNotEmpty(tipo.getTipo())) {
             sql += "a.tipo = :tipo and ";
         }
         sql += "a.ativo = true";
-
+        
         Query query = getEntityManager().createQuery(sql);
-
-        if (tipo.getDescricao() != null && tipo != null) {
-            query.setParameter("desc", "%" + tipo.getDescricao().trim() + "%");
+        
+        if (Utils.isNotEmpty(tipo.getDescricao())) {
+            query.setParameter("desc", tipo.getDescricao().trim());
         }
-        if (tipo.getTipo() != null && tipo != null) {
-            query.setParameter("tipo", "%" + tipo.getTipo().trim() + "%");
+        if (Utils.isNotEmpty(tipo.getTipo())) {
+            query.setParameter("tipo", tipo.getTipo().trim());
         }
-        System.err.println(query.getResultList());
         return query.getResultList();
     }
-
+    
 }

@@ -31,7 +31,7 @@ public class EnderecoManager implements Serializable {
     }
 
     public Endereco Pegar(Long id) {
-        return enderecoServico.Find(id);
+        return enderecoServico.find(id);
     }
 
     public void Atualizar(Endereco endereco) {
@@ -43,7 +43,7 @@ public class EnderecoManager implements Serializable {
     }
 
     private void Deletar(Long id) {
-        Endereco novoEndereco = enderecoServico.Find(id);
+        Endereco novoEndereco = enderecoServico.find(id);
         novoEndereco.setAtivo(false);
     }
 

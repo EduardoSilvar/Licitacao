@@ -13,6 +13,7 @@ and open the template in the editor.
         <title>Tipo Licitação</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <link href="webjars/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="css/style.css"  />
         <style>
             html, body
             {
@@ -31,7 +32,7 @@ and open the template in the editor.
 
         </style>
     </h:head>
-    <h:body >
+    <h:body style="background:#f5fafa;">
         <h:form>
             <h:panelGroup id="menuPanelGroup">
                 <p:menubar style="margin-bottom: 30px;" >
@@ -92,7 +93,7 @@ and open the template in the editor.
                     <h4 style="color: #C8CCCB" >
                         Cadastro de Contratado
                     </h4>
-                    <p:commandButton value="pesquisar" icon="pi pi-search" style="background-color: #01415B; color: #fff;margin-left: 90%;margin-top: -35px"/>
+                    <p:commandButton value="pesquisar" icon="pi pi-search" style="background-color: #01415B; color: #fff;margin-left: 90% !important;margin-top: -40px !important"/>
 
                 </div>
 
@@ -102,17 +103,18 @@ and open the template in the editor.
 
             </h:panelGroup>
         </h:form>
-        <h:form id="pesquisarForm">
+        <h:form id="pesquisarForm" style="padding: 30px !important">
             <p:panel>
-                <p:growl id="growl" showDetail="true" />
-                <h:panelGroup id="testeform">
+                <p:growl id="messages" showDetail="true" />
+                <h:panelGroup id="testeform" >
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <p:outputLabel value="Tipo"
+                                <p:outputLabel value="Tipo" 
                                                for="tipoLicitacaoInput" />
                                 <p:inputText id="tipoLicitacaoInput"
                                              placeholder="tipo"
+                                             value="#{managerTipoLicitacao.tipoLicitacao.tipo}"
                                              rendered="true"
                                              requiredMessage="Este campo é obrigatório."
                                              styleClass="form-control" 
@@ -126,6 +128,7 @@ and open the template in the editor.
                                                for="descLicitacaoInput" />
                                 <p:inputTextarea id="descLicitacaoInput"
                                                  placeholder="Descrição"
+                                                 value="#{managerTipoLicitacao.tipoLicitacao.descricao}"
                                                  rendered="true"
                                                  requiredMessage="Este campo é obrigatório."
                                                  styleClass="form-control" 
@@ -139,18 +142,28 @@ and open the template in the editor.
                 </h:panelGroup>
 
                 <center>
-                    <p:commandButton value="Pesquisar" icon="pi pi-search" update="pesquisarForm:tipoLicitacaoDatatable" process="pesquisarForm:testeform" actionListener="#{managerTipoLicitacao.pesquisar()}"  style="margin: 0px 20px; background-color: #01415B; color: #fff; margin-bottom: 10px;"/>
-                    <p:commandButton value="Limpar" icon="pi pi-ban"  style="background-color: #01415B; color: #fff;margin-bottom: 10px"/>
+                    <p:commandButton value="Pesquisar" icon="pi pi-search" update="pesquisarForm:tipoLicitacaoDatatable  messages" process="@this testeform"  actionListener="#{managerTipoLicitacao.pesquisar()}" />
+                    <p:commandButton value="Limpar" icon="pi pi-ban" update="@form" actionListener="#{managerTipoLicitacao.init()}"/>
                 </center>
+                <hr/>
 
-                <p:dataTable id="tipoLicitacaoDatatable" var="product" value="#{managerTipoLicitacao.tiposLicitacoes}"
+                <p:dataTable id="tipoLicitacaoDatatable" var="licitacao" value="#{managerTipoLicitacao.tiposLicitacoes}"
                              resizeMode="5">
-                    <p:column headerText="Code">
-                        <h:outputText value="#{product.tipo}" />
+                    <f:facet name="header">
+                        <center>
+                            tipos de Licitação
+                        </center>
+                    </f:facet>
+                    <p:column headerText="ações" width="200">
+                        <p:commandButton  icon="pi pi-trash" update="@form" title="exluir" actionListener="#{managerTipoLicitacao.deletar(licitacao.id)}"/>
+                        <p:button  icon="pi pi-eye" title="visualizar" href="tipoLicitacao.xhtml?visualizar=#{licitacao.id}" />
+                    </p:column>
+                    <p:column headerText="Tipo">
+                        <h:outputText value="#{licitacao.tipo}" />
                     </p:column>
 
-                    <p:column headerText="Name">
-                        <h:outputText value="#{product.descricao}" />
+                    <p:column headerText="Descrição">
+                        <h:outputText value="#{licitacao.descricao}" />
                     </p:column>
 
                 </p:dataTable>

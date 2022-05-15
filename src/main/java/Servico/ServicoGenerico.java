@@ -35,7 +35,7 @@ public class ServicoGenerico<T> {
 
     }
 
-    public T Find(Long id) {
+    public T find(Long id) {
         T NovoObjeto = entityManager.find(entity, id);
         entityManager.refresh(NovoObjeto);
         return NovoObjeto;

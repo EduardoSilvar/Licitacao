@@ -44,7 +44,7 @@ public class TipoContratoManager implements Serializable {
     }
 
     public void Deletar(Long id) {
-        TipoContrato novoTipoContrato = tipoContratoServico.Find(id);
+        TipoContrato novoTipoContrato = tipoContratoServico.find(id);
         novoTipoContrato.setAtivo(false);
 
     }

@@ -115,6 +115,7 @@ and open the template in the editor.
                                              value="#{managerTipoLicitacao.tipoLicitacao.tipo}"
                                              placeholder="tipo"
                                              rendered="true"
+                                             disabled="#{managerTipoLicitacao.visualizar}"
                                              requiredMessage="Este campo é obrigatório."
                                              styleClass="form-control" 
                                              />
@@ -129,6 +130,7 @@ and open the template in the editor.
                                                  placeholder="Descrição"
                                                  value="#{managerTipoLicitacao.tipoLicitacao.descricao}"
                                                  rendered="true"
+                                                 disabled="#{managerTipoLicitacao.visualizar}"
                                                  requiredMessage="Este campo é obrigatório."
                                                  styleClass="form-control" 
                                                  />
@@ -141,8 +143,10 @@ and open the template in the editor.
                 </h:panelGroup>
 
                 <center>
-                    <p:commandButton value="salvar" icon="pi pi-save" process="tipoLicitacaoForm" actionListener="#{managerTipoLicitacao.salvar()}" update="tipoLicitacaoForm" style="margin: 0px 20px; background-color: #01415B; color: #fff; margin-bottom: 10px;"/>
-                    <p:commandButton value="cancelar" icon="pi pi-ban"  style="background-color: #01415B; color: #fff;margin-bottom: 10px"  update="tipoLicitacaoForm"/>
+                    <p:button value="editar" icon="pi pi-pencil"  rendered="#{managerTipoLicitacao.visualizar}" href="tipoLicitacao.xhtml?editar=#{managerTipoLicitacao.tipoLicitacao.id}" style="margin: 0px 20px; background-color: #01415B; color: #fff; margin-bottom: 10px;"/>
+                    <p:commandButton value="salvar" icon="pi pi-save" process="tipoLicitacaoForm" actionListener="#{managerTipoLicitacao.salvar()}" update="tipoLicitacaoForm" rendered="#{managerTipoLicitacao.cadastrar}" style="margin: 0px 20px; background-color: #01415B; color: #fff; margin-bottom: 10px;"/>
+                    <p:commandButton value="atualizar" icon="pi pi-sync" process="tipoLicitacaoForm" actionListener="#{managerTipoLicitacao.atualizar()}" rendered="#{managerTipoLicitacao.editar}" update="tipoLicitacaoForm" style="margin: 0px 20px; background-color: #01415B; color: #fff; margin-bottom: 10px;"/>
+                    <p:button value="cancelar" icon="pi pi-ban"  href="index.xhtml"  style="background-color: #01415B; color: #fff;margin-bottom: 10px"  />
                 </center>
             </p:panel>
         </h:form>

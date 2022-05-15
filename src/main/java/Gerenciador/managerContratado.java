@@ -48,13 +48,13 @@ public class managerContratado implements Serializable {
     }
 
     public void deletar(Long id) {
-        Contratado NovoContratado = contratadoServico.Find(id);
+        Contratado NovoContratado = contratadoServico.find(id);
         NovoContratado.setAtivo(false);
         contratadoServico.Update(NovoContratado);
     }
 
     public Contratado buscarPorId(Long id) {
-        return contratadoServico.Find(id);
+        return contratadoServico.find(id);
     }
 
     public List<Contratado> buscarTodos() {
