@@ -5,8 +5,11 @@
  */
 package Servico;
 
+import java.util.List;
 import javax.ejb.Stateless;
+import javax.persistence.Query;
 import modelo.TipoContrato;
+import util.Utils;
 
 /**
  *
@@ -17,6 +20,28 @@ public class tipoContratoServico extends ServicoGenerico<TipoContrato> {
 
     public tipoContratoServico() {
         super(TipoContrato.class);
+    }
+
+    public List<TipoContrato> pesquisar(TipoContrato tipo) {
+        String sql = "select t from TipoContrato t where ";
+        if (Utils.isNotEmpty(tipo.getNome())) {
+            sql += "t.nome = :nome and ";
+        }
+        if (Utils.isNotEmpty(tipo.getDescricao())) {
+            sql += "t.descricao = :desc and ";
+        }
+        sql += "t.ativo = true";
+
+        Query query = entityManager.createQuery(sql);
+        if (Utils.isNotEmpty(tipo.getNome())) {
+            query.setParameter("nome", tipo.getNome());
+        }
+        if (Utils.isNotEmpty(tipo.getDescricao())) {
+            query.setParameter("desc", tipo.getDescricao());
+        }
+
+        return query.getResultList();
+
     }
 
 }

@@ -106,48 +106,92 @@ and open the template in the editor.
         <h:form id="pesquisarForm" style="padding: 30px !important">
             <p:panel>
                 <p:growl id="messages" showDetail="true" />
-                <h:panelGroup id="testeform" >
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <p:outputLabel value="Tipo" 
-                                               for="tipoLicitacaoInput" />
-                                <p:inputText id="tipoLicitacaoInput"
-                                             placeholder="tipo"
-                                             value="#{managerTipoLicitacao.tipoLicitacao.tipo}"
-                                             rendered="true"
-                                             requiredMessage="Este campo é obrigatório."
-                                             styleClass="form-control" 
-                                             />
-                                <p:message for="tipoLicitacaoInput" />
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <p:outputLabel value="Descrição"
-                                               for="descLicitacaoInput" />
-                                <p:inputTextarea id="descLicitacaoInput"
-                                                 placeholder="Descrição"
-                                                 value="#{managerTipoLicitacao.tipoLicitacao.descricao}"
+                <h:panelGroup id="pesquisaPanel" >
+                    <h:panelGroup id="selectorPanelGroup"  >
+
+
+                        <p:selectOneRadio id="console" value="#{managerContratado.contratado.natureza}"  unselectable="true" disabled="#{managerContratado.visualizar}" style="margin: 10px">
+                            <f:selectItem itemLabel="Jurídica" itemValue="#{managerContratado.juridica}" />
+                            <f:selectItem itemLabel="Fisica" itemValue="#{managerContratado.fisica}"/>
+                            <p:ajax update="dadosGeraisPanelGroup" />
+                        </p:selectOneRadio>
+                    </h:panelGroup>
+                    <h:panelGroup id="dadosGeraisPanelGroup" >
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <p:outputLabel value="Nome"
+                                                   for="nomePessoaJuriInput" />
+                                    <p:inputText id="nomePessoaJuriInput"
+                                                 placeholder="Nome"
+                                                 value="#{managerContratado.contratado.nome}"
+                                                 disabled="#{managerContratado.visualizar}"
                                                  rendered="true"
                                                  requiredMessage="Este campo é obrigatório."
                                                  styleClass="form-control" 
                                                  />
-                                <p:message for="descLicitacaoInput" />
+                                    <p:message for="nomePessoaJuriInput" />
+                                </div>
+                            </div>
+                            <h:panelGroup rendered="#{managerContratado.renderedCnpjPEssoa()}">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <p:outputLabel value="CNPJ"
+                                                       for="cnpjPessoaJuriInput"  />
+                                        <p:inputText id="cnpjPessoaJuriInput"
+                                                     placeholder="CNPJ"
+                                                     value="#{managerContratado.contratado.cnpj}"
+                                                     disabled="#{managerContratado.visualizar}"
+                                                     requiredMessage="Este campo é obrigatório."
+                                                     styleClass="form-control" 
+                                                     />
+                                        <p:message for="cnpjPessoaJuriInput" />
+                                    </div>
+                                </div>
+                            </h:panelGroup>
+                            <h:panelGroup rendered="#{managerContratado.renderedCpfPEssoa()}">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <p:outputLabel value="CPF"
+                                                       for="cpfPessoaJuriInput" />
+                                        <p:inputMask id="cpfPessoaJuriInput"
+                                                     placeholder="CPF"
+                                                     mask="999.999.999-99"
+                                                     value="#{managerContratado.contratado.cpf}"
+                                                     disabled="#{managerContratado.visualizar}"
+                                                     requiredMessage="Este campo é obrigatório."
+                                                     styleClass="form-control" 
+                                                     />
+                                        <p:message for="cpfPessoaJuriInput" />
+                                    </div>
+                                </div>
+                            </h:panelGroup>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <p:outputLabel value="Especialidade"
+                                                   for="especPessoaJuriInput" />
+                                    <p:inputText id="especPessoaJuriInput"
+                                                 placeholder="Especialidade"
+                                                 value="#{managerContratado.contratado.especialidade}"
+                                                 disabled="#{managerContratado.visualizar}"
+                                                 requiredMessage="Este campo é obrigatório."
+                                                 styleClass="form-control" 
+                                                 />
+                                    <p:message for="especPessoaJuriInput" />
+                                </div>
                             </div>
                         </div>
-
-                    </div>
+                    </h:panelGroup>
 
                 </h:panelGroup>
 
                 <center>
-                    <p:commandButton value="Pesquisar" icon="pi pi-search" update="pesquisarForm:tipoLicitacaoDatatable  messages" process="@this testeform"  actionListener="#{managerTipoLicitacao.pesquisar()}" />
+                    <p:commandButton value="Pesquisar" icon="pi pi-search" update="pesquisarForm:tipoLicitacaoDatatable  messages" process="@this pesquisaPanel"  actionListener="#{managerContratado.pesquisar()}" />
                     <p:commandButton value="Limpar" icon="pi pi-ban" update="@form" actionListener="#{managerTipoLicitacao.init()}"/>
                 </center>
                 <hr/>
 
-                <p:dataTable id="tipoLicitacaoDatatable" var="licitacao" value="#{managerTipoLicitacao.tiposLicitacoes}"
+                <p:dataTable id="tipoLicitacaoDatatable" var="contratado" value="#{managerContratado.contratados}"
                              resizeMode="5">
                     <f:facet name="header">
                         <center>
@@ -155,15 +199,18 @@ and open the template in the editor.
                         </center>
                     </f:facet>
                     <p:column headerText="ações" width="200">
-                        <p:commandButton  icon="pi pi-trash" update="@form" title="exluir" actionListener="#{managerTipoLicitacao.deletar(licitacao.id)}"/>
-                        <p:button  icon="pi pi-eye" title="visualizar" href="tipoLicitacao.xhtml?visualizar=#{licitacao.id}" />
+                        <p:commandButton  icon="pi pi-trash" update="@form" title="exluir" actionListener="#{managerContratado.deletar(contratado.id)}"/>
+                        <p:button  icon="pi pi-eye" title="visualizar" href="contratado.xhtml?visualizar=#{contratado.id}" />
                     </p:column>
-                    <p:column headerText="Tipo">
-                        <h:outputText value="#{licitacao.tipo}" />
+                    <p:column headerText="nome">
+                        <h:outputText value="#{contratado.nome}" />
                     </p:column>
 
-                    <p:column headerText="Descrição">
-                        <h:outputText value="#{licitacao.descricao}" />
+                    <p:column headerText="Especialidade">
+                        <h:outputText value="#{contratado.especialidade}" />
+                    </p:column>
+                    <p:column headerText="Wahatsapp">
+                        <h:outputText value="#{contratado.whatsapp}" />
                     </p:column>
 
                 </p:dataTable>

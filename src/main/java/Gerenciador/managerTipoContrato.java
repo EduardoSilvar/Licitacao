@@ -14,6 +14,7 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import modelo.TipoContrato;
+import util.Msg;
 
 /**
  *
@@ -21,7 +22,7 @@ import modelo.TipoContrato;
  */
 @ManagedBean
 @ViewScoped
-public class TipoContratoManager implements Serializable {
+public class managerTipoContrato extends ManagerPrincipal implements Serializable {
 
     @EJB
     private tipoContratoServico tipoContratoServico;
@@ -29,27 +30,55 @@ public class TipoContratoManager implements Serializable {
     private TipoContrato tipoContrato;
     private List<TipoContrato> TipoContratos;
 
-    @PostConstruct
-    public void init() {
-        instanciarLista();
+    @Override
+    public void carregar(String param) {
+        this.tipoContrato = tipoContratoServico.find(Long.parseLong(param));
+    }
+
+    @Override
+    public void instanciar() {
         InstanciarTipoContrato();
+        instanciarLista();
     }
 
-    public void Salvar() {
+    @Override
+    public String getUrlPesquisar() {
+        return "pesquisarTipoContrato.xhtml";
+    }
+
+    @Override
+    public String getUrlVisualizar() {
+        return "tipoContrato.xhtml?visualizar=" + this.tipoContrato.getId();
+    }
+
+    public void salvar() {
         tipoContratoServico.Save(tipoContrato);
+        Msg.messagemInfoRedirect("Operação realizada com sucesso !", "tipoContrato.xhtml?visualizar=" + this.tipoContrato.getId());
     }
 
-    public void Atualizar(TipoContrato tipocontrato) {
-        tipoContratoServico.Update(tipocontrato);
+    public void atualizar() {
+        tipoContratoServico.Update(this.tipoContrato);
+        Msg.messagemInfoRedirect("Operação realizada com sucesso !", "tipoContrato.xhtml?visualizar=" + this.tipoContrato.getId());
     }
 
-    public void Deletar(Long id) {
+    public void deletar(Long id) {
         TipoContrato novoTipoContrato = tipoContratoServico.find(id);
         novoTipoContrato.setAtivo(false);
+        tipoContratoServico.Update(novoTipoContrato);
+        TipoContratos.remove(novoTipoContrato);
 
     }
 
-    public void TrazerTodos() {
+    public void pesquisar() {
+        TipoContratos = tipoContratoServico.pesquisar(this.tipoContrato);
+        if(TipoContratos.size() > 0){
+        Msg.messagemInfo("Pesquisa feita com sucesso !");
+        }else{
+        Msg.messagemError("Nenhum tipo de contrato foi encontrato !");
+        }
+    }
+
+    public void trazerTodos() {
         TipoContratos = tipoContratoServico.FindAll();
 
     }
@@ -77,6 +106,5 @@ public class TipoContratoManager implements Serializable {
     public void setTipoContratos(List<TipoContrato> TipoContratos) {
         this.TipoContratos = TipoContratos;
     }
-    
-    
+
 }

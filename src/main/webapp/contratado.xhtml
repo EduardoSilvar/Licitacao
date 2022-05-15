@@ -13,6 +13,7 @@ and open the template in the editor.
         <title>Contatado</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <link href="webjars/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="css/style.css" rel="stylesheet"/>
         <style>
             html, body
             {
@@ -31,7 +32,7 @@ and open the template in the editor.
 
         </style>
     </h:head>
-    <h:body >
+    <h:body>
         <h:form>
             <h:panelGroup id="menuPanelGroup">
                 <p:menubar style="margin-bottom: 30px;" >
@@ -92,7 +93,7 @@ and open the template in the editor.
                     <h4 style="color: #C8CCCB" >
                         Cadastro de Contratado
                     </h4>
-                    <p:commandButton value="pesquisar" icon="pi pi-search" style="background-color: #01415B; color: #fff;margin-left: 90%;margin-top: -35px"/>
+                    <p:commandButton value="pesquisar" icon="pi pi-search" style="background-color: #01415B; color: #fff;margin-left: 90% !important ;margin-top: -40px !important"/>
 
                 </div>
 
@@ -102,13 +103,13 @@ and open the template in the editor.
 
             </h:panelGroup>
         </h:form>
-        <h:form id="testess">
+        <h:form id="contratadoForm" style="padding: 30px !important">
             <p:panel>
-                <p:growl id="growl" showDetail="true" />
+                <p:growl id="messages" showDetail="true" />
                 <h:panelGroup id="selectorPanelGroup"  >
 
 
-                    <p:selectOneRadio id="console" value="#{managerContratado.contratado.natureza}"  unselectable="true" style="margin: 10px">
+                    <p:selectOneRadio id="console" value="#{managerContratado.contratado.natureza}"  unselectable="true" disabled="#{managerContratado.visualizar}" style="margin: 10px">
                         <f:selectItem itemLabel="Jurídica" itemValue="#{managerContratado.juridica}" />
                         <f:selectItem itemLabel="Fisica" itemValue="#{managerContratado.fisica}"/>
                         <p:ajax update="dadosGeraisPanelGroup" />
@@ -124,6 +125,7 @@ and open the template in the editor.
                                              placeholder="Nome"
                                              required="true"
                                              value="#{managerContratado.contratado.nome}"
+                                             disabled="#{managerContratado.visualizar}"
                                              rendered="true"
                                              requiredMessage="Este campo é obrigatório."
                                              styleClass="form-control" 
@@ -138,6 +140,8 @@ and open the template in the editor.
                                                    for="cnpjPessoaJuriInput"  />
                                     <p:inputText id="cnpjPessoaJuriInput"
                                                  placeholder="CNPJ"
+                                                 value="#{managerContratado.contratado.cnpj}"
+                                                 disabled="#{managerContratado.visualizar}"
                                                  requiredMessage="Este campo é obrigatório."
                                                  styleClass="form-control" 
                                                  />
@@ -150,8 +154,11 @@ and open the template in the editor.
                                 <div class="form-group">
                                     <p:outputLabel value="CPF"
                                                    for="cpfPessoaJuriInput" />
-                                    <p:inputText id="cpfPessoaJuriInput"
+                                    <p:inputMask id="cpfPessoaJuriInput"
                                                  placeholder="CPF"
+                                                 mask="999.999.999-99"
+                                                 value="#{managerContratado.contratado.cpf}"
+                                                 disabled="#{managerContratado.visualizar}"
                                                  requiredMessage="Este campo é obrigatório."
                                                  styleClass="form-control" 
                                                  />
@@ -165,6 +172,8 @@ and open the template in the editor.
                                                for="especPessoaJuriInput" />
                                 <p:inputText id="especPessoaJuriInput"
                                              placeholder="Especialidade"
+                                             value="#{managerContratado.contratado.especialidade}"
+                                             disabled="#{managerContratado.visualizar}"
                                              requiredMessage="Este campo é obrigatório."
                                              styleClass="form-control" 
                                              />
@@ -179,6 +188,8 @@ and open the template in the editor.
                                                for="emailPessoaJuriInput" />
                                 <p:inputText id="emailPessoaJuriInput"
                                              placeholder="E-mail"
+                                             value="#{managerContratado.contratado.email}"
+                                             disabled="#{managerContratado.visualizar}"
                                              requiredMessage="Este campo é obrigatório."
                                              styleClass="form-control" 
                                              />
@@ -189,8 +200,11 @@ and open the template in the editor.
                             <div class="form-group">
                                 <p:outputLabel value="Telefone"
                                                for="telefonePessoaJuriInput" />
-                                <p:inputText id="telefonePessoaJuriInput"
+                                <p:inputMask id="telefonePessoaJuriInput"
                                              placeholder="Telefone"
+                                             value="#{managerContratado.contratado.telefone}"
+                                             disabled="#{managerContratado.visualizar}"
+                                             mask="(99)9999-9999"
                                              requiredMessage="Este campo é obrigatório."
                                              styleClass="form-control" 
                                              />
@@ -201,8 +215,11 @@ and open the template in the editor.
                             <div class="form-group">
                                 <p:outputLabel value="Whatsapp"
                                                for="whatsPessoaJuriInput" />
-                                <p:inputText id="whatsPessoaJuriInput"
+                                <p:inputMask id="whatsPessoaJuriInput"
                                              placeholder="Whatsapp"
+                                             value="#{managerContratado.contratado.whatsapp}"
+                                             disabled="#{managerContratado.visualizar}"
+                                             mask="(99)99999-9999"
                                              requiredMessage="Este campo é obrigatório."
                                              styleClass="form-control" 
                                              />
@@ -218,7 +235,10 @@ and open the template in the editor.
                             <div class="form-group">
                                 <p:outputLabel value="Cep"
                                                for="cepPessoaJuriInput" />
-                                <p:inputText id="cepPessoaJuriInput"
+                                <p:inputMask id="cepPessoaJuriInput"
+                                             mask="99999-999"
+                                             value="#{managerContratado.contratado.endereco.cep}"
+                                             disabled="#{managerContratado.visualizar}"
                                              placeholder="Cep"
                                              requiredMessage="Este campo é obrigatório."
                                              styleClass="form-control" 
@@ -231,6 +251,8 @@ and open the template in the editor.
                                 <p:outputLabel value="Número"
                                                for="numeroPessoaJuriInput" />
                                 <p:inputText id="numeroPessoaJuriInput"
+                                             value="#{managerContratado.contratado.endereco.numero}"
+                                             disabled="#{managerContratado.visualizar}"
                                              placeholder="Número"
                                              requiredMessage="Este campo é obrigatório."
                                              styleClass="form-control" 
@@ -244,6 +266,8 @@ and open the template in the editor.
                                                for="CidadePessoaJuriInput" />
                                 <p:inputText id="CidadePessoaJuriInput"
                                              placeholder="Cidade"
+                                             value="#{managerContratado.contratado.endereco.cidade}"
+                                             disabled="#{managerContratado.visualizar}"
                                              requiredMessage="Este campo é obrigatório."
                                              styleClass="form-control" 
                                              />
@@ -256,6 +280,8 @@ and open the template in the editor.
                                                for="bairroPessoaJuriInput" />
                                 <p:inputText id="bairroPessoaJuriInput"
                                              placeholder="Bairro"
+                                             value="#{managerContratado.contratado.endereco.bairro}"
+                                             disabled="#{managerContratado.visualizar}"
                                              requiredMessage="Este campo é obrigatório."
                                              styleClass="form-control" 
                                              />
@@ -265,8 +291,10 @@ and open the template in the editor.
                     </div>
                 </h:panelGroup>
                 <center>
-                    <p:commandButton value="salvar" icon="pi pi-save" process="testess" actionListener="#{managerContratado.salvar()}" update="testess" style="margin: 0px 20px; background-color: #01415B; color: #fff; margin-bottom: 10px;"/>
-                    <p:commandButton value="cancelar" icon="pi pi-ban"  style="background-color: #01415B; color: #fff;margin-bottom: 10px"/>
+                    <p:button value="Editar" icon="pi pi-pencil"  rendered="#{managerContratado.visualizar}" href="contratado.xhtml?editar=#{managerContratado.contratado.id}" />
+                    <p:commandButton value="Atualizar" icon="pi pi-sync" process="contratadoForm" actionListener="#{managerContratado.atualizar()}" rendered="#{managerContratado.editar}" update="contratadoForm" />
+                    <p:button value="Cancelar" icon="pi pi-ban"  href="index.xhtml" />
+                    <p:commandButton value="Salvar" icon="pi pi-save" process="contratadoForm" actionListener="#{managerContratado.salvar()}" update="contratadoForm" rendered="#{managerContratado.cadastrar}" />
                 </center>
             </p:panel>
         </h:form>

@@ -8,12 +8,15 @@ package Gerenciador;
 import Enum.NaturezaEnum;
 import Servico.ContratadoServico;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import modelo.Contratado;
+import modelo.Endereco;
+import util.Msg;
 
 /**
  *
@@ -21,30 +24,54 @@ import modelo.Contratado;
  */
 @ManagedBean
 @ViewScoped
-public class managerContratado implements Serializable {
+public class managerContratado extends ManagerPrincipal implements Serializable {
 
     @EJB
     private ContratadoServico contratadoServico;
 
     private Contratado contratado;
+    private List<Contratado> contratados;
     private NaturezaEnum natureza;
 
-    @PostConstruct
-    public void init() {
+    @Override
+    public void carregar(String param) {
+        this.contratado = contratadoServico.find(Long.parseLong(param));
+    }
+
+    @Override
+    public void instanciar() {
         instanciarContratado();
+        intanciarContratados();
+    }
+
+    @Override
+    public String getUrlPesquisar() {
+        return "pesquisarContratado.xhtml";
+    }
+
+    @Override
+    public String getUrlVisualizar() {
+        return "contrartado.xhtml?visualizar=" + this.contratado.getId();
     }
 
     public void instanciarContratado() {
         contratado = new Contratado();
+        contratado.setEndereco(new Endereco());
         contratado.setNatureza(NaturezaEnum.JURÍDICA);
+    }
+
+    public void intanciarContratados() {
+        this.contratados = new ArrayList<>();
     }
 
     public void salvar() {
         contratadoServico.Save(contratado);
+        Msg.messagemInfoRedirect("Operação realizada com sucesso !", "contratado.xhtml?visualizar=" + this.contratado.getId());
     }
 
-    public void atualizar(Contratado contratado) {
+    public void atualizar() {
         contratadoServico.Update(contratado);
+        Msg.messagemInfoRedirect("Operação realizada com sucesso !", "contratado.xhtml?visualizar=" + this.contratado.getId());
     }
 
     public void deletar(Long id) {
@@ -77,6 +104,10 @@ public class managerContratado implements Serializable {
         }
     }
 
+    public void pesquisar() {
+        this.contratados = contratadoServico.findPesquisa(this.contratado);
+    }
+
     public Contratado getContratado() {
         return contratado;
     }
@@ -95,6 +126,14 @@ public class managerContratado implements Serializable {
 
     public NaturezaEnum getFisica() {
         return NaturezaEnum.FISICA;
+    }
+
+    public List<Contratado> getContratados() {
+        return contratados;
+    }
+
+    public void setContratados(List<Contratado> contratados) {
+        this.contratados = contratados;
     }
 
 }

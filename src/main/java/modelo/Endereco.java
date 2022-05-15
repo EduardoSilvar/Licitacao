@@ -25,7 +25,8 @@ public class Endereco implements Serializable {
     @GeneratedValue(generator = "seq_endereco", strategy = GenerationType.AUTO)
     private Long id;
     private String cep;
-    private String rua;
+    private String bairro;
+    private String cidade;
     private String numero;
     private String complemento;
     private boolean ativo = true;
@@ -46,12 +47,12 @@ public class Endereco implements Serializable {
         this.cep = cep;
     }
 
-    public String getRua() {
-        return rua;
+    public String getBairro() {
+        return bairro;
     }
 
-    public void setRua(String rua) {
-        this.rua = rua;
+    public void setBairro(String rua) {
+        this.bairro = rua;
     }
 
     public String getNumero() {
@@ -77,16 +78,25 @@ public class Endereco implements Serializable {
     public void setAtivo(boolean ativo) {
         this.ativo = ativo;
     }
-    
+
+    public String getCidade() {
+        return cidade;
+    }
+
+    public void setCidade(String cidade) {
+        this.cidade = cidade;
+    }
 
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 89 * hash + Objects.hashCode(this.id);
-        hash = 89 * hash + Objects.hashCode(this.cep);
-        hash = 89 * hash + Objects.hashCode(this.rua);
-        hash = 89 * hash + Objects.hashCode(this.numero);
-        hash = 89 * hash + Objects.hashCode(this.complemento);
+        hash = 79 * hash + Objects.hashCode(this.id);
+        hash = 79 * hash + Objects.hashCode(this.cep);
+        hash = 79 * hash + Objects.hashCode(this.bairro);
+        hash = 79 * hash + Objects.hashCode(this.cidade);
+        hash = 79 * hash + Objects.hashCode(this.numero);
+        hash = 79 * hash + Objects.hashCode(this.complemento);
+        hash = 79 * hash + (this.ativo ? 1 : 0);
         return hash;
     }
 
@@ -102,10 +112,16 @@ public class Endereco implements Serializable {
             return false;
         }
         final Endereco other = (Endereco) obj;
+        if (this.ativo != other.ativo) {
+            return false;
+        }
         if (!Objects.equals(this.cep, other.cep)) {
             return false;
         }
-        if (!Objects.equals(this.rua, other.rua)) {
+        if (!Objects.equals(this.bairro, other.bairro)) {
+            return false;
+        }
+        if (!Objects.equals(this.cidade, other.cidade)) {
             return false;
         }
         if (!Objects.equals(this.numero, other.numero)) {
@@ -122,9 +138,7 @@ public class Endereco implements Serializable {
 
     @Override
     public String toString() {
-        return "Endereco{" + "id=" + id + ", cep=" + cep + ", rua=" + rua + ", numero=" + numero + ", complemento=" + complemento + '}';
+        return "Endereco{" + "id=" + id + ", cep=" + cep + ", bairro=" + bairro + ", cidade=" + cidade + ", numero=" + numero + ", complemento=" + complemento + ", ativo=" + ativo + '}';
     }
 
-
-    
 }

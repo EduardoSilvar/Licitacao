@@ -26,7 +26,7 @@ public class TipoContrato implements Serializable {
     private Long id;
     private String nome;
     private String descricao;
-    private boolean ativo;
+    private boolean ativo =true;
 
     public Long getId() {
         return id;
