@@ -1,0 +1,24 @@
+.ui-datatable .ui-datatable-header{
+    color: white !important;
+    background-color: #01415B !important; 
+    font-size: 16px;
+    height: 30px !important;
+    padding: 3px !important;
+}
+body .ui-datatable thead th{
+    font-size: 16px;
+    height: 20px !important;
+    padding: 5px !important;
+    background: #f5fafa !important;
+}
+.ui-button{
+    background-color: #01415B !important;
+    color: #fff;
+    width: 120px;
+    margin: 10px !important;
+
+}
+
+body{
+    background:#f5fcfc;
+}

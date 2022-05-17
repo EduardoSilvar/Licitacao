@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Tipo Licitação</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link href="webjars/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="css/style.css"  />
+        <style>
+            html, body
+            {
+                margin: 0;
+                padding: 0;
+            }
+            #testess
+            {
+                margin: 0;
+                padding: 0px 40px
+            }
+            body .ui-selectbooleanbutton.ui-state-active, body .ui-selectonebutton > .ui-button.ui-state-active, body .ui-selectmanybutton > .ui-button.ui-state-active{
+                background: #01415B !important;
+                border-color:  #01415B !important;
+            }
+
+        </style>
+    </h:head>
+    <h:body>
+        <h:form>
+            <h:panelGroup id="menuPanelGroup">
+                <p:menubar style="margin-bottom: 30px;" >
+                    <p:submenu label="File" icon="pi pi-fw pi-file">
+                        <p:submenu label="New" icon="pi pi-fw pi-plus">
+                            <p:menuitem value="Bookmark" icon="pi pi-fw pi-bookmark"/>
+                            <p:menuitem value="Video" icon="pi pi-fw pi-video"/>
+                        </p:submenu>
+                        <p:menuitem value="Delete" icon="pi pi-fw pi-trash"/>
+                        <p:divider />
+                        <p:menuitem value="Export" icon="pi pi-fw pi-external-link"/>
+                    </p:submenu>
+
+                    <p:submenu label="Edit" icon="pi pi-fw pi-pencil">
+                        <p:menuitem value="Left" icon="pi pi-fw pi-align-left" rendered="false"/>
+                        <p:menuitem value="Right" icon="pi pi-fw pi-align-right"/>
+                        <p:menuitem value="Center" icon="pi pi-fw pi-align-center"/>
+                        <p:menuitem value="Justify" icon="pi pi-fw pi-align-justify"/>
+                    </p:submenu>
+
+                    <p:submenu label="Users" icon="pi pi-fw pi-user" rendered="false">
+                        <p:menuitem value="New" icon="pi pi-fw pi-user-plus"/>
+                        <p:menuitem value="Delete" icon="pi pi-fw pi-user-minus"/>
+                        <p:submenu label="Search" icon="pi pi-fw pi-users">
+                            <p:submenu label="Filter" icon="pi pi-fw pi-filter">
+                                <p:menuitem value="Print" icon="pi pi-fw pi-print"/>
+                            </p:submenu>
+                            <p:menuitem value="List" icon="pi pi-fw pi-bars"/>
+                        </p:submenu>
+                    </p:submenu>
+
+                    <p:submenu label="Events" icon="pi pi-fw pi-calendar">
+                        <p:submenu label="Edit" icon="pi pi-fw pi-pencil">
+                            <p:menuitem value="Save" icon="pi pi-fw pi-calendar-plus"/>
+                            <p:menuitem value="Delete" icon="pi pi-fw pi-calendar-minus"/>
+                        </p:submenu>
+                        <p:submenu label="Archieve" icon="pi pi-fw pi-calendar-times">
+                            <p:menuitem value="Remove" icon="pi pi-fw pi-calendar-minus"/>
+                        </p:submenu>
+                    </p:submenu>
+
+                    <p:divider layout="vertical"/>
+
+                    <p:menuitem value="Quit" icon="pi pi-fw pi-power-off"/>
+
+                    <f:facet name="options">
+                        <div class="ui-input-icon-left p-mr-2">
+                            <i class="pi pi-fw pi-search" />
+                            <p:inputText placeholder="Search"/>
+                        </div>
+                        <p:button value="Logout" icon="pi pi-fw pi-sign-out" styleClass="ui-button-info"/>
+                    </f:facet>
+                </p:menubar>
+            </h:panelGroup>
+            <h:panelGroup id="barraPanelGroup">
+                <div class="row" style="width: 101%; height: 50px; border: 1px solid #C8CCCB; padding: 10px; margin-bottom: 30px">
+                    <i class="pi pi-plus" style="margin: 5px 10px 5px 20px; color: #C8CCCB"></i>
+                    <h4 style="color: #C8CCCB" >
+                        Cadastro de Contratado
+                    </h4>
+                    <p:commandButton value="pesquisar" icon="pi pi-search" style="background-color: #01415B; color: #fff;margin-left: 90% !important;margin-top: -40px !important"/>
+
+                </div>
+
+                <div class="row" style="width: 101%;height: 40px;background-color: #019587; padding: 10px; margin-bottom: 30px">
+                    <i class="pi pi-globe" style="margin: 2px 10px 5px 20px; color: #e1e6e5"></i>    <h5 style="color: #e1e6e5" >  Dados Gerais </h5>
+                </div>
+
+            </h:panelGroup>
+        </h:form>
+        <h:form id="pesquisarForm" style="padding: 30px !important">
+            <p:panel>
+                <p:growl id="messages" showDetail="true" />
+                <h:panelGroup id="pesquisaPanel" >
+                    <h:panelGroup id="selectorPanelGroup"  >
+
+
+                        <p:selectOneRadio id="console" value="#{managerContratado.contratado.natureza}"  unselectable="true" disabled="#{managerContratado.visualizar}" style="margin: 10px">
+                            <f:selectItem itemLabel="Jurídica" itemValue="#{managerContratado.juridica}" />
+                            <f:selectItem itemLabel="Fisica" itemValue="#{managerContratado.fisica}"/>
+                            <p:ajax update="dadosGeraisPanelGroup" />
+                        </p:selectOneRadio>
+                    </h:panelGroup>
+                    <h:panelGroup id="dadosGeraisPanelGroup" >
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <p:outputLabel value="Nome"
+                                                   for="nomePessoaJuriInput" />
+                                    <p:inputText id="nomePessoaJuriInput"
+                                                 placeholder="Nome"
+                                                 value="#{managerContratado.contratado.nome}"
+                                                 disabled="#{managerContratado.visualizar}"
+                                                 rendered="true"
+                                                 requiredMessage="Este campo é obrigatório."
+                                                 styleClass="form-control" 
+                                                 />
+                                    <p:message for="nomePessoaJuriInput" />
+                                </div>
+                            </div>
+                            <h:panelGroup rendered="#{managerContratado.renderedCnpjPEssoa()}">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <p:outputLabel value="CNPJ"
+                                                       for="cnpjPessoaJuriInput"  />
+                                        <p:inputText id="cnpjPessoaJuriInput"
+                                                     placeholder="CNPJ"
+                                                     value="#{managerContratado.contratado.cnpj}"
+                                                     disabled="#{managerContratado.visualizar}"
+                                                     requiredMessage="Este campo é obrigatório."
+                                                     styleClass="form-control" 
+                                                     />
+                                        <p:message for="cnpjPessoaJuriInput" />
+                                    </div>
+                                </div>
+                            </h:panelGroup>
+                            <h:panelGroup rendered="#{managerContratado.renderedCpfPEssoa()}">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <p:outputLabel value="CPF"
+                                                       for="cpfPessoaJuriInput" />
+                                        <p:inputMask id="cpfPessoaJuriInput"
+                                                     placeholder="CPF"
+                                                     mask="999.999.999-99"
+                                                     value="#{managerContratado.contratado.cpf}"
+                                                     disabled="#{managerContratado.visualizar}"
+                                                     requiredMessage="Este campo é obrigatório."
+                                                     styleClass="form-control" 
+                                                     />
+                                        <p:message for="cpfPessoaJuriInput" />
+                                    </div>
+                                </div>
+                            </h:panelGroup>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <p:outputLabel value="Especialidade"
+                                                   for="especPessoaJuriInput" />
+                                    <p:inputText id="especPessoaJuriInput"
+                                                 placeholder="Especialidade"
+                                                 value="#{managerContratado.contratado.especialidade}"
+                                                 disabled="#{managerContratado.visualizar}"
+                                                 requiredMessage="Este campo é obrigatório."
+                                                 styleClass="form-control" 
+                                                 />
+                                    <p:message for="especPessoaJuriInput" />
+                                </div>
+                            </div>
+                        </div>
+                    </h:panelGroup>
+
+                </h:panelGroup>
+
+                <center>
+                    <p:commandButton value="Pesquisar" icon="pi pi-search" update="pesquisarForm:tipoLicitacaoDatatable  messages" process="@this pesquisaPanel"  actionListener="#{managerContratado.pesquisar()}" />
+                    <p:commandButton value="Limpar" icon="pi pi-ban" update="@form" actionListener="#{managerTipoLicitacao.init()}"/>
+                </center>
+                <hr/>
+
+                <p:dataTable id="tipoLicitacaoDatatable" var="contratado" value="#{managerContratado.contratados}"
+                             resizeMode="5">
+                    <f:facet name="header">
+                        <center>
+                            tipos de Licitação
+                        </center>
+                    </f:facet>
+                    <p:column headerText="ações" width="200">
+                        <p:commandButton  icon="pi pi-trash" update="@form" title="exluir" actionListener="#{managerContratado.deletar(contratado.id)}"/>
+                        <p:button  icon="pi pi-eye" title="visualizar" href="contratado.xhtml?visualizar=#{contratado.id}" />
+                    </p:column>
+                    <p:column headerText="nome">
+                        <h:outputText value="#{contratado.nome}" />
+                    </p:column>
+
+                    <p:column headerText="Especialidade">
+                        <h:outputText value="#{contratado.especialidade}" />
+                    </p:column>
+                    <p:column headerText="Wahatsapp">
+                        <h:outputText value="#{contratado.whatsapp}" />
+                    </p:column>
+
+                </p:dataTable>
+
+            </p:panel>
+        </h:form>
+
+    </h:body>
+</html>
