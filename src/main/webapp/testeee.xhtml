@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/WEB-INF/template/layout.xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="titulo">
+       teste
+    </ui:define>
+    
+    <ui:define name="acoes">
+        
+        <p:button value="Pesquisar"
+                  title="Pesquisar Bairro"
+                  icon="fa fa-search"
+                  href="pesquisarBairro.xhtml"/>
+        
+        <p:splitButton value="Ações"
+                       icon="fa fa-cog"
+                       >
+
+            <p:menuitem value="Editar"
+                        icon="fa fa-pencil"
+                        process="@this"
+                       />
+
+        </p:splitButton>
+
+    </ui:define>
+    
+    <ui:define name="corpo">
+
+        <ui:include src="testeteste.xhtml" />
+
+    </ui:define>
+
+</ui:composition>
+
+
+
