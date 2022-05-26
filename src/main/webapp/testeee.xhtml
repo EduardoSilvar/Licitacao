@@ -6,30 +6,30 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-    <ui:define name="titulo">
-       teste
-    </ui:define>
-    
     <ui:define name="acoes">
-        
-        <p:button value="Pesquisar"
-                  title="Pesquisar Bairro"
-                  icon="fa fa-search"
-                  href="pesquisarBairro.xhtml"/>
-        
-        <p:splitButton value="Ações"
-                       icon="fa fa-cog"
-                       >
+        <h:panelGroup style="float: right !important">
+            <p:button value="Pesquisar"
+                      title="Pesquisar Bairro"
+                      icon="fa fa-search"
+                      href="pesquisarBairro.xhtml" style=" margin-right: 30px !important"/>
 
-            <p:menuitem value="Editar"
-                        icon="fa fa-pencil"
-                        process="@this"
-                       />
+            <p:splitButton value="Ações" style="margin: -8px !important;"
+                           icon="fa fa-cog"
+                           >
 
-        </p:splitButton>
+                <p:menuitem value="Editar" 
+                            icon="fa fa-pencil"
+                            process="@this"
+                            />
 
+            </p:splitButton>
+        </h:panelGroup>
     </ui:define>
-    
+    <ui:define name="titulo">
+        <h4>Cadastro de Licitação</h4>
+    </ui:define>
+
+
     <ui:define name="corpo">
 
         <ui:include src="testeteste.xhtml" />

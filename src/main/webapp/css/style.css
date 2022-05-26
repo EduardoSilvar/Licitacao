@@ -15,10 +15,14 @@ body .ui-datatable thead th{
     background-color: #01415B !important;
     color: #fff;
     width: 120px;
-    margin: 10px !important;
-
 }
 
+body .ui-calendar .ui-button.ui-button-icon-only {
+    width: 2.357rem;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    margin-top: 0px !important;
+}
 body{
     background:#f5fcfc;
 }
