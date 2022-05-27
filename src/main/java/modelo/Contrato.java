@@ -31,6 +31,7 @@ public class Contrato implements Serializable {
     private Date dataInicio;
     private Date dataFimado;
     private Date dataFirmado;
+    private Date dataRenovacao;
     private boolean possuiTempoDeterminado;
     private String objetivo;
     private String anexo;
