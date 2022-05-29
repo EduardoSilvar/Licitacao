@@ -34,159 +34,157 @@
 
     <ui:define name="corpo">
         <h:form id="testess">
-            <p:panel>
-                <p:growl id="growl" showDetail="true" />
-                <h:panelGroup>
-                    <div class="row">
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <p:outputLabel value="Contratado" styleClass="control-label" for="contratadoSelect" />
-                                <p:selectOneMenu id="contratadoSelect"
-                                                 filter="true" 
-                                                 placeholder="Contratado"
-                                                 styleClass="form-control" >
-                                    <f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
-                                    <f:selectItems  />
-                                </p:selectOneMenu>
-                            </div> 
+            <p:growl id="growl" showDetail="true" />
+            <h:panelGroup>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <p:outputLabel value="Contratado" styleClass="control-label" for="contratadoSelect" />
+                            <p:selectOneMenu id="contratadoSelect"
+                                             filter="true" 
+                                             placeholder="Contratado"
+                                             styleClass="form-control" >
+                                <f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
+                                <f:selectItems  />
+                            </p:selectOneMenu>
+                        </div> 
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <p:outputLabel value="Tipo de contrato" styleClass="control-label" for="tipoContratoSelect" />
+                            <p:selectOneMenu id="tipoContratoSelect"
+                                             filter="true" 
+                                             placeholder="Contrato"
+                                             styleClass="form-control" >
+                                <f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
+                                <f:selectItems  />
+                            </p:selectOneMenu>
+                        </div> 
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <p:outputLabel value="Data da firmação"
+                                           for="dataContrato"  />
+                            <p:calendar id="dataContrato"
+                                        rendered="true"
+                                        mask="true"
+                                        style="display: flex;"
+                                        requiredMessage="Este campo é obrigatório."
+                                        inputStyleClass="form-control"
+                                        showOn="button"
+                                        />
+                            <p:message for="dataContrato" />
                         </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <p:outputLabel value="Tipo de contrato" styleClass="control-label" for="tipoContratoSelect" />
-                                <p:selectOneMenu id="tipoContratoSelect"
-                                                 filter="true" 
-                                                 placeholder="Contrato"
-                                                 styleClass="form-control" >
-                                    <f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
-                                    <f:selectItems  />
-                                </p:selectOneMenu>
-                            </div> 
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <p:outputLabel value="valor"
+                                           for="valorContrato" />
+                            <p:inputText id="valorContrato"
+                                         placeholder="valor"
+                                         rendered="true"
+                                         requiredMessage="Este campo é obrigatório."
+                                         styleClass="form-control" 
+                                         />
+                            <p:message for="valorContrato" />
                         </div>
-                        <div class="col-md-2">
-                            <div class="form-group">
-                                <p:outputLabel value="Data da firmação"
-                                               for="dataContrato"  />
-                                <p:calendar id="dataContrato"
-                                            rendered="true"
-                                            mask="true"
-                                            style="display: flex;"
-                                            requiredMessage="Este campo é obrigatório."
-                                            inputStyleClass="form-control"
-                                            showOn="button"
-                                            />
-                                <p:message for="dataContrato" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <p:outputLabel value="Possui tempo determinado ?"/>
+                            <div class="ui-inputgroup">
+                                <p:selectOneButton >
+                                    <f:selectItem itemLabel="Sim" itemValue="Option1"/>
+                                    <f:selectItem itemLabel="Não" itemValue="Option2"/>
+                                </p:selectOneButton>
                             </div>
                         </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <p:outputLabel value="valor"
-                                               for="valorContrato" />
-                                <p:inputText id="valorContrato"
-                                             placeholder="valor"
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <p:outputLabel value="Data da Início"
+                                           for="dataInicioContrato"  />
+                            <p:calendar id="dataInicioContrato"
+                                        rendered="true"
+                                        mask="true"
+                                        style="display: flex;"
+                                        requiredMessage="Este campo é obrigatório."
+                                        inputStyleClass="form-control"
+                                        showOn="button"
+                                        />
+                            <p:message for="dataInicioContrato" />
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <p:outputLabel value="Data Final"
+                                           for="dataFinalContrato"  />
+                            <p:calendar id="dataFinalContrato"
+                                        rendered="true"
+                                        mask="true"
+                                        style="display: flex;"
+                                        requiredMessage="Este campo é obrigatório."
+                                        inputStyleClass="form-control"
+                                        showOn="button"
+                                        />
+                            <p:message for="dataFinalContrato" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <p:outputLabel value="1° responsável" styleClass="control-label" for="primeiroResponContratoSelect" />
+                            <p:selectOneMenu id="primeiroResponContratoSelect"
+                                             filter="true" 
+                                             placeholder="Contrato"
+                                             styleClass="form-control" >
+                                <f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
+                                <f:selectItems  />
+                            </p:selectOneMenu>
+                        </div> 
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <p:outputLabel value="2° responsável" styleClass="control-label" for="segundoRespomSelect" />
+                            <p:selectOneMenu id="segundoRespomSelect"
+                                             filter="true" 
+                                             placeholder="Contrato"
+                                             styleClass="form-control" >
+                                <f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
+                                <f:selectItems  />
+                            </p:selectOneMenu>
+                        </div> 
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <p:outputLabel value="Objetivo"
+                                           for="objetivoContrato" />
+                            <p:inputTextarea id="objetivoContrato"
+                                             placeholder="Objetivo"
                                              rendered="true"
                                              requiredMessage="Este campo é obrigatório."
                                              styleClass="form-control" 
                                              />
-                                <p:message for="valorContrato" />
-                            </div>
+                            <p:message for="objetivoContrato" />
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <p:outputLabel value="Possui tempo determinado ?"/>
-                                <div class="ui-inputgroup">
-                                    <p:selectOneButton >
-                                        <f:selectItem itemLabel="Sim" itemValue="Option1"/>
-                                        <f:selectItem itemLabel="Não" itemValue="Option2"/>
-                                    </p:selectOneButton>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <div class="form-group">
-                                <p:outputLabel value="Data da Início"
-                                               for="dataInicioContrato"  />
-                                <p:calendar id="dataInicioContrato"
-                                            rendered="true"
-                                            mask="true"
-                                            style="display: flex;"
-                                            requiredMessage="Este campo é obrigatório."
-                                            inputStyleClass="form-control"
-                                            showOn="button"
-                                            />
-                                <p:message for="dataInicioContrato" />
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <div class="form-group">
-                                <p:outputLabel value="Data Final"
-                                               for="dataFinalContrato"  />
-                                <p:calendar id="dataFinalContrato"
-                                            rendered="true"
-                                            mask="true"
-                                            style="display: flex;"
-                                            requiredMessage="Este campo é obrigatório."
-                                            inputStyleClass="form-control"
-                                            showOn="button"
-                                            />
-                                <p:message for="dataFinalContrato" />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <p:outputLabel value="1° responsável" styleClass="control-label" for="primeiroResponContratoSelect" />
-                                <p:selectOneMenu id="primeiroResponContratoSelect"
-                                                 filter="true" 
-                                                 placeholder="Contrato"
-                                                 styleClass="form-control" >
-                                    <f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
-                                    <f:selectItems  />
-                                </p:selectOneMenu>
-                            </div> 
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <p:outputLabel value="2° responsável" styleClass="control-label" for="segundoRespomSelect" />
-                                <p:selectOneMenu id="segundoRespomSelect"
-                                                 filter="true" 
-                                                 placeholder="Contrato"
-                                                 styleClass="form-control" >
-                                    <f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
-                                    <f:selectItems  />
-                                </p:selectOneMenu>
-                            </div> 
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <p:outputLabel value="Objetivo"
-                                               for="objetivoContrato" />
-                                <p:inputTextarea id="objetivoContrato"
-                                                 placeholder="Objetivo"
-                                                 rendered="true"
-                                                 requiredMessage="Este campo é obrigatório."
-                                                 styleClass="form-control" 
-                                                 />
-                                <p:message for="objetivoContrato" />
-                            </div>
-                        </div>
-                    </div>
-                    <p:fileUpload mode="advanced"
-                                  multiple="false"
-                                  sizeLimit="102400" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
-                                  invalidSizeMessage="Maximum file size allowed is 100 KB"
-                                  invalidFileMessage="only gif | jpg | jpeg | png is allowed"
-                                  style="margin-bottom: 20px"
-                                  />
-                </h:panelGroup>
+                </div>
+                <p:fileUpload mode="advanced"
+                              multiple="false"
+                              sizeLimit="102400" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
+                              invalidSizeMessage="Maximum file size allowed is 100 KB"
+                              invalidFileMessage="only gif | jpg | jpeg | png is allowed"
+                              style="margin-bottom: 20px"
+                              />
+            </h:panelGroup>
 
-                <center>
-                    <p:commandButton value="salvar" icon="pi pi-save" process="testess" actionListener="#{managerContratado.salvar()}" update="testess" style="margin: 0px 20px; background-color: #01415B; color: #fff; margin-bottom: 10px;"/>
-                    <p:commandButton value="cancelar" icon="pi pi-ban"  style="background-color: #01415B; color: #fff;margin-bottom: 10px"/>
-                </center>
-            </p:panel>
+            <center>
+                <p:commandButton value="salvar" icon="pi pi-save" process="testess" actionListener="#{managerContratado.salvar()}" update="testess" style="margin: 0px 20px; background-color: #01415B; color: #fff; margin-bottom: 10px;"/>
+                <p:commandButton value="cancelar" icon="pi pi-ban"  style="background-color: #01415B; color: #fff;margin-bottom: 10px"/>
+            </center>
         </h:form>
     </ui:define>
 </ui:composition>
