@@ -105,29 +105,8 @@ and open the template in the editor.
 
         </style>
     </h:head>
-    <h:body>
+    <h:body  >
         <h:form>
-            <div style="position: fixed;width: 100%; margin-top: -140px;">
-                <div style="margin-top: 60px;">
-                    <h:panelGroup id="barraPanelGroup">
-                        <div class="row" id="titulo">
-                            <i class="pi pi-plus" style="margin: 5px 10px 5px 20px;size: 70px; color: #C8CCCB"></i>
-                            <ui:insert name="titulo">
-                            </ui:insert>
-                        </div>
-
-                    </h:panelGroup>
-
-                    <h:form id="acoesForm" >
-                        <ui:insert class="acoes" name="acoes">
-                        </ui:insert>
-                    </h:form>
-                    <div style=" margin-top: 10px;width: 100%;height: 40px;background-color: #01415B; padding: 10px; margin-bottom: 30px; margin-right: -3px">
-                        <ui:insert class="barra" name="barra">
-                        </ui:insert>
-                    </div>
-                </div>
-            </div>
             <div style="display: flex; flex-direction: row; width:98%;margin: -3px; margin-top: 120px;">
                 <div>
                     <p:panelMenu style="width:200px;height: 100% !important;  background: #01415B !important;position: fixed;margin-top: 40px;border-top-right-radius: 15px !important">
@@ -161,14 +140,36 @@ and open the template in the editor.
                     </p:panelMenu>
                 </div>
                 <div style="width: 99%">
-                    <p:panel style="padding: 0px 10px;margin-left: 230px;margin-top: 40px">
+                    <p:panel style="padding: 0px 10px;margin-left: 230px;margin-top: 40px;">
                         <ui:insert name="corpo">
 
                         </ui:insert>
                     </p:panel>
                 </div>
             </div>
+            <div style="position: absolute;">
+                <div style="position: fixed;width: 100%; margin-top: -840px;background-color:#F5FCFC;">
+                    <div style="margin-top: 60px;">
+                        <h:panelGroup id="barraPanelGroup">
+                            <div class="row" id="titulo">
+                                <i class="pi pi-plus" style="margin: 5px 10px 5px 20px;size: 70px; color: #C8CCCB"></i>
+                                <ui:insert name="titulo">
+                                </ui:insert>
+                            </div>
 
+                        </h:panelGroup>
+
+                        <h:form id="acoesForm" >
+                            <ui:insert class="acoes" name="acoes">
+                            </ui:insert>
+                        </h:form>
+                        <div style=" margin-top: 10px;width: 100%;height: 40px;background-color: #01415B; padding: 10px; margin-bottom: 30px; margin-right: -3px">
+                            <ui:insert class="barra" name="barra">
+                            </ui:insert>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </h:form>
     </h:body>
 </html>
