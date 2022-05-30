@@ -5,6 +5,7 @@
  */
 package Servico;
 
+import java.io.Serializable;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.Query;
@@ -16,7 +17,7 @@ import util.Utils;
  * @author eduardo
  */
 @Stateless
-public class TipoLicitacaoServico extends ServicoGenerico<TipoLicitacao> {
+public class TipoLicitacaoServico extends ServicoGenerico<TipoLicitacao> implements Serializable{
     
     public TipoLicitacaoServico() {
         super(TipoLicitacao.class);

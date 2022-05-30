@@ -6,6 +6,7 @@
 package Gerenciador;
 
 import Servico.ContratoServico;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -20,7 +21,7 @@ import modelo.Contrato;
  */
 @ManagedBean
 @ViewScoped
-public class ContratoManager {
+public class ContratoManager implements Serializable {
 
     @EJB
     private ContratoServico contratoServico;

@@ -5,6 +5,7 @@
  */
 package Servico;
 
+import java.io.Serializable;
 import javax.ejb.Stateless;
 import modelo.UnidadeOrganizacional;
 
@@ -13,7 +14,7 @@ import modelo.UnidadeOrganizacional;
  * @author eduardo
  */
 @Stateless
-public class UnidadeOrganizacionalServico extends ServicoGenerico<UnidadeOrganizacional> {
+public class UnidadeOrganizacionalServico extends ServicoGenerico<UnidadeOrganizacional> implements Serializable {
 
     public UnidadeOrganizacionalServico() {
         super(UnidadeOrganizacional.class);

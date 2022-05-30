@@ -34,7 +34,7 @@
 
     <ui:define name="corpo">
 
-        <h:form id="contratadoForm" style="padding: 30px !important">
+        <!--<h:form id="contratadoForm" style="padding: 30px !important">-->
             <p:growl id="messages" showDetail="true" />
             <h:panelGroup id="selectorPanelGroup"  >
 
@@ -42,121 +42,123 @@
                 <p:selectOneRadio id="console" value="#{managerContratado.contratado.natureza}"  unselectable="true" disabled="#{managerContratado.visualizar}" style="margin: 10px">
                     <f:selectItem itemLabel="Jurídica" itemValue="#{managerContratado.juridica}" />
                     <f:selectItem itemLabel="Fisica" itemValue="#{managerContratado.fisica}"/>
-                    <p:ajax update="dadosGeraisPanelGroup" />
+                    <p:ajax update="corpoInteiro:dadosGeraisPanelGroup"  />
                 </p:selectOneRadio>
             </h:panelGroup>
             <h:panelGroup id="dadosGeraisPanelGroup" >
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <p:outputLabel value="Nome"
-                                           for="nomePessoaJuriInput" />
-                            <p:inputText id="nomePessoaJuriInput"
-                                         placeholder="Nome"
-                                         required="true"
-                                         value="#{managerContratado.contratado.nome}"
-                                         disabled="#{managerContratado.visualizar}"
-                                         rendered="true"
-                                         requiredMessage="Este campo é obrigatório."
-                                         styleClass="form-control" 
-                                         />
-                            <p:message for="nomePessoaJuriInput" />
-                        </div>
-                    </div>
-                    <h:panelGroup rendered="#{managerContratado.renderedCnpjPEssoa()}">
+                <h:panelGroup>
+                    <div class="row">
                         <div class="col-md-4">
                             <div class="form-group">
-                                <p:outputLabel value="CNPJ"
-                                               for="cnpjPessoaJuriInput"  />
-                                <p:inputText id="cnpjPessoaJuriInput"
-                                             placeholder="CNPJ"
-                                             value="#{managerContratado.contratado.cnpj}"
+                                <p:outputLabel value="Nome"
+                                               for="nomePessoaJuriInput" />
+                                <p:inputText id="nomePessoaJuriInput"
+                                             placeholder="Nome"
+                                             required="true"
+                                             value="#{managerContratado.contratado.nome}"
+                                             disabled="#{managerContratado.visualizar}"
+                                             rendered="true"
+                                             requiredMessage="Este campo é obrigatório."
+                                             styleClass="form-control" 
+                                             />
+                                <p:message for="nomePessoaJuriInput" />
+                            </div>
+                        </div>
+                        <h:panelGroup rendered="#{managerContratado.renderedCnpjPEssoa()}">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <p:outputLabel value="CNPJ"
+                                                   for="cnpjPessoaJuriInput"  />
+                                    <p:inputText id="cnpjPessoaJuriInput"
+                                                 placeholder="CNPJ"
+                                                 value="#{managerContratado.contratado.cnpj}"
+                                                 disabled="#{managerContratado.visualizar}"
+                                                 requiredMessage="Este campo é obrigatório."
+                                                 styleClass="form-control" 
+                                                 />
+                                    <p:message for="cnpjPessoaJuriInput" />
+                                </div>
+                            </div>
+                        </h:panelGroup>
+                        <h:panelGroup rendered="#{managerContratado.renderedCpfPEssoa()}">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <p:outputLabel value="CPF"
+                                                   for="cpfPessoaJuriInput" />
+                                    <p:inputMask id="cpfPessoaJuriInput"
+                                                 placeholder="CPF"
+                                                 mask="999.999.999-99"
+                                                 value="#{managerContratado.contratado.cpf}"
+                                                 disabled="#{managerContratado.visualizar}"
+                                                 requiredMessage="Este campo é obrigatório."
+                                                 styleClass="form-control" 
+                                                 />
+                                    <p:message for="cpfPessoaJuriInput" />
+                                </div>
+                            </div>
+                        </h:panelGroup>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <p:outputLabel value="Especialidade"
+                                               for="especPessoaJuriInput" />
+                                <p:inputText id="especPessoaJuriInput"
+                                             placeholder="Especialidade"
+                                             value="#{managerContratado.contratado.especialidade}"
                                              disabled="#{managerContratado.visualizar}"
                                              requiredMessage="Este campo é obrigatório."
                                              styleClass="form-control" 
                                              />
-                                <p:message for="cnpjPessoaJuriInput" />
+                                <p:message for="especPessoaJuriInput" />
                             </div>
                         </div>
-                    </h:panelGroup>
-                    <h:panelGroup rendered="#{managerContratado.renderedCpfPEssoa()}">
+                    </div>
+                    <div class="row">
                         <div class="col-md-4">
                             <div class="form-group">
-                                <p:outputLabel value="CPF"
-                                               for="cpfPessoaJuriInput" />
-                                <p:inputMask id="cpfPessoaJuriInput"
-                                             placeholder="CPF"
-                                             mask="999.999.999-99"
-                                             value="#{managerContratado.contratado.cpf}"
+                                <p:outputLabel value="E-mail"
+                                               for="emailPessoaJuriInput" />
+                                <p:inputText id="emailPessoaJuriInput"
+                                             placeholder="E-mail"
+                                             value="#{managerContratado.contratado.email}"
                                              disabled="#{managerContratado.visualizar}"
                                              requiredMessage="Este campo é obrigatório."
                                              styleClass="form-control" 
                                              />
-                                <p:message for="cpfPessoaJuriInput" />
+                                <p:message for="emailPessoaJuriInput" />
                             </div>
                         </div>
-                    </h:panelGroup>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <p:outputLabel value="Especialidade"
-                                           for="especPessoaJuriInput" />
-                            <p:inputText id="especPessoaJuriInput"
-                                         placeholder="Especialidade"
-                                         value="#{managerContratado.contratado.especialidade}"
-                                         disabled="#{managerContratado.visualizar}"
-                                         requiredMessage="Este campo é obrigatório."
-                                         styleClass="form-control" 
-                                         />
-                            <p:message for="especPessoaJuriInput" />
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <p:outputLabel value="Telefone"
+                                               for="telefonePessoaJuriInput" />
+                                <p:inputMask id="telefonePessoaJuriInput"
+                                             placeholder="Telefone"
+                                             value="#{managerContratado.contratado.telefone}"
+                                             disabled="#{managerContratado.visualizar}"
+                                             mask="(99)9999-9999"
+                                             requiredMessage="Este campo é obrigatório."
+                                             styleClass="form-control" 
+                                             />
+                                <p:message for="telefonePessoaJuriInput" />
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <p:outputLabel value="Whatsapp"
+                                               for="whatsPessoaJuriInput" />
+                                <p:inputMask id="whatsPessoaJuriInput"
+                                             placeholder="Whatsapp"
+                                             value="#{managerContratado.contratado.whatsapp}"
+                                             disabled="#{managerContratado.visualizar}"
+                                             mask="(99)99999-9999"
+                                             requiredMessage="Este campo é obrigatório."
+                                             styleClass="form-control" 
+                                             />
+                                <p:message for="whatsPessoaJuriInput" />
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <p:outputLabel value="E-mail"
-                                           for="emailPessoaJuriInput" />
-                            <p:inputText id="emailPessoaJuriInput"
-                                         placeholder="E-mail"
-                                         value="#{managerContratado.contratado.email}"
-                                         disabled="#{managerContratado.visualizar}"
-                                         requiredMessage="Este campo é obrigatório."
-                                         styleClass="form-control" 
-                                         />
-                            <p:message for="emailPessoaJuriInput" />
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <p:outputLabel value="Telefone"
-                                           for="telefonePessoaJuriInput" />
-                            <p:inputMask id="telefonePessoaJuriInput"
-                                         placeholder="Telefone"
-                                         value="#{managerContratado.contratado.telefone}"
-                                         disabled="#{managerContratado.visualizar}"
-                                         mask="(99)9999-9999"
-                                         requiredMessage="Este campo é obrigatório."
-                                         styleClass="form-control" 
-                                         />
-                            <p:message for="telefonePessoaJuriInput" />
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <p:outputLabel value="Whatsapp"
-                                           for="whatsPessoaJuriInput" />
-                            <p:inputMask id="whatsPessoaJuriInput"
-                                         placeholder="Whatsapp"
-                                         value="#{managerContratado.contratado.whatsapp}"
-                                         disabled="#{managerContratado.visualizar}"
-                                         mask="(99)99999-9999"
-                                         requiredMessage="Este campo é obrigatório."
-                                         styleClass="form-control" 
-                                         />
-                            <p:message for="whatsPessoaJuriInput" />
-                        </div>
-                    </div>
-                </div>
+                </h:panelGroup>
             </h:panelGroup>
 
             <h:panelGroup id="enderecoPanelGroup">
@@ -222,10 +224,10 @@
             </h:panelGroup>
             <center>
                 <p:button value="Editar" icon="pi pi-pencil"  rendered="#{managerContratado.visualizar}" href="contratado.xhtml?editar=#{managerContratado.contratado.id}" />
-                <p:commandButton value="Atualizar" icon="pi pi-sync" process="contratadoForm" actionListener="#{managerContratado.atualizar()}" rendered="#{managerContratado.editar}" update="contratadoForm" />
+                <p:commandButton value="Atualizar" icon="pi pi-sync"  actionListener="#{managerContratado.atualizar()}" rendered="#{managerContratado.editar}"  />
                 <p:button value="Cancelar" icon="pi pi-ban"  href="index.xhtml" />
-                <p:commandButton value="Salvar" icon="pi pi-save" process="contratadoForm" actionListener="#{managerContratado.salvar()}" update="contratadoForm" rendered="#{managerContratado.cadastrar}" />
+                <p:commandButton value="Salvar" icon="pi pi-save" actionListener="#{managerContratado.salvar()}" rendered="#{managerContratado.cadastrar}" />
             </center>
-        </h:form>
+        <!--</h:form>-->
     </ui:define>
 </ui:composition>

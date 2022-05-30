@@ -122,7 +122,7 @@ public class Contratado implements Serializable {
     public void setAtivo(boolean ativo) {
         this.ativo = ativo;
     }
-    
+
     @Override
     public String toString() {
         return "Contratado{" + "id=" + id + ", nome=" + nome + ", cpf=" + cpf + ", cnpj=" + cnpj + ", endereco=" + endereco + ", especialidade=" + especialidade + ", natureza=" + natureza + ", email=" + email + ", telefone=" + telefone + ", whatsapp=" + whatsapp + '}';

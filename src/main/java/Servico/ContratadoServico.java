@@ -5,6 +5,7 @@
  */
 package Servico;
 
+import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
@@ -17,7 +18,7 @@ import util.Utils;
  * @author eduardo
  */
 @Stateless
-public class ContratadoServico extends ServicoGenerico<Contratado> {
+public class ContratadoServico extends ServicoGenerico<Contratado> implements Serializable{
 
     public ContratadoServico() {
         super(Contratado.class);

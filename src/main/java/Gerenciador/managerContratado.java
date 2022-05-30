@@ -57,7 +57,7 @@ public class managerContratado extends ManagerPrincipal implements Serializable 
     public void instanciarContratado() {
         contratado = new Contratado();
         contratado.setEndereco(new Endereco());
-        contratado.setNatureza(NaturezaEnum.JURÍDICA);
+        contratado.setNatureza(NaturezaEnum.FISICA);
     }
 
     public void intanciarContratados() {
@@ -89,19 +89,11 @@ public class managerContratado extends ManagerPrincipal implements Serializable 
     }
 
     public boolean renderedCpfPEssoa() {
-        if (contratado.getNatureza().equals(natureza.FISICA)) {
-            return true;
-        } else {
-            return false;
-        }
+        return contratado.getNatureza().equals(natureza.FISICA);
     }
 
     public boolean renderedCnpjPEssoa() {
-        if (contratado.getNatureza().equals(natureza.JURÍDICA)) {
-            return true;
-        } else {
-            return false;
-        }
+        return contratado.getNatureza().equals(natureza.JURÍDICA);
     }
 
     public void pesquisar() {

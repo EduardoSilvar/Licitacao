@@ -5,6 +5,7 @@
  */
 package Servico;
 
+import java.io.Serializable;
 import javax.ejb.Stateless;
 import modelo.Endereco;
 
@@ -13,7 +14,7 @@ import modelo.Endereco;
  * @author eduardo
  */
 @Stateless
-public class EnderecoServico extends ServicoGenerico<Endereco>{
+public class EnderecoServico extends ServicoGenerico<Endereco> implements Serializable{
     
     public EnderecoServico() {
         super(Endereco.class);
