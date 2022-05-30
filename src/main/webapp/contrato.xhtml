@@ -25,11 +25,11 @@
     </ui:define>
     <ui:define name="barra">
         <div class="row" id="stylebarra">
-            <i class="pi pi-file-o" id="icon"></i> <h5 style="color: #e1e6e5"> Dados Gerais teste</h5>
+            <i class="pi pi-file-o" id="icon"></i> <h5 style="color: #e1e6e5"> Dados Gerais</h5>
         </div>
     </ui:define>
     <ui:define name="titulo">
-        <h4>Cadastro de Licitação</h4>
+        <h4>Cadastro de Contrato</h4>
     </ui:define>
 
     <ui:define name="corpo">
@@ -91,18 +91,15 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <p:outputLabel value="Possui tempo determinado ?"/>
                             <div class="ui-inputgroup">
-                                <p:selectOneButton >
-                                    <f:selectItem itemLabel="Sim" itemValue="Option1"/>
-                                    <f:selectItem itemLabel="Não" itemValue="Option2"/>
-                                </p:selectOneButton>
+                                <p:selectBooleanButton onLabel="Sim" offLabel="Não" style="width:6rem; color: white !important;border-radius: 5px"/>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <p:outputLabel value="Data da Início"
                                            for="dataInicioContrato"  />
@@ -117,7 +114,7 @@
                             <p:message for="dataInicioContrato" />
                         </div>
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <p:outputLabel value="Data Final"
                                            for="dataFinalContrato"  />
