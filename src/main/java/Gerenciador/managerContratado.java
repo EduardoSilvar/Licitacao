@@ -24,7 +24,7 @@ import util.Msg;
  */
 @ManagedBean
 @ViewScoped
-public class managerContratado extends ManagerPrincipal implements Serializable {
+public class managerContratado extends managerPrincipal implements Serializable {
 
     @EJB
     private ContratadoServico contratadoServico;

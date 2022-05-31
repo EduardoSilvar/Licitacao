@@ -14,7 +14,7 @@ import javax.faces.context.FacesContext;
  *
  * @author eduardo
  */
-public abstract class ManagerPrincipal implements Serializable {
+public abstract class managerPrincipal implements Serializable {
 
     private String visualizar;
     private String editar;

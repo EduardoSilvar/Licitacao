@@ -113,12 +113,12 @@
             </h:panelGroup>
 
             <center>
-                <p:commandButton value="Pesquisar" icon="pi pi-search" process="@this corpoInteiro:pesquisaPanel" update="corpoInteiro:tipoLicitacaoDatatable" actionListener="#{managerContratado.pesquisar()}" />
-                <p:commandButton value="Limpar" icon="pi pi-ban"  actionListener="#{managerTipoLicitacao.init()}"/>
+                <p:commandButton value="Pesquisar" icon="pi pi-search" process="@this corpoInteiro:pesquisaPanel" update="corpoInteiro:tipoContratadoDatatable" actionListener="#{managerContratado.pesquisar()}" />
+                <p:commandButton value="Limpar" icon="pi pi-ban" update="corpoInteiro:tipoContratadoDatatable" process="@this corpoInteiro:pesquisaPanel" actionListener="#{managerContratado.instanciar()}"/>
             </center>
             <hr/>
 
-            <p:dataTable id="tipoLicitacaoDatatable" var="contratado" value="#{managerContratado.contratados}"
+            <p:dataTable id="tipoContratadoDatatable" var="contratado" value="#{managerContratado.contratados}"
                          resizeMode="5">
                 <f:facet name="header">
                     <center>
@@ -126,7 +126,10 @@
                     </center>
                 </f:facet>
                 <p:column headerText="ações" width="200">
-                    <p:commandButton  icon="pi pi-trash"  title="exluir" actionListener="#{managerContratado.deletar(contratado.id)}"/>
+                    <p:commandButton  icon="pi pi-trash" 
+                                      process="@this"
+                                      update="@form:removeraContratadoConfirmDialog"
+                                      oncomplete="PF('removeraContratadoConfirmDialog').show();" title="exluir" />
                     <p:button  icon="pi pi-eye" title="visualizar" href="contratado.xhtml?visualizar=#{contratado.id}" />
                 </p:column>
                 <p:column headerText="nome">
@@ -150,13 +153,14 @@
                   maximizable="false"
                   minimizable="false"
                   modal="true"
+                  width="850"
                   showEffect="fade"
                   hideEffect="fade">
 
             <div class="row">
 
                 <div class="col-md-12">
-                    <div class="form-group">
+                    <div class="form-group" style="padding-left: 80px !important">
                         <h4>
                             <i class="pi pi-exclamation-triangle"></i>
                             Tem certeza de que deseja remover este Contratado ?
@@ -171,8 +175,8 @@
                         <p:commandButton value="Sim"
                                          title="Confirmar Remoção"
                                          icon="fa fa-check"
-                                         update="tipoLicitacaoDatatable messages"
-                                         actionListener="#{managerAforamento.deletar()}"
+                                         update="tipoContratadoDatatable messages"
+                                         actionListener="#{managerContratado.deletar(contratado.id)}"
                                          oncomplete="PF('removeraContratadoConfirmDialog').hide();"
                                          styleClass="mr-md-1"/>
 

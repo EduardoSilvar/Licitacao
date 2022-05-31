@@ -21,7 +21,7 @@ import modelo.Contrato;
  */
 @ManagedBean
 @ViewScoped
-public class ContratoManager implements Serializable {
+public class contratoManager implements Serializable {
 
     @EJB
     private ContratoServico contratoServico;

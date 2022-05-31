@@ -23,7 +23,7 @@ import util.Msg;
  */
 @ManagedBean
 @ViewScoped
-public class managerTipoLicitacao extends ManagerPrincipal implements Serializable {
+public class managerTipoLicitacao extends managerPrincipal implements Serializable {
 
     @EJB
     private TipoLicitacaoServico tipoLicitacaoServico;

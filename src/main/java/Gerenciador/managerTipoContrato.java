@@ -22,7 +22,7 @@ import util.Msg;
  */
 @ManagedBean
 @ViewScoped
-public class managerTipoContrato extends ManagerPrincipal implements Serializable {
+public class managerTipoContrato extends managerPrincipal implements Serializable {
 
     @EJB
     private tipoContratoServico tipoContratoServico;

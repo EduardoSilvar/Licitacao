@@ -117,8 +117,8 @@
                     <div class="form-group">
                         <p:outputLabel value="O valor do contrato mudou?" />
                         <div class="ui-inputgroup">
-                            <p:selectBooleanButton onLabel="Sim" offLabel="Não" value="#{ContratoManager.valorMudou}" style="width:12rem; color: white !important;border-radius: 5px">
-                                <p:ajax update="corpoInteiro:atualizacaoValor" listener="#{ContratoManager.print()}"/>
+                            <p:selectBooleanButton onLabel="Sim" offLabel="Não" value="#{contratoManager.valorMudou}" style="width:12rem; color: white !important;border-radius: 5px">
+                                <p:ajax update="corpoInteiro:atualizacaoValor" listener="#{contratoManager.print()}"/>
                             </p:selectBooleanButton>
                         </div>
                     </div>
@@ -127,7 +127,7 @@
         </h:panelGroup>
         <h:panelGroup id="atualizacaoValor" >
             <h2>Teste</h2>
-            <h:panelGroup rendered="#{ContratoManager.renderedNovoValor()}">
+            <h:panelGroup rendered="#{contratoManager.renderedNovoValor()}">
                 <div class="row">
                     <div class="col-md-6">
                         <p:outputLabel value="Valor"
@@ -154,7 +154,7 @@
             </h:panelGroup>
         </h:panelGroup>
         <center>    
-            <p:commandButton value="salvar" icon="pi pi-save"  actionListener="#{managerContratado.salvar()}"  style="margin: 0px 20px; background-color: #01415B; color: #fff; margin-bottom: 10px;"/>
+            <p:commandButton value="salvar" icon="pi pi-save"  actionListener="#{managercontratado.salvar()}"  style="margin: 0px 20px; background-color: #01415B; color: #fff; margin-bottom: 10px;"/>
             <p:commandButton value="cancelar" icon="pi pi-ban"  style="background-color: #01415B; color: #fff;margin-bottom: 10px"/>
         </center>
 

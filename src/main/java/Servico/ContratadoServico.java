@@ -34,7 +34,10 @@ public class ContratadoServico extends ServicoGenerico<Contratado> implements Se
         }
         if (Utils.isNotEmpty(contratado.getEspecialidade())) {
             sql += "c.especialidade = :especialidade and ";
+        }if (Utils.isNotEmpty(contratado.getNome())) {
+            sql += "c.nome = :nome and ";
         }
+        
         sql += "c.ativo = true";
         Query query = entityManager.createQuery(sql);
 
@@ -46,6 +49,9 @@ public class ContratadoServico extends ServicoGenerico<Contratado> implements Se
         }
         if (Utils.isNotEmpty(contratado.getEspecialidade())) {
             query.setParameter("especialidade", contratado.getEspecialidade());
+        }
+         if (Utils.isNotEmpty(contratado.getNome())) {
+            query.setParameter("nome", contratado.getNome());
         }
         return query.getResultList();
     }
