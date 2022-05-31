@@ -62,6 +62,7 @@ public class managerTipoContrato extends managerPrincipal implements Serializabl
     }
 
     public void deletar(Long id) {
+        System.out.println("o id é " + id);
         TipoContrato novoTipoContrato = tipoContratoServico.find(id);
         novoTipoContrato.setAtivo(false);
         tipoContratoServico.Update(novoTipoContrato);

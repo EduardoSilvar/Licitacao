@@ -6,17 +6,13 @@
                 xmlns="http://www.w3.org/1999/xhtml">
     <ui:define name="acoes">
         <h:panelGroup class="panelAcoes">
-            <p:button value="Pesquisar"
-                      title="Pesquisar Bairro"
-                      icon="pi pi-search"
-                      href="pesquisarBairro.xhtml" style=" margin-right: 30px !important"/>
-
             <p:splitButton value="Ações" style="margin: -8px !important;"
                            icon="pi pi-cog"
                            >
 
-                <p:menuitem value="Editar" 
-                            icon="pi pi-pencil"
+                <p:menuitem value="Cadastrar" 
+                            icon="pi pi-save"
+                            url="contratado.xhtml"
                             process="@this"
                             />
 
@@ -25,11 +21,11 @@
     </ui:define>
     <ui:define name="barra">
         <div class="row" id="stylebarra">
-            <i class="pi pi-file-o" id="icon"></i> <h5 style="color: #e1e6e5"> Dados Gerais teste</h5>
+            <i class="pi pi-file-o" id="icon"></i> <h5 style="color: #e1e6e5"> Dados Gerais</h5>
         </div>
     </ui:define>
     <ui:define name="titulo">
-        <h4>Cadastro de Licitação</h4>
+        <h4>Pesquisar Contratado</h4>
     </ui:define>
 
     <ui:define name="corpo">
@@ -114,7 +110,7 @@
 
             <center>
                 <p:commandButton value="Pesquisar" icon="pi pi-search" process="@this corpoInteiro:pesquisaPanel" update="corpoInteiro:tipoContratadoDatatable" actionListener="#{managerContratado.pesquisar()}" />
-                <p:commandButton value="Limpar" icon="pi pi-ban" update="corpoInteiro:tipoContratadoDatatable" process="@this corpoInteiro:pesquisaPanel" actionListener="#{managerContratado.instanciar()}"/>
+                <p:commandButton value="Limpar" icon="pi pi-ban" update="corpoInteiro:pesquisaPanel corpoInteiro:tipoContratadoDatatable" process="@this corpoInteiro:pesquisaPanel" actionListener="#{managerContratado.instanciar()}"/>
             </center>
             <hr/>
 
@@ -122,7 +118,7 @@
                          resizeMode="5">
                 <f:facet name="header">
                     <center>
-                        tipos de Licitação
+                        Contratatos
                     </center>
                 </f:facet>
                 <p:column headerText="ações" width="200">
