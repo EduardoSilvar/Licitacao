@@ -18,7 +18,7 @@ import util.Utils;
  * @author eduardo
  */
 @Stateless
-public class ContratadoServico extends ServicoGenerico<Contratado> implements Serializable{
+public class ContratadoServico extends ServicoGenerico<Contratado> implements Serializable {
 
     public ContratadoServico() {
         super(Contratado.class);
@@ -26,6 +26,9 @@ public class ContratadoServico extends ServicoGenerico<Contratado> implements Se
 
     public List<Contratado> findPesquisa(Contratado contratado) {
         String sql = "select c from Contratado c where ";
+        if (Utils.isNotEmpty(contratado.getNatureza())) {
+            sql += "c.natureza = :nt and ";
+        }
         if (Utils.isNotEmpty(contratado.getCnpj())) {
             sql += "c.cnpj = :cnpj and ";
         }
@@ -34,10 +37,11 @@ public class ContratadoServico extends ServicoGenerico<Contratado> implements Se
         }
         if (Utils.isNotEmpty(contratado.getEspecialidade())) {
             sql += "c.especialidade = :especialidade and ";
-        }if (Utils.isNotEmpty(contratado.getNome())) {
+        }
+        if (Utils.isNotEmpty(contratado.getNome())) {
             sql += "c.nome = :nome and ";
         }
-        
+
         sql += "c.ativo = true";
         Query query = entityManager.createQuery(sql);
 
@@ -50,8 +54,11 @@ public class ContratadoServico extends ServicoGenerico<Contratado> implements Se
         if (Utils.isNotEmpty(contratado.getEspecialidade())) {
             query.setParameter("especialidade", contratado.getEspecialidade());
         }
-         if (Utils.isNotEmpty(contratado.getNome())) {
+        if (Utils.isNotEmpty(contratado.getNome())) {
             query.setParameter("nome", contratado.getNome());
+        }
+        if (Utils.isNotEmpty(contratado.getNatureza())) {
+            query.setParameter("nt", contratado.getNatureza());
         }
         return query.getResultList();
     }

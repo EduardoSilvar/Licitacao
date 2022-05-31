@@ -21,7 +21,7 @@ import modelo.Contrato;
  */
 @ManagedBean
 @ViewScoped
-public class contratoManager implements Serializable {
+public class managerContrato implements Serializable {
 
     @EJB
     private ContratoServico contratoServico;
@@ -58,8 +58,8 @@ public class contratoManager implements Serializable {
     public Contrato Pegar(Long id) {
         return contratoServico.find(id);
     }
-    
-    public void print(){
+
+    public void print() {
         System.out.println(valorMudou);
     }
 
@@ -75,11 +75,11 @@ public class contratoManager implements Serializable {
         contrato = new Contrato();
     }
 
-    public boolean getValorMudou(){
+    public boolean getValorMudou() {
         return this.valorMudou;
     }
 
-    public void setValorMudou(boolean valorMudou){
+    public void setValorMudou(boolean valorMudou) {
         this.valorMudou = valorMudou;
     }
 }
