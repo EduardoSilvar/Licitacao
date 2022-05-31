@@ -27,12 +27,14 @@ public class ContratoManager implements Serializable {
     private ContratoServico contratoServico;
 
     private Contrato contrato;
+    private boolean valorMudou;
     private List<Contrato> contratos;
 
     @PostConstruct
     public void iniciar() {
         InstanciarContrato();
         InstanciarContratos();
+        this.valorMudou = false;
     }
 
     public void Salvar() {
@@ -49,8 +51,16 @@ public class ContratoManager implements Serializable {
         contratoServico.Update(contrato);
     }
 
+    public boolean renderedNovoValor() {
+        return valorMudou;
+    }
+
     public Contrato Pegar(Long id) {
         return contratoServico.find(id);
+    }
+    
+    public void print(){
+        System.out.println(valorMudou);
     }
 
     public void PegarTodos() {
@@ -63,5 +73,13 @@ public class ContratoManager implements Serializable {
 
     public void InstanciarContrato() {
         contrato = new Contrato();
+    }
+
+    public boolean getValorMudou(){
+        return this.valorMudou;
+    }
+
+    public void setValorMudou(boolean valorMudou){
+        this.valorMudou = valorMudou;
     }
 }

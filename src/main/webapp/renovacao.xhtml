@@ -36,97 +36,127 @@
         </div>
     </ui:define>
     <ui:define name="corpo">
-        <h:form id="renovacaoForm">
-            <p:growl id="growl" showDetail="true" />
-            <h:panelGroup>
+        <p:growl id="mensage" showDetail="true" />
+        <h:panelGroup>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <p:outputLabel value="Contrato*" styleClass="control-label" for="contratoRenovacao" />
+                        <p:selectOneMenu id="contratoRenovacao"
+                                         filter="true" 
+                                         placeholder="Contrato"
+                                         styleClass="form-control" >
+                            <f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
+                            <f:selectItems  />
+                        </p:selectOneMenu>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <p:outputLabel value="Número do termo aditivo*"
+                                       for="numeroTermoAditivo" />
+                        <p:inputText id="numeroTermoAditivo"
+                                     placeholder="Número"
+                                     rendered="true"
+                                     requiredMessage="Este campo é obrigatório."
+                                     styleClass="form-control" 
+                                     />
+                        <p:message for="numeroTermoAditivo" />
+                    </div>
+                </div>
+            </div>
+        </h:panelGroup>
+
+        <h:panelGroup>
+            <div class="row">
+                <div class="col-md-6">
+                    <p:outputLabel value="Data inicial"
+                                   for="dataInicial" />
+                    <p:calendar id="dataInicial"
+                                rendered="true"
+                                mask="true"
+                                style="display: flex; flex-direction: row"
+                                requiredMessage="Este campo é obrigatório."
+                                inputStyleClass="form-control"
+                                showOn="button"
+                                />
+                    <p:message for="dataInicial" />
+                </div>
+                <div class="col-md-6">
+                    <p:outputLabel value="Data final"
+                                   for="dataFinal" />
+                    <p:calendar id="dataFinal"
+                                rendered="true"
+                                mask="true"
+                                style="display: flex; flex-direction: row"
+                                requiredMessage="Este campo é obrigatório."
+                                inputStyleClass="form-control"
+                                showOn="button"
+                                />
+                    <p:message for="dataFinal" />
+                </div>
+
+            </div>
+        </h:panelGroup>
+        <h:panelGroup>
+            <div class="row">
+
+                <div class="col-md-6">
+                    <p:outputLabel value="Início da próxima renovação"
+                                   for="proximaRenovacao" />
+                    <p:inputNumber id="proximaRenovacao"
+                                   style="display: flex; flex-direction: row"
+                                   inputStyleClass="form-control"
+                                   placeholder="Número de dias"
+                                   requiredMessage="Este campo é obrigatório." />
+
+
+                    <p:message for="proximaRenovacao" />
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <p:outputLabel value="O valor do contrato mudou?" />
+                        <div class="ui-inputgroup">
+                            <p:selectBooleanButton onLabel="Sim" offLabel="Não" value="#{ContratoManager.valorMudou}" style="width:12rem; color: white !important;border-radius: 5px">
+                                <p:ajax update="corpoInteiro:atualizacaoValor" listener="#{ContratoManager.print()}"/>
+                            </p:selectBooleanButton>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </h:panelGroup>
+        <h:panelGroup id="atualizacaoValor" >
+            <h2>Teste</h2>
+            <h:panelGroup rendered="#{ContratoManager.renderedNovoValor()}">
                 <div class="row">
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <p:outputLabel value="Contrato*" styleClass="control-label" for="contratoRenovacao" />
-                            <p:selectOneMenu id="contratoRenovacao"
-                                             filter="true" 
-                                             placeholder="Contrato"
-                                             styleClass="form-control" >
-                                <f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
-                                <f:selectItems  />
-                            </p:selectOneMenu>
-                        </div>
+                    <div class="col-md-6">
+                        <p:outputLabel value="Valor"
+                                       for="novoValor" />
+                        <p:inputMask id="novoValor"
+                                     style="display: flex; flex-direction: row"
+                                     styleClass="form-control" 
+                                     placeholder="Valor"
+                                     requiredMessage="Este campo é obrigatório." />
+                        <p:message for="novoValor" />
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <div class="form-group">
-                            <p:outputLabel value="Número do termo aditivo*"
-                                           for="numeroTermoAditivo" />
-                            <p:inputText id="numeroTermoAditivo"
-                                         placeholder="Número"
-                                         rendered="true"
-                                         requiredMessage="Este campo é obrigatório."
-                                         styleClass="form-control" 
-                                         />
-                            <p:message for="numeroTermoAditivo" />
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <p:outputLabel value="O valor do contrato mudou?" />
-                            <div class="ui-inputgroup">
-                                <p:selectOneButton>
-                                    <f:selectItem itemLabel="Sim" itemValue="Option1"/>
-                                    <f:selectItem itemLabel="Não" itemValue="Option2"/>
-                                </p:selectOneButton>
-                            </div>
+                            <p:outputLabel value="Descrição" for="descricao" />
+                            <p:inputText id="descricao"
+                                     placeholder="Descrição"
+                                     requiredMessage="Este campo é obrigatório."
+                                     styleClass="form-control" 
+                                     />
+                            <p:message for="descricao" />
                         </div>
                     </div>
                 </div>
             </h:panelGroup>
-
-            <h:panelGroup>
-                <div class="row">
-                    <div class="col-md-4">
-                        <p:outputLabel value="Data inicial"
-                                       for="dataInicial" />
-                        <p:calendar id="dataInicial"
-                                    rendered="true"
-                                    mask="true"
-                                    style="display: flex; flex-direction: row"
-                                    requiredMessage="Este campo é obrigatório."
-                                    inputStyleClass="form-control"
-                                    showOn="button"
-                                    />
-                        <p:message for="dataInicial" />
-                    </div>
-                    <div class="col-md-4">
-                        <p:outputLabel value="Data final"
-                                       for="dataFinal" />
-                        <p:calendar id="dataFinal"
-                                    rendered="true"
-                                    mask="true"
-                                    style="display: flex; flex-direction: row"
-                                    requiredMessage="Este campo é obrigatório."
-                                    inputStyleClass="form-control"
-                                    showOn="button"
-                                    />
-                        <p:message for="dataFinal" />
-                    </div>
-                    <div class="col-md-4">
-                        <p:outputLabel value="Início da próxima renovação"
-                                       for="proximaRenovacao" />
-                        <p:inputNumber id="proximaRenovacao"
-                                       style="display: flex; flex-direction: row"
-                                       inputStyleClass="form-control"
-                                       placeholder="Número de dias"
-                                       requiredMessage="Este campo é obrigatório." />
-
-
-                        <p:message for="proximaRenovacao" />
-                    </div>
-                </div>
-            </h:panelGroup>
-
-            <center>    
-                <p:commandButton value="salvar" icon="pi pi-save"  actionListener="#{managerContratado.salvar()}"  style="margin: 0px 20px; background-color: #01415B; color: #fff; margin-bottom: 10px;"/>
-                <p:commandButton value="cancelar" icon="pi pi-ban"  style="background-color: #01415B; color: #fff;margin-bottom: 10px"/>
-            </center>
-        </h:form>
+        </h:panelGroup>
+        <center>    
+            <p:commandButton value="salvar" icon="pi pi-save"  actionListener="#{managerContratado.salvar()}"  style="margin: 0px 20px; background-color: #01415B; color: #fff; margin-bottom: 10px;"/>
+            <p:commandButton value="cancelar" icon="pi pi-ban"  style="background-color: #01415B; color: #fff;margin-bottom: 10px"/>
+        </center>
 
     </ui:define>
 
