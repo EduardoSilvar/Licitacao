@@ -61,9 +61,8 @@ public class managerTipoContrato extends managerPrincipal implements Serializabl
         Msg.messagemInfoRedirect("Operação realizada com sucesso !", "tipoContrato.xhtml?visualizar=" + this.tipoContrato.getId());
     }
 
-    public void deletar(Long id) {
-        System.out.println("o id é " + id);
-        TipoContrato novoTipoContrato = tipoContratoServico.find(id);
+    public void deletar() {
+        TipoContrato novoTipoContrato = tipoContratoServico.find(this.tipoContrato.getId());
         novoTipoContrato.setAtivo(false);
         tipoContratoServico.Update(novoTipoContrato);
         TipoContratos.remove(novoTipoContrato);
@@ -72,10 +71,10 @@ public class managerTipoContrato extends managerPrincipal implements Serializabl
 
     public void pesquisar() {
         TipoContratos = tipoContratoServico.pesquisar(this.tipoContrato);
-        if(TipoContratos.size() > 0){
-        Msg.messagemInfo("Pesquisa feita com sucesso !");
-        }else{
-        Msg.messagemError("Nenhum tipo de contrato foi encontrato !");
+        if (TipoContratos.size() > 0) {
+            Msg.messagemInfo("Pesquisa feita com sucesso !");
+        } else {
+            Msg.messagemError("Nenhum tipo de contrato foi encontrato !");
         }
     }
 

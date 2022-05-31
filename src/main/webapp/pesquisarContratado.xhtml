@@ -125,7 +125,10 @@
                     <p:commandButton  icon="pi pi-trash" 
                                       process="@this"
                                       update="@form:removeraContratadoConfirmDialog"
-                                      oncomplete="PF('removeraContratadoConfirmDialog').show();" title="exluir" />
+                                      oncomplete="PF('removeraContratadoConfirmDialog').show();" title="exluir" >
+                        <f:setPropertyActionListener value="#{contratado}"
+                                                     target="#{managerContratado.contratado}"/>
+                    </p:commandButton>
                     <p:button  icon="pi pi-eye" title="visualizar" href="contratado.xhtml?visualizar=#{contratado.id}" />
                 </p:column>
                 <p:column headerText="nome">
@@ -172,7 +175,7 @@
                                          title="Confirmar Remoção"
                                          icon="fa fa-check"
                                          update="tipoContratadoDatatable messages"
-                                         actionListener="#{managerContratado.deletar(contratado.id)}"
+                                         actionListener="#{managerContratado.deletar()}"
                                          oncomplete="PF('removeraContratadoConfirmDialog').hide();"
                                          styleClass="mr-md-1"/>
 

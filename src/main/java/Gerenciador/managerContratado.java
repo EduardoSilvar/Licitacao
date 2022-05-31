@@ -74,10 +74,11 @@ public class managerContratado extends managerPrincipal implements Serializable 
         Msg.messagemInfoRedirect("Operação realizada com sucesso !", "contratado.xhtml?visualizar=" + this.contratado.getId());
     }
 
-    public void deletar(Long id) {
-        Contratado NovoContratado = contratadoServico.find(id);
+    public void deletar() {
+        Contratado NovoContratado = contratadoServico.find(this.contratado.getId());
         NovoContratado.setAtivo(false);
         contratadoServico.Update(NovoContratado);
+        contratados.remove(NovoContratado);
     }
 
     public Contratado buscarPorId(Long id) {

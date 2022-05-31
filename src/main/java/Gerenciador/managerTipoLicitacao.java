@@ -37,10 +37,11 @@ public class managerTipoLicitacao extends managerPrincipal implements Serializab
         instanciarTipoLicitacao();
     }
 
-    public void deletar(Long id) {
-        TipoLicitacao novoTipoLicitacao = tipoLicitacaoServico.find(id);
+    public void deletar() {
+        TipoLicitacao novoTipoLicitacao = tipoLicitacaoServico.find(this.tipoLicitacao.getId());
         novoTipoLicitacao.setAtivo(false);
         tipoLicitacaoServico.Update(novoTipoLicitacao);
+        tiposLicitacoes.remove(novoTipoLicitacao);
     }
 
     public void atualizar() {
@@ -63,7 +64,7 @@ public class managerTipoLicitacao extends managerPrincipal implements Serializab
     }
 
     public void instanciarListaTipoLicitacao() {
-        this.tiposLicitacoes = tipoLicitacaoServico.FindAll();
+        this.tiposLicitacoes = new ArrayList<>();
     }
 
     public TipoLicitacao getTipoLicitacao() {

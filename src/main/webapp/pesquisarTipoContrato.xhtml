@@ -88,7 +88,10 @@
                 <p:commandButton icon="pi pi-trash" 
                                  process="@this"
                                  update="@form:removeraTipoConfirmDialog"
-                                 oncomplete="PF('removeraTipoConfirmDialog').show();" title="exluir" />
+                                 oncomplete="PF('removeraTipoConfirmDialog').show();" title="exluir" >
+                    <f:setPropertyActionListener value="#{tipoContrato}"
+                                                 target="#{managerTipoContrato.tipoContrato}"/>
+                </p:commandButton>
                 <p:button  icon="pi pi-eye" title="visualizar" href="tipoContrato.xhtml?visualizar=#{tipoContrato.id}" />
             </p:column>
             <p:column headerText="Tipo">
@@ -131,8 +134,9 @@
                         <p:commandButton value="Sim"
                                          title="Confirmar Remoção"
                                          icon="fa fa-check"
-                                         update="removeraTipoConfirmDialog messages"
-                                         actionListener="#{managerTipoContrato.deletar(tipoContrato.id)}"
+                                         process="@this"
+                                         update="removeraTipoConfirmDialog messages tipoLicitacaoDatatable"
+                                         actionListener="#{managerTipoContrato.deletar()}"
                                          oncomplete="PF('removeraTipoConfirmDialog').hide();"
                                          styleClass="mr-md-1"/>
 
