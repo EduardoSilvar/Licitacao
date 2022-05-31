@@ -57,7 +57,7 @@ public class managerContratado extends ManagerPrincipal implements Serializable 
     public void instanciarContratado() {
         contratado = new Contratado();
         contratado.setEndereco(new Endereco());
-        contratado.setNatureza(NaturezaEnum.FISICA);
+        contratado.setNatureza(NaturezaEnum.JURÍDICA);
     }
 
     public void intanciarContratados() {

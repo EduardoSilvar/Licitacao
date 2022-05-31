@@ -19,6 +19,10 @@
                             icon="pi pi-pencil"
                             process="@this"
                             />
+                <p:menuitem value="Excluir" 
+                            icon="pi pi-trash"
+                            process="@this"
+                            />
 
             </p:splitButton>
         </h:panelGroup>
@@ -29,12 +33,12 @@
         </div>
     </ui:define>
     <ui:define name="titulo">
-        <h4>Cadastro de Licitação</h4>
+        <h4>Cadastro de Contratado</h4>
     </ui:define>
 
     <ui:define name="corpo">
 
-        <!--<h:form id="contratadoForm" style="padding: 30px !important">-->
+        <h:panelGroup id="contratadoPanelGroup" style="padding: 30px !important">
             <p:growl id="messages" showDetail="true" />
             <h:panelGroup id="selectorPanelGroup"  >
 
@@ -69,8 +73,9 @@
                                 <div class="form-group">
                                     <p:outputLabel value="CNPJ"
                                                    for="cnpjPessoaJuriInput"  />
-                                    <p:inputText id="cnpjPessoaJuriInput"
+                                    <p:inputMask id="cnpjPessoaJuriInput"
                                                  placeholder="CNPJ"
+                                                 mask="99.999.999/9999-99"
                                                  value="#{managerContratado.contratado.cnpj}"
                                                  disabled="#{managerContratado.visualizar}"
                                                  requiredMessage="Este campo é obrigatório."
@@ -224,10 +229,10 @@
             </h:panelGroup>
             <center>
                 <p:button value="Editar" icon="pi pi-pencil"  rendered="#{managerContratado.visualizar}" href="contratado.xhtml?editar=#{managerContratado.contratado.id}" />
-                <p:commandButton value="Atualizar" icon="pi pi-sync"  actionListener="#{managerContratado.atualizar()}" rendered="#{managerContratado.editar}"  />
+                <p:commandButton value="Atualizar" icon="pi pi-sync" process="contratadoPanelGroup"  actionListener="#{managerContratado.atualizar()}" rendered="#{managerContratado.editar}"  />
                 <p:button value="Cancelar" icon="pi pi-ban"  href="index.xhtml" />
-                <p:commandButton value="Salvar" icon="pi pi-save" actionListener="#{managerContratado.salvar()}" rendered="#{managerContratado.cadastrar}" />
+                <p:commandButton value="Salvar" icon="pi pi-save" process="contratadoPanelGroup" actionListener="#{managerContratado.salvar()}" rendered="#{managerContratado.cadastrar}" />
             </center>
-        <!--</h:form>-->
+        </h:panelGroup>>
     </ui:define>
 </ui:composition>
