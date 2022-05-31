@@ -115,10 +115,13 @@ and open the template in the editor.
                             <p:submenu label="Contrato" >
                                 <p:menuitem value="Cadastrar" icon="pi pi-save" url="contrato.xhtml"/>
                                 <p:menuitem value="Renovar"  icon="pi pi-refresh" url="renovacao.xhtml"/>
-                                <p:menuitem value="Pesquisar Contrato"  icon="pi pi-search" url="pesquisarContrato.xhtml"/>
+                                <p:menuitem value="Pesquisar"  icon="pi pi-search" url="pesquisarContrato.xhtml"/>
+                                <p:submenu label="Tipo de Contrato" >
+                                    <p:menuitem value="Cadastrar"  icon="pi pi-save" url="tipoContrato.xhtml"/>
+                                    <p:menuitem value="Pesquisar"  icon="pi pi-search" url="pesquisarTipoContrato.xhtml"/>
+                                </p:submenu>
                                 <p:menuitem value="Status"  icon="pi pi-check-circle" url="statusContrato.xhtml"/>
-                                <p:menuitem value="Cadastrar Tipo"  icon="pi pi-save" url="tipoContrato.xhtml"/>
-                                <p:menuitem value="Pesquisar Tipo"  icon="pi pi-search" url="pesquisarTipoContrato.xhtml"/>
+
                             </p:submenu>
                             <p:submenu label="Contratado">
                                 <p:menuitem value="Cadastrar" icon="pi pi-save" url="contratado.xhtml"/>
@@ -135,7 +138,7 @@ and open the template in the editor.
                             <p:submenu label="Estatísticas">
                                 <p:menuitem value="Gráficos" url="graficos.xhtml" icon="pi pi-chart-bar"/>
                             </p:submenu>
-                            
+
 
                         </p:panelMenu>
                     </div>
