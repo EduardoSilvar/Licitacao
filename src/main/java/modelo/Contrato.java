@@ -6,6 +6,7 @@
 package modelo;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.util.Date;
 import java.util.Objects;
 import javax.persistence.Entity;
@@ -36,6 +37,7 @@ public class Contrato implements Serializable {
     private String objetivo;
     private String anexo;
     private String fiscal;
+    private BigInteger valor;
     private boolean ativo;
 
     public Long getId() {
@@ -143,21 +145,40 @@ public class Contrato implements Serializable {
         this.ativo = ativo;
     }
 
+    public Date getDataRenovacao() {
+        return dataRenovacao;
+    }
+
+    public void setDataRenovacao(Date dataRenovacao) {
+        this.dataRenovacao = dataRenovacao;
+    }
+
+    public BigInteger getValor() {
+        return valor;
+    }
+
+    public void setValor(BigInteger valor) {
+        this.valor = valor;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 31 * hash + Objects.hashCode(this.contratado);
-        hash = 31 * hash + Objects.hashCode(this.NumeroContrato);
-        hash = 31 * hash + Objects.hashCode(this.DOU);
-        hash = 31 * hash + Objects.hashCode(this.tipoContrato);
-        hash = 31 * hash + Objects.hashCode(this.dataInicio);
-        hash = 31 * hash + Objects.hashCode(this.dataFimado);
-        hash = 31 * hash + Objects.hashCode(this.dataFirmado);
-        hash = 31 * hash + (this.possuiTempoDeterminado ? 1 : 0);
-        hash = 31 * hash + Objects.hashCode(this.objetivo);
-        hash = 31 * hash + Objects.hashCode(this.anexo);
-        hash = 31 * hash + Objects.hashCode(this.fiscal);
-        hash = 31 * hash + (this.ativo ? 1 : 0);
+        int hash = 7;
+        hash = 83 * hash + Objects.hashCode(this.id);
+        hash = 83 * hash + Objects.hashCode(this.contratado);
+        hash = 83 * hash + Objects.hashCode(this.NumeroContrato);
+        hash = 83 * hash + Objects.hashCode(this.DOU);
+        hash = 83 * hash + Objects.hashCode(this.tipoContrato);
+        hash = 83 * hash + Objects.hashCode(this.dataInicio);
+        hash = 83 * hash + Objects.hashCode(this.dataFimado);
+        hash = 83 * hash + Objects.hashCode(this.dataFirmado);
+        hash = 83 * hash + Objects.hashCode(this.dataRenovacao);
+        hash = 83 * hash + (this.possuiTempoDeterminado ? 1 : 0);
+        hash = 83 * hash + Objects.hashCode(this.objetivo);
+        hash = 83 * hash + Objects.hashCode(this.anexo);
+        hash = 83 * hash + Objects.hashCode(this.fiscal);
+        hash = 83 * hash + Objects.hashCode(this.valor);
+        hash = 83 * hash + (this.ativo ? 1 : 0);
         return hash;
     }
 
@@ -188,6 +209,9 @@ public class Contrato implements Serializable {
         if (!Objects.equals(this.fiscal, other.fiscal)) {
             return false;
         }
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
         if (!Objects.equals(this.contratado, other.contratado)) {
             return false;
         }
@@ -209,12 +233,15 @@ public class Contrato implements Serializable {
         if (!Objects.equals(this.dataFirmado, other.dataFirmado)) {
             return false;
         }
+        if (!Objects.equals(this.dataRenovacao, other.dataRenovacao)) {
+            return false;
+        }
+        if (!Objects.equals(this.valor, other.valor)) {
+            return false;
+        }
         return true;
     }
 
-    @Override
-    public String toString() {
-        return "Contrato{" + "contratado=" + contratado + ", NumeroContrato=" + NumeroContrato + ", DOU=" + DOU + ", tipoContrato=" + tipoContrato + ", dataInicio=" + dataInicio + ", dataFimado=" + dataFimado + ", dataFirmado=" + dataFirmado + ", possuiTempoDeterminado=" + possuiTempoDeterminado + ", objetivo=" + objetivo + ", anexo=" + anexo + ", fiscal=" + fiscal + ", ativo=" + ativo + '}';
-    }
+  
 
 }

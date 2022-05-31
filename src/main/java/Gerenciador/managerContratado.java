@@ -97,6 +97,7 @@ public class managerContratado extends ManagerPrincipal implements Serializable 
     }
 
     public void pesquisar() {
+        System.err.println("rendeu meu parceiro");
         this.contratados = contratadoServico.findPesquisa(this.contratado);
     }
 
