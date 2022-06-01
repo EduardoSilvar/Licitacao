@@ -55,5 +55,5 @@ public class ServicoGenerico<T> {
     public void setEntityManager(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
-    
+
 }

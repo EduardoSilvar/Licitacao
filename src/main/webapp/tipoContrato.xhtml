@@ -6,24 +6,37 @@
                 xmlns="http://www.w3.org/1999/xhtml">
 
     <ui:define name="titulo">
-        <h4>Renovação de contrato</h4>
+        <h4>Cadastro Tipo de contrato</h4>
     </ui:define>
 
     <ui:define name="acoes">
         <h:panelGroup class="panelAcoes">
             <p:button value="Pesquisar"
-                      title="Pesquisar Bairro"
+                      title="Pesquisar Contratado"
                       icon="pi pi-search"
-                      href="pesquisarBairro.xhtml" style=" margin-right: 30px !important"/>
+                      href="pesquisarTipoContrato.xhtml" style=" margin-right: 30px !important"/>
 
-            <p:splitButton value="Ações" style="margin: -8px !important;"
+            <p:splitButton value="Ações" style="margin: -8px !important;" rendered="#{not managerTipoContrato.cadastrar}"
                            icon="pi pi-cog"
                            >
 
                 <p:menuitem value="Editar" 
                             icon="pi pi-pencil"
-                            process="@this"
+                            rendered="#{managerTipoContrato.visualizar}"
+                            url="tipoContrato.xhtml?editar=#{managerTipoContrato.tipoContrato.id}"
+                            process="@this corpoInteiro"
                             />
+
+                <p:menuitem value="Excluir" 
+                            icon="pi pi-trash"
+                            oncomplete="PF('removeraTipoConfirmDialog').show();"
+                            process="@this corpoInteiro"
+                            update="corpoInteiro:messages"
+                            >
+                    <f:setPropertyActionListener value="#{managerTipoContrato.tipoContrato}"
+                                                 target="#{managerTipoContrato.tipoContrato}"/>
+                </p:menuitem>
+
 
             </p:splitButton>
         </h:panelGroup>
@@ -35,7 +48,7 @@
     </ui:define>
     <ui:define name="corpo">
         <p:growl id="messages" showDetail="true" />
-        <h:panelGroup>
+        <h:panelGroup id="panelCorpo">
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
@@ -73,11 +86,64 @@
 
         <center>
             <p:button value="editar" icon="pi pi-pencil"  rendered="#{managerTipoContrato.visualizar}" href="tipoContrato.xhtml?editar=#{managerTipoContrato.tipoContrato.id}" />
-            <p:commandButton value="atualizar" icon="pi pi-sync"  actionListener="#{managerTipoContrato.atualizar()}" rendered="#{managerTipoContrato.editar}"  />
-            <p:commandButton value="salvar" icon="pi pi-save" rendered="#{managerTipoContrato.cadastrar}" actionListener="#{managerTipoContrato.salvar()}"  />
+            <p:commandButton value="atualizar" icon="pi pi-sync" update="corpoInteiro:messages" process="@this panelCorpo" actionListener="#{managerTipoContrato.atualizar()}" rendered="#{managerTipoContrato.editar}"  />
+            <p:commandButton value="salvar" icon="pi pi-save"  update="corpoInteiro:messages" process="@this panelCorpo" rendered="#{managerTipoContrato.cadastrar}" actionListener="#{managerTipoContrato.salvar()}"  />
             <p:button value="cancelar" icon="pi pi-ban" href="index.xhtml" rendered="#{managerTipoContrato.cadastrar}"  />
             <p:button value="cancelar" icon="pi pi-ban" href="tipoContrato.xhtml" rendered="#{managerTipoContrato.visualizar}" />
 
         </center>
+
+        <p:dialog id="removeraTipoConfirmDialog"
+                  widgetVar="removeraTipoConfirmDialog"
+                  header="Atenção!"
+                  closeOnEscape="true"
+                  draggable="false"
+                  maximizable="false"
+                  minimizable="false"
+                  modal="true"
+                  width="850"
+                  showEffect="fade"
+                  hideEffect="fade">
+
+            <div class="row">
+
+                <div class="col-md-12">
+                    <div class="form-group" style="padding-left: 80px !important">
+                        <h4>
+                            <i class="pi pi-exclamation-triangle"></i>
+                            Tem certeza de que deseja remover este Tipo de Contrato ?
+                        </h4>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+
+                    <center>
+
+                        <p:commandButton value="Sim"
+                                         title="Confirmar Remoção"
+                                         icon="fa fa-check"
+                                         process="@this"
+                                         update="removeraTipoConfirmDialog messages "
+                                         actionListener="#{managerTipoContrato.deletar()}"
+                                         oncomplete="PF('removeraTipoConfirmDialog').hide();"
+                                         styleClass="mr-md-1"/>
+
+                        <p:commandButton value="Não"
+                                         title="Cancelar Remoção"
+                                         icon="fa fa-close"
+                                         process="@this"
+                                         update="@form"
+                                         oncomplete="PF('removeraTipoConfirmDialog').hide();"
+                                         styleClass="ml-md-1"/>
+
+                    </center>
+
+                </div>
+
+            </div>
+
+
+        </p:dialog>
     </ui:define>
 </ui:composition>

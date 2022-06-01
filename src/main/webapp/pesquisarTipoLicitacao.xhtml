@@ -6,17 +6,13 @@
                 xmlns="http://www.w3.org/1999/xhtml">
     <ui:define name="acoes">
         <h:panelGroup class="panelAcoes">
-            <p:button value="Pesquisar"
-                      title="Pesquisar Bairro"
-                      icon="pi pi-search"
-                      href="pesquisarBairro.xhtml" style=" margin-right: 30px !important"/>
-
             <p:splitButton value="Ações" style="margin: -8px !important;"
                            icon="pi pi-cog"
                            >
 
-                <p:menuitem value="Editar" 
-                            icon="pi pi-pencil"
+                <p:menuitem value="Cadastrar" 
+                            icon="pi pi-save"
+                            url="tipoLicitacao.xhtml"
                             process="@this"
                             />
 
@@ -84,9 +80,9 @@
             </f:facet>
             <p:column headerText="ações" width="200">
                 <p:commandButton  icon="pi pi-trash" 
-                                      process="@this"
-                                      update="@form:tipoLicitacaoDatatable"
-                                      oncomplete="PF('removerLicitacaoConfirmDialog').show();" title="exluir">
+                                  process="@this"
+                                  update="@form:tipoLicitacaoDatatable"
+                                  oncomplete="PF('removerLicitacaoConfirmDialog').show();" title="exluir">
                     <f:setPropertyActionListener value="#{licitacao}"
                                                  target="#{managerTipoLicitacao.tipoLicitacao}"/>
                 </p:commandButton>

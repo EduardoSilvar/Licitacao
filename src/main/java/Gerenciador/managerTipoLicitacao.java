@@ -33,7 +33,7 @@ public class managerTipoLicitacao extends managerPrincipal implements Serializab
 
     public void salvar() {
         tipoLicitacaoServico.Save(this.tipoLicitacao);
-        Msg.messagemInfoRedirect("Operação realizada com sucesso !", "pesquisarTipoLicitacao.xhtml");
+        Msg.messagemInfoRedirect("Operação realizada com sucesso !", "tipoLicitacao.xhtml?visualizar=" + this.tipoLicitacao.getId());
         instanciarTipoLicitacao();
     }
 
@@ -42,6 +42,7 @@ public class managerTipoLicitacao extends managerPrincipal implements Serializab
         novoTipoLicitacao.setAtivo(false);
         tipoLicitacaoServico.Update(novoTipoLicitacao);
         tiposLicitacoes.remove(novoTipoLicitacao);
+        Msg.messagemInfoRedirect("Operação realizada com sucesso !", "tipoLicitacao.xhtml");
     }
 
     public void atualizar() {
@@ -86,6 +87,7 @@ public class managerTipoLicitacao extends managerPrincipal implements Serializab
     @Override
     public void carregar(String param) {
         this.tipoLicitacao = tipoLicitacaoServico.find(Long.parseLong(param));
+        this.tiposLicitacoes = new ArrayList<>();
     }
 
     @Override

@@ -11,18 +11,24 @@
                       icon="pi pi-search"
                       href="pesquisarContratado.xhtml" style=" margin-right: 30px !important"/>
 
-            <p:splitButton value="Ações" style="margin: -8px !important;"
+            <p:splitButton value="Ações" style="margin: -8px !important;" rendered="#{not managerContratado.cadastrar}"
                            icon="pi pi-cog"
                            >
 
                 <p:menuitem value="Editar" 
                             icon="pi pi-pencil"
+                            url="contratado.xhtml?editar=#{managerContratado.contratado.id}"
                             process="@this"
                             />
                 <p:menuitem value="Excluir" 
                             icon="pi pi-trash"
-                            process="@this"
-                            />
+                            oncomplete="PF('removeraContratadoConfirmDialog').show();"
+                            process="@this corpoInteiro"
+                            update="corpoInteiro:messages"
+                            >
+                    <f:setPropertyActionListener value="#{managerContratado.contratado}"
+                                                 target="#{managerContratado.contratado}"/>
+                </p:menuitem>
 
             </p:splitButton>
         </h:panelGroup>
@@ -234,6 +240,58 @@
                 <p:button value="Cancelar" icon="pi pi-ban"  href="contratado.xhtml" rendered="#{managerContratado.visualizar}" />
                 <p:button value="Cancelar" icon="pi pi-ban"  href="index.xhtml" rendered="#{managerContratado.cadastrar}" />
             </center>
-        </h:panelGroup>>
+        </h:panelGroup>
+        <p:dialog id="removeraContratadoConfirmDialog"
+                  widgetVar="removeraContratadoConfirmDialog"
+                  header="Atenção!"
+                  closeOnEscape="true"
+                  draggable="false"
+                  maximizable="false"
+                  minimizable="false"
+                  modal="true"
+                  width="850"
+                  showEffect="fade"
+                  hideEffect="fade">
+
+            <div class="row">
+
+                <div class="col-md-12">
+                    <div class="form-group" style="padding-left: 80px !important">
+                        <h4>
+                            <i class="pi pi-exclamation-triangle"></i>
+                            Tem certeza de que deseja remover este Contratado ?
+                        </h4>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+
+                    <center>
+
+                        <p:commandButton value="Sim"
+                                         title="Confirmar Remoção"
+                                         icon="fa fa-check"
+                                         update="corpoInteiro corpoInteiro:messages"
+                                         process="@this"
+                                         actionListener="#{managerContratado.deletar()}"
+                                         oncomplete="PF('removeraContratadoConfirmDialog').hide();"
+                                         styleClass="mr-md-1"/>
+
+                        <p:commandButton value="Não"
+                                         title="Cancelar Remoção"
+                                         icon="fa fa-close"
+                                         process="@this"
+                                         update="@form"
+                                         oncomplete="PF('removeraContratadoConfirmDialog').hide();"
+                                         styleClass="ml-md-1"/>
+
+                    </center>
+
+                </div>
+
+            </div>
+
+
+        </p:dialog>
     </ui:define>
 </ui:composition>

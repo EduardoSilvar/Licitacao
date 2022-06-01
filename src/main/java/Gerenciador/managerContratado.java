@@ -36,6 +36,7 @@ public class managerContratado extends managerPrincipal implements Serializable 
     @Override
     public void carregar(String param) {
         this.contratado = contratadoServico.find(Long.parseLong(param));
+        this.contratados = new ArrayList<>();
     }
 
     @Override
@@ -75,10 +76,16 @@ public class managerContratado extends managerPrincipal implements Serializable 
     }
 
     public void deletar() {
-        Contratado NovoContratado = contratadoServico.find(this.contratado.getId());
-        NovoContratado.setAtivo(false);
-        contratadoServico.Update(NovoContratado);
-        contratados.remove(NovoContratado);
+        try {
+            Contratado NovoContratado = contratadoServico.find(this.contratado.getId());
+            NovoContratado.setAtivo(false);
+            contratadoServico.Update(NovoContratado);
+            contratados.remove(NovoContratado);
+            Msg.messagemInfoRedirect("Processo realizado com sucesso !", "contratado.xhtml");
+        } catch (Exception e) {
+            e.getMessage();
+        }
+
     }
 
     public Contratado buscarPorId(Long id) {

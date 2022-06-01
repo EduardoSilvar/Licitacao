@@ -6,17 +6,13 @@
                 xmlns="http://www.w3.org/1999/xhtml">
     <ui:define name="acoes">
         <h:panelGroup class="panelAcoes">
-            <p:button value="Pesquisar"
-                      title="Pesquisar Bairro"
-                      icon="pi pi-search"
-                      href="pesquisarBairro.xhtml" style=" margin-right: 30px !important"/>
-
             <p:splitButton value="Ações" style="margin: -8px !important;"
                            icon="pi pi-cog"
                            >
 
-                <p:menuitem value="Editar" 
-                            icon="pi pi-pencil"
+                <p:menuitem value="Cadastrar" 
+                            icon="pi pi-save"
+                            url="tipoContrato.xhtml"
                             process="@this"
                             />
 

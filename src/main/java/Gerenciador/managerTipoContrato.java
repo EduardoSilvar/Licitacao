@@ -9,10 +9,13 @@ import Servico.tipoContratoServico;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
 import modelo.TipoContrato;
 import util.Msg;
 
@@ -33,6 +36,7 @@ public class managerTipoContrato extends managerPrincipal implements Serializabl
     @Override
     public void carregar(String param) {
         this.tipoContrato = tipoContratoServico.find(Long.parseLong(param));
+        this.TipoContratos = new ArrayList<>();
     }
 
     @Override
@@ -62,10 +66,16 @@ public class managerTipoContrato extends managerPrincipal implements Serializabl
     }
 
     public void deletar() {
-        TipoContrato novoTipoContrato = tipoContratoServico.find(this.tipoContrato.getId());
-        novoTipoContrato.setAtivo(false);
-        tipoContratoServico.Update(novoTipoContrato);
-        TipoContratos.remove(novoTipoContrato);
+        try {
+            TipoContrato novoTipoContrato = tipoContratoServico.find(this.tipoContrato.getId());
+            novoTipoContrato.setAtivo(false);
+            tipoContratoServico.Update(novoTipoContrato);
+            TipoContratos.remove(novoTipoContrato);
+            Msg.messagemInfoRedirect("Operação realizada com sucesso !", "pesquisarTipoContrato.xhtml");
+
+        } catch (Exception e) {
+            e.getMessage();
+        }
 
     }
 

@@ -33,142 +33,71 @@
     </ui:define>
 
     <ui:define name="corpo">
-        <h:form>
-            <h:panelGroup id="menuPanelGroup">
-                <p:menubar style="margin-bottom: 30px;" >
-                    <p:submenu label="File" icon="pi pi-fw pi-file">
-                        <p:submenu label="New" icon="pi pi-fw pi-plus">
-                            <p:menuitem value="Bookmark" icon="pi pi-fw pi-bookmark"/>
-                            <p:menuitem value="Video" icon="pi pi-fw pi-video"/>
-                        </p:submenu>
-                        <p:menuitem value="Delete" icon="pi pi-fw pi-trash"/>
-                        <p:divider />
-                        <p:menuitem value="Export" icon="pi pi-fw pi-external-link"/>
-                    </p:submenu>
 
-                    <p:submenu label="Edit" icon="pi pi-fw pi-pencil">
-                        <p:menuitem value="Left" icon="pi pi-fw pi-align-left" rendered="false"/>
-                        <p:menuitem value="Right" icon="pi pi-fw pi-align-right"/>
-                        <p:menuitem value="Center" icon="pi pi-fw pi-align-center"/>
-                        <p:menuitem value="Justify" icon="pi pi-fw pi-align-justify"/>
-                    </p:submenu>
-
-                    <p:submenu label="Users" icon="pi pi-fw pi-user" rendered="false">
-                        <p:menuitem value="New" icon="pi pi-fw pi-user-plus"/>
-                        <p:menuitem value="Delete" icon="pi pi-fw pi-user-minus"/>
-                        <p:submenu label="Search" icon="pi pi-fw pi-users">
-                            <p:submenu label="Filter" icon="pi pi-fw pi-filter">
-                                <p:menuitem value="Print" icon="pi pi-fw pi-print"/>
-                            </p:submenu>
-                            <p:menuitem value="List" icon="pi pi-fw pi-bars"/>
-                        </p:submenu>
-                    </p:submenu>
-
-                    <p:submenu label="Events" icon="pi pi-fw pi-calendar">
-                        <p:submenu label="Edit" icon="pi pi-fw pi-pencil">
-                            <p:menuitem value="Save" icon="pi pi-fw pi-calendar-plus"/>
-                            <p:menuitem value="Delete" icon="pi pi-fw pi-calendar-minus"/>
-                        </p:submenu>
-                        <p:submenu label="Archieve" icon="pi pi-fw pi-calendar-times">
-                            <p:menuitem value="Remove" icon="pi pi-fw pi-calendar-minus"/>
-                        </p:submenu>
-                    </p:submenu>
-
-                    <p:divider layout="vertical"/>
-
-                    <p:menuitem value="Quit" icon="pi pi-fw pi-power-off"/>
-
-                    <f:facet name="options">
-                        <div class="ui-input-icon-left p-mr-2">
-                            <i class="pi pi-fw pi-search" />
-                            <p:inputText placeholder="Search"/>
-                        </div>
-                        <p:button value="Logout" icon="pi pi-fw pi-sign-out" styleClass="ui-button-info"/>
-                    </f:facet>
-                </p:menubar>
-            </h:panelGroup>
-            <h:panelGroup id="barraPanelGroup">
-                <div class="row" style="width: 101%; height: 50px; border: 1px solid #C8CCCB; padding: 10px; margin-bottom: 30px">
-                    <i class="pi pi-plus" style="margin: 5px 10px 5px 20px; color: #C8CCCB"></i>
-                    <h4 style="color: #C8CCCB" >
-                        Cadastro de Contratado
-                    </h4>
-                    <p:commandButton value="pesquisar" icon="pi pi-search" style="background-color: #01415B; color: #fff;margin-left: 90%;margin-top: -35px"/>
-
+        <p:growl id="messages" showDetail="true" />
+        <h:panelGroup id="panelCorpo">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <p:outputLabel value="Nome"
+                                       for="nomeStatusContrInput" />
+                        <p:inputText id="nomeStatusContrInput" value="#{managerStatusContrato.statusContrato.status}"
+                                     placeholder="Nome"
+                                     rendered="true"
+                                     requiredMessage="Este campo é obrigatório."
+                                     styleClass="form-control" 
+                                     />
+                        <p:message for="nomeStatusContrInput" />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <p:outputLabel value="Abreviação"
+                                       for="abrevStatuContrInput" />
+                        <p:inputText id="abrevStatuContrInput"
+                                     placeholder="Abreviação"
+                                     value="#{managerStatusContrato.statusContrato.abreviacao}"
+                                     rendered="true"
+                                     requiredMessage="Este campo é obrigatório."
+                                     styleClass="form-control" 
+                                     />
+                        <p:message for="abrevStatuContrInput" />
+                    </div>
                 </div>
 
-                <div class="row" style="width: 101%;height: 40px;background-color: #019587; padding: 10px; margin-bottom: 30px">
-                    <i class="pi pi-globe" style="margin: 2px 10px 5px 20px; color: #e1e6e5"></i>    <h5 style="color: #e1e6e5" >  Dados Gerais </h5>
+            </div>
+            <div class="row">
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <p:outputLabel value="cor"
+                                       />
+                        <p:colorPicker 
+                            value="#{managerStatusContrato.statusContrato.cor}"
+                            mode="inline"  />
+                    </div>
                 </div>
-
-            </h:panelGroup>
-        </h:form>
-        <h:form id="testess">
-            <p:panel>
-                <p:growl id="growl" showDetail="true" />
-                <h:panelGroup>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <p:outputLabel value="Nome"
-                                               for="nomeStatusContrInput" />
-                                <p:inputText id="nomeStatusContrInput"
-                                             placeholder="Nome"
-                                             rendered="true"
-                                             requiredMessage="Este campo é obrigatório."
-                                             styleClass="form-control" 
-                                             />
-                                <p:message for="nomeStatusContrInput" />
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <p:outputLabel value="Abreviação"
-                                               for="abrevStatuContrInput" />
-                                <p:inputText id="abrevStatuContrInput"
-                                             placeholder="Abreviação"
-                                             rendered="true"
-                                             requiredMessage="Este campo é obrigatório."
-                                             styleClass="form-control" 
-                                             />
-                                <p:message for="abrevStatuContrInput" />
-                            </div>
-                        </div>
-
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <p:outputLabel value="Descrição"
+                                       for="descStatuContrInput" />
+                        <p:inputTextarea id="descStatuContrInput"
+                                         placeholder="Nome"
+                                         value="#{managerStatusContrato.statusContrato.descricao}"
+                                         rendered="true"
+                                         requiredMessage="Este campo é obrigatório."
+                                         styleClass="form-control" 
+                                         />
+                        <p:message for="descStatuContrInput" />
                     </div>
-                    <div class="row">
+                </div>
+            </div>
 
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <p:outputLabel value="cor"
-                                               />
-                                <p:colorPicker 
-                                    mode="inline"  />
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <p:outputLabel value="Descrição"
-                                               for="descStatuContrInput" />
-                                <p:inputTextarea id="descStatuContrInput"
-                                                 placeholder="Nome"
-                                                 rendered="true"
-                                                 requiredMessage="Este campo é obrigatório."
-                                                 styleClass="form-control" 
-                                                 />
-                                <p:message for="descStatuContrInput" />
-                            </div>
-                        </div>
-                    </div>
+        </h:panelGroup>
 
-                </h:panelGroup>
-
-                <center>
-                    <p:commandButton value="salvar" icon="pi pi-save" process="testess" actionListener="#{managerContratado.salvar()}" update="testess" style="margin: 0px 20px; background-color: #01415B; color: #fff; margin-bottom: 10px;"/>
-                    <p:commandButton value="cancelar" icon="pi pi-ban"  style="background-color: #01415B; color: #fff;margin-bottom: 10px"/>
-                </center>
-            </p:panel>
-        </h:form>
-
+        <center>
+            <p:commandButton value="salvar" icon="pi pi-save" process="@this corpoInteiro:panelCorpo " update="corpoInteiro:panelCorpo " actionListener="#{managerStatusContrato.salvar()}" style="margin: 0px 20px; background-color: #01415B; color: #fff; margin-bottom: 10px;"/>
+            <p:commandButton value="cancelar" icon="pi pi-ban"  style="background-color: #01415B; color: #fff;margin-bottom: 10px"/>
+        </center>
     </ui:define>
 </ui:composition>
