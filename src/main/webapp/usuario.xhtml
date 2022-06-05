@@ -11,7 +11,7 @@
                       icon="pi pi-search"
                       href="pesquisarUsuario.xhtml" style=" margin-right: 30px !important"/>
 
-            <p:splitButton value="Ações" style="margin: 0px -8px !important" rendered="#{not managerUsuario.cadastrar}"
+            <p:splitButton value="Ações" style="margin: 0px !important;" rendered="#{not managerUsuario.cadastrar}"
                            icon="pi pi-cog"
                            >
 
@@ -160,19 +160,14 @@
                 <div class="row"  
 
                      >
-                    <div class="col-md-6">
+                    <div class="col-md-3">
                         <div class="form-group">
                             <p:outputLabel value="Senha"
                                            for="senhaUserInput"
-                                           rendered="#{managerUsuario.cadastrar}"/>
-                            <p:inputText id="senhaUserInput"
-                                         value="#{managerUsuario.user.senha}"
-                                         disabled="#{managerUsuario.visualizar}"
-                                         placeholder="Senha"
-                                         rendered="#{managerUsuario.cadastrar}"
-                                         requiredMessage="Este campo é obrigatório."
-                                         styleClass="form-control" 
-                                         />
+                                           rendered="#{managerUsuario.cadastrar}"/><br/>
+                            <p:password id="senhaUserInput" value="#{managerUsuario.user.senha}" toggleMask="true"
+                                        redisplay="true" requiredMessage="Este campo é obrigatório."
+                                        styleClass="form-control"  disabled="#{managerUsuario.visualizar}"    rendered="#{managerUsuario.cadastrar}"/>
                             <p:message for="senhaUserInput" />
                         </div>
                     </div>
@@ -180,15 +175,10 @@
                         <div class="form-group">
                             <p:outputLabel value="Repita a senha"
                                            for="repSenhaUserInput" 
-                                           rendered="#{managerUsuario.cadastrar}"/>
-                            <p:inputText id="repSenhaUserInput"
-                                         value="#{managerUsuario.repetirSenha}"
-                                         disabled="#{managerUsuario.visualizar}"
-                                         placeholder="Repita a senha"
-                                         requiredMessage="Este campo é obrigatório."
-                                         styleClass="form-control" 
-                                         rendered="#{managerUsuario.cadastrar}"
-                                         />
+                                           rendered="#{managerUsuario.cadastrar}"/><br/>
+                            <p:password id="repSenhaUserInput" value="#{managerUsuario.repetirSenha}" toggleMask="true"
+                                        redisplay="true" requiredMessage="Este campo é obrigatório."
+                                        styleClass="form-control"  disabled="#{managerUsuario.visualizar}"    rendered="#{managerUsuario.cadastrar}"/>
                             <p:message for="repSenhaUserInput" />
                         </div>
                     </div>
