@@ -24,7 +24,7 @@ and open the template in the editor.
                 padding: 0;
             }
             .panelAcoes{
-                float: right !important; margin-top: -50px; margin-right: 30px !important;
+                float: right !important;margin-top: 1px; margin-right: 30px !important;
 
             }
             #icon{
@@ -56,6 +56,9 @@ and open the template in the editor.
             }
             a:hover{
                 background: #0e526e !important;
+            }
+            body .ui-menu{
+                border: none !important;
             }
             #titulo{
                 width: 101%;
@@ -102,6 +105,9 @@ and open the template in the editor.
                 margin-left: 5px !important;
                 border-top: 1px solid #01415B !important;
             }
+            body .ui-menu .ui-menu-list .ui-menuitem .ui-menuitem-link .ui-icon-triangle-1-e:last-child{
+                color:white !important;
+            }
 
         </style>
     </h:head>
@@ -109,53 +115,9 @@ and open the template in the editor.
         <h:form id="corpoInteiro">
             <div style="display: flex; flex-direction: column-reverse">
 
-                <div style="display: flex; flex-direction: row; width:98%;margin: -3px; margin-top: 90px;">
-                    <div>
-                        <p:panelMenu style="width:200px;height: 100% !important;  background: #01415B !important;position: fixed;margin-top: 70px;border-top-right-radius: 15px !important">
-                            <p:submenu label="Contrato" >
-                                <p:menuitem value="Cadastrar" icon="pi pi-save" url="contrato.xhtml"/>
-                                <p:menuitem value="Pesquisar"  icon="pi pi-search" url="pesquisarContrato.xhtml"/>
-                                <p:menuitem value="Renovar"  icon="pi pi-refresh" url="renovacao.xhtml"/>
-                                <p:menuitem value="Status"  icon="pi pi-check-circle" url="statusContrato.xhtml"/>
-                                <p:submenu label="Alteração de valor" >
-                                    <p:menuitem value="Acréscimo"  icon="pi pi-plus-circle" url="acrescimo.xhtml"/>
-                                    <p:menuitem value="Supressão"  icon="pi pi-minus-circle" url="supressao.xhtml"/>
-                                </p:submenu>
-                                <p:submenu label="Tipo de Contrato" >
-                                    <p:menuitem value="Cadastrar"  icon="pi pi-save" url="tipoContrato.xhtml"/>
-                                    <p:menuitem value="Pesquisar"  icon="pi pi-search" url="pesquisarTipoContrato.xhtml"/>
-                                </p:submenu>
-                            </p:submenu>
-                            <p:submenu label="Contratado">
-                                <p:menuitem value="Cadastrar" icon="pi pi-save" url="contratado.xhtml"/>
-                                <p:menuitem value="Pesquisar"  icon="pi pi-search" url="pesquisarContratado.xhtml"/>
-                            </p:submenu>
-                            <p:submenu label="Controle Financeiro" >
-                                <p:menuitem value="Pagamento"  icon="pi pi-credit-card"/>
-                                <p:submenu label="Nota Fiscal">
-                                    <p:menuitem value="Cadastrar" icon="pi pi-save" url="notaFiscal.xhtml"/>
-                                    <p:menuitem value="Pesquisar"  icon="pi pi-search"/>
-                                </p:submenu>
-                                <p:submenu label="Ordens">
-                                    <p:menuitem value="Cadastrar" icon="pi pi-save" url="notaFiscal.xhtml"/>
-                                    <p:menuitem value="Pesquisar"  icon="pi pi-search"/>
-                                </p:submenu>
-                            </p:submenu>
-
-                            <p:submenu label="Licitação">
-                                <p:menuitem value="Cadastrar Tipo" icon="pi pi-save" url="tipoLicitacao.xhtml"/>
-                                <p:menuitem value="Pesquisar Tipo"  icon="pi pi-search" url="pesquisarTipoLicitacao.xhtml"/>
-                            </p:submenu>
-                            <p:submenu label="Relatórios">
-                                <p:menuitem value="Gráficos" url="graficos.xhtml" icon="pi pi-chart-bar"/>
-                                <p:menuitem value="Documentos" url="graficos.xhtml" icon="pi pi-file-pdf"/>
-                            </p:submenu>
-
-
-                        </p:panelMenu>
-                    </div>
+                <div style="display: flex; flex-direction: row; width:100%;margin: -3px; margin-top: -10px;">
                     <div style="width: 99%">
-                        <p:panel style="padding: 0px 0px;margin-left: 230px;margin-top: 70px;">
+                        <p:panel style="padding: 0px 0px;margin-left: 225px;margin-top: 130px;">
                             <ui:insert name="corpo">
 
                             </ui:insert>
@@ -164,24 +126,125 @@ and open the template in the editor.
                 </div>
                 <div>
                     <div style="position: fixed;width: 100%; margin-top: 0px;  background: #F5FCFC !important;">
-                        <div style="margin-top: 30px;">
-                            <h:panelGroup id="barraPanelGroup">
-                                <div class="row" id="titulo">
-                                    <i class="pi pi-plus" style="margin: 5px 10px 5px 20px;size: 70px; color: #C8CCCB"></i>
-                                    <ui:insert name="titulo">
-                                    </ui:insert>
+                        <div class="row" style="margin-bottom: -10px">
+                            <div class="row">
+                                <img src="img/img-01.png" width="60" height="60" style="margin-left: 30px"/>
+                                <div>
+                                    <div class="row" style="margin-top: 5px;margin-bottom: -10px;">
+                                        <i class="pi pi-whatsapp" style="margin: 5px;margin-left: 20px; font-size: 12px"></i>  
+                                        <p style="margin-top: 3px;font-size: 12px">(86) 99813-0806</p>
+                                    </div>
+                                    <div  class="row" style="margin-top: -10px">
+                                        <i class="pi pi-instagram" style="margin: 4px;margin-left: 20px;font-size: 12px"></i> 
+                                        <p style="margin-top: 3px;font-size: 12px">Espedito Jarbas</p>
+                                    </div>
                                 </div>
-
-                            </h:panelGroup>
-                            <h:form id="acoesForm" >
+                            </div>
+                            <div class="row" style="margin-left: 86%;margin-top: -60px">
+                                <p:button icon="pi pi-user" styleClass="rounded-button ui-button-info" />
+                                <p:button icon="pi pi-cog" styleClass="rounded-button ui-button-info" />
+                                <p:button icon="pi pi-envelope" styleClass="rounded-button ui-button-info"  style="margin-left: 0px !important;" />
+                                <p style="border-radius: 140%; background: red;height: 18px; width: 18px; font-size: 12px;text-align: center;margin-left: 110px;position: absolute">10</p>
+                            </div>
+                        </div>
+                        <div style="margin-top: -20px;">
+                            <h:form id="acoesForm"  >
                                 <ui:insert class="acoes" name="acoes">
                                 </ui:insert>
                             </h:form>
-                            <div style=" margin-top: 10px;width: 100%;height: 40px;background-color: #01415B; padding: 10px; margin-bottom: 30px; margin-right: -3px">
+                            <div style=" margin-top: 10px;width: 82%;height: 40px;background-color: #01415B; padding: 10px; margin-bottom: 10px;margin-right: -3px;margin-left: 17%">
                                 <ui:insert class="barra" name="barra">
                                 </ui:insert>
                             </div>
                         </div>
+
+                        <div>
+                            <!--                            <p:panelMenu style="width:200px;height: 100% !important;  background: #01415B !important;position: fixed;margin-top: -50px;border-top-right-radius: 15px !important">
+                                                            <p:submenu label="Contrato" >
+                                                                <p:menuitem value="Cadastrar" icon="pi pi-save" url="contrato.xhtml"/>
+                                                                <p:menuitem value="Pesquisar"  icon="pi pi-search" url="pesquisarContrato.xhtml"/>
+                                                                <p:menuitem value="Renovar"  icon="pi pi-refresh" url="renovacao.xhtml"/>
+                                                                <p:menuitem value="Status"  icon="pi pi-check-circle" url="statusContrato.xhtml"/>
+                                                                <p:submenu label="Alteração de valor" >
+                                                                    <p:menuitem value="Acréscimo"  icon="pi pi-plus-circle" url="acrescimo.xhtml"/>
+                                                                    <p:menuitem value="Supressão"  icon="pi pi-minus-circle" url="supressao.xhtml"/>
+                                                                </p:submenu>
+                                                                <p:submenu label="Tipo de Contrato" >
+                                                                    <p:menuitem value="Cadastrar"  icon="pi pi-save" url="tipoContrato.xhtml"/>
+                                                                    <p:menuitem value="Pesquisar"  icon="pi pi-search" url="pesquisarTipoContrato.xhtml"/>
+                                                                </p:submenu>
+                                                            </p:submenu>
+                                                            <p:submenu label="Contratado">
+                                                                <p:menuitem value="Cadastrar" icon="pi pi-save" url="contratado.xhtml"/>
+                                                                <p:menuitem value="Pesquisar"  icon="pi pi-search" url="pesquisarContratado.xhtml"/>
+                                                            </p:submenu>
+                                                            <p:submenu label="Controle Financeiro" >
+                                                                <p:menuitem value="Pagamento"  icon="pi pi-credit-card"/>
+                                                                <p:submenu label="Nota Fiscal">
+                                                                    <p:menuitem value="Cadastrar" icon="pi pi-save" url="notaFiscal.xhtml"/>
+                                                                    <p:menuitem value="Pesquisar"  icon="pi pi-search"/>
+                                                                </p:submenu>
+                                                                <p:submenu label="Ordens">
+                                                                    <p:menuitem value="Cadastrar" icon="pi pi-save" url="notaFiscal.xhtml"/>
+                                                                    <p:menuitem value="Pesquisar"  icon="pi pi-search"/>
+                                                                </p:submenu>
+                                                            </p:submenu>
+                            
+                                                            <p:submenu label="Licitação">
+                                                                <p:menuitem value="Cadastrar Tipo" icon="pi pi-save" url="tipoLicitacao.xhtml"/>
+                                                                <p:menuitem value="Pesquisar Tipo"  icon="pi pi-search" url="pesquisarTipoLicitacao.xhtml"/>
+                                                            </p:submenu>
+                                                            <p:submenu label="Relatórios">
+                                                                <p:menuitem value="Gráficos" url="graficos.xhtml" icon="pi pi-chart-bar"/>
+                                                                <p:menuitem value="Documentos" url="graficos.xhtml" icon="pi pi-file-pdf"/>
+                                                            </p:submenu>
+                            
+                            
+                                                        </p:panelMenu>-->
+                            <p:slideMenu style="width:200px;height: 100% !important; margin-left: -3px; background: #01415B !important;position: fixed;margin-top: -53px;">
+                                <p:submenu label="Contrato" icon="pi pi-file-o">
+                                    <p:menuitem value="Cadastrar" url="contrato.xhtml" icon="pi pi-save"/>
+                                    <p:menuitem value="Pesquisar" url="pesquisarContrato.xhtml" icon="pi pi-search"/>
+                                </p:submenu>
+                                <p:submenu label="Contratado" icon="pi pi-user">
+                                    <p:menuitem value="Cadastrar" url="contratado.xhtml" icon="pi pi-save"/>
+                                    <p:menuitem value="Pesquisar" url="pesquisarContratado.xhtml" icon="pi pi-search"/>
+                                </p:submenu>
+                            </p:slideMenu>
+                            <p:slideMenu style="width:200px;height: 100% !important;  background: #01415B !important; margin-left: -3px;position: fixed;margin-top: 80px;border-top-right-radius: 15px !important">
+                                <p:submenu label="Nota Fiscal" icon="pi pi-file">
+                                    <p:menuitem value="Cadastrar" url="notaFiscal.xhtml"
+                                                icon="pi pi-save"/>
+                                    <p:menuitem value="Pesquisar" icon="pi pi-search"/>
+                                </p:submenu>
+                                <p:submenu label="Tipo de Contrato" icon="pi pi-bookmark">
+                                    <p:menuitem value="Cadastrar" url="tipoContrato.xhtml" icon="pi pi-save"/>
+                                    <p:menuitem value="Pesquisar"  icon="pi pi-search"/>
+                                </p:submenu>
+                            </p:slideMenu>
+                            <p:slideMenu style="width:200px;height: 100% !important;  background: #01415B !important; margin-left: -3px;position: fixed;margin-top: 210px;border-top-right-radius: 15px !important">
+                                <p:submenu label="Tipo Licitação" icon="pi pi-bookmark">
+                                    <p:menuitem value="Cadastrar" url="tipoLicitacao.xhtml"
+                                                icon="pi pi-save"/>
+                                    <p:menuitem value="Pesquisar" icon="pi pi-search"/>
+                                </p:submenu>
+                                <p:submenu label="Usuario" icon="pi pi-users">
+                                    <p:menuitem value="Cadastrar" url="usuario.xhtml" icon="pi pi-save"/>
+                                    <p:menuitem value="Pesquisar"  icon="pi pi-search"/>
+                                </p:submenu>
+                            </p:slideMenu>
+                            <p:slideMenu style="width:200px;height: 100% !important;  background: #01415B !important; margin-left: -3px;position: fixed;margin-top: 350px;border-top-right-radius: 15px !important">
+                                <p:submenu label="Alteração">
+                                    <p:menuitem value="Acréscimo" url="pesquisarContrato.xhtml" icon="pi pi-plus"/>
+                                    <p:menuitem value="Supressão" url="pesquisarContrato.xhtml" icon="pi pi-minus"/>
+                                </p:submenu>
+                                <p:submenu label="Status">
+                                    <p:menuitem value="Cadastrar" url="statusContrato.xhtml" icon="pi pi-save"/>
+                                    <p:menuitem value="Pesquisar" url="pesquisarStatusContrato.xhtml" icon="pi pi-search"/>
+                                </p:submenu>
+                            </p:slideMenu>
+                        </div>
+
                     </div>
                 </div>
             </div>

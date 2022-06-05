@@ -1,0 +1,260 @@
+<ui:composition template="/WEB-INF/template/layout.xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns="http://www.w3.org/1999/xhtml">
+    <ui:define name="acoes">
+        <h:panelGroup class="panelAcoes">
+            <p:button value="Pesquisar"
+                      title="Pesquisar Usuario"
+                      icon="pi pi-search"
+                      href="pesquisarUsuario.xhtml" style=" margin-right: 30px !important"/>
+
+            <p:splitButton value="Ações" style="margin: 0px -8px !important" rendered="#{not managerUsuario.cadastrar}"
+                           icon="pi pi-cog"
+                           >
+
+                <p:menuitem value="Editar" 
+                            icon="pi pi-pencil"
+                            url="usuario.xhtml?editar=#{managerUsuario.user.id}"
+                            process="@this"
+                            />
+                <p:menuitem value="Cadastrar" 
+                            icon="pi pi-save"
+                            url="usuario.xhtml"
+                            process="@this"
+                            />
+                <p:menuitem value="Excluir" 
+                            icon="pi pi-trash"
+                            oncomplete="PF('removeraUserConfirmDialog').show();"
+                            process="@this corpoInteiro"
+                            update="corpoInteiro:messages"
+                            >
+                    <f:setPropertyActionListener value="#{managerUsuario.user}"
+                                                 target="#{managerUsuario.user}"/>
+                </p:menuitem>
+
+            </p:splitButton>
+        </h:panelGroup>
+    </ui:define>
+    <ui:define name="barra">
+        <div class="row" id="stylebarra">
+            <i class="pi pi-file-o" id="icon"></i> <h5 style="color: #e1e6e5"> Dados Gerais teste</h5>
+        </div>
+    </ui:define>
+    <ui:define name="titulo">
+        <h4>Cadastro de Usuario</h4>
+    </ui:define>
+
+    <ui:define name="corpo">
+
+        <h:panelGroup id="usurarioPanelGroup" style="padding: 30px !important">
+            <p:growl id="messages" showDetail="true" />
+            <h:panelGroup id="dadosGeraisPanelGroup" >
+                <h:panelGroup>
+                    <div class="row">
+                        <div class="col-md-12">
+
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <p:outputLabel value="Nome"
+                                               for="nomeUserInput" />
+                                <p:inputText id="nomeUserInput"
+                                             placeholder="Nome"
+                                             required="true"
+                                             value="#{managerUsuario.user.nome}"
+                                             disabled="#{managerUsuario.visualizar}"
+                                             rendered="true"
+                                             requiredMessage="Este campo é obrigatório."
+                                             styleClass="form-control" 
+                                             />
+                                <p:message for="nomeUserInput" />
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <p:outputLabel value="CPF"
+                                               for="cpfUserInput" />
+                                <p:inputMask id="cpfUserInput"
+                                             placeholder="CPF"
+                                             mask="999.999.999-99"
+                                             value="#{managerUsuario.user.cpf}"
+                                             disabled="#{managerUsuario.visualizar}"
+                                             requiredMessage="Este campo é obrigatório."
+                                             styleClass="form-control" 
+                                             />
+                                <p:message for="cpfUserInput" />
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <p:outputLabel value="Telefone"
+                                               for="telefoneUserInput" />
+                                <p:inputMask id="telefoneUserInput"
+                                             placeholder="Telefone"
+                                             value="#{managerUsuario.user.telefone}"
+                                             disabled="#{managerUsuario.visualizar}"
+                                             mask="(99)9999-9999"
+                                             requiredMessage="Este campo é obrigatório."
+                                             styleClass="form-control" 
+                                             />
+                                <p:message for="telefoneUserInput" />
+                            </div>
+                        </div>
+                    </div>
+                </h:panelGroup>
+            </h:panelGroup>
+
+            <h:panelGroup id="enderecoPanelGroup">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <p:outputLabel value="E-mail"
+                                           for="emailUserInput" />
+                            <p:inputText id="emailUserInput"
+                                         placeholder="E-mail"
+                                         value="#{managerUsuario.user.email}"
+                                         disabled="#{managerUsuario.visualizar}"
+                                         requiredMessage="Este campo é obrigatório."
+                                         styleClass="form-control" 
+                                         />
+                            <p:message for="emailUserInput" />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <p:outputLabel value="Whatsapp"
+                                           for="whatsUserInput" />
+                            <p:inputMask id="whatsUserInput"
+                                         placeholder="Whatsapp"
+                                         value="#{managerUsuario.user.whatsapp}"
+                                         disabled="#{managerUsuario.visualizar}"
+                                         mask="(99)99999-9999"
+                                         requiredMessage="Este campo é obrigatório."
+                                         styleClass="form-control" 
+                                         />
+                            <p:message for="whatsUserInput" />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <p:outputLabel value="Login"
+                                           for="loginUserInput" />
+                            <p:inputText id="loginUserInput"
+                                         placeholder="Login"
+                                         value="#{managerUsuario.user.login}"
+                                         disabled="#{managerUsuario.visualizar}"
+                                         requiredMessage="Este campo é obrigatório."
+                                         styleClass="form-control" 
+                                         />
+                            <p:message for="loginUserInput" />
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row"  
+
+                     >
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <p:outputLabel value="Senha"
+                                           for="senhaUserInput"
+                                           rendered="#{managerUsuario.cadastrar}"/>
+                            <p:inputText id="senhaUserInput"
+                                         value="#{managerUsuario.user.senha}"
+                                         disabled="#{managerUsuario.visualizar}"
+                                         placeholder="Senha"
+                                         rendered="#{managerUsuario.cadastrar}"
+                                         requiredMessage="Este campo é obrigatório."
+                                         styleClass="form-control" 
+                                         />
+                            <p:message for="senhaUserInput" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <p:outputLabel value="Repita a senha"
+                                           for="repSenhaUserInput" 
+                                           rendered="#{managerUsuario.cadastrar}"/>
+                            <p:inputText id="repSenhaUserInput"
+                                         value="#{managerUsuario.repetirSenha}"
+                                         disabled="#{managerUsuario.visualizar}"
+                                         placeholder="Repita a senha"
+                                         requiredMessage="Este campo é obrigatório."
+                                         styleClass="form-control" 
+                                         rendered="#{managerUsuario.cadastrar}"
+                                         />
+                            <p:message for="repSenhaUserInput" />
+                        </div>
+                    </div>
+
+                </div>
+
+            </h:panelGroup>
+            <center>
+                <p:commandButton value="Salvar" icon="pi pi-save" update="corpoInteiro corpoInteiro:messages" process="@this usurarioPanelGroup" actionListener="#{managerUsuario.salvar()}" rendered="#{managerUsuario.cadastrar}" />
+                <p:button value="Editar" icon="pi pi-pencil"  rendered="#{managerUsuario.visualizar}" href="usuario.xhtml?editar=#{managerUsuario.user.id}" />
+                <p:commandButton value="Atualizar" icon="pi pi-sync" process="usurarioPanelGroup"  actionListener="#{managerUsuario.atualizar()}" rendered="#{managerUsuario.editar}"  />
+                <p:button value="Cancelar" icon="pi pi-ban"  href="usuario.xhtml" rendered="#{managerUsuario.visualizar}" />
+                <p:button value="Cancelar" icon="pi pi-ban"  href="index.xhtml" rendered="#{managerUsuario.cadastrar}" />
+            </center>
+        </h:panelGroup>
+        <p:dialog id="removeraUserConfirmDialog"
+                  widgetVar="removeraUserConfirmDialog"
+                  header="Atenção!"
+                  closeOnEscape="true"
+                  draggable="false"
+                  maximizable="false"
+                  minimizable="false"
+                  modal="true"
+                  width="850"
+                  showEffect="fade"
+                  hideEffect="fade">
+
+            <div class="row">
+
+                <div class="col-md-12">
+                    <div class="form-group" style="padding-left: 80px !important">
+                        <h4>
+                            <i class="pi pi-exclamation-triangle"></i>
+                            Tem certeza de que deseja remover este Usuario ?
+                        </h4>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+
+                    <center>
+
+                        <p:commandButton value="Sim"
+                                         title="Confirmar Remoção"
+                                         icon="fa fa-check"
+                                         update="corpoInteiro corpoInteiro:messages"
+                                         process="@this"
+                                         actionListener="#{managerUsuario.deletar()}"
+                                         oncomplete="PF('removeraUserConfirmDialog').hide();"
+                                         styleClass="mr-md-1"/>
+
+                        <p:commandButton value="Não"
+                                         title="Cancelar Remoção"
+                                         icon="fa fa-close"
+                                         process="@this"
+                                         update="@form"
+                                         oncomplete="PF('removeraUserConfirmDialog').hide();"
+                                         styleClass="ml-md-1"/>
+
+                    </center>
+
+                </div>
+
+            </div>
+
+
+        </p:dialog>
+    </ui:define>
+</ui:composition>
