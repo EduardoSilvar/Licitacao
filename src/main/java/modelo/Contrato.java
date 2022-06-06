@@ -26,18 +26,28 @@ public class Contrato implements Serializable {
     @GeneratedValue(generator = "seq_contrato", strategy = GenerationType.AUTO)
     private Long id;
     private Contratado contratado;
-    private Integer NumeroContrato;
-    private Integer DOU;
+    private BigInteger NumeroContrato;
+    private BigInteger NumeroProcesso;
+    private BigInteger NumeroLicitacao;
+    //private Integer DOU;
     private TipoContrato tipoContrato;
-    private Date dataInicio;
-    private Date dataFimado;
-    private Date dataFirmado;
-    private Date dataRenovacao;
+    private TipoLicitacao tipoLicitacao;
+    private Integer valor;
     private boolean possuiTempoDeterminado;
-    private String objetivo;
-    private String anexo;
-    private String fiscal;
-    private BigInteger valor;
+    private Date dataInicio;
+    private Date dataFinal;
+    private Date dataAssinatura;
+    private Date dataRenovacao;
+    private Integer objetoContrato;
+    private String fiscalContrato;
+    private String descricao;
+    private StatusContrato status;
+    private String banco;
+    private Integer numeroConta;
+    private Integer digito;
+    private Integer agencia;
+    private Integer operacao;
+    private Integer saldoInicial;
     private boolean ativo;
 
     public Long getId() {
@@ -47,7 +57,6 @@ public class Contrato implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-    
 
     public Contratado getContratado() {
         return contratado;
@@ -57,20 +66,28 @@ public class Contrato implements Serializable {
         this.contratado = contratado;
     }
 
-    public Integer getNumeroContrato() {
+    public BigInteger getNumeroContrato() {
         return NumeroContrato;
     }
 
-    public void setNumeroContrato(Integer NumeroContrato) {
+    public void setNumeroContrato(BigInteger NumeroContrato) {
         this.NumeroContrato = NumeroContrato;
     }
 
-    public Integer getDOU() {
-        return DOU;
+    public BigInteger getNumeroProcesso(){
+        return NumeroProcesso;
     }
 
-    public void setDOU(Integer DOU) {
-        this.DOU = DOU;
+    public void setNumeroProcesso(BigInteger NumeroProcesso){
+        this.NumeroProcesso = NumeroProcesso;
+    }
+
+    public BigInteger getNumeroLicitacao(){
+        return NumeroLicitacao;
+    }
+
+    public void NumeroLicitacao(BigInteger NumeroLicitacao){
+        this.NumeroLicitacao = NumeroLicitacao;
     }
 
     public TipoContrato getTipoContrato() {
@@ -80,7 +97,31 @@ public class Contrato implements Serializable {
     public void setTipoContrato(TipoContrato tipoContrato) {
         this.tipoContrato = tipoContrato;
     }
+    
+    public TipoLicitacao getTipoLicitacao(){
+        return tipoLicitacao;
+    }
 
+    public void setTipoLicitacao(TipoLicitacao tipoLicitacao){
+        this.tipoLicitacao = tipoLicitacao;
+    }
+
+    public Integer getValor() {
+        return valor;
+    }
+
+    public void setValor(Integer valor) {
+        this.valor = valor;
+    }
+    
+    public boolean isPossuiTempoDeterminado() {
+        return possuiTempoDeterminado;
+    }
+
+    public void setPossuiTempoDeterminado(boolean possuiTempoDeterminado) {
+        this.possuiTempoDeterminado = possuiTempoDeterminado;
+    }
+    
     public Date getDataInicio() {
         return dataInicio;
     }
@@ -93,50 +134,106 @@ public class Contrato implements Serializable {
         return dataFimado;
     }
 
-    public void setDataFimado(Date dataFimado) {
-        this.dataFimado = dataFimado;
+    public void setDataFinal(Date dataFinal) {
+        this.dataFinal = dataFinal;
     }
 
-    public Date getDataFirmado() {
+    public Date getDataAssinatura() {
         return dataFirmado;
     }
-
-    public void setDataFirmado(Date dataFirmado) {
+    
+    public void setDataAssinatura(Date dataAssinatura) {
         this.dataFirmado = dataFirmado;
     }
 
-    public boolean isPossuiTempoDeterminado() {
-        return possuiTempoDeterminado;
+    public Date getDataRenovacao() {
+        return dataRenovacao;
+    }
+    
+    public void setDataRenovacao(Date dataRenovacao) {
+        this.dataRenovacao = dataRenovacao;
     }
 
-    public void setPossuiTempoDeterminado(boolean possuiTempoDeterminado) {
-        this.possuiTempoDeterminado = possuiTempoDeterminado;
-    }
-
-    public String getObjetivo() {
+    public Integer getObjetoContrato() {
         return objetivo;
     }
 
-    public void setObjetivo(String objetivo) {
-        this.objetivo = objetivo;
+    public void setObjetoContrato(Integer objetoContrato) {
+        this.objetoContrato = objetoContrato;
     }
 
-    public String getAnexo() {
-        return anexo;
+    public String getFiscalContrato() {
+        return fiscalContrato;
     }
 
-    public void setAnexo(String anexo) {
-        this.anexo = anexo;
+    public void setFiscalContrato(String fiscalContrato) {
+        this.fiscalContrato = fiscalContrato;
     }
 
-    public String getFiscal() {
-        return fiscal;
+    public String getDescricao() {
+        return descricao;
     }
 
-    public void setFiscal(String fiscal) {
-        this.fiscal = fiscal;
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 
+    public StatusContrato getStatus(){
+        return status;
+    }
+
+    public void setStatus(StatusContrato status){
+        this.status = status;
+    }
+
+    public String getBanco() {
+        return banco;
+    }
+
+    public void setBanco(String banco) {
+        this.banco = banco;
+    }
+
+    public Integer getNumeroConta() {
+        return numeroConta;
+    }
+
+    public void setNumeroConta(Integer numeroConta) {
+        this.numeroConta = numeroConta;
+    }
+
+    public Integer getDigito() {
+        return digito;
+    }
+
+    public void setDigito(Integer digito) {
+        this.digito = digito;
+    }
+
+    public Integer getAgencia() {
+        return agencia;
+    }
+
+    public void setAgencia(Integer agencia) {
+        this.agencia = agencia;
+    }
+    
+    public Integer getOperacao() {
+        return operacao;
+    }
+
+    public void setOperacao(Integer operacao) {
+        this.operacao = operacao;
+    }
+
+    public Integer getSaldoInicial() {
+        return saldoInicial;
+    }
+
+    public void setSaldoInicial(Integer saldoInicial) {
+        this.saldoInicial = saldoInicial;
+    }
+    
     public boolean isAtivo() {
         return ativo;
     }
@@ -145,21 +242,8 @@ public class Contrato implements Serializable {
         this.ativo = ativo;
     }
 
-    public Date getDataRenovacao() {
-        return dataRenovacao;
-    }
 
-    public void setDataRenovacao(Date dataRenovacao) {
-        this.dataRenovacao = dataRenovacao;
-    }
-
-    public BigInteger getValor() {
-        return valor;
-    }
-
-    public void setValor(BigInteger valor) {
-        this.valor = valor;
-    }
+    
 
     @Override
     public int hashCode() {
