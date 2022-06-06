@@ -63,4 +63,20 @@ public class ContratadoServico extends ServicoGenerico<Contratado> implements Se
         return query.getResultList();
     }
 
+    public boolean existCpf(String cpf) {
+        String sql = "select c from Contratado c where c.ativo = true ";
+        if (Utils.isNotEmpty(cpf)) {
+            sql += "and c.cpf = :cpf ";
+        }
+        Query query = getEntityManager().createQuery(sql);
+        if (Utils.isNotEmpty(cpf)) {
+            query.setParameter("cpf", cpf);
+        }
+        if (query.getResultList().size() > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }

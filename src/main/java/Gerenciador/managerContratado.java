@@ -17,6 +17,7 @@ import javax.faces.bean.ViewScoped;
 import modelo.Contratado;
 import modelo.Endereco;
 import util.Msg;
+import util.Utils;
 
 /**
  *
@@ -66,8 +67,24 @@ public class managerContratado extends managerPrincipal implements Serializable 
     }
 
     public void salvar() {
-        contratadoServico.Save(contratado);
-        Msg.messagemInfoRedirect("Operação realizada com sucesso !", "contratado.xhtml?visualizar=" + this.contratado.getId());
+        if (Utils.isNotEmpty(contratado.getCpf())) {
+            if (contratadoServico.valida(contratado.getCpf())) {
+                if(contratadoServico.existCpf(contratado.getCpf())){
+                    Msg.messagemError("CPF ja esta sendo usado !");
+                }else{
+                  contratadoServico.Save(contratado);
+                Msg.messagemInfoRedirect("Operação realizada com sucesso !", "contratado.xhtml?visualizar=" + this.contratado.getId());
+                  
+                }
+            }else{
+            Msg.messagemError("CPF invalido !");
+            }
+        } else {
+            contratadoServico.Save(contratado);
+            Msg.messagemInfoRedirect("Operação realizada com sucesso !", "contratado.xhtml?visualizar=" + this.contratado.getId());
+
+        }
+
     }
 
     public void atualizar() {
