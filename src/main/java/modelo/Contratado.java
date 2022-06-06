@@ -7,7 +7,6 @@ package modelo;
 
 import Enum.NaturezaEnum;
 import java.io.Serializable;
-import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.*;
 

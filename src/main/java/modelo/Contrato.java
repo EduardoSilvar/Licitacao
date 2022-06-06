@@ -9,11 +9,14 @@ import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.Date;
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Temporal;
 
 /**
  *
@@ -25,22 +28,30 @@ public class Contrato implements Serializable {
     @SequenceGenerator(sequenceName = "seq_contrato", name = "seq_contrato", allocationSize = 1)
     @GeneratedValue(generator = "seq_contrato", strategy = GenerationType.AUTO)
     private Long id;
+    @OneToOne
     private Contratado contratado;
     private BigInteger NumeroContrato;
     private BigInteger NumeroProcesso;
     private BigInteger NumeroLicitacao;
     //private Integer DOU;
+    @OneToOne
     private TipoContrato tipoContrato;
+    @OneToOne
     private TipoLicitacao tipoLicitacao;
     private Integer valor;
     private boolean possuiTempoDeterminado;
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date dataInicio;
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date dataFinal;
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date dataAssinatura;
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date dataRenovacao;
     private Integer objetoContrato;
     private String fiscalContrato;
     private String descricao;
+    @OneToOne
     private StatusContrato status;
     private String banco;
     private Integer numeroConta;
@@ -74,19 +85,19 @@ public class Contrato implements Serializable {
         this.NumeroContrato = NumeroContrato;
     }
 
-    public BigInteger getNumeroProcesso(){
+    public BigInteger getNumeroProcesso() {
         return NumeroProcesso;
     }
 
-    public void setNumeroProcesso(BigInteger NumeroProcesso){
+    public void setNumeroProcesso(BigInteger NumeroProcesso) {
         this.NumeroProcesso = NumeroProcesso;
     }
 
-    public BigInteger getNumeroLicitacao(){
+    public BigInteger getNumeroLicitacao() {
         return NumeroLicitacao;
     }
 
-    public void NumeroLicitacao(BigInteger NumeroLicitacao){
+    public void setNumeroLicitacao(BigInteger NumeroLicitacao) {
         this.NumeroLicitacao = NumeroLicitacao;
     }
 
@@ -97,12 +108,12 @@ public class Contrato implements Serializable {
     public void setTipoContrato(TipoContrato tipoContrato) {
         this.tipoContrato = tipoContrato;
     }
-    
-    public TipoLicitacao getTipoLicitacao(){
+
+    public TipoLicitacao getTipoLicitacao() {
         return tipoLicitacao;
     }
 
-    public void setTipoLicitacao(TipoLicitacao tipoLicitacao){
+    public void setTipoLicitacao(TipoLicitacao tipoLicitacao) {
         this.tipoLicitacao = tipoLicitacao;
     }
 
@@ -113,7 +124,7 @@ public class Contrato implements Serializable {
     public void setValor(Integer valor) {
         this.valor = valor;
     }
-    
+
     public boolean isPossuiTempoDeterminado() {
         return possuiTempoDeterminado;
     }
@@ -121,7 +132,7 @@ public class Contrato implements Serializable {
     public void setPossuiTempoDeterminado(boolean possuiTempoDeterminado) {
         this.possuiTempoDeterminado = possuiTempoDeterminado;
     }
-    
+
     public Date getDataInicio() {
         return dataInicio;
     }
@@ -130,8 +141,8 @@ public class Contrato implements Serializable {
         this.dataInicio = dataInicio;
     }
 
-    public Date getDataFimado() {
-        return dataFimado;
+    public Date getDataFinal() {
+        return dataFinal;
     }
 
     public void setDataFinal(Date dataFinal) {
@@ -139,23 +150,23 @@ public class Contrato implements Serializable {
     }
 
     public Date getDataAssinatura() {
-        return dataFirmado;
+        return dataAssinatura;
     }
-    
+
     public void setDataAssinatura(Date dataAssinatura) {
-        this.dataFirmado = dataFirmado;
+        this.dataAssinatura = dataAssinatura;
     }
 
     public Date getDataRenovacao() {
         return dataRenovacao;
     }
-    
+
     public void setDataRenovacao(Date dataRenovacao) {
         this.dataRenovacao = dataRenovacao;
     }
 
     public Integer getObjetoContrato() {
-        return objetivo;
+        return objetoContrato;
     }
 
     public void setObjetoContrato(Integer objetoContrato) {
@@ -178,11 +189,11 @@ public class Contrato implements Serializable {
         this.descricao = descricao;
     }
 
-    public StatusContrato getStatus(){
+    public StatusContrato getStatus() {
         return status;
     }
 
-    public void setStatus(StatusContrato status){
+    public void setStatus(StatusContrato status) {
         this.status = status;
     }
 
@@ -217,7 +228,7 @@ public class Contrato implements Serializable {
     public void setAgencia(Integer agencia) {
         this.agencia = agencia;
     }
-    
+
     public Integer getOperacao() {
         return operacao;
     }
@@ -233,7 +244,7 @@ public class Contrato implements Serializable {
     public void setSaldoInicial(Integer saldoInicial) {
         this.saldoInicial = saldoInicial;
     }
-    
+
     public boolean isAtivo() {
         return ativo;
     }
@@ -242,27 +253,35 @@ public class Contrato implements Serializable {
         this.ativo = ativo;
     }
 
-
     
 
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 83 * hash + Objects.hashCode(this.id);
-        hash = 83 * hash + Objects.hashCode(this.contratado);
-        hash = 83 * hash + Objects.hashCode(this.NumeroContrato);
-        hash = 83 * hash + Objects.hashCode(this.DOU);
-        hash = 83 * hash + Objects.hashCode(this.tipoContrato);
-        hash = 83 * hash + Objects.hashCode(this.dataInicio);
-        hash = 83 * hash + Objects.hashCode(this.dataFimado);
-        hash = 83 * hash + Objects.hashCode(this.dataFirmado);
-        hash = 83 * hash + Objects.hashCode(this.dataRenovacao);
-        hash = 83 * hash + (this.possuiTempoDeterminado ? 1 : 0);
-        hash = 83 * hash + Objects.hashCode(this.objetivo);
-        hash = 83 * hash + Objects.hashCode(this.anexo);
-        hash = 83 * hash + Objects.hashCode(this.fiscal);
-        hash = 83 * hash + Objects.hashCode(this.valor);
-        hash = 83 * hash + (this.ativo ? 1 : 0);
+        hash = 17 * hash + Objects.hashCode(this.id);
+        hash = 17 * hash + Objects.hashCode(this.contratado);
+        hash = 17 * hash + Objects.hashCode(this.NumeroContrato);
+        hash = 17 * hash + Objects.hashCode(this.NumeroProcesso);
+        hash = 17 * hash + Objects.hashCode(this.NumeroLicitacao);
+        hash = 17 * hash + Objects.hashCode(this.tipoContrato);
+        hash = 17 * hash + Objects.hashCode(this.tipoLicitacao);
+        hash = 17 * hash + Objects.hashCode(this.valor);
+        hash = 17 * hash + (this.possuiTempoDeterminado ? 1 : 0);
+        hash = 17 * hash + Objects.hashCode(this.dataInicio);
+        hash = 17 * hash + Objects.hashCode(this.dataFinal);
+        hash = 17 * hash + Objects.hashCode(this.dataAssinatura);
+        hash = 17 * hash + Objects.hashCode(this.dataRenovacao);
+        hash = 17 * hash + Objects.hashCode(this.objetoContrato);
+        hash = 17 * hash + Objects.hashCode(this.fiscalContrato);
+        hash = 17 * hash + Objects.hashCode(this.descricao);
+        hash = 17 * hash + Objects.hashCode(this.status);
+        hash = 17 * hash + Objects.hashCode(this.banco);
+        hash = 17 * hash + Objects.hashCode(this.numeroConta);
+        hash = 17 * hash + Objects.hashCode(this.digito);
+        hash = 17 * hash + Objects.hashCode(this.agencia);
+        hash = 17 * hash + Objects.hashCode(this.operacao);
+        hash = 17 * hash + Objects.hashCode(this.saldoInicial);
+        hash = 17 * hash + (this.ativo ? 1 : 0);
         return hash;
     }
 
@@ -284,13 +303,13 @@ public class Contrato implements Serializable {
         if (this.ativo != other.ativo) {
             return false;
         }
-        if (!Objects.equals(this.objetivo, other.objetivo)) {
+        if (!Objects.equals(this.fiscalContrato, other.fiscalContrato)) {
             return false;
         }
-        if (!Objects.equals(this.anexo, other.anexo)) {
+        if (!Objects.equals(this.descricao, other.descricao)) {
             return false;
         }
-        if (!Objects.equals(this.fiscal, other.fiscal)) {
+        if (!Objects.equals(this.banco, other.banco)) {
             return false;
         }
         if (!Objects.equals(this.id, other.id)) {
@@ -302,29 +321,64 @@ public class Contrato implements Serializable {
         if (!Objects.equals(this.NumeroContrato, other.NumeroContrato)) {
             return false;
         }
-        if (!Objects.equals(this.DOU, other.DOU)) {
+        if (!Objects.equals(this.NumeroProcesso, other.NumeroProcesso)) {
+            return false;
+        }
+        if (!Objects.equals(this.NumeroLicitacao, other.NumeroLicitacao)) {
             return false;
         }
         if (!Objects.equals(this.tipoContrato, other.tipoContrato)) {
             return false;
         }
-        if (!Objects.equals(this.dataInicio, other.dataInicio)) {
-            return false;
-        }
-        if (!Objects.equals(this.dataFimado, other.dataFimado)) {
-            return false;
-        }
-        if (!Objects.equals(this.dataFirmado, other.dataFirmado)) {
-            return false;
-        }
-        if (!Objects.equals(this.dataRenovacao, other.dataRenovacao)) {
+        if (!Objects.equals(this.tipoLicitacao, other.tipoLicitacao)) {
             return false;
         }
         if (!Objects.equals(this.valor, other.valor)) {
             return false;
         }
+        if (!Objects.equals(this.dataInicio, other.dataInicio)) {
+            return false;
+        }
+        if (!Objects.equals(this.dataFinal, other.dataFinal)) {
+            return false;
+        }
+        if (!Objects.equals(this.dataAssinatura, other.dataAssinatura)) {
+            return false;
+        }
+        if (!Objects.equals(this.dataRenovacao, other.dataRenovacao)) {
+            return false;
+        }
+        if (!Objects.equals(this.objetoContrato, other.objetoContrato)) {
+            return false;
+        }
+        if (!Objects.equals(this.status, other.status)) {
+            return false;
+        }
+        if (!Objects.equals(this.numeroConta, other.numeroConta)) {
+            return false;
+        }
+        if (!Objects.equals(this.digito, other.digito)) {
+            return false;
+        }
+        if (!Objects.equals(this.agencia, other.agencia)) {
+            return false;
+        }
+        if (!Objects.equals(this.operacao, other.operacao)) {
+            return false;
+        }
+        if (!Objects.equals(this.saldoInicial, other.saldoInicial)) {
+            return false;
+        }
         return true;
     }
+
+
+    
+
+    
+
+    
+    
 
   
 
