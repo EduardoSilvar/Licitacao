@@ -46,7 +46,7 @@
                                              styleClass="form-control" 
                                              value="#{managerContrato.contrato.contratado}"
                                              converter="contratoconverter"
-                                             required="true">
+                                             required="true" style="width: 230px;">
                                 <f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
                                 <f:selectItems value="#{managerContrato.contratados}" var="contratado" itemLabel="#{contratado.nome}" itemValue="#{contratado}"/>
                             </p:selectOneMenu>
