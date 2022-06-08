@@ -56,6 +56,7 @@ public class managerUsuario extends managerPrincipal implements Serializable {
                     if (userServico.valida(user.getCpf())) {
                         if (Utils.isNotEmpty(this.repetirSenha)) {
                             if (user.getSenha().equals(repetirSenha)) {
+                                this.user.setSenha(Usuario.encryptPassword(repetirSenha));
                                 userServico.Save(this.user);
                                 Msg.messagemInfoRedirect("Operação realizada com sucesso !", "usuario.xhtml?visualizar=" + this.user.getId());
                             } else {
