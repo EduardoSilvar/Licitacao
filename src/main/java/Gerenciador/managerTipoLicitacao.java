@@ -49,7 +49,11 @@ public class managerTipoLicitacao extends managerPrincipal implements Serializab
         tipoLicitacaoServico.Update(this.tipoLicitacao);
         Msg.messagemInfoRedirect("Operação realizada com sucesso !", "tipoLicitacao.xhtml?visualizar=" + this.tipoLicitacao.getId());
     }
-
+    
+    public List<TipoLicitacao> getAll(){
+        return tipoLicitacaoServico.findAllTiposLicitacao();
+    }
+    
     public void pesquisar() {
         this.tiposLicitacoes = tipoLicitacaoServico.pesquisar(tipoLicitacao);
         if (this.tiposLicitacoes.size() > 0) {

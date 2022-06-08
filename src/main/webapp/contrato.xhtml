@@ -43,131 +43,320 @@
                             <p:selectOneMenu id="contratadoSelect"
                                              filter="true" 
                                              placeholder="Contratado"
-                                             styleClass="form-control" >
+                                             styleClass="form-control" 
+                                             value="#{managerContrato.contrato.contratado}"
+                                             converter="contratoconverter"
+                                             required="true">
                                 <f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
-                                <f:selectItems  />
+                                <f:selectItems value="#{managerContrato.contratados}" var="contratado" itemLabel="#{contratado.nome}" itemValue="#{contratado}"/>
                             </p:selectOneMenu>
                         </div> 
                     </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <p:outputLabel value="Número"
+                                           for="numeroContrato" />
+                            <p:inputMask id="numeroContrato"
+                                         placeholder=""
+                                         rendered="true"
+                                         requiredMessage="Este campo é obrigatório."
+                                         styleClass="form-control" 
+                                         value="#{managerContrato.contrato.numeroContrato}"
+                                         />
+                            <p:message for="numeroContrato" />
+                        </div> 
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <p:outputLabel value="N° do processo"
+                                           for="numeroProcesso" />
+                            <p:inputMask id="numeroProcesso"
+                                         placeholder=""
+                                         rendered="true"
+                                         requiredMessage="Este campo é obrigatório."
+                                         styleClass="form-control" 
+                                         value="#{managerContrato.contrato.numeroProcesso}"
+                                         />
+                            <p:message for="numeroProcesso" />
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <p:outputLabel value="N° da licitação"
+                                           for="numeroLicitacao" />
+                            <p:inputMask id="numeroLicitacao"
+                                         placeholder=""
+                                         rendered="true"
+                                         requiredMessage="Este campo é obrigatório."
+                                         styleClass="form-control" 
+                                         value="#{managerContrato.contrato.numeroLicitacao}"
+                                         />
+                            <p:message for="numeroLicitacao" />
+                        </div>
+                    </div>
+                </div>
+                <!-- linha 2 -->
+                <div class="row">
                     <div class="col-md-3">
                         <div class="form-group">
                             <p:outputLabel value="Tipo de contrato" styleClass="control-label" for="tipoContratoSelect" />
                             <p:selectOneMenu id="tipoContratoSelect"
                                              filter="true" 
-                                             placeholder="Contrato"
-                                             styleClass="form-control" >
+                                             placeholder="Tipo"
+                                             styleClass="form-control" 
+                                             required="true"
+                                             value="#{managerTipoContrato.tipoContrato}"
+                                             converter="tipocontratoconverter">
                                 <f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
-                                <f:selectItems  />
-                            </p:selectOneMenu>
-                        </div> 
-                    </div>
-                    <div class="col-md-2">
-                        <div class="form-group">
-                            <p:outputLabel value="Data da firmação"
-                                           for="dataContrato"  />
-                            <p:calendar id="dataContrato"
-                                        rendered="true"
-                                        mask="true"
-                                        style="display: flex;"
-                                        requiredMessage="Este campo é obrigatório."
-                                        inputStyleClass="form-control"
-                                        showOn="button"
-                                        />
-                            <p:message for="dataContrato" />
+                                <f:selectItems value="#{managerTipoContrato.all}" var="tipoContrato" itemLabel="#{tipoContrato.nome}" itemValue="#{tipoContrato}"/>
+                            </p:selectOneMenu> 
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="form-group">
-                            <p:outputLabel value="valor"
-                                           for="valorContrato" />
-                            <p:inputText id="valorContrato"
-                                         placeholder="valor"
+                            <p:outputLabel value="Tipo de licitação" styleClass="control-label" for="tipoLicitacaoSelect" />
+                            <p:selectOneMenu id="tipoLicitacaoSelect"
+                                             filter="true" 
+                                             placeholder="Tipo"
+                                             styleClass="form-control"
+                                             converter="tipolicitacaoconverter"
+                                             value="#{managerTipoLicitacao.tipoLicitacao}"
+                                             required="true">
+                                <f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
+                                <f:selectItems value="#{managerTipoLicitacao.all}" var="tipoLicitacao" itemLabel="#{managerTipoLicitacao.titulo}" itemValue="#{tipoLicitacao}" />
+                            </p:selectOneMenu>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <p:outputLabel value="Valor"
+                                           for="valor" />
+                            <p:inputMask id="valor"
+                                         placeholder="R$"
                                          rendered="true"
+                                         required="true"
+                                         value="#{managerContrato.contrato.valor}"
                                          requiredMessage="Este campo é obrigatório."
                                          styleClass="form-control" 
                                          />
-                            <p:message for="valorContrato" />
+                            <p:message for="valor" />
                         </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="form-group">
                             <p:outputLabel value="Possui tempo determinado ?"/>
                             <div class="ui-inputgroup">
-                                <p:selectBooleanButton onLabel="Sim" offLabel="Não" style="width:6rem; color: white !important;border-radius: 5px"/>
+                                <p:selectBooleanButton id="tempoDeterminadoButton" onLabel="Sim" offLabel="Não" style="width:12rem; color: white !important;border-radius: 5px"/>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <p:outputLabel value="Data da Início"
-                                           for="dataInicioContrato"  />
-                            <p:calendar id="dataInicioContrato"
-                                        rendered="true"
-                                        mask="true"
-                                        style="display: flex;"
-                                        requiredMessage="Este campo é obrigatório."
-                                        inputStyleClass="form-control"
-                                        showOn="button"
-                                        />
-                            <p:message for="dataInicioContrato" />
-                        </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <p:outputLabel value="Data inicial"
+                                       for="dataInicialContrato" />
+                        <p:calendar id="dataInicialContrato"
+                                    rendered="true"
+                                    mask="true"
+                                    style="display: flex; flex-direction: row"
+                                    requiredMessage="Este campo é obrigatório."
+                                    inputStyleClass="form-control"
+                                    value="#{managerContrato.contrato.dataInicio}"
+                                    showOn="button"
+                                    />
+                        <p:message for="dataInicialContrato" />
                     </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <p:outputLabel value="Data Final"
-                                           for="dataFinalContrato"  />
-                            <p:calendar id="dataFinalContrato"
-                                        rendered="true"
-                                        mask="true"
-                                        style="display: flex;"
-                                        requiredMessage="Este campo é obrigatório."
-                                        inputStyleClass="form-control"
-                                        showOn="button"
-                                        />
-                            <p:message for="dataFinalContrato" />
-                        </div>
+                    <div class="col-md-6">
+                        <p:outputLabel value="Data final"
+                                       for="dataFinalContrato" />
+                        <p:calendar id="dataFinalContrato"
+                                    rendered="true"
+                                    mask="true"
+                                    style="display: flex; flex-direction: row"
+                                    requiredMessage="Este campo é obrigatório."
+                                    inputStyleClass="form-control"
+                                    value="#{managerContrato.contrato.dataFinal}"
+                                    showOn="button"
+                                    />
+                        <p:message for="dataFinalContrato" />
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-3">
                         <div class="form-group">
-                            <p:outputLabel value="1° responsável" styleClass="control-label" for="primeiroResponContratoSelect" />
-                            <p:selectOneMenu id="primeiroResponContratoSelect"
-                                             filter="true" 
-                                             placeholder="Contrato"
-                                             styleClass="form-control" >
-                                <f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
-                                <f:selectItems  />
-                            </p:selectOneMenu>
+                            <p:outputLabel value="Data de assinatura"
+                                           for="dataassinaturaContrato" />
+                            <p:calendar id="dataassinaturaContrato"
+                                        rendered="true"
+                                        mask="true"
+                                        style="display: flex; flex-direction: row"
+                                        required="true"
+                                        requiredMessage="Este campo é obrigatório."
+                                        inputStyleClass="form-control"
+                                        value="#{managerContrato.contrato.dataAssinatura}"
+                                        showOn="button"
+                                        />
+                            <p:message for="dataassinaturaContrato" />
                         </div> 
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
-                            <p:outputLabel value="2° responsável" styleClass="control-label" for="segundoRespomSelect" />
-                            <p:selectOneMenu id="segundoRespomSelect"
+                            <p:outputLabel value="Objeto do contrato"
+                                           for="objetoContrato" />
+                            <p:inputMask id="objetoContrato"
+                                         style="display: flex; flex-direction: row"
+                                         required="true"
+                                         styleClass="form-control" 
+                                         placeholder=""
+                                         value="#{managerContrato.contrato.objetoContrato}"
+                                         requiredMessage="Este campo é obrigatório." />
+                            <p:message for="objetoContrato" />
+                        </div> 
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <p:outputLabel value="Fiscal de contrato" styleClass="control-label" for="fiscalSelect" />
+                            <p:selectOneMenu id="fiscalSelect"
                                              filter="true" 
-                                             placeholder="Contrato"
+                                             placeholder="fiscal"
                                              styleClass="form-control" >
                                 <f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
                                 <f:selectItems  />
                             </p:selectOneMenu>
-                        </div> 
+                        </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-3">
                         <div class="form-group">
-                            <p:outputLabel value="Objetivo"
-                                           for="objetivoContrato" />
-                            <p:inputTextarea id="objetivoContrato"
-                                             placeholder="Objetivo"
+                            <p:outputLabel value="Descrição"
+                                           for="descricaoContrato" />
+                            <p:inputTextarea id="descricaoContrato"
+                                             placeholder="Descrição"
                                              rendered="true"
+                                             value="#{managerContrato.contrato.descricao}"
                                              requiredMessage="Este campo é obrigatório."
                                              styleClass="form-control" 
                                              />
-                            <p:message for="objetivoContrato" />
+                            <p:message for="descricaoContrato" />
                         </div>
                     </div>
+                </div>
+                <h4>Conta vinculada</h4>
+                <hr></hr>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <p:outputLabel value="Banco"
+                                           for="bancoContrato" />
+                            <p:inputText id="bancoContrato"
+                                         placeholder=""
+                                         rendered="true"
+                                         required="true"
+                                         value="#{managerContrato.contrato.banco}"
+                                         requiredMessage="Este campo é obrigatório."
+                                         styleClass="form-control" 
+                                         />
+                            <p:message for="bancoContrato" />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <p:outputLabel value="N° da conta"
+                                           for="contaContrato" />
+                            <p:inputMask id="contaContrato"
+                                         style="display: flex; flex-direction: row"
+                                         styleClass="form-control" 
+                                         placeholder=""
+                                         required="true"
+                                         value="#{managerContrato.contrato.numeroConta}"
+                                         requiredMessage="Este campo é obrigatório." />
+                            <p:message for="contaContrato" />
+                        </div> 
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <p:outputLabel value="Dígito"
+                                           for="digitoContaContrato" />
+                            <p:inputMask id="digitoContaContrato"
+                                         style="display: flex; flex-direction: row"
+                                         styleClass="form-control" 
+                                         placeholder=""
+                                         required="true"
+                                         value="#{managerContrato.contrato.digito}"
+                                         requiredMessage="Este campo é obrigatório." />
+                            <p:message for="digitoContaContrato" />
+                        </div> 
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <p:outputLabel value="Agência"
+                                           for="agenciaContrato" />
+                            <p:inputText id="agenciaContrato"
+                                         placeholder=""
+                                         rendered="true"
+                                         required="true"
+                                         value="#{managerContrato.contrato.agencia}"
+                                         requiredMessage="Este campo é obrigatório."
+                                         styleClass="form-control" 
+                                         />
+                            <p:message for="agenciaContrato" />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <p:outputLabel value="Operação"
+                                           for="operacaoContrato" />
+                            <p:inputMask id="operacaoContrato"
+                                         style="display: flex; flex-direction: row"
+                                         styleClass="form-control" 
+                                         placeholder=""
+                                         required="true"
+                                         value="#{managerContrato.contrato.operacao}"
+                                         requiredMessage="Este campo é obrigatório." />
+                            <p:message for="operacaoContrato" />
+                        </div> 
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <p:outputLabel value="Saldo inicial"
+                                           for="saldoContaContrato" />
+                            <p:inputMask id="saldoContaContrato"
+                                         style="display: flex; flex-direction: row"
+                                         styleClass="form-control" 
+                                         required="true"
+                                         placeholder="R$"
+                                         value="#{managerContrato.contrato.valor}"
+                                         requiredMessage="Este campo é obrigatório." />
+                            <p:message for="saldoContaContrato" />
+                        </div> 
+                    </div>
+                </div>
+                <h4>Situação</h4>
+                <hr></hr>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <p:outputLabel value="Status" styleClass="control-label" for="statusContratoSelect" />
+                            <p:selectOneMenu id="statusContratoSelect"
+                                             filter="true" 
+                                             placeholder="status"
+                                             required="true"
+                                             styleClass="form-control" >
+                                <f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
+                                <f:selectItems  />
+                            </p:selectOneMenu>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <p:outputLabel value="Contrato está ativo ?"/>
+                            <div class="ui-inputgroup">                                
+                                <p:selectBooleanButton onLabel="Sim" offLabel="Não" value="#{managerContrato.contrato.ativo}" style="width:12rem; color: white !important;border-radius: 5px"/>
+                            </div>
+                        </div> 
+                    </div>
+
                 </div>
                 <p:fileUpload mode="advanced"
                               multiple="false"

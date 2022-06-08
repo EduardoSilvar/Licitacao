@@ -22,7 +22,13 @@ public class tipoContratoServico extends ServicoGenerico<TipoContrato> implement
     public tipoContratoServico() {
         super(TipoContrato.class);
     }
-
+    
+    public List<TipoContrato> findAllTiposContrato(){
+        String sql = "select t from TipoContrato t";
+        Query query = entityManager.createQuery(sql);
+        return query.getResultList();
+    }
+    
     public List<TipoContrato> pesquisar(TipoContrato tipo) {
         String sql = "select t from TipoContrato t where ";
         if (Utils.isNotEmpty(tipo.getNome())) {

@@ -23,6 +23,12 @@ public class TipoLicitacaoServico extends ServicoGenerico<TipoLicitacao> impleme
         super(TipoLicitacao.class);
     }
     
+    public List<TipoLicitacao> findAllTiposLicitacao(){
+        String sql = "select a from TipoLicitacao a";
+        Query query = getEntityManager().createQuery(sql);
+        return query.getResultList();
+    }
+    
     public List<TipoLicitacao> pesquisar(TipoLicitacao tipo) {
         String sql = "select a from TipoLicitacao a where ";
         if (Utils.isNotEmpty(tipo.getDescricao())) {

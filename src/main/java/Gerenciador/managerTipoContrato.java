@@ -88,8 +88,8 @@ public class managerTipoContrato extends managerPrincipal implements Serializabl
         }
     }
 
-    public void trazerTodos() {
-        TipoContratos = tipoContratoServico.FindAll();
+    public List<TipoContrato> getAll() {
+        return tipoContratoServico.findAllTiposContrato();
 
     }
 

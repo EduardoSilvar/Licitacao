@@ -6,7 +6,10 @@
 package Servico;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.ejb.Stateless;
+import javax.persistence.Query;
+import modelo.Contratado;
 import modelo.Contrato;
 
 /**
@@ -20,4 +23,9 @@ public class ContratoServico extends ServicoGenerico<Contrato> implements Serial
         super(Contrato.class);
     }
     
+    public List<Contratado> findAllContratados(){
+        String sql = "select c from Contratado c";
+        Query query = entityManager.createQuery(sql);
+        return query.getResultList();
+    }
 }

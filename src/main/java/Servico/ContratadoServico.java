@@ -23,7 +23,7 @@ public class ContratadoServico extends ServicoGenerico<Contratado> implements Se
     public ContratadoServico() {
         super(Contratado.class);
     }
-
+    
     public List<Contratado> findPesquisa(Contratado contratado) {
         String sql = "select c from Contratado c where ";
         if (Utils.isNotEmpty(contratado.getNatureza())) {
