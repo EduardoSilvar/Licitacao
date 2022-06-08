@@ -58,7 +58,11 @@ public class managerStatusContrato extends managerPrincipal implements Serializa
     public void instanciarListStts() {
         this.sttsContratos = new ArrayList<>();
     }
-
+    
+    public List<StatusContrato> getAll(){
+        return sttsContratoServico.FindAll();
+    }
+    
     public void salvar() {
         System.out.println(this.statusContrato);
         sttsContratoServico.Save(this.statusContrato);

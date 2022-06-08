@@ -37,28 +37,31 @@
             <p:growl id="growl" showDetail="true" />
             <h:panelGroup>
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-md-12">
                         <div class="form-group">
                             <p:outputLabel value="Contratado" styleClass="control-label" for="contratadoSelect" />
                             <p:selectOneMenu id="contratadoSelect"
                                              filter="true" 
-                                             placeholder="Contratado"
+                                             placeholder="Tipo"
                                              styleClass="form-control" 
+                                             required="true"
                                              value="#{managerContrato.contrato.contratado}"
-                                             converter="contratoconverter"
-                                             required="true" style="width: 230px;">
+                                             converter="contratoconverter" >
                                 <f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
-                                <f:selectItems value="#{managerContrato.contratados}" var="contratado" itemLabel="#{contratado.nome}" itemValue="#{contratado}"/>
+                                <f:selectItems value="#{managerContratado.all}" var="contratado" itemLabel="#{contratado.nome}" itemValue="#{contratado}"/>
                             </p:selectOneMenu>
                         </div> 
                     </div>
-                    <div class="col-md-3">
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <p:outputLabel value="Número"
                                            for="numeroContrato" />
                             <p:inputMask id="numeroContrato"
                                          placeholder=""
                                          rendered="true"
+                                         required="true"
                                          requiredMessage="Este campo é obrigatório."
                                          styleClass="form-control" 
                                          value="#{managerContrato.contrato.numeroContrato}"
@@ -66,13 +69,14 @@
                             <p:message for="numeroContrato" />
                         </div> 
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <p:outputLabel value="N° do processo"
                                            for="numeroProcesso" />
                             <p:inputMask id="numeroProcesso"
                                          placeholder=""
                                          rendered="true"
+                                         required="true"
                                          requiredMessage="Este campo é obrigatório."
                                          styleClass="form-control" 
                                          value="#{managerContrato.contrato.numeroProcesso}"
@@ -80,13 +84,14 @@
                             <p:message for="numeroProcesso" />
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <p:outputLabel value="N° da licitação"
                                            for="numeroLicitacao" />
                             <p:inputMask id="numeroLicitacao"
                                          placeholder=""
                                          rendered="true"
+                                         required="true"
                                          requiredMessage="Este campo é obrigatório."
                                          styleClass="form-control" 
                                          value="#{managerContrato.contrato.numeroLicitacao}"
@@ -97,7 +102,7 @@
                 </div>
                 <!-- linha 2 -->
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <p:outputLabel value="Tipo de contrato" styleClass="control-label" for="tipoContratoSelect" />
                             <p:selectOneMenu id="tipoContratoSelect"
@@ -105,14 +110,14 @@
                                              placeholder="Tipo"
                                              styleClass="form-control" 
                                              required="true"
-                                             value="#{managerTipoContrato.tipoContrato}"
+                                             value="#{managerContrato.contrato.tipoContrato}"
                                              converter="tipocontratoconverter">
                                 <f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
                                 <f:selectItems value="#{managerTipoContrato.all}" var="tipoContrato" itemLabel="#{tipoContrato.nome}" itemValue="#{tipoContrato}"/>
                             </p:selectOneMenu> 
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <p:outputLabel value="Tipo de licitação" styleClass="control-label" for="tipoLicitacaoSelect" />
                             <p:selectOneMenu id="tipoLicitacaoSelect"
@@ -120,14 +125,15 @@
                                              placeholder="Tipo"
                                              styleClass="form-control"
                                              converter="tipolicitacaoconverter"
-                                             value="#{managerTipoLicitacao.tipoLicitacao}"
-                                             required="true">
+                                             value="#{managerContrato.contrato.tipoLicitacao}"
+                                             required="true"
+                                             >
                                 <f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
-                                <f:selectItems value="#{managerTipoLicitacao.all}" var="tipoLicitacao" itemLabel="#{managerTipoLicitacao.titulo}" itemValue="#{tipoLicitacao}" />
+                                <f:selectItems value="#{managerTipoLicitacao.all}" var="tipoLicitacao" itemLabel="#{tipoLicitacao.tipo}" itemValue="#{tipoLicitacao}" />
                             </p:selectOneMenu>
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <p:outputLabel value="Valor"
                                            for="valor" />
@@ -142,17 +148,22 @@
                             <p:message for="valor" />
                         </div>
                     </div>
+                </div>
+                <div class="row">
                     <div class="col-md-3">
                         <div class="form-group">
                             <p:outputLabel value="Possui tempo determinado ?"/>
                             <div class="ui-inputgroup">
-                                <p:selectBooleanButton id="tempoDeterminadoButton" onLabel="Sim" offLabel="Não" style="width:12rem; color: white !important;border-radius: 5px"/>
+                                <p:selectBooleanButton id="tempoDeterminadoButton" value="#{managerContrato.tempoDeterminado}" onLabel="Sim" offLabel="Não" style="width:12rem; color: white !important;border-radius: 5px"/>
+<!--                                    <p:ajax update="testess:dataDefinida"/>-->
+<!--                                </p:selectBooleanButton>-->
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
+                    <!--{managerContrato.renderedTempoDeterminado()}-->
+
+
+                    <div class="col-md-5">
                         <p:outputLabel value="Data inicial"
                                        for="dataInicialContrato" />
                         <p:calendar id="dataInicialContrato"
@@ -166,7 +177,7 @@
                                     />
                         <p:message for="dataInicialContrato" />
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <p:outputLabel value="Data final"
                                        for="dataFinalContrato" />
                         <p:calendar id="dataFinalContrato"
@@ -180,6 +191,8 @@
                                     />
                         <p:message for="dataFinalContrato" />
                     </div>
+
+
                 </div>
                 <div class="row">
                     <div class="col-md-3">
@@ -219,13 +232,35 @@
                             <p:selectOneMenu id="fiscalSelect"
                                              filter="true" 
                                              placeholder="fiscal"
-                                             styleClass="form-control" >
+                                             required="true"
+                                             styleClass="form-control"
+                                             requiredMessage="Este campo é obrigatório."
+                                             converter="usuarioconverter"
+                                             value="#{managerContrato.contrato.fiscalContrato}"
+                                             >
                                 <f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
-                                <f:selectItems  />
+                                <f:selectItems value="#{managerUsuario.all}" var="user" itemLabel="#{user.nome}" itemValue="#{user}" />
                             </p:selectOneMenu>
                         </div>
                     </div>
                     <div class="col-md-3">
+                        <div class="form-group">
+                            <p:outputLabel value="Status " styleClass="control-label" for="statusContratoSelect" />
+                            <p:selectOneMenu id="statusContratoSelect"
+                                             filter="true" 
+                                             placeholder="status"
+                                             required="true"
+                                             styleClass="form-control" 
+                                             converter="statusconverter"
+                                             value="#{managerContrato.contrato.status}">
+                                <f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
+                                <f:selectItems value="#{managerStatusContrato.all}" var="status" itemLabel="#{status.status}" itemValue="#{status}" />
+                            </p:selectOneMenu>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
                         <div class="form-group">
                             <p:outputLabel value="Descrição"
                                            for="descricaoContrato" />
@@ -239,11 +274,12 @@
                             <p:message for="descricaoContrato" />
                         </div>
                     </div>
+
                 </div>
-                <h4>Conta vinculada</h4>
+                <h4>Dados bancários</h4>
                 <hr></hr>
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <div class="form-group">
                             <p:outputLabel value="Banco"
                                            for="bancoContrato" />
@@ -258,7 +294,7 @@
                             <p:message for="bancoContrato" />
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <div class="form-group">
                             <p:outputLabel value="N° da conta"
                                            for="contaContrato" />
@@ -272,13 +308,16 @@
                             <p:message for="contaContrato" />
                         </div> 
                     </div>
-                    <div class="col-md-4">
+
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
                         <div class="form-group">
                             <p:outputLabel value="Dígito"
                                            for="digitoContaContrato" />
                             <p:inputMask id="digitoContaContrato"
                                          style="display: flex; flex-direction: row"
-                                         styleClass="form-control" 
+                                         styleClass="form-control"
                                          placeholder=""
                                          required="true"
                                          value="#{managerContrato.contrato.digito}"
@@ -286,9 +325,7 @@
                             <p:message for="digitoContaContrato" />
                         </div> 
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="form-group">
                             <p:outputLabel value="Agência"
                                            for="agenciaContrato" />
@@ -303,7 +340,7 @@
                             <p:message for="agenciaContrato" />
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="form-group">
                             <p:outputLabel value="Operação"
                                            for="operacaoContrato" />
@@ -317,7 +354,7 @@
                             <p:message for="operacaoContrato" />
                         </div> 
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="form-group">
                             <p:outputLabel value="Saldo inicial"
                                            for="saldoContaContrato" />
@@ -331,32 +368,6 @@
                             <p:message for="saldoContaContrato" />
                         </div> 
                     </div>
-                </div>
-                <h4>Situação</h4>
-                <hr></hr>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <p:outputLabel value="Status" styleClass="control-label" for="statusContratoSelect" />
-                            <p:selectOneMenu id="statusContratoSelect"
-                                             filter="true" 
-                                             placeholder="status"
-                                             required="true"
-                                             styleClass="form-control" >
-                                <f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
-                                <f:selectItems  />
-                            </p:selectOneMenu>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <p:outputLabel value="Contrato está ativo ?"/>
-                            <div class="ui-inputgroup">                                
-                                <p:selectBooleanButton onLabel="Sim" offLabel="Não" value="#{managerContrato.contrato.ativo}" style="width:12rem; color: white !important;border-radius: 5px"/>
-                            </div>
-                        </div> 
-                    </div>
-
                 </div>
                 <p:fileUpload mode="advanced"
                               multiple="false"

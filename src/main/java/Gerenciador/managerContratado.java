@@ -109,7 +109,7 @@ public class managerContratado extends managerPrincipal implements Serializable 
         return contratadoServico.find(id);
     }
 
-    public List<Contratado> buscarTodos() {
+    public List<Contratado> getAll() {
         return contratadoServico.FindAll();
     }
 

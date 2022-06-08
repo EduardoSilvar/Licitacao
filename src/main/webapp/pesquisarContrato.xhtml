@@ -29,10 +29,215 @@
         </div>
     </ui:define>
     <ui:define name="titulo">
-        <h4>Cadastro de Licitação</h4>
+        <h4>Pesquisar Contrato</h4>
     </ui:define>
 
     <ui:define name="corpo">
+        <h:panelGroup>
+            <p:growl id="messages" showDetail="true" />
+            <h:panelGroup id="pesquisaPanel" >
+                <h:panelGroup id="dadosGeraisPanelGroup" >
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <p:outputLabel value="Número"
+                                               for="numeroInput" />
+                                <p:inputMask id="numeroInput"
+                                             placeholder=""
+                                             value="#{managerContrato.contrato.numeroContrato}"
+                                             disabled="#{managerContratado.visualizar}"
+                                             rendered="true"
+                                             requiredMessage="Este campo é obrigatório."
+                                             styleClass="form-control" 
+                                             />
+                                <p:message for="numeroInput" />
+                            </div>
+                        </div>
+                        <h:panelGroup >
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <p:outputLabel value="Status"
+                                                   for="statusContratoSelect"  />
+                                    <p:selectOneMenu id="statusContratoSelect"
+                                                     filter="true" 
+                                                     placeholder="status"
+                                                     styleClass="form-control" 
+                                                     converter="statusconverter"
+                                                     value="#{managerContrato.contrato.status}"
+                                                     disabled="#{managerContratado.visualizar}">
+                                        <f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
+                                        <f:selectItems value="#{managerStatusContrato.all}" var="status" itemLabel="#{status.status}" itemValue="#{status}" />
+                                    </p:selectOneMenu>
+                                    <p:message for="statusContratoSelect" />
+                                </div>
+                            </div>
+                        </h:panelGroup>
+                        <h:panelGroup >
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <p:outputLabel value="Empresa" styleClass="control-label" for="contratadoSelect" />
+                                    <p:selectOneMenu id="contratadoSelect"
+                                                     filter="true" 
+                                                     placeholder="Tipo"
+                                                     styleClass="form-control"
+                                                     value="#{managerContrato.contrato.contratado}"
+                                                     disabled="#{managerContratado.visualizar}"
+                                                     converter="contratoconverter" >
+                                        <f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
+                                        <f:selectItems value="#{managerContratado.all}" var="contratado" itemLabel="#{contratado.nome}" itemValue="#{contratado}"/>
+                                    </p:selectOneMenu>
+                                </div>
+                            </div>
+                        </h:panelGroup>
+                        <h:panelGroup>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <p:outputLabel value="Valor Global"
+                                                   for="valorInput" />
+                                    <p:inputMask id="valorInput"
+                                                 placeholder=""
+                                                 value="#{managerContrato.contrato.valor}"
+                                                 disabled="#{managerContratado.visualizar}"
+                                                 rendered="true"
+                                                 requiredMessage="Este campo é obrigatório."
+                                                 styleClass="form-control" 
+                                                 />
+                                    <p:message for="valorInput" />
+                                </div>
+                            </div>
+                        </h:panelGroup>
+                    </div>
+                    <div class="row">
+                        <h:panelGroup>
+                            <div class="col-md-2"></div>
+                            <div class="col-md-4">
+                                <p:outputLabel value="Data inicial"
+                                               for="dataInicialContrato" />
+                                <p:calendar id="dataInicialContrato"
+                                            rendered="true"
+                                            mask="true"
+                                            style="display: flex; flex-direction: row"
+                                            requiredMessage="Este campo é obrigatório."
+                                            inputStyleClass="form-control"
+                                            value="#{managerContrato.contrato.dataInicio}"
+                                            showOn="button"
+                                            />
+                                <p:message for="dataInicialContrato" />
+                            </div>
+                            <div class="col-md-4">
+                                <p:outputLabel value="Data final"
+                                               for="dataFinalContrato" />
+                                <p:calendar id="dataFinalContrato"
+                                            rendered="true"
+                                            mask="true"
+                                            style="display: flex; flex-direction: row"
+                                            requiredMessage="Este campo é obrigatório."
+                                            inputStyleClass="form-control"
+                                            value="#{managerContrato.contrato.dataFinal}"
+                                            showOn="button"
+                                            />
+                                <p:message for="dataFinalContrato" />
+                            </div>
+                            <div class="col-md-2"></div>
+                        </h:panelGroup>
+                    </div>
+                </h:panelGroup>
 
+            </h:panelGroup>
+
+            <center>
+                <p:commandButton value="Pesquisar" icon="pi pi-search" process="@this corpoInteiro:pesquisaPanel" update="corpoInteiro:contratoDatatable" actionListener="#{managerContrato.pesquisar()}" />
+                <p:commandButton value="Limpar" icon="pi pi-ban" update="corpoInteiro:pesquisaPanel corpoInteiro:contratoDatatable" process="@this corpoInteiro:pesquisaPanel" actionListener="#{managerContrato.instanciar()}"/>
+            </center>
+            <hr/>
+
+            <p:dataTable id="contratoDatatable" var="contrato" value="#{managerContrato.contratos}"
+                         resizeMode="5">
+                <f:facet name="header">
+                    <center>
+                        Contratos
+                    </center>
+                </f:facet>
+                <p:column headerText="ações" width="200">
+                    <p:commandButton  icon="pi pi-trash" 
+                                      process="@this"
+                                      update="@form:removeraContratoConfirmDialog"
+                                      oncomplete="PF('removeraContratoConfirmDialog').show();" title="exluir" >
+                        <f:setPropertyActionListener value="#{contrato}"
+                                                     target="#{managerContrato.contrato}"/>
+                    </p:commandButton>
+                    <p:button  icon="pi pi-eye" title="visualizar" href="contrato.xhtml?visualizar=#{contrato.id}" />
+                </p:column>
+                <p:column headerText="N° do contrato">
+                    <h:outputText value="#{contrato.numeroContrato}" />
+                </p:column>
+
+                <p:column headerText="Status">
+                    <h:outputText value="#{contrato.status}" />
+                </p:column>
+                <p:column headerText="Empresa">
+                    <h:outputText value="#{contrato.contratado}" />
+                </p:column>
+                <p:column headerText="Valor">
+                    <h:outputText value="#{contrato.valor}" />
+                </p:column>
+                <p:column headerText="Vigência">
+                    <h:outputText value="#{contrato.dataInicio}"  />
+                </p:column>
+                
+
+            </p:dataTable>
+        </h:panelGroup>
+        <p:dialog id="removeraContratoConfirmDialog"
+                  widgetVar="removeraContratoConfirmDialog"
+                  header="Atenção!"
+                  closeOnEscape="true"
+                  draggable="false"
+                  maximizable="false"
+                  minimizable="false"
+                  modal="true"
+                  width="850"
+                  showEffect="fade"
+                  hideEffect="fade">
+
+            <div class="row">
+
+                <div class="col-md-12">
+                    <div class="form-group" style="padding-left: 80px !important">
+                        <h4>
+                            <i class="pi pi-exclamation-triangle"></i>
+                            Tem certeza de que deseja remover este Contrato ?
+                        </h4>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+
+                    <center>
+
+                        <p:commandButton value="Sim"
+                                         title="Confirmar Remoção"
+                                         icon="fa fa-check"
+                                         update="contratoDatatable messages"
+                                         actionListener="#{managerContrato.deletar()}"
+                                         oncomplete="PF('removeraContratoConfirmDialog').hide();"
+                                         styleClass="mr-md-1"/>
+
+                        <p:commandButton value="Não"
+                                         title="Cancelar Remoção"
+                                         icon="fa fa-close"
+                                         process="@this"
+                                         update="@form"
+                                         oncomplete="PF('removeraContratoConfirmDialog').hide();"
+                                         styleClass="ml-md-1"/>
+
+                    </center>
+
+                </div>
+
+            </div>
+
+
+        </p:dialog>
     </ui:define>
 </ui:composition>
