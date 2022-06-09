@@ -15,6 +15,7 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import modelo.Contratado;
+import modelo.Contrato_;
 import modelo.Endereco;
 import util.Msg;
 import util.Utils;
@@ -33,10 +34,14 @@ public class managerContratado extends managerPrincipal implements Serializable 
     private Contratado contratado;
     private List<Contratado> contratados;
     private NaturezaEnum natureza;
+    private String cpf;
+    private String cnpj;
 
     @Override
     public void carregar(String param) {
         this.contratado = contratadoServico.find(Long.parseLong(param));
+        cpf = contratado.getCpf();
+        cnpj = contratado.getCnpj();
         this.contratados = new ArrayList<>();
     }
 
@@ -67,17 +72,24 @@ public class managerContratado extends managerPrincipal implements Serializable 
     }
 
     public void salvar() {
+        if (contratado.getNatureza().equals(natureza.FISICA)) {
+            contratado.setCpf(cpf);
+            contratado.setCnpj("");
+        } else {
+            contratado.setCnpj(cnpj);
+            contratado.setCpf("");
+        }
         if (Utils.isNotEmpty(contratado.getCpf())) {
             if (contratadoServico.valida(contratado.getCpf())) {
-                if(contratadoServico.existCpf(contratado.getCpf())){
+                if (contratadoServico.existCpf(contratado.getCpf())) {
                     Msg.messagemError("CPF ja esta sendo usado !");
-                }else{
-                  contratadoServico.Save(contratado);
-                Msg.messagemInfoRedirect("Operação realizada com sucesso !", "contratado.xhtml?visualizar=" + this.contratado.getId());
-                  
+                } else {
+                    contratadoServico.Save(contratado);
+                    Msg.messagemInfoRedirect("Operação realizada com sucesso !", "contratado.xhtml?visualizar=" + this.contratado.getId());
+
                 }
-            }else{
-            Msg.messagemError("CPF invalido !");
+            } else {
+                Msg.messagemError("CPF invalido !");
             }
         } else {
             contratadoServico.Save(contratado);
@@ -88,7 +100,15 @@ public class managerContratado extends managerPrincipal implements Serializable 
     }
 
     public void atualizar() {
+        if (contratado.getNatureza().equals(natureza.FISICA)) {
+            contratado.setCpf(cpf);
+            contratado.setCnpj("");
+        } else {
+            contratado.setCnpj(cnpj);
+            contratado.setCpf("");
+        }
         contratadoServico.Update(contratado);
+
         Msg.messagemInfoRedirect("Operação realizada com sucesso !", "contratado.xhtml?visualizar=" + this.contratado.getId());
     }
 
@@ -98,7 +118,10 @@ public class managerContratado extends managerPrincipal implements Serializable 
             NovoContratado.setAtivo(false);
             contratadoServico.Update(NovoContratado);
             contratados.remove(NovoContratado);
-            Msg.messagemInfoRedirect("Processo realizado com sucesso !", "contratado.xhtml");
+            if (Utils.isNotEmpty(contratado)) {
+                this.contratados = contratadoServico.findPesquisa(this.contratado);
+            }
+            Msg.messagemInfo("Processo realizado com sucesso !");
         } catch (Exception e) {
             e.getMessage();
         }
@@ -122,8 +145,12 @@ public class managerContratado extends managerPrincipal implements Serializable 
     }
 
     public void pesquisar() {
-        System.err.println("rendeu meu parceiro");
         this.contratados = contratadoServico.findPesquisa(this.contratado);
+        if (contratados.size() > 0) {
+            Msg.messagemInfo("Pesquisa realizada com sucesso !");
+        } else {
+            Msg.messagemError("Nenhum contratado encontrado !");
+        }
     }
 
     public Contratado getContratado() {

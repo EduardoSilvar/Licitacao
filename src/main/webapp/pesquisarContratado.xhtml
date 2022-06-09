@@ -109,7 +109,7 @@
             </h:panelGroup>
 
             <center>
-                <p:commandButton value="Pesquisar" icon="pi pi-search" process="@this corpoInteiro:pesquisaPanel" update="corpoInteiro:tipoContratadoDatatable" actionListener="#{managerContratado.pesquisar()}" />
+                <p:commandButton value="Pesquisar" icon="pi pi-search" process="@this corpoInteiro:pesquisaPanel" update="corpoInteiro:tipoContratadoDatatable corpoInteiro:messages" actionListener="#{managerContratado.pesquisar()}" />
                 <p:commandButton value="Limpar" icon="pi pi-ban" update="corpoInteiro:pesquisaPanel corpoInteiro:tipoContratadoDatatable" process="@this corpoInteiro:pesquisaPanel" actionListener="#{managerContratado.instanciar()}"/>
             </center>
             <hr/>
@@ -175,6 +175,7 @@
                                          title="Confirmar Remoção"
                                          icon="fa fa-check"
                                          update="tipoContratadoDatatable messages"
+                                         process="@this pesquisaPanel"
                                          actionListener="#{managerContratado.deletar()}"
                                          oncomplete="PF('removeraContratadoConfirmDialog').hide();"
                                          styleClass="mr-md-1"/>

@@ -43,7 +43,7 @@
     </ui:define>
     <ui:define name="barra">
         <div class="row" id="stylebarra">
-            <i class="pi pi-file-o" id="icon"></i> <h5 style="color: #e1e6e5"> Vigência</h5>
+            <i class="pi pi-file-o" id="icon"></i> <h5 style="color: #e1e6e5">Dados Gerais</h5>
         </div>
     </ui:define>
     <ui:define name="corpo">
@@ -90,6 +90,7 @@
             <p:commandButton value="salvar" icon="pi pi-save"  update="corpoInteiro:messages" process="@this panelCorpo" rendered="#{managerTipoContrato.cadastrar}" actionListener="#{managerTipoContrato.salvar()}"  />
             <p:button value="cancelar" icon="pi pi-ban" href="index.xhtml" rendered="#{managerTipoContrato.cadastrar}"  />
             <p:button value="cancelar" icon="pi pi-ban" href="tipoContrato.xhtml" rendered="#{managerTipoContrato.visualizar}" />
+            <p:button value="cancelar" icon="pi pi-ban" href="tipoContrato.xhtml?visualizar=#{managerTipoContrato.tipoContrato.id}" rendered="#{managerTipoContrato.editar}" />
 
         </center>
 
@@ -122,7 +123,7 @@
 
                         <p:commandButton value="Sim"
                                          title="Confirmar Remoção"
-                                         icon="fa fa-check"
+                                         icon="pi pi-check"
                                          process="@this"
                                          update="removeraTipoConfirmDialog messages "
                                          actionListener="#{managerTipoContrato.deletar()}"
@@ -131,7 +132,7 @@
 
                         <p:commandButton value="Não"
                                          title="Cancelar Remoção"
-                                         icon="fa fa-close"
+                                         icon="pi pi-times"
                                          process="@this"
                                          update="@form"
                                          oncomplete="PF('removeraTipoConfirmDialog').hide();"

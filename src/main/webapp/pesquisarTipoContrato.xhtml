@@ -130,7 +130,7 @@
                         <p:commandButton value="Sim"
                                          title="Confirmar Remoção"
                                          icon="fa fa-check"
-                                         process="@this"
+                                         process="@this pesquisaPanel"
                                          update="removeraTipoConfirmDialog messages tipoLicitacaoDatatable"
                                          actionListener="#{managerTipoContrato.deletar()}"
                                          oncomplete="PF('removeraTipoConfirmDialog').hide();"

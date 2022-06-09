@@ -79,16 +79,25 @@ public class UsuarioServico extends ServicoGenerico<Usuario> implements Serializ
     }
 
     public boolean login(Usuario user) {
-        String sql = "select u from Usuario u where u.email = :email"
+        String sql = "select u from Usuario u where u.login = :login"
                 + " and u.senha = :senha and u.ativo = true";
         Query query = getEntityManager().createQuery(sql);
-        query.setParameter("email", user.getEmail());
+        query.setParameter("login", user.getLogin());
         query.setParameter("senha", user.getSenha());
         if (query.getResultList().size() > 0) {
             return true;
         } else {
             return false;
         }
+    }
+
+    public Usuario find(Usuario user) {
+        String sql = "select u from Usuario u where u.login = :login"
+                + " and u.senha = :senha and u.ativo = true";
+        Query query = getEntityManager().createQuery(sql);
+        query.setParameter("login", user.getLogin());
+        query.setParameter("senha", user.getSenha());
+        return (Usuario) query.getResultList().get(0);
     }
 
     public boolean existCpf(Usuario user) {

@@ -18,6 +18,7 @@ import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 import modelo.TipoContrato;
 import util.Msg;
+import util.Utils;
 
 /**
  *
@@ -71,6 +72,9 @@ public class managerTipoContrato extends managerPrincipal implements Serializabl
             novoTipoContrato.setAtivo(false);
             tipoContratoServico.Update(novoTipoContrato);
             TipoContratos.remove(novoTipoContrato);
+            if (Utils.isNotEmpty(tipoContrato)) {
+                TipoContratos = tipoContratoServico.pesquisar(this.tipoContrato);
+            }
             Msg.messagemInfoRedirect("Operação realizada com sucesso !", "pesquisarTipoContrato.xhtml");
 
         } catch (Exception e) {

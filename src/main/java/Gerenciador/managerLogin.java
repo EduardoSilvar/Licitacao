@@ -68,7 +68,8 @@ public class managerLogin implements Serializable {
         this.usuarioLogado.setSenha(Usuario.encryptPassword(senha));
         if (Utils.isNotEmpty(usuarioLogado)) {
             if (userServico.login(usuarioLogado)) {
-                Msg.messagemInfoRedirect("Bem vindo " , "index.xhtml");
+                this.usuarioLogado = userServico.find(usuarioLogado);
+                Msg.messagemInfoRedirect("Bem vindo ", "index.xhtml");
             } else {
                 Msg.messagemError("Informações erradas, tente novamente !");
             }

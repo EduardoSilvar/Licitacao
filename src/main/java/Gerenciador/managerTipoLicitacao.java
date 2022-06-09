@@ -16,6 +16,7 @@ import javax.faces.bean.ViewScoped;
 import javax.persistence.PersistenceContext;
 import modelo.TipoLicitacao;
 import util.Msg;
+import util.Utils;
 
 /**
  *
@@ -42,24 +43,28 @@ public class managerTipoLicitacao extends managerPrincipal implements Serializab
         novoTipoLicitacao.setAtivo(false);
         tipoLicitacaoServico.Update(novoTipoLicitacao);
         tiposLicitacoes.remove(novoTipoLicitacao);
-        Msg.messagemInfoRedirect("Operação realizada com sucesso !", "tipoLicitacao.xhtml");
+        if (Utils.isNotEmpty(tipoLicitacao)) {
+            this.tiposLicitacoes = tipoLicitacaoServico.pesquisar(tipoLicitacao);
+        }
+        Msg.messagemInfo("Operação realizada com sucesso !");
+
     }
 
     public void atualizar() {
         tipoLicitacaoServico.Update(this.tipoLicitacao);
         Msg.messagemInfoRedirect("Operação realizada com sucesso !", "tipoLicitacao.xhtml?visualizar=" + this.tipoLicitacao.getId());
     }
-    
-    public List<TipoLicitacao> getAll(){
+
+    public List<TipoLicitacao> getAll() {
         return tipoLicitacaoServico.findAllTiposLicitacao();
     }
-    
+
     public void pesquisar() {
         this.tiposLicitacoes = tipoLicitacaoServico.pesquisar(tipoLicitacao);
         if (this.tiposLicitacoes.size() > 0) {
             Msg.messagemInfo("Pesquisa realizada com suceso !");
         } else {
-            Msg.messagemError("Nenhum tipo de licitação encontrada !");
+            Msg.messagemError("Sua Pesquisa não trouxe nenhum tipo de licitação !");
         }
 
     }

@@ -84,7 +84,9 @@ public class managerUsuario extends managerPrincipal implements Serializable {
         Usuario novoUser = userServico.find(this.user.getId());
         novoUser.setAtivo(false);
         userServico.Update(novoUser);
-        pesquisar();
+        if (Utils.isNotEmpty(user)) {
+            this.users = userServico.pesquisar(this.user);
+        }
         Msg.messagemInfo("Operação realizada com sucesso !");
     }
 

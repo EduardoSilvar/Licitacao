@@ -35,13 +35,9 @@
     </ui:define>
     <ui:define name="barra">
         <div class="row" id="stylebarra">
-            <i class="pi pi-file-o" id="icon"></i> <h5 style="color: #e1e6e5"> Dados Gerais teste</h5>
+            <i class="pi pi-user" id="icon"></i> <h5 style="color: #e1e6e5"> Dados Gerais</h5>
         </div>
     </ui:define>
-    <ui:define name="titulo">
-        <h4>Cadastro de Contratado</h4>
-    </ui:define>
-
     <ui:define name="corpo">
 
         <h:panelGroup id="contratadoPanelGroup" style="padding: 30px !important">
@@ -238,6 +234,7 @@
                 <p:button value="Editar" icon="pi pi-pencil"  rendered="#{managerContratado.visualizar}" href="contratado.xhtml?editar=#{managerContratado.contratado.id}" />
                 <p:commandButton value="Atualizar" icon="pi pi-sync" process="contratadoPanelGroup"  actionListener="#{managerContratado.atualizar()}" rendered="#{managerContratado.editar}"  />
                 <p:button value="Cancelar" icon="pi pi-ban"  href="contratado.xhtml" rendered="#{managerContratado.visualizar}" />
+                <p:button value="Cancelar" icon="pi pi-ban"  href="contratado.xhtml?visualizar=#{managerContratado.contratado.id}" rendered="#{managerContratado.editar}" />
                 <p:button value="Cancelar" icon="pi pi-ban"  href="index.xhtml" rendered="#{managerContratado.cadastrar}" />
             </center>
         </h:panelGroup>
