@@ -74,7 +74,11 @@ public class managerUsuario extends managerPrincipal implements Serializable {
         }
 
     }
-
+    
+    public List<Usuario> getAll(){
+        return userServico.FindAll();
+    }
+    
     public void atualizar() {
         userServico.Update(this.user);
         Msg.messagemInfoRedirect("Operação realizada com sucesso !", "usuario.xhtml?visualizar=" + this.user.getId());

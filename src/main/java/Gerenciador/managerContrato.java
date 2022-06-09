@@ -16,6 +16,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import modelo.Contratado;
 import modelo.Contrato;
+import util.Msg;
+import util.Utils;
 
 /**
  *
@@ -23,7 +25,7 @@ import modelo.Contrato;
  */
 @ManagedBean
 @ViewScoped
-public class managerContrato implements Serializable {
+public class managerContrato extends managerPrincipal implements Serializable {
 
     @EJB
     private ContratoServico contratoServico;
@@ -33,38 +35,77 @@ public class managerContrato implements Serializable {
     private boolean tempoDeterminado;
     private List<Contrato> contratos;
 
-    @PostConstruct
-    public void iniciar() {
+    @Override
+    public void carregar(String param) {
+        this.contrato = contratoServico.find(Long.parseLong(param));
+        this.contratos = new ArrayList<>();
+    }
+
+    @Override
+    public void instanciar() {
         InstanciarContrato();
         InstanciarContratos();
+    }
+
+    @Override
+    public String getUrlVisualizar() {
+        return "contrato.xhtml?visualizar=" + this.contrato.getId();
+    }
+
+    @Override
+    public String getUrlPesquisar() {
+        return "pesquisarContrato.xhtml";
+    }
+
+    @PostConstruct
+    public void iniciar() {
         this.valorMudou = false;
         this.tempoDeterminado = false;
     }
 
     public void Salvar() {
         contrato.setPossuiTempoDeterminado(tempoDeterminado);
-        contratoServico.Save(contrato);
-    }
-    
-    public List<Contratado> getContratados(){
-        return contratoServico.findAllContratados();
-    }
-    
-    public void Deletar(Long id) {
-        Contrato novoContrato = contratoServico.find(id);
-        novoContrato.setAtivo(false);
-        contratoServico.Update(novoContrato);
+        if (Utils.isNotEmpty(contrato.getNumeroContrato())) {
+            if (contratoServico.existNumero(contrato.getNumeroContrato())) {
+                Msg.messagemError("Número de contrato já registrado !");
+            } else {
+                contratoServico.Save(contrato);
+                Msg.messagemInfoRedirect("Operação realizada com sucesso !", "contrato.xhtml?visualizar=" + this.contrato.getId());
+            }
+        } else {
+            contratoServico.Save(contrato);
+            Msg.messagemInfoRedirect("Operação realizada com sucesso !", "contrato.xhtml?visualizar=" + this.contrato.getId());
+
+        }
     }
 
-    public void Atualizar(Contrato contrato) {
+    public void pesquisar() {
+        System.err.println("rendeu meu parceiro");
+        this.contratos = contratoServico.findPesquisa(this.contrato);
+    }
+
+    public void Deletar() {
+        try {
+            Contrato novoContrato = contratoServico.find(this.contrato.getId());
+            novoContrato.setAtivo(false);
+            contratoServico.Update(novoContrato);
+            contratos.remove(novoContrato);
+            Msg.messagemInfoRedirect("Processo realizado com sucesso !", "contrato.xhtml");
+        } catch (Exception e) {
+            e.getMessage();
+        }
+    }
+
+    public void Atualizar() {
         contratoServico.Update(contrato);
+        Msg.messagemInfoRedirect("Operação realizada com sucesso !", "contrato.xhtml?visualizar=" + this.contrato.getId());
     }
 
     public boolean renderedNovoValor() {
         return valorMudou;
     }
-    
-    public boolean renderedTempoDeterminado(){
+
+    public boolean renderedTempoDeterminado() {
         return tempoDeterminado;
     }
 
@@ -119,6 +160,5 @@ public class managerContrato implements Serializable {
     public void setContratos(List<Contrato> contratos) {
         this.contratos = contratos;
     }
-    
-    
+
 }

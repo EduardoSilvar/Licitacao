@@ -21,7 +21,7 @@ public class StatusContratoServico extends ServicoGenerico<StatusContrato> imple
     public StatusContratoServico() {
         super(StatusContrato.class);
     }
-
+    
     public List<StatusContrato> pesquisar(StatusContrato stts) {
         String sql = "select * from statusContrato s where s.ativo = true";
         if (util.Utils.isNotEmpty(stts.getStatus())) {
