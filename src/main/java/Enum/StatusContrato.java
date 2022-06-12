@@ -12,8 +12,9 @@ package Enum;
 public enum StatusContrato {
     CANCELADO("Candelado"),
     FINALIZADO("Finalizado"),
-    EXPIRADO("Expidado"),
+    EXPIRADO("Expirado"),
     PAGO("Pago"),
+    INICIADO("Iniciado"),
     ESPERANDO_INICIO("Esperando inicio"),
     APROVADO("aprovado"),
     VIGENCIA("Vigencia"),

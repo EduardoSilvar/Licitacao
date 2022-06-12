@@ -6,6 +6,7 @@
 package Gerenciador;
 
 import Enum.NaturezaEnum;
+import Enum.StatusContrato;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +26,13 @@ public class managerEnuns implements Serializable {
         List<SelectItem> items = new ArrayList<>();
         for (NaturezaEnum item : NaturezaEnum.values()) {
             items.add(new SelectItem(item, item.getNome()));
+        }
+        return items;
+    }
+     public List<SelectItem> getStatusContrato() {
+        List<SelectItem> items = new ArrayList<>();
+        for (StatusContrato item : StatusContrato.values()) {
+            items.add(new SelectItem(item, item.getStatus()));
         }
         return items;
     }

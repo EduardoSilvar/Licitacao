@@ -7,9 +7,9 @@
     <ui:define name="acoes">
         <h:panelGroup class="panelAcoes">
             <p:button value="Pesquisar"
-                      title="Pesquisar Bairro"
+                      title="Pesquisar contrato"
                       icon="pi pi-search"
-                      href="pesquisarBairro.xhtml" style=" margin-right: 30px !important"/>
+                      href="pesquisarContrato.xhtml" style=" margin-right: 30px !important"/>
 
             <p:splitButton value="Ações" style="margin: 0px -8px !important"
                            icon="pi pi-cog"
@@ -25,11 +25,8 @@
     </ui:define>
     <ui:define name="barra">
         <div class="row" id="stylebarra">
-            <i class="pi pi-file-o" id="icon"></i> <h5 style="color: #e1e6e5"> Dados Gerais teste</h5>
+            <i class="pi pi-file-o" id="icon"></i> <h5 style="color: #e1e6e5"> Pesquisar Contrato</h5>
         </div>
-    </ui:define>
-    <ui:define name="titulo">
-        <h4>Pesquisar Contrato</h4>
     </ui:define>
 
     <ui:define name="corpo">
@@ -53,25 +50,25 @@
                                 <p:message for="numeroInput" />
                             </div>
                         </div>
-                        <h:panelGroup >
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <p:outputLabel value="Status"
-                                                   for="statusContratoSelect"  />
-                                    <p:selectOneMenu id="statusContratoSelect"
-                                                     filter="true" 
-                                                     placeholder="status"
-                                                     styleClass="form-control" 
-                                                     converter="statusconverter"
-                                                     value="#{managerContrato.contrato.status}"
-                                                     disabled="#{managerContratado.visualizar}">
-                                        <f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
-                                        <f:selectItems value="#{managerStatusContrato.all}" var="status" itemLabel="#{status.status}" itemValue="#{status}" />
-                                    </p:selectOneMenu>
-                                    <p:message for="statusContratoSelect" />
-                                </div>
-                            </div>
-                        </h:panelGroup>
+                        <!--                        <h:panelGroup >
+                                                    <div class="col-md-3">
+                                                        <div class="form-group">
+                                                            <p:outputLabel value="Status"
+                                                                           for="statusContratoSelect"  />
+                                                            <p:selectOneMenu id="statusContratoSelect"
+                                                                             filter="true" 
+                                                                             placeholder="status"
+                                                                             styleClass="form-control" 
+                                                                             converter="statusconverter"
+                                                                             value="{managerContrato.contrato.status}"
+                                                                             disabled="{managerContratado.visualizar}">
+                                                                <f:selectItem itemLabel="Selecione..." itemValue="{null}" />
+                                                                <f:selectItems value="{managerStatusContrato.all}" var="status" itemLabel="{status.status}" itemValue="#status}" />
+                                                            </p:selectOneMenu>
+                                                            <p:message for="statusContratoSelect" />
+                                                        </div>
+                                                    </div>
+                                                </h:panelGroup>-->
                         <h:panelGroup >
                             <div class="col-md-3">
                                 <div class="form-group">
@@ -184,7 +181,7 @@
                 <p:column headerText="Vigência">
                     <h:outputText value="#{contrato.dataInicio}"  />
                 </p:column>
-                
+
 
             </p:dataTable>
         </h:panelGroup>

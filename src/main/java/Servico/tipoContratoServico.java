@@ -24,7 +24,7 @@ public class tipoContratoServico extends ServicoGenerico<TipoContrato> implement
     }
     
     public List<TipoContrato> findAllTiposContrato(){
-        String sql = "select t from TipoContrato t";
+        String sql = "select t from TipoContrato t where t.ativo = true";
         Query query = entityManager.createQuery(sql);
         return query.getResultList();
     }

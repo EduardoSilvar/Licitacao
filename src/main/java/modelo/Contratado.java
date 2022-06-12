@@ -124,7 +124,7 @@ public class Contratado implements Serializable {
 
     @Override
     public String toString() {
-        return "Contratado{" + "id=" + id + ", nome=" + nome + ", cpf=" + cpf + ", cnpj=" + cnpj + ", endereco=" + endereco + ", especialidade=" + especialidade + ", natureza=" + natureza + ", email=" + email + ", telefone=" + telefone + ", whatsapp=" + whatsapp + '}';
+        return " " + nome + " ";
     }
 
 }

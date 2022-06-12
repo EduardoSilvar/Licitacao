@@ -7,6 +7,7 @@ package Gerenciador;
 
 import Servico.ContratadoServico;
 import Servico.ContratoServico;
+import Servico.UsuarioServico;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +17,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import modelo.Contratado;
 import modelo.Contrato;
+import modelo.Usuario;
 import util.Msg;
 import util.Utils;
 
@@ -29,22 +31,33 @@ public class managerContrato extends managerPrincipal implements Serializable {
 
     @EJB
     private ContratoServico contratoServico;
+    @EJB
+    private ContratadoServico contratadoServico;
+    @EJB
+    private UsuarioServico userServico;
 
     private Contrato contrato;
+    private List<Usuario> responsaveis;
     private boolean valorMudou;
     private boolean tempoDeterminado;
     private List<Contrato> contratos;
+    private List<Contratado> contratados;
 
     @Override
     public void carregar(String param) {
         this.contrato = contratoServico.find(Long.parseLong(param));
         this.contratos = new ArrayList<>();
+        this.contratados = contratadoServico.FindAll();
+        this.responsaveis = userServico.FindAll();
+
     }
 
     @Override
     public void instanciar() {
         InstanciarContrato();
         InstanciarContratos();
+        this.contratados = contratadoServico.FindAll();
+        this.responsaveis = userServico.FindAll();
     }
 
     @Override
@@ -80,7 +93,6 @@ public class managerContrato extends managerPrincipal implements Serializable {
     }
 
     public void pesquisar() {
-        System.err.println("rendeu meu parceiro");
         this.contratos = contratoServico.findPesquisa(this.contrato);
     }
 
@@ -106,7 +118,7 @@ public class managerContrato extends managerPrincipal implements Serializable {
     }
 
     public boolean renderedTempoDeterminado() {
-        return tempoDeterminado;
+        return contrato.isPossuiTempoDeterminado();
     }
 
     public Contrato Pegar(Long id) {
@@ -159,6 +171,22 @@ public class managerContrato extends managerPrincipal implements Serializable {
 
     public void setContratos(List<Contrato> contratos) {
         this.contratos = contratos;
+    }
+
+    public List<Contratado> getContratados() {
+        return contratados;
+    }
+
+    public void setContratados(List<Contratado> contratados) {
+        this.contratados = contratados;
+    }
+
+    public List<Usuario> getResponsaveis() {
+        return responsaveis;
+    }
+
+    public void setResponsaveis(List<Usuario> responsaveis) {
+        this.responsaveis = responsaveis;
     }
 
 }
