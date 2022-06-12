@@ -1,0 +1,179 @@
+<ui:composition template="/WEB-INF/template/layout.xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns="http://www.w3.org/1999/xhtml">
+    <ui:define name="acoes">
+        <h:panelGroup class="panelAcoes">
+            <p:button value="Pesquisar"
+                      title="Pesquisar Setor"
+                      icon="pi pi-search"
+                      href="pesquisarSetor.xhtml" style=" margin-right: 30px !important;"/>
+
+            <p:splitButton value="Ações" style="margin: 0px -8px !important" rendered="#{not managerSetor.cadastrar}"
+                           icon="pi pi-cog"
+                           >
+
+                <p:menuitem value="Editar" 
+                            icon="pi pi-pencil"
+                            url="setor.xhtml?editar=#{managerSetor.setor.id}"
+                            process="@this"
+                            />
+                <p:menuitem value="Excluir" 
+                            icon="pi pi-trash"
+                            oncomplete="PF('removeraSetorConfirmDialog').show();"
+                            process="@this corpoInteiro"
+                            update="corpoInteiro:messages"
+                            >
+                    <f:setPropertyActionListener value="#{managerSetor.setor}"
+                                                 target="#{managerSetor.setor}"/>
+                </p:menuitem>
+
+            </p:splitButton>
+        </h:panelGroup>
+    </ui:define>
+    <ui:define name="barra">
+        <div class="row" id="stylebarra">
+            <i class="pi pi-plus" id="icon"></i> <h5 style="color: #e1e6e5">Cadastro de Setor</h5>
+        </div>
+    </ui:define>
+    <ui:define name="corpo">
+
+        <h:panelGroup id="contratadoPanelGroup" style="padding: 30px !important">
+            <p:growl id="messages" showDetail="true" />
+            <h:panelGroup>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <p:outputLabel value="CPF do Responsável"
+                                           for="cpfResponInput" />
+                            <p:inputMask id="cpfResponInput"
+                                         placeholder="CPF"
+                                         required="true"
+                                         mask="999.999.999-99"
+                                         value="#{managerSetor.setor.cpfResponsavel}"
+                                         disabled="#{managerSetor.visualizar}"
+                                         rendered="true"
+                                         requiredMessage="Este campo é obrigatório."
+                                         styleClass="form-control" 
+                                         />
+                            <p:message for="cpfResponInput" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <p:outputLabel value="Nome do Responsável"
+                                           for="nomResponInput" />
+                            <p:inputText id="nomResponInput"
+                                         placeholder="Nome"
+                                         required="true"
+                                         value="#{managerSetor.setor.nomeResponsavel}"
+                                         disabled="#{managerSetor.visualizar}"
+                                         rendered="true"
+                                         requiredMessage="Este campo é obrigatório."
+                                         styleClass="form-control" 
+                                         />
+                            <p:message for="nomResponInput" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <p:outputLabel value="Nome"
+                                           for="nomSetorInput" />
+                            <p:inputText id="nomSetorInput"
+                                         placeholder="Nome"
+                                         required="true"
+                                         value="#{managerSetor.setor.nome}"
+                                         disabled="#{managerSetor.visualizar}"
+                                         rendered="true"
+                                         requiredMessage="Este campo é obrigatório."
+                                         styleClass="form-control" 
+                                         />
+                            <p:message for="nomSetorInput" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <p:outputLabel value="Descrição"
+                                           for="nomDescInput" />
+                            <p:inputTextarea id="nomDescInput"
+                                             placeholder="descrição"
+                                             required="true"
+                                             value="#{managerSetor.setor.descricao}"
+                                             disabled="#{managerSetor.visualizar}"
+                                             rendered="true"
+                                             requiredMessage="Este campo é obrigatório."
+                                             styleClass="form-control" 
+                                             />
+                            <p:message for="nomDescInput" />
+                        </div>
+                    </div>
+                </div>
+
+            </h:panelGroup>
+            <center>
+                <p:commandButton value="Salvar" icon="pi pi-save" process="contratadoPanelGroup" update="corpoInteiro:messages" actionListener="#{managerSetor.salvar()}" rendered="#{managerSetor.cadastrar}" />
+                <p:button value="Editar" icon="pi pi-pencil"  rendered="#{managerSetor.visualizar}" href="setor.xhtml?editar=#{managerSetor.setor.id}" />
+                <p:commandButton value="Atualizar" icon="pi pi-sync" process="contratadoPanelGroup" update="corpoInteiro:messages" actionListener="#{managerSetor.atualizar()}" rendered="#{managerSetor.editar}"  />
+                <p:button value="Cancelar" icon="pi pi-ban"  href="setor.xhtml" rendered="#{managerSetor.visualizar}" />
+                <p:button value="Cancelar" icon="pi pi-ban"  href="setor.xhtml?visualizar=#{managerSetor.setor.id}" rendered="#{managerSetor.editar}" />
+                <p:button value="Cancelar" icon="pi pi-ban"  href="index.xhtml" rendered="#{managerSetor.cadastrar}" />
+            </center>
+        </h:panelGroup>
+        <p:dialog id="removeraSetorConfirmDialog"
+                  widgetVar="removeraContratadoConfirmDialog"
+                  header="Atenção!"
+                  closeOnEscape="true"
+                  draggable="false"
+                  maximizable="false"
+                  minimizable="false"
+                  modal="true"
+                  width="850"
+                  showEffect="fade"
+                  hideEffect="fade">
+
+            <div class="row">
+
+                <div class="col-md-12">
+                    <div class="form-group" style="padding-left: 80px !important">
+                        <h4>
+                            <i class="pi pi-exclamation-triangle"></i>
+                            Tem certeza de que deseja remover este Contratado ?
+                        </h4>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+
+                    <center>
+
+                        <p:commandButton value="Sim"
+                                         title="Confirmar Remoção"
+                                         icon="fa fa-check"
+                                         update="corpoInteiro corpoInteiro:messages"
+                                         process="@this"
+                                         actionListener="#{managerContratado.deletar()}"
+                                         oncomplete="PF('removeraContratadoConfirmDialog').hide();"
+                                         styleClass="mr-md-1"/>
+
+                        <p:commandButton value="Não"
+                                         title="Cancelar Remoção"
+                                         icon="fa fa-close"
+                                         process="@this"
+                                         update="@form"
+                                         oncomplete="PF('removeraContratadoConfirmDialog').hide();"
+                                         styleClass="ml-md-1"/>
+
+                    </center>
+
+                </div>
+
+            </div>
+
+
+        </p:dialog>
+    </ui:define>
+</ui:composition>

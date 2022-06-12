@@ -1,0 +1,71 @@
+<ui:composition template="/WEB-INF/template/layout.xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns="http://www.w3.org/1999/xhtml">
+    <ui:define name="acoes">
+        <h:panelGroup class="panelAcoes">
+            <p:splitButton value="Ações" style="margin: 0px -8px !important" 
+                           icon="pi pi-cog"
+                           >
+
+                <p:menuitem value="Cadastrar" 
+                            icon="pi pi-save"
+                            url="setor.xhtml"
+                            process="@this"
+                            />
+
+            </p:splitButton>
+        </h:panelGroup>
+    </ui:define>
+    <ui:define name="barra">
+        <div class="row" id="stylebarra">
+            <i class="pi pi-bell" id="icon" style="margin-top: 3px"></i> <h5 style="color: #e1e6e5">Suas notificações</h5>
+        </div>
+    </ui:define>
+    <ui:define name="corpo">
+        <h:panelGroup>
+            <p:growl id="messages" showDetail="true" />
+            <p:accordionPanel  multiple="true" widgetVar="multiple">
+                <p:tab title="Contratos com o Vencimento Próximo">
+                    <p:dataTable id="tipoContratadoDatatable" var="contratado" value="#{managerContratado.contratados}"
+                                 resizeMode="5">
+                        <f:facet name="header">
+                            <center>
+                                Contratatos
+                            </center>
+                        </f:facet>
+                        <p:column headerText="ações" width="200">
+                            <p:button  icon="pi pi-eye" title="visualizar" href="contratado.xhtml?visualizar=#{contratado.id}" />
+                        </p:column>
+                        <p:column headerText="Nome">
+                            <h:outputText value="#{contratado.nome}" />
+                        </p:column>
+
+                        <p:column headerText="Especialidade">
+                            <h:outputText value="#{contratado.especialidade}" />
+                        </p:column>
+                        <p:column headerText="Whatsapp">
+                            <h:outputText value="#{contratado.whatsapp}" />
+                        </p:column>
+
+                    </p:dataTable>
+                </p:tab>
+                <p:tab title="Header II">
+                    <p class="p-m-0">
+                        Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab
+                        illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut
+                        odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Consectetur, adipisci velit, sed quia non numquam eius modi.
+                    </p>
+                </p:tab>
+                <p:tab title="Header III">
+                    <p class="p-m-0">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores
+                        et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga.
+                        Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus.
+                    </p>
+                </p:tab>
+            </p:accordionPanel>
+        </h:panelGroup>
+    </ui:define>
+</ui:composition>
