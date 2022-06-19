@@ -5,9 +5,13 @@
  */
 package Gerenciador;
 
+import Enum.StatusContrato;
 import Servico.ContratadoServico;
 import Servico.ContratoServico;
+import Servico.SetorServico;
+import Servico.TipoLicitacaoServico;
 import Servico.UsuarioServico;
+import Servico.tipoContratoServico;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +21,9 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import modelo.Contratado;
 import modelo.Contrato;
+import modelo.Setor;
+import modelo.TipoContrato;
+import modelo.TipoLicitacao;
 import modelo.Usuario;
 import util.Msg;
 import util.Utils;
@@ -35,20 +42,29 @@ public class managerContrato extends managerPrincipal implements Serializable {
     private ContratadoServico contratadoServico;
     @EJB
     private UsuarioServico userServico;
+    @EJB
+    private tipoContratoServico tipocontratoServico;
+    @EJB
+    private TipoLicitacaoServico tipoLicitacaoServico;
+    @EJB
+    private SetorServico setorServico;
 
     private Contrato contrato;
     private List<Usuario> responsaveis;
     private boolean valorMudou;
-    private boolean tempoDeterminado;
+    private List<TipoLicitacao> tiposLicitacao;
     private List<Contrato> contratos;
     private List<Contratado> contratados;
+    private List<TipoContrato> tiposContratos;
+    private List<Setor> setores;
 
     @Override
     public void carregar(String param) {
         this.contrato = contratoServico.find(Long.parseLong(param));
         this.contratos = new ArrayList<>();
-        this.contratados = contratadoServico.FindAll();
+        this.tiposContratos = tipocontratoServico.FindAll();
         this.responsaveis = userServico.FindAll();
+        this.setores = setorServico.FindAll();
 
     }
 
@@ -56,8 +72,11 @@ public class managerContrato extends managerPrincipal implements Serializable {
     public void instanciar() {
         InstanciarContrato();
         InstanciarContratos();
+        this.setores = setorServico.FindAll();
+        this.tiposContratos = tipocontratoServico.FindAll();
         this.contratados = contratadoServico.FindAll();
         this.responsaveis = userServico.FindAll();
+        this.tiposLicitacao = tipoLicitacaoServico.FindAll();
     }
 
     @Override
@@ -70,25 +89,15 @@ public class managerContrato extends managerPrincipal implements Serializable {
         return "pesquisarContrato.xhtml";
     }
 
-    @PostConstruct
-    public void iniciar() {
-        this.valorMudou = false;
-        this.tempoDeterminado = false;
-    }
-
-    public void Salvar() {
-        contrato.setPossuiTempoDeterminado(tempoDeterminado);
-        if (Utils.isNotEmpty(contrato.getNumeroContrato())) {
-            if (contratoServico.existNumero(contrato.getNumeroContrato())) {
+    public void salvar() {
+        if (Utils.isNotEmpty(this.contrato.getNumeroContrato())) {
+            if (contratoServico.existNumero(this.contrato.getNumeroContrato())) {
                 Msg.messagemError("Número de contrato já registrado !");
             } else {
-                contratoServico.Save(contrato);
+                this.contrato.setCorStatus(cores(this.contrato));
+                contratoServico.Save(this.contrato);
                 Msg.messagemInfoRedirect("Operação realizada com sucesso !", "contrato.xhtml?visualizar=" + this.contrato.getId());
             }
-        } else {
-            contratoServico.Save(contrato);
-            Msg.messagemInfoRedirect("Operação realizada com sucesso !", "contrato.xhtml?visualizar=" + this.contrato.getId());
-
         }
     }
 
@@ -102,7 +111,8 @@ public class managerContrato extends managerPrincipal implements Serializable {
             novoContrato.setAtivo(false);
             contratoServico.Update(novoContrato);
             contratos.remove(novoContrato);
-            Msg.messagemInfoRedirect("Processo realizado com sucesso !", "contrato.xhtml");
+            Msg.messagemInfoRedirect("Processo realizado com sucesso !", "pesquisarContrato.xhtml");
+            pesquisar();
         } catch (Exception e) {
             e.getMessage();
         }
@@ -111,6 +121,45 @@ public class managerContrato extends managerPrincipal implements Serializable {
     public void Atualizar() {
         contratoServico.Update(contrato);
         Msg.messagemInfoRedirect("Operação realizada com sucesso !", "contrato.xhtml?visualizar=" + this.contrato.getId());
+    }
+
+    public String cores(Contrato contrato) {
+        String cor = "teste";
+        if (Utils.isNotEmpty(contrato.getStatus())) {
+            switch (contrato.getStatus()) {
+                case APROVADO:
+                    cor = "#005CFE";
+                    break;
+                case CANCELADO:
+                    cor = "#FF0100";
+                    break;
+                case ESPERANDO_INICIO:
+                    cor = "#7736FF";
+                    break;
+                case EXPIRADO:
+                    cor = "#FED800";
+                    break;
+                case FINALIZADO:
+                    cor = "#7E0EAC";
+                    break;
+                case INICIADO:
+                    cor = "#ced9db";
+                    break;
+                case PAGO:
+                    cor = "#89F629";
+                    break;
+                case PROXIMO_EXPIRAR:
+                    cor = "#3FF9000";
+                    break;
+                case VIGENCIA:
+                    cor = "#88F629";
+                    break;
+                default:
+                    break;
+            }
+        }
+        return cor;
+
     }
 
     public boolean renderedNovoValor() {
@@ -157,14 +206,6 @@ public class managerContrato extends managerPrincipal implements Serializable {
         this.contrato = contrato;
     }
 
-    public boolean isTempoDeterminado() {
-        return tempoDeterminado;
-    }
-
-    public void setTempoDeterminado(boolean tempoDeterminado) {
-        this.tempoDeterminado = tempoDeterminado;
-    }
-
     public List<Contrato> getContratos() {
         return contratos;
     }
@@ -187,6 +228,70 @@ public class managerContrato extends managerPrincipal implements Serializable {
 
     public void setResponsaveis(List<Usuario> responsaveis) {
         this.responsaveis = responsaveis;
+    }
+
+    public ContratoServico getContratoServico() {
+        return contratoServico;
+    }
+
+    public void setContratoServico(ContratoServico contratoServico) {
+        this.contratoServico = contratoServico;
+    }
+
+    public ContratadoServico getContratadoServico() {
+        return contratadoServico;
+    }
+
+    public void setContratadoServico(ContratadoServico contratadoServico) {
+        this.contratadoServico = contratadoServico;
+    }
+
+    public UsuarioServico getUserServico() {
+        return userServico;
+    }
+
+    public void setUserServico(UsuarioServico userServico) {
+        this.userServico = userServico;
+    }
+
+    public tipoContratoServico getTipocontratoServico() {
+        return tipocontratoServico;
+    }
+
+    public void setTipocontratoServico(tipoContratoServico tipocontratoServico) {
+        this.tipocontratoServico = tipocontratoServico;
+    }
+
+    public List<TipoContrato> getTiposContratos() {
+        return tiposContratos;
+    }
+
+    public void setTiposContratos(List<TipoContrato> tiposContratos) {
+        this.tiposContratos = tiposContratos;
+    }
+
+    public TipoLicitacaoServico getTipoLicitacaoServico() {
+        return tipoLicitacaoServico;
+    }
+
+    public void setTipoLicitacaoServico(TipoLicitacaoServico tipoLicitacaoServico) {
+        this.tipoLicitacaoServico = tipoLicitacaoServico;
+    }
+
+    public List<TipoLicitacao> getTiposLicitacao() {
+        return tiposLicitacao;
+    }
+
+    public void setTiposLicitacao(List<TipoLicitacao> tiposLicitacao) {
+        this.tiposLicitacao = tiposLicitacao;
+    }
+
+    public List<Setor> getSetores() {
+        return setores;
+    }
+
+    public void setSetores(List<Setor> setores) {
+        this.setores = setores;
     }
 
 }

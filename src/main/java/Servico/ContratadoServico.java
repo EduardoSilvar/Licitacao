@@ -7,7 +7,6 @@ package Servico;
 
 import java.io.Serializable;
 import java.util.List;
-import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
 import javax.persistence.Query;
 import modelo.Contratado;

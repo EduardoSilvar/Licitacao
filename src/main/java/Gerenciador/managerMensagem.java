@@ -7,13 +7,16 @@ package Gerenciador;
 
 import Servico.MensagemServico;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import modelo.Contrato;
 import modelo.PedidoRenovacao;
 import modelo.Usuario;
+import util.Msg;
 
 /**
  *
@@ -30,6 +33,13 @@ public class managerMensagem implements Serializable {
     private List<Contrato> contratosPertodeExpirar;
     private List<Contrato> contratosFinalizados;
     private List<PedidoRenovacao> pedidoDeRedefinirSenha;
+
+    @PostConstruct
+    public void init() {
+        this.contratosPertodeExpirar = new ArrayList<>();
+        this.contratosAprovados = msgServico.aprovado();
+        this.contratosPertodeExpirar = msgServico.expirar();
+    }
 
     public void aprovados() {
         contratosAprovados = msgServico.aprovado();

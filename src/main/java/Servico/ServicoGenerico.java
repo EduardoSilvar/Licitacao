@@ -6,6 +6,7 @@
 package Servico;
 
 import br.com.caelum.stella.validation.CPFValidator;
+import java.io.Serializable;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -15,7 +16,7 @@ import javax.persistence.PersistenceContext;
  * @author eduardo
  * @param <T>
  */
-public class ServicoGenerico<T> {
+public class ServicoGenerico<T> implements Serializable{
 
     @PersistenceContext
     EntityManager entityManager;
@@ -38,7 +39,6 @@ public class ServicoGenerico<T> {
 
     public T find(Long id) {
         T NovoObjeto = entityManager.find(entity, id);
-        entityManager.refresh(NovoObjeto);
         return NovoObjeto;
     }
 

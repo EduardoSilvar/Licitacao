@@ -66,6 +66,10 @@ public class managerTipoContrato extends managerPrincipal implements Serializabl
         Msg.messagemInfoRedirect("Operação realizada com sucesso !", "tipoContrato.xhtml?visualizar=" + this.tipoContrato.getId());
     }
 
+    public List<TipoContrato> findall() {
+        return tipoContratoServico.FindAll();
+    }
+
     public void deletar() {
         try {
             TipoContrato novoTipoContrato = tipoContratoServico.find(this.tipoContrato.getId());
@@ -90,11 +94,6 @@ public class managerTipoContrato extends managerPrincipal implements Serializabl
         } else {
             Msg.messagemError("Nenhum tipo de contrato foi encontrato !");
         }
-    }
-
-    public List<TipoContrato> getAll() {
-        return tipoContratoServico.findAllTiposContrato();
-
     }
 
     public void instanciarLista() {

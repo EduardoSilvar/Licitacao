@@ -29,7 +29,7 @@
             <p:growl id="messages" showDetail="true" />
             <p:accordionPanel  multiple="true" widgetVar="multiple">
                 <p:tab title="Contratos com o Vencimento Próximo">
-                    <p:dataTable id="tipoContratadoDatatable" var="contratado" value="#{managerContratado.contratados}"
+                    <p:dataTable id="tipoContratadoDatatable" var="contrato" value="#{managerMensagem.contratosPertodeExpirar}"
                                  resizeMode="5">
                         <f:facet name="header">
                             <center>
@@ -37,17 +37,17 @@
                             </center>
                         </f:facet>
                         <p:column headerText="ações" width="200">
-                            <p:button  icon="pi pi-eye" title="visualizar" href="contratado.xhtml?visualizar=#{contratado.id}" />
+                            <p:button  icon="pi pi-eye" title="visualizar" href="contrato.xhtml?visualizar=#{contrato.id}" />
                         </p:column>
-                        <p:column headerText="Nome">
-                            <h:outputText value="#{contratado.nome}" />
+                        <p:column headerText="Número do processo">
+                            <h:outputText value="#{contrato.numeroProcesso}" />
                         </p:column>
 
-                        <p:column headerText="Especialidade">
-                            <h:outputText value="#{contratado.especialidade}" />
+                        <p:column headerText="Especialidade" style="background: #{contrato.corStatus}">
+                            <h:outputText value="#{contrato.status}" />
                         </p:column>
-                        <p:column headerText="Whatsapp">
-                            <h:outputText value="#{contratado.whatsapp}" />
+                        <p:column headerText="termino da vigência">
+                            <h:outputText value="#{contrato.dataFinal}" />
                         </p:column>
 
                     </p:dataTable>

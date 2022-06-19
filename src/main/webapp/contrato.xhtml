@@ -35,6 +35,7 @@
                                          placeholder="Tipo"
                                          styleClass="form-control" 
                                          required="true"
+                                         disabled="#{managerContrato.visualizar}"
                                          converter="contratadoconverter" >
                             <f:selectItem  itemLabel="Selecione..." noSelectionOption="true" />
                             <f:selectItems value="#{managerContrato.contratados}" var="contratado" itemLabel="#{contratado.nome}" itemValue="#{contratado}"/>
@@ -48,6 +49,7 @@
                         <p:inputMask id="numeroContrato"
                                      placeholder=""
                                      rendered="true"
+                                     disabled="#{managerContrato.visualizar}"
                                      required="true"
                                      requiredMessage="Este campo é obrigatório."
                                      styleClass="form-control" 
@@ -64,6 +66,7 @@
                                      placeholder=""
                                      rendered="true"
                                      required="true"
+                                     disabled="#{managerContrato.visualizar}"
                                      requiredMessage="Este campo é obrigatório."
                                      styleClass="form-control" 
                                      value="#{managerContrato.contrato.numeroProcesso}"
@@ -79,6 +82,7 @@
                                      placeholder=""
                                      rendered="true"
                                      required="true"
+                                     disabled="#{managerContrato.visualizar}"
                                      requiredMessage="Este campo é obrigatório."
                                      styleClass="form-control" 
                                      value="#{managerContrato.contrato.numeroLicitacao}"
@@ -97,10 +101,11 @@
                                          placeholder="Tipo"
                                          styleClass="form-control" 
                                          required="true"
+                                         disabled="#{managerContrato.visualizar}"
                                          value="#{managerContrato.contrato.tipoContrato}"
                                          converter="tipocontratoconverter">
                             <f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
-                            <f:selectItems value="#{managerTipoContrato.all}" var="tipoContrato" itemLabel="#{tipoContrato.nome}" itemValue="#{tipoContrato}"/>
+                            <f:selectItems value="#{managerContrato.tiposContratos}" var="tipoContrato" itemLabel="#{tipoContrato.nome}" itemValue="#{tipoContrato}"/>
                         </p:selectOneMenu> 
                     </div>
                 </div>
@@ -114,9 +119,10 @@
                                          converter="tipolicitacaoconverter"
                                          value="#{managerContrato.contrato.tipoLicitacao}"
                                          required="true"
+                                         disabled="#{managerContrato.visualizar}"
                                          >
                             <f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
-                            <f:selectItems value="#{managerTipoLicitacao.all}" var="tipoLicitacao" itemLabel="#{tipoLicitacao.tipo}" itemValue="#{tipoLicitacao}" />
+                            <f:selectItems value="#{managerContrato.tiposLicitacao}" var="tipoLicitacao" itemLabel="#{tipoLicitacao.tipo}" itemValue="#{tipoLicitacao}" />
                         </p:selectOneMenu>
                     </div>
                 </div>
@@ -128,6 +134,7 @@
                                      placeholder="R$"
                                      rendered="true"
                                      required="true"
+                                     disabled="#{managerContrato.visualizar}"
                                      value="#{managerContrato.contrato.valor}"
                                      requiredMessage="Este campo é obrigatório."
                                      styleClass="form-control" 
@@ -141,7 +148,7 @@
                     <div class="form-group">
                         <p:outputLabel value="Possui tempo determinado ?"/>
                         <div class="ui-inputgroup">
-                            <p:selectBooleanButton id="tempoDeterminadoButton" value="#{managerContrato.contrato.possuiTempoDeterminado}" onLabel="Sim" offLabel="Não" style="width:12rem; color: white !important;border-radius: 5px">
+                            <p:selectBooleanButton id="tempoDeterminadoButton"   disabled="#{managerContrato.visualizar}" value="#{managerContrato.contrato.possuiTempoDeterminado}" onLabel="Sim" offLabel="Não" style="width:12rem; color: white !important;border-radius: 5px">
                                 <p:ajax update="corpoInteiro:dataDefinida"/>
                             </p:selectBooleanButton>
                         </div>
@@ -155,6 +162,7 @@
                                                for="dataInicialContrato" />
                                 <p:calendar id="dataInicialContrato"
                                             rendered="true"
+                                            disabled="#{managerContrato.visualizar}"
                                             mask="true"
                                             style="display: flex; flex-direction: row"
                                             requiredMessage="Este campo é obrigatório."
@@ -170,6 +178,7 @@
                                 <p:calendar id="dataFinalContrato"
                                             rendered="true"
                                             mask="true"
+                                            disabled="#{managerContrato.visualizar}"
                                             style="display: flex; flex-direction: row"
                                             requiredMessage="Este campo é obrigatório."
                                             inputStyleClass="form-control"
@@ -192,6 +201,7 @@
                                     mask="true"
                                     style="display: flex; flex-direction: row"
                                     required="true"
+                                    disabled="#{managerContrato.visualizar}"
                                     requiredMessage="Este campo é obrigatório."
                                     inputStyleClass="form-control"
                                     value="#{managerContrato.contrato.dataAssinatura}"
@@ -208,7 +218,7 @@
                                      style="display: flex; flex-direction: row"
                                      required="true"
                                      styleClass="form-control" 
-                                     placeholder=""
+                                     disabled="#{managerContrato.visualizar}"
                                      value="#{managerContrato.contrato.objetoContrato}"
                                      requiredMessage="Este campo é obrigatório." />
                         <p:message for="objetoContrato" />
@@ -222,6 +232,7 @@
                                          placeholder="fiscal"
                                          required="true"
                                          styleClass="form-control"
+                                         disabled="#{managerContrato.visualizar}"
                                          requiredMessage="Este campo é obrigatório."
                                          converter="usuarioconverter"
                                          value="#{managerContrato.contrato.fiscalContrato}"
@@ -233,13 +244,31 @@
                 </div>
             </div>
             <div class="row">
-                 <div class="col-md-4">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <p:outputLabel value="Setor reponsável" styleClass="control-label" for="setorSelect" />
+                        <p:selectOneMenu id="setorSelect"
+                                         filter="true" 
+                                         required="true"
+                                         styleClass="form-control"
+                                         disabled="#{managerContrato.visualizar}"
+                                         requiredMessage="Este campo é obrigatório."
+                                         converter="setorconverter"
+                                         value="#{managerContrato.contrato.setor}"
+                                         >
+                            <f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
+                            <f:selectItems value="#{managerContrato.setores}" var="setor" itemLabel="#{setor.nome}" itemValue="#{setor}" />
+                        </p:selectOneMenu>
+                    </div>
+                </div>
+                <div class="col-md-3">
                     <div class="form-group">
                         <p:outputLabel value="Status do contrato" styleClass="control-label" for="statusContratoSelect" />
                         <p:selectOneMenu id="statusContratoSelect"
                                          filter="true" 
                                          placeholder="status"
                                          required="true"
+                                         disabled="#{managerContrato.visualizar}"
                                          styleClass="form-control" 
                                          value="#{managerContrato.contrato.status}">
                             <f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
@@ -247,13 +276,15 @@
                         </p:selectOneMenu>
                     </div>
                 </div>
-                <div class="col-md-8">
+                
+                <div class="col-md-6">
                     <div class="form-group">
                         <p:outputLabel value="Descrição"
                                        for="descricaoContrato" />
                         <p:inputTextarea id="descricaoContrato"
                                          placeholder="Descrição"
                                          rendered="true"
+                                         disabled="#{managerContrato.visualizar}"
                                          value="#{managerContrato.contrato.descricao}"
                                          requiredMessage="Este campo é obrigatório."
                                          styleClass="form-control" 
@@ -274,6 +305,7 @@
                                      placeholder=""
                                      rendered="true"
                                      required="true"
+                                     disabled="#{managerContrato.visualizar}"
                                      value="#{managerContrato.contrato.banco}"
                                      requiredMessage="Este campo é obrigatório."
                                      styleClass="form-control" 
@@ -290,6 +322,7 @@
                                      styleClass="form-control" 
                                      placeholder=""
                                      required="true"
+                                     disabled="#{managerContrato.visualizar}"
                                      value="#{managerContrato.contrato.numeroConta}"
                                      requiredMessage="Este campo é obrigatório." />
                         <p:message for="contaContrato" />
@@ -307,6 +340,7 @@
                                      styleClass="form-control"
                                      placeholder=""
                                      required="true"
+                                     disabled="#{managerContrato.visualizar}"
                                      value="#{managerContrato.contrato.digito}"
                                      requiredMessage="Este campo é obrigatório." />
                         <p:message for="digitoContaContrato" />
@@ -320,6 +354,7 @@
                                      placeholder=""
                                      rendered="true"
                                      required="true"
+                                     disabled="#{managerContrato.visualizar}"
                                      value="#{managerContrato.contrato.agencia}"
                                      requiredMessage="Este campo é obrigatório."
                                      styleClass="form-control" 
@@ -335,6 +370,7 @@
                                      style="display: flex; flex-direction: row"
                                      styleClass="form-control" 
                                      placeholder=""
+                                     disabled="#{managerContrato.visualizar}"
                                      required="true"
                                      value="#{managerContrato.contrato.operacao}"
                                      requiredMessage="Este campo é obrigatório." />
@@ -349,6 +385,7 @@
                                      style="display: flex; flex-direction: row"
                                      styleClass="form-control" 
                                      required="true"
+                                     disabled="#{managerContrato.visualizar}"
                                      placeholder="R$"
                                      value="#{managerContrato.contrato.valor}"
                                      requiredMessage="Este campo é obrigatório." />
@@ -366,7 +403,7 @@
         </h:panelGroup>
 
         <center>
-            <p:commandButton value="salvar" icon="pi pi-save"  actionListener="#{managerContratado.salvar()}" style="margin: 0px 20px; background-color: #01415B; color: #fff; margin-bottom: 10px;"/>
+            <p:commandButton value="salvar" icon="pi pi-save"  actionListener="#{managerContrato.salvar()}" style="margin: 0px 20px; background-color: #01415B; color: #fff; margin-bottom: 10px;"/>
             <p:commandButton value="cancelar" icon="pi pi-ban"  style="background-color: #01415B; color: #fff;margin-bottom: 10px"/>
         </center>
     </ui:define>
