@@ -1,21 +1,80 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
-    <h:head>
-        <title>TODO supply a title</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    </h:head>
-    <h:body>
-        <div>TODO write content</div>
-    </h:body>
-</html>
+<ui:composition template="/WEB-INF/template/layout.xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns="http://www.w3.org/1999/xhtml">
+    <ui:define name="acoes">
+        <h:panelGroup class="panelAcoes">
+            <p:splitButton value="Ações" style="margin: 0px -8px !important" 
+                           icon="pi pi-cog"
+                           >
+
+                <p:menuitem value="Alterar senha" 
+                            icon="pi pi-key"
+
+                            process="@this"
+                            />
+
+            </p:splitButton>
+        </h:panelGroup>
+    </ui:define>
+    <ui:define name="barra">
+        <div class="row" id="stylebarra">
+            <i class="pi pi-user" id="icon" style="margin-top: 3px"></i> <h5 style="color: #e1e6e5">Perfil</h5>
+        </div>
+    </ui:define>
+    <ui:define name="corpo">
+        <h:panelGroup>
+            <p:growl id="messages" showDetail="true" />
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <p:outputLabel value="Nome"
+                                       for="nomeUser" />
+                        <p:inputMask id="nomeUser"
+                                     placeholder="nome"
+                                     rendered="true"
+                                     required="true"
+                                     requiredMessage="Este campo é obrigatório."
+                                     styleClass="form-control" 
+                                     value="#{managerLogin.usuarioLogado.nome}"
+                                     />
+                        <p:message for="nomeUser" />
+                    </div> 
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <p:outputLabel value="Email"
+                                       for="emailUser" />
+                        <p:inputMask id="emailUser"
+                                     placeholder="Email"
+                                     rendered="true"
+                                     required="true"
+                                     requiredMessage="Este campo é obrigatório."
+                                     styleClass="form-control" 
+                                     value="#{managerLogin.usuarioLogado.email}"
+                                     />
+                        <p:message for="emailUser" />
+                    </div> 
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <p:outputLabel value="Login"
+                                       for="loginUser" />
+                        <p:inputMask id="loginUser"
+                                     placeholder="Login"
+                                     rendered="true"
+                                     required="true"
+                                     requiredMessage="Este campo é obrigatório."
+                                     styleClass="form-control" 
+                                     value="#{managerLogin.usuarioLogado.login}"
+                                     />
+                        <p:message for="loginUser" />
+                    </div> 
+                </div>
+            </div>
+        </h:panelGroup>
+        <p:commandButton value="salvar"/>
+    </ui:define>
+</ui:composition>

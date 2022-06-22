@@ -43,8 +43,8 @@
                             <h:outputText value="#{contrato.numeroProcesso}" />
                         </p:column>
 
-                        <p:column headerText="Especialidade" style="background: #{contrato.corStatus}">
-                            <h:outputText value="#{contrato.status}" />
+                        <p:column headerText="Especialidade">
+                            <h:outputText value="#{managerContrato.cores(contrato)}" />
                         </p:column>
                         <p:column headerText="termino da vigência">
                             <h:outputText value="#{contrato.dataFinal}" />
