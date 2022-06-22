@@ -60,21 +60,86 @@
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
-                        <p:outputLabel value="Login"
-                                       for="loginUser" />
-                        <p:inputMask id="loginUser"
-                                     placeholder="Login"
+                        <p:outputLabel value="Whatsapp"
+                                       for="whatsUser" />
+                        <p:inputMask id="whatsUser"
+                                     placeholder="whatsapp"
                                      rendered="true"
                                      required="true"
                                      requiredMessage="Este campo é obrigatório."
                                      styleClass="form-control" 
-                                     value="#{managerLogin.usuarioLogado.login}"
+                                     value="#{managerLogin.usuarioLogado.whatsapp}"
                                      />
-                        <p:message for="loginUser" />
+                        <p:message for="whatsUser" />
                     </div> 
                 </div>
             </div>
         </h:panelGroup>
-        <p:commandButton value="salvar"/>
+        <center>
+            <p:button value="Editar" icon="pi pi-pencil" />
+            <p:commandButton value="Atualizar" icon="pi pi-sync" rendered="false"/>
+            <p:button value="Cancelar" icon="pi pi-ban"  href="index.xhtml"/>           
+        </center>
+        <div class="row" style="margin-left: 5px; margin-bottom: 10px; margin-top: 40px">
+            <p:commandButton value="Alterar senha" style="width: 150px"/>
+
+        </div>
+        <h:panelGroup id="mudarSenha">
+            <h:panelGroup>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <p:outputLabel value="Senha atual"
+                                           for="senhaAtual" />
+                            <p:password id="senhaAtual"
+                                        placeholder="senha atual"
+                                        required="true"
+                                        requiredMessage="Este campo é obrigatório."
+                                        styleClass="form-control" 
+                                        value=""
+                                        toggleMask="true"
+                                        />
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <p:outputLabel value="Nova senha"
+                                           for="novaSenha" />
+                            <p:password id="novaSenha"
+                                        placeholder="nova senha"
+                                        required="true"
+                                        requiredMessage="Este campo é obrigatório."
+                                        styleClass="form-control" 
+                                        value=""
+                                        toggleMask="true"
+                                        />
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <p:outputLabel value="Confirmar nova senha"
+                                           for="confirmarSenha" />
+                            <p:password id="confirmarSenha"
+                                        placeholder="nova senha"
+                                        required="true"
+                                        requiredMessage="Este campo é obrigatório."
+                                        styleClass="form-control" 
+                                        value=""
+                                        toggleMask="true"
+                                        />
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group" style="margin-top: 30px">
+                           
+                            <p:commandButton value="Salvar" icon="pi pi-save" />
+                            <p:button value="Cancelar" icon="pi pi-ban"  href="index.xhtml"/>
+                        </div>
+                    </div>
+                </div>
+
+            </h:panelGroup>
+        </h:panelGroup>
+
     </ui:define>
 </ui:composition>
