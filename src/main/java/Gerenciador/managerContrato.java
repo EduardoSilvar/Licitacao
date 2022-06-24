@@ -94,7 +94,7 @@ public class managerContrato extends managerPrincipal implements Serializable {
             if (contratoServico.existNumero(this.contrato.getNumeroContrato())) {
                 Msg.messagemError("Número de contrato já registrado !");
             } else {
-                this.contrato.setCorStatus(cores(this.contrato));
+                this.contrato.setCorStatus(cores(this.contrato.getStatus()));
                 contratoServico.Save(this.contrato);
                 Msg.messagemInfoRedirect("Operação realizada com sucesso !", "contrato.xhtml?visualizar=" + this.contrato.getId());
             }
@@ -123,36 +123,75 @@ public class managerContrato extends managerPrincipal implements Serializable {
         Msg.messagemInfoRedirect("Operação realizada com sucesso !", "contrato.xhtml?visualizar=" + this.contrato.getId());
     }
 
-    public String cores(Contrato contrato) {
-        String cor = "teste";
-        if (Utils.isNotEmpty(contrato.getStatus())) {
-            switch (contrato.getStatus()) {
+    public String abreviacao(StatusContrato stts) {
+        String abreviacao = "teste";
+        if (Utils.isNotEmpty(stts)) {
+            switch (stts) {
                 case APROVADO:
-                    cor = "#005CFE";
+                    abreviacao = "AP";
                     break;
                 case CANCELADO:
-                    cor = "#FF0100";
+                    abreviacao = "CA";
                     break;
                 case ESPERANDO_INICIO:
-                    cor = "#7736FF";
+                    abreviacao = "EI";
                     break;
                 case EXPIRADO:
-                    cor = "#FED800";
+                    abreviacao = "EP";
                     break;
                 case FINALIZADO:
-                    cor = "#7E0EAC";
+                    abreviacao = "FI";
                     break;
                 case INICIADO:
-                    cor = "#ced9db";
+                    abreviacao = "IN";
                     break;
                 case PAGO:
-                    cor = "#89F629";
+                    abreviacao = "PG";
                     break;
                 case PROXIMO_EXPIRAR:
-                    cor = "#3FF9000";
+                    abreviacao = "PE";
                     break;
                 case VIGENCIA:
-                    cor = "#88F629";
+                    abreviacao = "VI";
+                    break;
+                default:
+                    break;
+            }
+        }
+        return abreviacao;
+
+    }
+
+    public String cores(StatusContrato stts) {
+        String cor = "teste";
+        if (Utils.isNotEmpty(stts)) {
+            switch (stts) {
+                case APROVADO:
+                    cor = "005CFE";
+                    break;
+                case CANCELADO:
+                    cor = "FF0100";
+                    break;
+                case ESPERANDO_INICIO:
+                    cor = "7736FF";
+                    break;
+                case EXPIRADO:
+                    cor = "FED800";
+                    break;
+                case FINALIZADO:
+                    cor = "7E0EAC";
+                    break;
+                case INICIADO:
+                    cor = "ced9db";
+                    break;
+                case PAGO:
+                    cor = "89F629";
+                    break;
+                case PROXIMO_EXPIRAR:
+                    cor = "3FF900";
+                    break;
+                case VIGENCIA:
+                    cor = "88F629";
                     break;
                 default:
                     break;

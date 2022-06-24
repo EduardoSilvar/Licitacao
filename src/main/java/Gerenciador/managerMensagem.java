@@ -33,6 +33,7 @@ public class managerMensagem implements Serializable {
     private List<Contrato> contratosPertodeExpirar;
     private List<Contrato> contratosFinalizados;
     private List<PedidoRenovacao> pedidoDeRedefinirSenha;
+    private List<String> cores;
 
     @PostConstruct
     public void init() {
