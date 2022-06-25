@@ -74,72 +74,66 @@
                     </div> 
                 </div>
             </div>
-        </h:panelGroup>
-        <center>
-            <p:button value="Editar" icon="pi pi-pencil" />
-            <p:commandButton value="Atualizar" icon="pi pi-sync" rendered="false"/>
-            <p:button value="Cancelar" icon="pi pi-ban"  href="index.xhtml"/>           
-        </center>
-        <div class="row" style="margin-left: 5px; margin-bottom: 10px; margin-top: 40px">
-            <p:commandButton value="Alterar senha" style="width: 150px"/>
+            <div class="row" style="margin-bottom: 20px">
+                <div class="col-md-2">
+                    <h5>Alterar senha</h5>
+                </div>
+                <div class="col-md-9">
+                    <p:selectBooleanCheckbox itemLabel="Sim"/>
+                </div>
+                    
+            </div>
 
-        </div>
-        <h:panelGroup id="mudarSenha">
-            <h:panelGroup>
-                <div class="row">
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <p:outputLabel value="Senha atual"
-                                           for="senhaAtual" />
-                            <p:password id="senhaAtual"
-                                        placeholder="senha atual"
-                                        required="true"
-                                        requiredMessage="Este campo é obrigatório."
-                                        styleClass="form-control" 
-                                        value=""
-                                        toggleMask="true"
-                                        />
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <p:outputLabel value="Nova senha"
-                                           for="novaSenha" />
-                            <p:password id="novaSenha"
-                                        placeholder="nova senha"
-                                        required="true"
-                                        requiredMessage="Este campo é obrigatório."
-                                        styleClass="form-control" 
-                                        value=""
-                                        toggleMask="true"
-                                        />
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <p:outputLabel value="Confirmar nova senha"
-                                           for="confirmarSenha" />
-                            <p:password id="confirmarSenha"
-                                        placeholder="nova senha"
-                                        required="true"
-                                        requiredMessage="Este campo é obrigatório."
-                                        styleClass="form-control" 
-                                        value=""
-                                        toggleMask="true"
-                                        />
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="form-group" style="margin-top: 30px">
-                           
-                            <p:commandButton value="Salvar" icon="pi pi-save" />
-                            <p:button value="Cancelar" icon="pi pi-ban"  href="index.xhtml"/>
-                        </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <p:outputLabel value="Senha atual"
+                                       for="senhaAtual" />
+                        <p:password id="senhaAtual"
+                                    placeholder="senha atual"
+                                    required="true"
+                                    requiredMessage="Este campo é obrigatório."
+                                    styleClass="form-control" 
+                                    value="#{managerLogin.usuarioLogado.senha}"
+                                    toggleMask="true"
+                                    />
                     </div>
                 </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <p:outputLabel value="Nova senha"
+                                       for="novaSenha" />
+                        <p:password id="novaSenha"
+                                    placeholder="nova senha"
+                                    required="true"
+                                    requiredMessage="Este campo é obrigatório."
+                                    styleClass="form-control" 
+                                    value="#{managerLogin.usuarioLogado.senha}"
+                                    toggleMask="true"
+                                    />
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <p:outputLabel value="Confirmar nova senha"
+                                       for="confirmarSenha" />
+                        <p:password id="confirmarSenha"
+                                    placeholder="nova senha"
+                                    required="true"
+                                    requiredMessage="Este campo é obrigatório."
+                                    styleClass="form-control" 
+                                    value="#{managerLogin.usuarioLogado.senha}"
+                                    toggleMask="true"
+                                    />
+                    </div>
+                </div>
+            </div>
 
-            </h:panelGroup>
         </h:panelGroup>
+        <center>
+            <p:button value="Salvar" icon="pi pi-save" />
+            <p:button value="Cancelar" icon="pi pi-ban"  href="index.xhtml"/>           
+        </center>
 
     </ui:define>
 </ui:composition>
