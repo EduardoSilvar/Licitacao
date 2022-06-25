@@ -1,16 +1,135 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <title>TODO supply a title</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
-</html>
+<ui:composition template="/WEB-INF/template/layout.xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns="http://www.w3.org/1999/xhtml">
+
+    <ui:define name="barra">
+        <div class="row" id="stylebarra">
+            <i class="pi pi-cog" id="icon"></i> <h5 style="color: #e1e6e5"> Configurações </h5>
+        </div>
+    </ui:define>
+    <ui:define name="corpo">
+
+        <h:panelGroup id="contratadoPanelGroup" style="padding: 30px !important">
+            <p:growl id="messages" showDetail="true" />
+            <h:panelGroup id="dadosGeraisPanelGroup" >
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <p:outputLabel value="Quantos dias para expirar "
+                                           for="diasInput" />
+                            <p:inputNumber id="diasInput"
+                                           placeholder="Dias"
+                                           required="true"
+                                           inputStyleClass="form-control"
+                                           value="#{managerConfiguracao.configuracao.diasPraExpirar}"
+                                           rendered="true"
+                                           requiredMessage="Este campo é obrigatório."
+                                           />
+                            <p:message for="diasInput" />
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <p:outputLabel value="Primeiro status" styleClass="control-label" for="statusContratoSelect" />
+                            <p:selectOneMenu id="statusContratoSelect"
+                                             filter="true" 
+                                             placeholder="status"
+                                             required="true"
+                                             styleClass="form-control" 
+                                             value="#{managerConfiguracao.configuracao.primeiroStatus}">
+                                <f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
+                                <f:selectItems value="#{managerEnuns.statusContrato}" var="status" itemLabel="#{status.label}" itemValue="#{status}" />
+                            </p:selectOneMenu>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <p:outputLabel value="Segundo status" styleClass="control-label" for="segundostatusContratoSelect" />
+                            <p:selectOneMenu id="segundostatusContratoSelect"
+                                             filter="true" 
+                                             placeholder="status"
+                                             required="true"
+                                             disabled="#{managerContrato.visualizar}"
+                                             styleClass="form-control" 
+                                             value="#{managerConfiguracao.configuracao.segundoStatus}">
+                                <f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
+                                <f:selectItems value="#{managerEnuns.statusContrato}" var="status" itemLabel="#{status.label}" itemValue="#{status}" />
+                            </p:selectOneMenu>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <p:outputLabel value="Terceiro status" styleClass="control-label" for="terceirostatusContratoSelect" />
+                            <p:selectOneMenu id="terceirostatusContratoSelect"
+                                             filter="true" 
+                                             placeholder="status"
+                                             required="true"
+                                             styleClass="form-control" 
+                                             value="#{managerConfiguracao.configuracao.terceiroStatus}">
+                                <f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
+                                <f:selectItems value="#{managerEnuns.statusContrato}" var="status" itemLabel="#{status.label}" itemValue="#{status}" />
+                            </p:selectOneMenu>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <p:outputLabel value="Primeiro Gráfico" styleClass="control-label" for="primeirorograficoContratoSelect" />
+                            <p:selectOneMenu id="primeirorograficoContratoSelect"
+                                             filter="true" 
+                                             placeholder="status"
+                                             required="true"
+                                             styleClass="form-control" 
+                                             value="#{managerConfiguracao.configuracao.primeiroGrafico}">
+                                <f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
+                                <f:selectItems value="#{managerEnuns.graficos}" var="grafico" itemLabel="#{grafico.label}" itemValue="#{grafico}" />
+                            </p:selectOneMenu>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <p:outputLabel value="Segundo Gráfico" styleClass="control-label" for="segundoGraficoContratoSelect" />
+                            <p:selectOneMenu id="segundoGraficoContratoSelect"
+                                             filter="grafico" 
+                                             placeholder="status"
+                                             required="true"
+                                             styleClass="form-control" 
+                                             value="#{managerConfiguracao.configuracao.segundoGrafico}">
+                                <f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
+                                <f:selectItems value="#{managerEnuns.graficos}" var="grafico" itemLabel="#{grafico.label}" itemValue="#{grafico}" />
+                            </p:selectOneMenu>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <p:outputLabel value="Terceiro Gráfico" styleClass="control-label" for="terceiroGraficoContratoSelect" />
+                            <p:selectOneMenu id="terceiroGraficoContratoSelect"
+                                             filter="true" 
+                                             placeholder="grafico"
+                                             required="true"
+                                             styleClass="form-control" 
+                                             value="#{managerConfiguracao.configuracao.terceiroGrafico}">
+                                <f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
+                                <f:selectItems value="#{managerEnuns.graficos}" var="grafico" itemLabel="#{grafico.label}" itemValue="#{grafico}" />
+                            </p:selectOneMenu>
+                        </div>
+                    </div>
+                </div>
+
+            </h:panelGroup>
+            <center>
+                <p:commandButton value="Salvar" icon="pi pi-save" process="contratadoPanelGroup" update="corpoInteiro:messages" actionListener="#{managerContratado.salvar()}" rendered="#{managerContratado.cadastrar}" />
+                <p:button value="Editar" icon="pi pi-pencil"  rendered="#{managerContratado.visualizar}" href="contratado.xhtml?editar=#{managerContratado.contratado.id}" />
+                <p:commandButton value="Atualizar" icon="pi pi-sync" process="contratadoPanelGroup"  actionListener="#{managerContratado.atualizar()}" rendered="#{managerContratado.editar}"  />
+                <p:button value="Cancelar" icon="pi pi-ban"  href="contratado.xhtml" rendered="#{managerContratado.visualizar}" />
+                <p:button value="Cancelar" icon="pi pi-ban"  href="contratado.xhtml?visualizar=#{managerContratado.contratado.id}" rendered="#{managerContratado.editar}" />
+                <p:button value="Cancelar" icon="pi pi-ban"  href="index.xhtml" rendered="#{managerContratado.cadastrar}" />
+            </center>
+        </h:panelGroup>
+
+    </ui:define>
+</ui:composition>

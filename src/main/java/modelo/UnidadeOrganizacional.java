@@ -7,8 +7,14 @@ package modelo;
 
 import java.io.Serializable;
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 
 /**
  *
@@ -16,15 +22,20 @@ import javax.persistence.Id;
  */
 @Entity
 public class UnidadeOrganizacional implements Serializable {
-    
+
     @Id
+    @SequenceGenerator(sequenceName = "seq_unidade", name = "seq_unidade", allocationSize = 1)
+    @GeneratedValue(generator = "seq_unidade", strategy = GenerationType.AUTO)
     private Long id;
     private String nome;
     private String NomeRepresentante;
     private String telefone;
     private String email;
+    @OneToOne(cascade = CascadeType.ALL)
     private Endereco endereco;
+    private String whatsapp;
     private boolean ativo = true;
+    private String cnpj;
 
     public Long getId() {
         return id;
@@ -34,8 +45,22 @@ public class UnidadeOrganizacional implements Serializable {
         this.id = id;
     }
 
-    
-    
+    public String getWhatsapp() {
+        return whatsapp;
+    }
+
+    public void setWhatsapp(String whatsapp) {
+        this.whatsapp = whatsapp;
+    }
+
+    public String getCnpj() {
+        return cnpj;
+    }
+
+    public void setCnpj(String cnpj) {
+        this.cnpj = cnpj;
+    }
+
     public String getNome() {
         return nome;
     }
@@ -133,7 +158,5 @@ public class UnidadeOrganizacional implements Serializable {
     public String toString() {
         return "UnidadeOrganizacional{" + "nome=" + nome + ", NomeRepresentante=" + NomeRepresentante + ", telefone=" + telefone + ", email=" + email + ", endereco=" + endereco + ", ativo=" + ativo + '}';
     }
-    
-    
-    
+
 }

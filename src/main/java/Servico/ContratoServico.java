@@ -26,6 +26,7 @@ public class ContratoServico extends ServicoGenerico<Contrato> implements Serial
     }
 
     public List<Contrato> findPesquisa(Contrato contrato) {
+        System.err.println("veio aqui");
         String sql = "select c from Contrato c where ";
         if (Utils.isNotEmpty(contrato.getContratado())) {
             sql += "c.contratado = :contratado and ";

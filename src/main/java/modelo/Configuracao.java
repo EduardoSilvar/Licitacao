@@ -5,12 +5,18 @@
  */
 package modelo;
 
+import Enum.GraficoEnum;
+import Enum.StatusContrato;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
 /**
@@ -25,16 +31,21 @@ public class Configuracao implements Serializable {
     @GeneratedValue(generator = "seq_configuracao", strategy = GenerationType.AUTO)
     private Long id;
     private Long diasPraExpirar;
-    private boolean finalizado;
-    private boolean expirado;
-    private boolean pertoExpira;
-    private boolean vigencia;
-    private boolean renovado;
-    private boolean pago;
-    private boolean iniciado;
-    private boolean esperandoInicio;
-    private boolean aprovado;
-    private boolean cancelado;
+    @Enumerated(EnumType.STRING)
+    private StatusContrato primeiroStatus;
+    @Enumerated(EnumType.STRING)
+    private StatusContrato SegundoStatus;
+    @Enumerated(EnumType.STRING)
+    private StatusContrato terceiroStatus;
+    @OneToMany
+    private List<PedidoRenovacao> pedidosRenovacao;
+    @Enumerated(EnumType.STRING)
+    private GraficoEnum primeiroGrafico;
+    @Enumerated(EnumType.STRING)
+    private GraficoEnum segundoGrafico;
+    @Enumerated(EnumType.STRING)
+    private GraficoEnum terceiroGrafico;
+    private boolean ativo = true;
 
     public Long getId() {
         return id;
@@ -52,154 +63,68 @@ public class Configuracao implements Serializable {
         this.diasPraExpirar = diasPraExpirar;
     }
 
-    public boolean isFinalizado() {
-        return finalizado;
+    public StatusContrato getPrimeiroStatus() {
+        return primeiroStatus;
     }
 
-    public void setFinalizado(boolean finalizado) {
-        this.finalizado = finalizado;
+    public void setPrimeiroStatus(StatusContrato primeiroStatus) {
+        this.primeiroStatus = primeiroStatus;
     }
 
-    public boolean isExpirado() {
-        return expirado;
+    public StatusContrato getSegundoStatus() {
+        return SegundoStatus;
     }
 
-    public void setExpirado(boolean expirado) {
-        this.expirado = expirado;
+    public void setSegundoStatus(StatusContrato SegundoStatus) {
+        this.SegundoStatus = SegundoStatus;
     }
 
-    public boolean isPertoExpira() {
-        return pertoExpira;
+    public StatusContrato getTerceiroStatus() {
+        return terceiroStatus;
     }
 
-    public void setPertoExpira(boolean pertoExpira) {
-        this.pertoExpira = pertoExpira;
+    public void setTerceiroStatus(StatusContrato terceiroStatus) {
+        this.terceiroStatus = terceiroStatus;
     }
 
-    public boolean isVigencia() {
-        return vigencia;
+    public List<PedidoRenovacao> getPedidosRenovacao() {
+        return pedidosRenovacao;
     }
 
-    public void setVigencia(boolean vigencia) {
-        this.vigencia = vigencia;
+    public void setPedidosRenovacao(List<PedidoRenovacao> pedidosRenovacao) {
+        this.pedidosRenovacao = pedidosRenovacao;
     }
 
-    public boolean isRenovado() {
-        return renovado;
+    public GraficoEnum getPrimeiroGrafico() {
+        return primeiroGrafico;
     }
 
-    public void setRenovado(boolean renovado) {
-        this.renovado = renovado;
+    public void setPrimeiroGrafico(GraficoEnum primeiroGrafico) {
+        this.primeiroGrafico = primeiroGrafico;
     }
 
-    public boolean isPago() {
-        return pago;
+    public GraficoEnum getSegundoGrafico() {
+        return segundoGrafico;
     }
 
-    public void setPago(boolean pago) {
-        this.pago = pago;
+    public void setSegundoGrafico(GraficoEnum segundoGrafico) {
+        this.segundoGrafico = segundoGrafico;
     }
 
-    public boolean isIniciado() {
-        return iniciado;
+    public GraficoEnum getTerceiroGrafico() {
+        return terceiroGrafico;
     }
 
-    public void setIniciado(boolean iniciado) {
-        this.iniciado = iniciado;
+    public void setTerceiroGrafico(GraficoEnum terceiroGrafico) {
+        this.terceiroGrafico = terceiroGrafico;
     }
 
-    public boolean isEsperandoInicio() {
-        return esperandoInicio;
+    public boolean isAtivo() {
+        return ativo;
     }
 
-    public void setEsperandoInicio(boolean esperandoInicio) {
-        this.esperandoInicio = esperandoInicio;
+    public void setAtivo(boolean ativo) {
+        this.ativo = ativo;
     }
 
-    public boolean isAprovado() {
-        return aprovado;
-    }
-
-    public void setAprovado(boolean aprovado) {
-        this.aprovado = aprovado;
-    }
-
-    public boolean isCancelado() {
-        return cancelado;
-    }
-
-    public void setCancelado(boolean cancelado) {
-        this.cancelado = cancelado;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 5;
-        hash = 83 * hash + Objects.hashCode(this.id);
-        hash = 83 * hash + Objects.hashCode(this.diasPraExpirar);
-        hash = 83 * hash + (this.finalizado ? 1 : 0);
-        hash = 83 * hash + (this.expirado ? 1 : 0);
-        hash = 83 * hash + (this.pertoExpira ? 1 : 0);
-        hash = 83 * hash + (this.vigencia ? 1 : 0);
-        hash = 83 * hash + (this.renovado ? 1 : 0);
-        hash = 83 * hash + (this.pago ? 1 : 0);
-        hash = 83 * hash + (this.iniciado ? 1 : 0);
-        hash = 83 * hash + (this.esperandoInicio ? 1 : 0);
-        hash = 83 * hash + (this.aprovado ? 1 : 0);
-        hash = 83 * hash + (this.cancelado ? 1 : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Configuracao other = (Configuracao) obj;
-        if (this.finalizado != other.finalizado) {
-            return false;
-        }
-        if (this.expirado != other.expirado) {
-            return false;
-        }
-        if (this.pertoExpira != other.pertoExpira) {
-            return false;
-        }
-        if (this.vigencia != other.vigencia) {
-            return false;
-        }
-        if (this.renovado != other.renovado) {
-            return false;
-        }
-        if (this.pago != other.pago) {
-            return false;
-        }
-        if (this.iniciado != other.iniciado) {
-            return false;
-        }
-        if (this.esperandoInicio != other.esperandoInicio) {
-            return false;
-        }
-        if (this.aprovado != other.aprovado) {
-            return false;
-        }
-        if (this.cancelado != other.cancelado) {
-            return false;
-        }
-        if (!Objects.equals(this.id, other.id)) {
-            return false;
-        }
-        if (!Objects.equals(this.diasPraExpirar, other.diasPraExpirar)) {
-            return false;
-        }
-        return true;
-    }
-
-    
 }

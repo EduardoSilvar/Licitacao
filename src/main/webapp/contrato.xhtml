@@ -24,7 +24,7 @@
 
     <ui:define name="corpo">
         <p:growl id="growl" showDetail="true" />
-        <h:panelGroup>
+        <h:panelGroup id="corpoInteiro">
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group" >
@@ -403,7 +403,7 @@
         </h:panelGroup>
 
         <center>
-            <p:commandButton value="salvar" icon="pi pi-save"  actionListener="#{managerContrato.salvar()}" style="margin: 0px 20px; background-color: #01415B; color: #fff; margin-bottom: 10px;"/>
+            <p:commandButton value="salvar" icon="pi pi-save" process="@this corpoInteiro" update="corpoInteiro" actionListener="#{managerContrato.salvar()}" style="margin: 0px 20px; background-color: #01415B; color: #fff; margin-bottom: 10px;"/>
             <p:commandButton value="cancelar" icon="pi pi-ban"  style="background-color: #01415B; color: #fff;margin-bottom: 10px"/>
         </center>
     </ui:define>

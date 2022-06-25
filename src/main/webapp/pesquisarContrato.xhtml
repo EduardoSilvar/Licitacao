@@ -30,7 +30,7 @@
     </ui:define>
 
     <ui:define name="corpo">
-        <h:panelGroup>
+        <h:panelGroup id="corpoInteiro">
             <p:growl id="messages" showDetail="true" />
             <h:panelGroup id="pesquisaPanel" >
                 <div class="row">
@@ -86,7 +86,6 @@
                             <p:selectOneMenu id="fiscalSelect"
                                              filter="true" 
                                              placeholder="fiscal"
-                                             required="true"
                                              styleClass="form-control"
                                              disabled="#{managerContrato.visualizar}"
                                              requiredMessage="Este campo é obrigatório."
@@ -103,7 +102,6 @@
                             <p:outputLabel value="Setor reponsável" styleClass="control-label" for="setorSelect" />
                             <p:selectOneMenu id="setorSelect"
                                              filter="true" 
-                                             required="true"
                                              styleClass="form-control"
                                              disabled="#{managerContrato.visualizar}"
                                              requiredMessage="Este campo é obrigatório."
@@ -176,7 +174,17 @@
                 </p:column>
 
                 <p:column headerText="Status">
-                    <h:outputText value="#{contrato.status}" />
+                    <div id="row-atividades" class="row row-atividades" style="display: flex; flex-wrap: nowrap !important; overflow: hidden !important; overflow-x: scroll !important">
+                        <ui:repeat value="#{contrato.status}"
+                                   var="atividade">
+                            <div class="atividade">
+                                <div class="ui-avatar ui-widget ui-avatar-circle ui-avatar-xl"
+                                     style="background-color:#{'#'.concat(managerContrato.cores(contrato.status))}; font-size: 15px; color: #ffffff; width: 50px; height: 50px;">
+                                    <span class="ui-avatar-text">#{managerContrato.abreviacao(contrato.status)}</span>
+                                </div>
+                            </div>
+                        </ui:repeat>
+                    </div>
                 </p:column>
                 <p:column headerText="Empresa">
                     <h:outputText value="#{contrato.contratado}" />
