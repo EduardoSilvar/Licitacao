@@ -39,6 +39,8 @@ public class Usuario implements Serializable {
     private String email;
     private String senha;
     private String whatsapp;
+    private String urlArquivoToken;
+    private String senhaToken;
     private boolean ativo = true;
     @Enumerated(EnumType.STRING)
     private List<TipoUsuario> TiposUsuario;
@@ -54,7 +56,9 @@ public class Usuario implements Serializable {
         this.whatsapp = whatsapp;
     }
 
-   
+    public boolean possueToken() {
+        return urlArquivoToken != null && !urlArquivoToken.isEmpty() && senhaToken != null && !senhaToken.isEmpty();
+    }
 
     public static String encryptPassword(String senha) {
         StringBuilder stringBuilder = new StringBuilder();
@@ -117,6 +121,22 @@ public class Usuario implements Serializable {
 
     public void setTiposUsuario(List<TipoUsuario> TiposUsuario) {
         this.TiposUsuario = TiposUsuario;
+    }
+
+    public String getUrlArquivoToken() {
+        return urlArquivoToken;
+    }
+
+    public void setUrlArquivoToken(String urlArquivoToken) {
+        this.urlArquivoToken = urlArquivoToken;
+    }
+
+    public String getSenhaToken() {
+        return senhaToken;
+    }
+
+    public void setSenhaToken(String senhaToken) {
+        this.senhaToken = senhaToken;
     }
 
     public Long getId() {
@@ -216,8 +236,5 @@ public class Usuario implements Serializable {
     public String toString() {
         return "Usuario{" + "id=" + id + ", cpf=" + cpf + ", telefone=" + telefone + ", nome=" + nome + ", login=" + login + ", email=" + email + ", senha=" + senha + ", whatsapp=" + whatsapp + ", ativo=" + ativo + ", TiposUsuario=" + TiposUsuario + '}';
     }
-
-   
-    
 
 }

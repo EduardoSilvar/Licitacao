@@ -34,6 +34,7 @@ public class managerLogin implements Serializable {
     @EJB
     private UsuarioServico userServico;
     private Usuario usuarioLogado;
+    private Usuario userll;
     private String user;
     private String senha;
 
@@ -64,16 +65,47 @@ public class managerLogin implements Serializable {
         fc.getExternalContext().redirect("index.xhtml");
     }
 
-    public void verificarLogin() {
+    public void logout(String user) {
+        HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        HttpSession session = request.getSession();
+        session.removeAttribute(user);
+
+    }
+
+    public void setObjectSession(String user, Object object) throws IOException, NullPointerException {
+        HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        HttpSession session = request.getSession();
+        session.setAttribute(user, object);
+    }
+
+    public Object getObjectSession(String user) throws IOException, NullPointerException {
+        HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        HttpSession session = request.getSession();
+        return session.getAttribute(user);
+    }
+
+    public void verificarLogin() throws IOException {
         this.usuarioLogado.setSenha(Usuario.encryptPassword(senha));
         if (Utils.isNotEmpty(usuarioLogado)) {
             if (userServico.login(usuarioLogado)) {
                 this.usuarioLogado = userServico.find(usuarioLogado);
+                setObjectSession("usuarioLogado", this.usuarioLogado);
                 Msg.messagemInfoRedirect("Bem vindo ", "index.xhtml");
             } else {
                 Msg.messagemError("Informações erradas, tente novamente !");
             }
         }
+    }
+    public Usuario retornanome() throws IOException{
+    return (Usuario) getObjectSession("usuarioLogado");
+    }
+
+    public Usuario getUserll() {
+        return userll;
+    }
+
+    public void setUserll(Usuario userll) {
+        this.userll = userll;
     }
 
     public UsuarioServico getUserServico() {

@@ -25,6 +25,10 @@
         </div>
     </ui:define>-->
     <ui:define name="corpo">
+        
+        <div>
+            <h1>#{managerLogin.retornanome().nome}</h1>
+        </div>
         <div style="width: 300px">        
             <div style="border: none !important">
                 <p:pieChart model="#{graficoPie.pieModel}" style="width: 100px; height: 250px;"/>
