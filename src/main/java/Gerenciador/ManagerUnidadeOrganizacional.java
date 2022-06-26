@@ -11,6 +11,7 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import modelo.UnidadeOrganizacional;
+import util.Msg;
 
 /**
  *
@@ -24,6 +25,23 @@ public class ManagerUnidadeOrganizacional extends managerPrincipal implements Se
     UnidadeOrganizacionalServico unidadeServico;
 
     private UnidadeOrganizacional unidade;
+
+    public void salvar() {
+        unidadeServico.Save(this.unidade);
+        Msg.messagemInfo("Operação realizada com sucesso !");
+    }
+
+    public void deletar() {
+        UnidadeOrganizacional Novaunidade = unidadeServico.find(this.unidade.getId());
+        Novaunidade.setAtivo(false);
+        unidadeServico.Update(Novaunidade);
+        Msg.messagemInfo("Operação realizada com sucesso !");
+    }
+
+    public void atualizar() {
+        unidadeServico.Update(this.unidade);
+        Msg.messagemInfo("Operação realizada com sucesso !");
+    }
 
     @Override
     public void carregar(String param) {

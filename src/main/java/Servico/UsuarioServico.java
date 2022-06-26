@@ -26,6 +26,21 @@ public class UsuarioServico extends ServicoGenerico<Usuario> implements Serializ
         super(Usuario.class);
     }
 
+    public void alterarSenha(Usuario usuario, String senhaAntiga, String novaSenha, String repetirSenha) throws Exception {
+
+        if (!novaSenha.equals(repetirSenha)) {
+            throw new Exception("Senhas informadas são diferentes!");
+        }
+
+        if (!Usuario.encryptPassword(senhaAntiga).equals(usuario.getSenha())) {
+            throw new Exception("Senha atual não está correta!");
+        }
+
+        usuario.setSenha(Usuario.encryptPassword(novaSenha));
+        getEntityManager().merge(usuario);
+
+    }
+
     public List<Usuario> pesquisar(Usuario user) {
         String sql = "select u from Usuario u where u.ativo = true";
         if (Utils.isNotEmpty(user.getEmail())) {

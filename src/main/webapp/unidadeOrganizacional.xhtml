@@ -176,12 +176,12 @@
 
             </h:panelGroup>
             <center>
-                <p:commandButton value="Salvar" icon="pi pi-save" process="contratadoPanelGroup" update="corpoInteiro:messages" actionListener="#{managerContratado.salvar()}" rendered="#{managerContratado.cadastrar}" />
-                <p:button value="Editar" icon="pi pi-pencil"  rendered="#{managerContratado.visualizar}" href="contratado.xhtml?editar=#{managerContratado.contratado.id}" />
-                <p:commandButton value="Atualizar" icon="pi pi-sync" process="contratadoPanelGroup"  actionListener="#{managerContratado.atualizar()}" rendered="#{managerContratado.editar}"  />
-                <p:button value="Cancelar" icon="pi pi-ban"  href="contratado.xhtml" rendered="#{managerContratado.visualizar}" />
-                <p:button value="Cancelar" icon="pi pi-ban"  href="contratado.xhtml?visualizar=#{managerContratado.contratado.id}" rendered="#{managerContratado.editar}" />
-                <p:button value="Cancelar" icon="pi pi-ban"  href="index.xhtml" rendered="#{managerContratado.cadastrar}" />
+                <p:commandButton value="Salvar" icon="pi pi-save" process="contratadoPanelGroup" update="corpoInteiro:messages" actionListener="#{managerUnidadeOrganizacional.salvar()}" rendered="#{managerUnidadeOrganizacional.cadastrar}" />
+                <p:button value="Editar" icon="pi pi-pencil"  rendered="#{managerUnidadeOrganizacional.visualizar}" href="unidadeOrganizacional.xhtml?editar=#{managerUnidadeOrganizacional.unidade.id}" />
+                <p:commandButton value="Atualizar" icon="pi pi-sync" process="contratadoPanelGroup"  actionListener="#{managerContratado.atualizar()}" rendered="#{managerUnidadeOrganizacional.editar}"  />
+                <p:button value="Cancelar" icon="pi pi-ban"  href="unidadeOrganizacional.xhtml" rendered="#{managerUnidadeOrganizacional.visualizar}" />
+                <p:button value="Cancelar" icon="pi pi-ban"  href="unidadeOrganizacional.xhtml?visualizar=#{managerUnidadeOrganizacional.unidade.id}" rendered="#{managerUnidadeOrganizacional.editar}" />
+                <p:button value="Cancelar" icon="pi pi-ban"  href="index.xhtml" rendered="#{managerUnidadeOrganizacional.cadastrar}" />
             </center>
         </h:panelGroup>
 

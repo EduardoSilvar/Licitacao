@@ -6,15 +6,17 @@
                 xmlns="http://www.w3.org/1999/xhtml">
     <ui:define name="acoes">
         <h:panelGroup class="panelAcoes">
-            <p:splitButton value="Ações" style="margin: 0px -8px !important" 
-                           icon="pi pi-cog"
+            <p:splitButton value="Ações"
+                           icon="pi pi-align-justify"
                            >
 
-                <p:menuitem value="Alterar senha" 
+                <p:menuitem value="Redefinir Senha"
                             icon="pi pi-key"
-
+                            update="corpoInteiro:teste:senhas "
                             process="@this"
+                            actionListener="#{managerPerfil.alterarSenha()}"
                             />
+
 
             </p:splitButton>
         </h:panelGroup>
@@ -25,113 +27,152 @@
         </div>
     </ui:define>
     <ui:define name="corpo">
-        <h:panelGroup>
-            <p:growl id="messages" showDetail="true" />
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <p:outputLabel value="Nome"
-                                       for="nomeUser" />
-                        <p:inputMask id="nomeUser"
-                                     placeholder="nome"
-                                     rendered="true"
-                                     required="true"
-                                     requiredMessage="Este campo é obrigatório."
-                                     styleClass="form-control" 
-                                     value="#{managerLogin.usuarioLogado.nome}"
-                                     />
-                        <p:message for="nomeUser" />
-                    </div> 
+        <h:form id="teste">
+            <h:panelGroup id="corpoPerfil">
+                <p:growl id="messages" showDetail="true" />
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <p:outputLabel value="Nome"
+                                           for="nomeUser" />
+                            <p:inputText id="nomeUser"
+                                         placeholder="nome"
+                                         rendered="true"
+                                         required="true"
+                                         requiredMessage="Este campo é obrigatório."
+                                         styleClass="form-control" 
+                                         value="#{managerLogin.usuarioLogado.nome}"
+                                         />
+                            <p:message for="nomeUser" />
+                        </div> 
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <p:outputLabel value="Email"
+                                           for="emailUser" />
+                            <p:inputText id="emailUser"
+                                         placeholder="Email"
+                                         rendered="true"
+                                         required="true"
+                                         requiredMessage="Este campo é obrigatório."
+                                         styleClass="form-control" 
+                                         value="#{managerLogin.usuarioLogado.email}"
+                                         />
+                            <p:message for="emailUser" />
+                        </div> 
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <p:outputLabel value="Whatsapp"
+                                           for="whatsUser" />
+                            <p:inputText id="whatsUser"
+                                         placeholder="whatsapp"
+                                         rendered="true"
+                                         required="true"
+                                         requiredMessage="Este campo é obrigatório."
+                                         styleClass="form-control" 
+                                         value="#{managerLogin.usuarioLogado.whatsapp}"
+                                         />
+                            <p:message for="whatsUser" />
+                        </div> 
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <p:outputLabel value="Tipo de Acesso"
+                                           for="tipoUser" />
+                            <p:inputText id="tipoUser"
+                                         placeholder="whatsapp"
+                                         rendered="true"
+                                         required="true"
+                                         requiredMessage="Este campo é obrigatório."
+                                         styleClass="form-control" 
+                                         value="#{managerLogin.usuarioLogado.tiposUsuario}"
+                                         />
+                            <p:message for="tipoUser" />
+                        </div> 
+                    </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <p:outputLabel value="Email"
-                                       for="emailUser" />
-                        <p:inputMask id="emailUser"
-                                     placeholder="Email"
-                                     rendered="true"
-                                     required="true"
-                                     requiredMessage="Este campo é obrigatório."
-                                     styleClass="form-control" 
-                                     value="#{managerLogin.usuarioLogado.email}"
-                                     />
-                        <p:message for="emailUser" />
-                    </div> 
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <p:outputLabel value="Whatsapp"
-                                       for="whatsUser" />
-                        <p:inputMask id="whatsUser"
-                                     placeholder="whatsapp"
-                                     rendered="true"
-                                     required="true"
-                                     requiredMessage="Este campo é obrigatório."
-                                     styleClass="form-control" 
-                                     value="#{managerLogin.usuarioLogado.whatsapp}"
-                                     />
-                        <p:message for="whatsUser" />
-                    </div> 
-                </div>
-            </div>
-            <div class="row" style="margin-bottom: 20px">
-                <div class="col-md-2">
-                    <h5>Alterar senha</h5>
-                </div>
-                <div class="col-md-9">
-                    <p:selectBooleanCheckbox itemLabel="Sim"/>
-                </div>
-                    
-            </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <p:outputLabel value="Organização"
+                                           for="organizacaoInput" />
+                            <p:inputText id="organizacaoInput"
+                                         placeholder="whatsapp"
+                                         rendered="true"
+                                         required="true"
+                                         requiredMessage="Este campo é obrigatório."
+                                         styleClass="form-control" 
+                                         value="#{managerLogin.usuarioLogado.tiposUsuario}"
+                                         />
+                            <p:message for="organizacaoInput" />
+                        </div> 
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <p:outputLabel value="Setor"
+                                           for="setorInput" />
+                            <p:inputText id="setorInput"
+                                         placeholder="whatsapp"
+                                         rendered="true"
+                                         required="true"
+                                         requiredMessage="Este campo é obrigatório."
+                                         styleClass="form-control" 
+                                         value="#{managerLogin.usuarioLogado.tiposUsuario}"
+                                         />
+                            <p:message for="setorInput" />
+                        </div> 
+                    </div>
 
-            <div class="row">
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <p:outputLabel value="Senha atual"
-                                       for="senhaAtual" />
-                        <p:password id="senhaAtual"
-                                    placeholder="senha atual"
-                                    required="true"
-                                    requiredMessage="Este campo é obrigatório."
-                                    styleClass="form-control" 
-                                    value="#{managerLogin.usuarioLogado.senha}"
-                                    toggleMask="true"
-                                    />
-                    </div>
                 </div>
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <p:outputLabel value="Nova senha"
-                                       for="novaSenha" />
-                        <p:password id="novaSenha"
-                                    placeholder="nova senha"
-                                    required="true"
-                                    requiredMessage="Este campo é obrigatório."
-                                    styleClass="form-control" 
-                                    value="#{managerLogin.usuarioLogado.senha}"
-                                    toggleMask="true"
-                                    />
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <p:outputLabel value="Confirmar nova senha"
-                                       for="confirmarSenha" />
-                        <p:password id="confirmarSenha"
-                                    placeholder="nova senha"
-                                    required="true"
-                                    requiredMessage="Este campo é obrigatório."
-                                    styleClass="form-control" 
-                                    value="#{managerLogin.usuarioLogado.senha}"
-                                    toggleMask="true"
-                                    />
-                    </div>
-                </div>
-            </div>
 
-        </h:panelGroup>
+                <h:panelGroup id="senhas">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <p:outputLabel value="Senha atual"
+                                               for="senhaAtual" rendered="#{managerPerfil.alteracaoSenha}" />
+                                <p:password id="senhaAtual" rendered="#{managerPerfil.alteracaoSenha}"
+                                            placeholder="senha atual"
+                                            required="true"
+                                            requiredMessage="Este campo é obrigatório."
+                                            styleClass="form-control"
+                                            value="#{managerLogin.usuarioLogado.senha}"
+                                            />
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <p:outputLabel value="Nova senha"
+                                               for="novaSenha" rendered="#{managerPerfil.alteracaoSenha}" />
+                                <p:password id="novaSenha" rendered="#{managerPerfil.alteracaoSenha}"
+                                            placeholder="nova senha"
+                                            required="true"
+                                            requiredMessage="Este campo é obrigatório."
+                                            styleClass="form-control"
+                                            value="#{managerLogin.usuarioLogado.senha}"
+                                            />
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <p:outputLabel value="Repetir nova senha"
+                                               for="confirmarSenha" rendered="#{managerPerfil.alteracaoSenha}" />
+                                <p:password id="confirmarSenha" rendered="#{managerPerfil.alteracaoSenha}"
+                                            placeholder="Repetir senha"
+                                            required="true"
+                                            requiredMessage="Este campo é obrigatório."
+                                            styleClass="form-control"
+                                            value="#{managerLogin.usuarioLogado.senha}"
+                                            />
+                            </div>
+                        </div>
+                    </div>
+                </h:panelGroup>
+            </h:panelGroup>
+        </h:form>
         <center>
-            <p:button value="Salvar" icon="pi pi-save" />
+            <p:button value="atualizar" icon="pi pi-sync" />
             <p:button value="Cancelar" icon="pi pi-ban"  href="index.xhtml"/>           
         </center>
 
