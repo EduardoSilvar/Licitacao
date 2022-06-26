@@ -5,10 +5,14 @@
  */
 package Gerenciador;
 
+import static Gerenciador.managerLogin.VerificarLogin;
 import Servico.TipoLicitacaoServico;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -95,12 +99,22 @@ public class managerTipoLicitacao extends managerPrincipal implements Serializab
 
     @Override
     public void carregar(String param) {
+         try {
+            VerificarLogin();
+        } catch (IOException ex) {
+            Logger.getLogger(managerContrato.class.getName()).log(Level.SEVERE, null, ex);
+        }
         this.tipoLicitacao = tipoLicitacaoServico.find(Long.parseLong(param));
         this.tiposLicitacoes = new ArrayList<>();
     }
 
     @Override
     public void instanciar() {
+         try {
+            VerificarLogin();
+        } catch (IOException ex) {
+            Logger.getLogger(managerContrato.class.getName()).log(Level.SEVERE, null, ex);
+        }
         instanciarTipoLicitacao();
         instanciarListaTipoLicitacao();
     }

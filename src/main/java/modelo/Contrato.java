@@ -33,6 +33,8 @@ public class Contrato implements Serializable {
     @GeneratedValue(generator = "seq_contrato", strategy = GenerationType.AUTO)
     private Long id;
     @OneToOne
+    private UnidadeOrganizacional unidadeOrganizacional;
+    @OneToOne
     private Contratado contratado;
     private BigInteger NumeroContrato;
     private BigInteger NumeroProcesso;
@@ -71,35 +73,13 @@ public class Contrato implements Serializable {
     public Contrato() {
     }
 
-    public Contrato(Long id, Contratado contratado, BigInteger NumeroContrato, BigInteger NumeroProcesso, BigInteger NumeroLicitacao, TipoContrato tipoContrato, Setor setor, TipoLicitacao tipoLicitacao, Integer valor, boolean possuiTempoDeterminado, Date dataInicio, Date dataFinal, Date dataAssinatura, Date dataRenovacao, Integer objetoContrato, Usuario fiscalContrato, String descricao, StatusContrato status, String banco, Integer numeroConta, Integer digito, Integer agencia, Integer operacao, Integer saldoInicial, String corStatus) {
-        this.id = id;
-        this.contratado = contratado;
-        this.NumeroContrato = NumeroContrato;
-        this.NumeroProcesso = NumeroProcesso;
-        this.NumeroLicitacao = NumeroLicitacao;
-        this.tipoContrato = tipoContrato;
-        this.setor = setor;
-        this.tipoLicitacao = tipoLicitacao;
-        this.valor = valor;
-        this.possuiTempoDeterminado = possuiTempoDeterminado;
-        this.dataInicio = dataInicio;
-        this.dataFinal = dataFinal;
-        this.dataAssinatura = dataAssinatura;
-        this.dataRenovacao = dataRenovacao;
-        this.objetoContrato = objetoContrato;
-        this.fiscalContrato = fiscalContrato;
-        this.descricao = descricao;
-        this.status = status;
-        this.banco = banco;
-        this.numeroConta = numeroConta;
-        this.digito = digito;
-        this.agencia = agencia;
-        this.operacao = operacao;
-        this.saldoInicial = saldoInicial;
-        this.corStatus = corStatus;
+    public UnidadeOrganizacional getUnidadeOrganizacional() {
+        return unidadeOrganizacional;
     }
 
-
+    public void setUnidadeOrganizacional(UnidadeOrganizacional unidadeOrganizacional) {
+        this.unidadeOrganizacional = unidadeOrganizacional;
+    }
 
     public String getCorStatus() {
         return corStatus;
@@ -311,33 +291,34 @@ public class Contrato implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 97 * hash + Objects.hashCode(this.id);
-        hash = 97 * hash + Objects.hashCode(this.contratado);
-        hash = 97 * hash + Objects.hashCode(this.NumeroContrato);
-        hash = 97 * hash + Objects.hashCode(this.NumeroProcesso);
-        hash = 97 * hash + Objects.hashCode(this.NumeroLicitacao);
-        hash = 97 * hash + Objects.hashCode(this.tipoContrato);
-        hash = 97 * hash + Objects.hashCode(this.setor);
-        hash = 97 * hash + Objects.hashCode(this.tipoLicitacao);
-        hash = 97 * hash + Objects.hashCode(this.valor);
-        hash = 97 * hash + (this.possuiTempoDeterminado ? 1 : 0);
-        hash = 97 * hash + Objects.hashCode(this.dataInicio);
-        hash = 97 * hash + Objects.hashCode(this.dataFinal);
-        hash = 97 * hash + Objects.hashCode(this.dataAssinatura);
-        hash = 97 * hash + Objects.hashCode(this.dataRenovacao);
-        hash = 97 * hash + Objects.hashCode(this.objetoContrato);
-        hash = 97 * hash + Objects.hashCode(this.fiscalContrato);
-        hash = 97 * hash + Objects.hashCode(this.descricao);
-        hash = 97 * hash + Objects.hashCode(this.status);
-        hash = 97 * hash + Objects.hashCode(this.banco);
-        hash = 97 * hash + Objects.hashCode(this.numeroConta);
-        hash = 97 * hash + Objects.hashCode(this.digito);
-        hash = 97 * hash + Objects.hashCode(this.agencia);
-        hash = 97 * hash + Objects.hashCode(this.operacao);
-        hash = 97 * hash + Objects.hashCode(this.saldoInicial);
-        hash = 97 * hash + (this.ativo ? 1 : 0);
-        hash = 97 * hash + Objects.hashCode(this.corStatus);
+        int hash = 7;
+        hash = 79 * hash + Objects.hashCode(this.id);
+        hash = 79 * hash + Objects.hashCode(this.unidadeOrganizacional);
+        hash = 79 * hash + Objects.hashCode(this.contratado);
+        hash = 79 * hash + Objects.hashCode(this.NumeroContrato);
+        hash = 79 * hash + Objects.hashCode(this.NumeroProcesso);
+        hash = 79 * hash + Objects.hashCode(this.NumeroLicitacao);
+        hash = 79 * hash + Objects.hashCode(this.tipoContrato);
+        hash = 79 * hash + Objects.hashCode(this.setor);
+        hash = 79 * hash + Objects.hashCode(this.tipoLicitacao);
+        hash = 79 * hash + Objects.hashCode(this.valor);
+        hash = 79 * hash + (this.possuiTempoDeterminado ? 1 : 0);
+        hash = 79 * hash + Objects.hashCode(this.dataInicio);
+        hash = 79 * hash + Objects.hashCode(this.dataFinal);
+        hash = 79 * hash + Objects.hashCode(this.dataAssinatura);
+        hash = 79 * hash + Objects.hashCode(this.dataRenovacao);
+        hash = 79 * hash + Objects.hashCode(this.objetoContrato);
+        hash = 79 * hash + Objects.hashCode(this.fiscalContrato);
+        hash = 79 * hash + Objects.hashCode(this.descricao);
+        hash = 79 * hash + Objects.hashCode(this.status);
+        hash = 79 * hash + Objects.hashCode(this.banco);
+        hash = 79 * hash + Objects.hashCode(this.numeroConta);
+        hash = 79 * hash + Objects.hashCode(this.digito);
+        hash = 79 * hash + Objects.hashCode(this.agencia);
+        hash = 79 * hash + Objects.hashCode(this.operacao);
+        hash = 79 * hash + Objects.hashCode(this.saldoInicial);
+        hash = 79 * hash + (this.ativo ? 1 : 0);
+        hash = 79 * hash + Objects.hashCode(this.corStatus);
         return hash;
     }
 
@@ -369,6 +350,9 @@ public class Contrato implements Serializable {
             return false;
         }
         if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        if (!Objects.equals(this.unidadeOrganizacional, other.unidadeOrganizacional)) {
             return false;
         }
         if (!Objects.equals(this.contratado, other.contratado)) {
@@ -433,6 +417,8 @@ public class Contrato implements Serializable {
         }
         return true;
     }
+
+   
 
 
 }

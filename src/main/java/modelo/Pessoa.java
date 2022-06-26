@@ -25,6 +25,8 @@ public class Pessoa implements Serializable {
     private String telefone;
     private String cpf;
     private Endereco endereco;
+    @OneToOne
+    private UnidadeOrganizacional unidadeOrganizacional;
 
     public Pessoa(Long id, String nome, String telefone, String cpf, Endereco endereco) {
         this.id = id;
@@ -77,14 +79,23 @@ public class Pessoa implements Serializable {
         this.endereco = endereco;
     }
 
+    public UnidadeOrganizacional getUnidadeOrganizacional() {
+        return unidadeOrganizacional;
+    }
+
+    public void setUnidadeOrganizacional(UnidadeOrganizacional unidadeOrganizacional) {
+        this.unidadeOrganizacional = unidadeOrganizacional;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 71 * hash + Objects.hashCode(this.id);
-        hash = 71 * hash + Objects.hashCode(this.nome);
-        hash = 71 * hash + Objects.hashCode(this.telefone);
-        hash = 71 * hash + Objects.hashCode(this.cpf);
-        hash = 71 * hash + Objects.hashCode(this.endereco);
+        int hash = 3;
+        hash = 61 * hash + Objects.hashCode(this.id);
+        hash = 61 * hash + Objects.hashCode(this.nome);
+        hash = 61 * hash + Objects.hashCode(this.telefone);
+        hash = 61 * hash + Objects.hashCode(this.cpf);
+        hash = 61 * hash + Objects.hashCode(this.endereco);
+        hash = 61 * hash + Objects.hashCode(this.unidadeOrganizacional);
         return hash;
     }
 
@@ -115,8 +126,13 @@ public class Pessoa implements Serializable {
         if (!Objects.equals(this.endereco, other.endereco)) {
             return false;
         }
+        if (!Objects.equals(this.unidadeOrganizacional, other.unidadeOrganizacional)) {
+            return false;
+        }
         return true;
     }
+
+   
 
     @Override
     public String toString() {

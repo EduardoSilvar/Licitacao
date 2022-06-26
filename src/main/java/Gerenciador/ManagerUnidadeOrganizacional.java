@@ -5,8 +5,12 @@
  */
 package Gerenciador;
 
+import static Gerenciador.managerLogin.VerificarLogin;
 import Servico.UnidadeOrganizacionalServico;
+import java.io.IOException;
 import java.io.Serializable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -45,11 +49,21 @@ public class ManagerUnidadeOrganizacional extends managerPrincipal implements Se
 
     @Override
     public void carregar(String param) {
+         try {
+            VerificarLogin();
+        } catch (IOException ex) {
+            Logger.getLogger(managerContrato.class.getName()).log(Level.SEVERE, null, ex);
+        }
         this.unidade = unidadeServico.find(Long.parseLong(param));
     }
 
     @Override
     public void instanciar() {
+         try {
+            VerificarLogin();
+        } catch (IOException ex) {
+            Logger.getLogger(managerContrato.class.getName()).log(Level.SEVERE, null, ex);
+        }
         instanciarUnidade();
     }
 

@@ -19,6 +19,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 
 /**
@@ -42,6 +43,8 @@ public class Usuario implements Serializable {
     private String urlArquivoToken;
     private String senhaToken;
     private boolean ativo = true;
+    @OneToOne
+    private UnidadeOrganizacional unidadeOrganizacional;
     @Enumerated(EnumType.STRING)
     private List<TipoUsuario> TiposUsuario;
 
@@ -171,19 +174,30 @@ public class Usuario implements Serializable {
         this.telefone = telefone;
     }
 
+    public UnidadeOrganizacional getUnidadeOrganizacional() {
+        return unidadeOrganizacional;
+    }
+
+    public void setUnidadeOrganizacional(UnidadeOrganizacional unidadeOrganizacional) {
+        this.unidadeOrganizacional = unidadeOrganizacional;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 83 * hash + Objects.hashCode(this.id);
-        hash = 83 * hash + Objects.hashCode(this.cpf);
-        hash = 83 * hash + Objects.hashCode(this.telefone);
-        hash = 83 * hash + Objects.hashCode(this.nome);
-        hash = 83 * hash + Objects.hashCode(this.login);
-        hash = 83 * hash + Objects.hashCode(this.email);
-        hash = 83 * hash + Objects.hashCode(this.senha);
-        hash = 83 * hash + Objects.hashCode(this.whatsapp);
-        hash = 83 * hash + (this.ativo ? 1 : 0);
-        hash = 83 * hash + Objects.hashCode(this.TiposUsuario);
+        int hash = 7;
+        hash = 97 * hash + Objects.hashCode(this.id);
+        hash = 97 * hash + Objects.hashCode(this.cpf);
+        hash = 97 * hash + Objects.hashCode(this.telefone);
+        hash = 97 * hash + Objects.hashCode(this.nome);
+        hash = 97 * hash + Objects.hashCode(this.login);
+        hash = 97 * hash + Objects.hashCode(this.email);
+        hash = 97 * hash + Objects.hashCode(this.senha);
+        hash = 97 * hash + Objects.hashCode(this.whatsapp);
+        hash = 97 * hash + Objects.hashCode(this.urlArquivoToken);
+        hash = 97 * hash + Objects.hashCode(this.senhaToken);
+        hash = 97 * hash + (this.ativo ? 1 : 0);
+        hash = 97 * hash + Objects.hashCode(this.unidadeOrganizacional);
+        hash = 97 * hash + Objects.hashCode(this.TiposUsuario);
         return hash;
     }
 
@@ -223,7 +237,16 @@ public class Usuario implements Serializable {
         if (!Objects.equals(this.whatsapp, other.whatsapp)) {
             return false;
         }
+        if (!Objects.equals(this.urlArquivoToken, other.urlArquivoToken)) {
+            return false;
+        }
+        if (!Objects.equals(this.senhaToken, other.senhaToken)) {
+            return false;
+        }
         if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        if (!Objects.equals(this.unidadeOrganizacional, other.unidadeOrganizacional)) {
             return false;
         }
         if (!Objects.equals(this.TiposUsuario, other.TiposUsuario)) {
@@ -231,6 +254,8 @@ public class Usuario implements Serializable {
         }
         return true;
     }
+
+    
 
     @Override
     public String toString() {

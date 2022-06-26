@@ -11,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 
 /**
@@ -30,17 +31,19 @@ public class Setor implements Serializable {
     private String descricao;
     private String telefone;
     private boolean ativo = true;
+    @OneToOne
+    private UnidadeOrganizacional unidadeOrganizacional;
 
     public Setor() {
     }
 
-    public Setor(Long id, String nome, String nomeResponsavel, String cpfResponsavel, String descricao, String telefone) {
-        this.id = id;
-        this.nome = nome;
-        this.nomeResponsavel = nomeResponsavel;
-        this.cpfResponsavel = cpfResponsavel;
-        this.descricao = descricao;
-        this.telefone = telefone;
+
+    public UnidadeOrganizacional getUnidadeOrganizacional() {
+        return unidadeOrganizacional;
+    }
+
+    public void setUnidadeOrganizacional(UnidadeOrganizacional unidadeOrganizacional) {
+        this.unidadeOrganizacional = unidadeOrganizacional;
     }
 
     public String getTelefone() {
@@ -50,8 +53,6 @@ public class Setor implements Serializable {
     public void setTelefone(String telefone) {
         this.telefone = telefone;
     }
-
-   
 
     public Long getId() {
         return id;
@@ -104,12 +105,14 @@ public class Setor implements Serializable {
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 23 * hash + Objects.hashCode(this.id);
-        hash = 23 * hash + Objects.hashCode(this.nome);
-        hash = 23 * hash + Objects.hashCode(this.nomeResponsavel);
-        hash = 23 * hash + Objects.hashCode(this.cpfResponsavel);
-        hash = 23 * hash + Objects.hashCode(this.descricao);
-        hash = 23 * hash + (this.ativo ? 1 : 0);
+        hash = 61 * hash + Objects.hashCode(this.id);
+        hash = 61 * hash + Objects.hashCode(this.nome);
+        hash = 61 * hash + Objects.hashCode(this.nomeResponsavel);
+        hash = 61 * hash + Objects.hashCode(this.cpfResponsavel);
+        hash = 61 * hash + Objects.hashCode(this.descricao);
+        hash = 61 * hash + Objects.hashCode(this.telefone);
+        hash = 61 * hash + (this.ativo ? 1 : 0);
+        hash = 61 * hash + Objects.hashCode(this.unidadeOrganizacional);
         return hash;
     }
 
@@ -140,12 +143,19 @@ public class Setor implements Serializable {
         if (!Objects.equals(this.descricao, other.descricao)) {
             return false;
         }
+        if (!Objects.equals(this.telefone, other.telefone)) {
+            return false;
+        }
         if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        if (!Objects.equals(this.unidadeOrganizacional, other.unidadeOrganizacional)) {
             return false;
         }
         return true;
     }
 
+    
     @Override
     public String toString() {
         return "Setor{" + "id=" + id + ", nome=" + nome + ", nomeResponsavel=" + nomeResponsavel + ", cpfResponsavel=" + cpfResponsavel + ", descricao=" + descricao + ", ativo=" + ativo + '}';

@@ -11,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 
 /**
@@ -26,8 +27,19 @@ public class TipoContrato implements Serializable {
     private Long id;
     private String nome;
     private String descricao;
-    private boolean ativo =true;
+    private boolean ativo = true;
+    @OneToOne
+    private UnidadeOrganizacional unidadeOrganizacional;
 
+    public UnidadeOrganizacional getUnidadeOrganizacional() {
+        return unidadeOrganizacional;
+    }
+
+    public void setUnidadeOrganizacional(UnidadeOrganizacional unidadeOrganizacional) {
+        this.unidadeOrganizacional = unidadeOrganizacional;
+    }
+
+    
     public Long getId() {
         return id;
     }
@@ -62,10 +74,12 @@ public class TipoContrato implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 53 * hash + Objects.hashCode(this.id);
-        hash = 53 * hash + Objects.hashCode(this.nome);
-        hash = 53 * hash + Objects.hashCode(this.descricao);
+        int hash = 5;
+        hash = 23 * hash + Objects.hashCode(this.id);
+        hash = 23 * hash + Objects.hashCode(this.nome);
+        hash = 23 * hash + Objects.hashCode(this.descricao);
+        hash = 23 * hash + (this.ativo ? 1 : 0);
+        hash = 23 * hash + Objects.hashCode(this.unidadeOrganizacional);
         return hash;
     }
 
@@ -81,6 +95,9 @@ public class TipoContrato implements Serializable {
             return false;
         }
         final TipoContrato other = (TipoContrato) obj;
+        if (this.ativo != other.ativo) {
+            return false;
+        }
         if (!Objects.equals(this.nome, other.nome)) {
             return false;
         }
@@ -90,9 +107,13 @@ public class TipoContrato implements Serializable {
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }
+        if (!Objects.equals(this.unidadeOrganizacional, other.unidadeOrganizacional)) {
+            return false;
+        }
         return true;
     }
 
+   
     @Override
     public String toString() {
         return "TipoContrato{" + "id=" + id + ", nome=" + nome + ", descricao=" + descricao + '}';

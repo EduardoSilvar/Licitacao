@@ -7,6 +7,7 @@ package modelo;
 
 import Enum.NaturezaEnum;
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.*;
 
@@ -24,6 +25,8 @@ public class Contratado implements Serializable {
     private String nome;
     private String cpf;
     private String cnpj;
+    @OneToOne
+    private UnidadeOrganizacional unidadeOrganizacional;
     @OneToOne(cascade = CascadeType.ALL)
     private Endereco endereco;
     private String especialidade;
@@ -40,6 +43,14 @@ public class Contratado implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public UnidadeOrganizacional getUnidadeOrganizacional() {
+        return unidadeOrganizacional;
+    }
+
+    public void setUnidadeOrganizacional(UnidadeOrganizacional unidadeOrganizacional) {
+        this.unidadeOrganizacional = unidadeOrganizacional;
     }
 
     public String getNome() {
@@ -120,6 +131,75 @@ public class Contratado implements Serializable {
 
     public void setAtivo(boolean ativo) {
         this.ativo = ativo;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 37 * hash + Objects.hashCode(this.id);
+        hash = 37 * hash + Objects.hashCode(this.nome);
+        hash = 37 * hash + Objects.hashCode(this.cpf);
+        hash = 37 * hash + Objects.hashCode(this.cnpj);
+        hash = 37 * hash + Objects.hashCode(this.unidadeOrganizacional);
+        hash = 37 * hash + Objects.hashCode(this.endereco);
+        hash = 37 * hash + Objects.hashCode(this.especialidade);
+        hash = 37 * hash + Objects.hashCode(this.natureza);
+        hash = 37 * hash + Objects.hashCode(this.email);
+        hash = 37 * hash + Objects.hashCode(this.telefone);
+        hash = 37 * hash + Objects.hashCode(this.whatsapp);
+        hash = 37 * hash + (this.ativo ? 1 : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Contratado other = (Contratado) obj;
+        if (this.ativo != other.ativo) {
+            return false;
+        }
+        if (!Objects.equals(this.nome, other.nome)) {
+            return false;
+        }
+        if (!Objects.equals(this.cpf, other.cpf)) {
+            return false;
+        }
+        if (!Objects.equals(this.cnpj, other.cnpj)) {
+            return false;
+        }
+        if (!Objects.equals(this.especialidade, other.especialidade)) {
+            return false;
+        }
+        if (!Objects.equals(this.email, other.email)) {
+            return false;
+        }
+        if (!Objects.equals(this.telefone, other.telefone)) {
+            return false;
+        }
+        if (!Objects.equals(this.whatsapp, other.whatsapp)) {
+            return false;
+        }
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        if (!Objects.equals(this.unidadeOrganizacional, other.unidadeOrganizacional)) {
+            return false;
+        }
+        if (!Objects.equals(this.endereco, other.endereco)) {
+            return false;
+        }
+        if (this.natureza != other.natureza) {
+            return false;
+        }
+        return true;
     }
 
     @Override

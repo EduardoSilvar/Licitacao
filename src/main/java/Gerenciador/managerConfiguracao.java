@@ -5,8 +5,12 @@
  */
 package Gerenciador;
 
+import static Gerenciador.managerLogin.VerificarLogin;
 import Servico.ConfiguracaoServico;
+import java.io.IOException;
 import java.io.Serializable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -30,6 +34,11 @@ public class managerConfiguracao implements Serializable {
 
     @PostConstruct
     public void init() {
+         try {
+            VerificarLogin();
+        } catch (IOException ex) {
+            Logger.getLogger(managerContrato.class.getName()).log(Level.SEVERE, null, ex);
+        }
         if (configuracaoServico.FindAll().size() > 0) {
             System.err.println("sla");
         } else {

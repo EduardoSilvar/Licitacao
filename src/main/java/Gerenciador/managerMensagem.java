@@ -5,10 +5,14 @@
  */
 package Gerenciador;
 
+import static Gerenciador.managerLogin.VerificarLogin;
 import Servico.MensagemServico;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -37,6 +41,11 @@ public class managerMensagem implements Serializable {
 
     @PostConstruct
     public void init() {
+         try {
+            VerificarLogin();
+        } catch (IOException ex) {
+            Logger.getLogger(managerContrato.class.getName()).log(Level.SEVERE, null, ex);
+        }
         this.contratosPertodeExpirar = new ArrayList<>();
         this.contratosAprovados = msgServico.aprovado();
         this.contratosPertodeExpirar = msgServico.expirar();

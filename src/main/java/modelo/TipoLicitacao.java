@@ -11,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 
 /**
@@ -26,6 +27,8 @@ public class TipoLicitacao implements Serializable {
     private Long id;
     private String descricao;
     private String tipo;
+    @OneToOne
+    private UnidadeOrganizacional unidadeOrganizacional;
     private boolean ativo = true;
 
     public TipoLicitacao() {
@@ -69,13 +72,22 @@ public class TipoLicitacao implements Serializable {
         this.ativo = ativo;
     }
 
+    public UnidadeOrganizacional getUnidadeOrganizacional() {
+        return unidadeOrganizacional;
+    }
+
+    public void setUnidadeOrganizacional(UnidadeOrganizacional unidadeOrganizacional) {
+        this.unidadeOrganizacional = unidadeOrganizacional;
+    }
+
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 83 * hash + Objects.hashCode(this.id);
-        hash = 83 * hash + Objects.hashCode(this.descricao);
-        hash = 83 * hash + Objects.hashCode(this.tipo);
-        hash = 83 * hash + (this.ativo ? 1 : 0);
+        hash = 79 * hash + Objects.hashCode(this.id);
+        hash = 79 * hash + Objects.hashCode(this.descricao);
+        hash = 79 * hash + Objects.hashCode(this.tipo);
+        hash = 79 * hash + Objects.hashCode(this.unidadeOrganizacional);
+        hash = 79 * hash + (this.ativo ? 1 : 0);
         return hash;
     }
 
@@ -103,9 +115,13 @@ public class TipoLicitacao implements Serializable {
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }
+        if (!Objects.equals(this.unidadeOrganizacional, other.unidadeOrganizacional)) {
+            return false;
+        }
         return true;
     }
 
+    
     @Override
     public String toString() {
         return "TipoLicitacao{" + "id=" + id + ", descricao=" + descricao + ", tipo=" + tipo + ", ativo=" + ativo + '}';

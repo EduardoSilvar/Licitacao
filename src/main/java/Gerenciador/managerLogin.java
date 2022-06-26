@@ -41,15 +41,29 @@ public class managerLogin implements Serializable {
     @PostConstruct
     public void init() {
         this.usuarioLogado = new Usuario();
-//        Principal userPrincipal = FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal();
-//        usuarioLogado = userServico.getCurrentUser();
-//        if (userPrincipal != null) {
-//            this.user = userPrincipal.getName();
-//            String[] nome = this.user.trim().split(" ");
-//            if (nome.length > 1) {
-//                this.user = nome[0];
-//            }
-//        }
+        try {
+            VerificarLogin();
+        } catch (IOException ex) {
+            Logger.getLogger(managerLogin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public static void VerificarLogin() throws IOException {
+        if (Utils.isEmpty(getObjectSession("usuarioLogado"))) {
+            redirectLogin();
+        }
+    }
+
+    public static void redirectLogin() {
+        HttpServletRequest uri = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        if (!uri.getRequestURI().contains("login.xhtml")) {
+            try {
+                ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
+                context.redirect("login.xhtml");
+            } catch (IOException ex) {
+                Logger.getLogger(managerLogin.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 
     public boolean logado() {
@@ -58,27 +72,27 @@ public class managerLogin implements Serializable {
         return uL;
     }
 
-    public void logout() throws IOException, NullPointerException {
+    public static void logout() throws IOException, NullPointerException {
         FacesContext fc = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
         session.invalidate();
         fc.getExternalContext().redirect("index.xhtml");
     }
 
-    public void logout(String user) {
+    public static void logout(String user) {
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
         HttpSession session = request.getSession();
         session.removeAttribute(user);
 
     }
 
-    public void setObjectSession(String user, Object object) throws IOException, NullPointerException {
+    public static void setObjectSession(String user, Object object) throws IOException, NullPointerException {
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
         HttpSession session = request.getSession();
         session.setAttribute(user, object);
     }
 
-    public Object getObjectSession(String user) throws IOException, NullPointerException {
+    public static Object getObjectSession(String user) throws IOException, NullPointerException {
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
         HttpSession session = request.getSession();
         return session.getAttribute(user);
@@ -96,8 +110,9 @@ public class managerLogin implements Serializable {
             }
         }
     }
-    public Usuario retornanome() throws IOException{
-    return (Usuario) getObjectSession("usuarioLogado");
+
+    public Usuario retornanome() throws IOException {
+        return (Usuario) getObjectSession("usuarioLogado");
     }
 
     public Usuario getUserll() {

@@ -17,6 +17,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 
 /**
@@ -30,6 +31,8 @@ public class Configuracao implements Serializable {
     @SequenceGenerator(sequenceName = "seq_configuracao", name = "seq_configuracao", allocationSize = 1)
     @GeneratedValue(generator = "seq_configuracao", strategy = GenerationType.AUTO)
     private Long id;
+    @OneToOne
+    private UnidadeOrganizacional unidadeOrganizacional;
     private Long diasPraExpirar;
     @Enumerated(EnumType.STRING)
     private StatusContrato primeiroStatus;
@@ -57,6 +60,14 @@ public class Configuracao implements Serializable {
 
     public Long getDiasPraExpirar() {
         return diasPraExpirar;
+    }
+
+    public UnidadeOrganizacional getUnidadeOrganizacional() {
+        return unidadeOrganizacional;
+    }
+
+    public void setUnidadeOrganizacional(UnidadeOrganizacional unidadeOrganizacional) {
+        this.unidadeOrganizacional = unidadeOrganizacional;
     }
 
     public void setDiasPraExpirar(Long diasPraExpirar) {
@@ -125,6 +136,71 @@ public class Configuracao implements Serializable {
 
     public void setAtivo(boolean ativo) {
         this.ativo = ativo;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 37 * hash + Objects.hashCode(this.id);
+        hash = 37 * hash + Objects.hashCode(this.unidadeOrganizacional);
+        hash = 37 * hash + Objects.hashCode(this.diasPraExpirar);
+        hash = 37 * hash + Objects.hashCode(this.primeiroStatus);
+        hash = 37 * hash + Objects.hashCode(this.SegundoStatus);
+        hash = 37 * hash + Objects.hashCode(this.terceiroStatus);
+        hash = 37 * hash + Objects.hashCode(this.pedidosRenovacao);
+        hash = 37 * hash + Objects.hashCode(this.primeiroGrafico);
+        hash = 37 * hash + Objects.hashCode(this.segundoGrafico);
+        hash = 37 * hash + Objects.hashCode(this.terceiroGrafico);
+        hash = 37 * hash + (this.ativo ? 1 : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Configuracao other = (Configuracao) obj;
+        if (this.ativo != other.ativo) {
+            return false;
+        }
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        if (!Objects.equals(this.unidadeOrganizacional, other.unidadeOrganizacional)) {
+            return false;
+        }
+        if (!Objects.equals(this.diasPraExpirar, other.diasPraExpirar)) {
+            return false;
+        }
+        if (this.primeiroStatus != other.primeiroStatus) {
+            return false;
+        }
+        if (this.SegundoStatus != other.SegundoStatus) {
+            return false;
+        }
+        if (this.terceiroStatus != other.terceiroStatus) {
+            return false;
+        }
+        if (!Objects.equals(this.pedidosRenovacao, other.pedidosRenovacao)) {
+            return false;
+        }
+        if (this.primeiroGrafico != other.primeiroGrafico) {
+            return false;
+        }
+        if (this.segundoGrafico != other.segundoGrafico) {
+            return false;
+        }
+        if (this.terceiroGrafico != other.terceiroGrafico) {
+            return false;
+        }
+        return true;
     }
 
 }

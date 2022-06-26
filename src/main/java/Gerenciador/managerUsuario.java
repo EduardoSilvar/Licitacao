@@ -5,10 +5,14 @@
  */
 package Gerenciador;
 
+import static Gerenciador.managerLogin.VerificarLogin;
 import Servico.UsuarioServico;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -34,11 +38,21 @@ public class managerUsuario extends managerPrincipal implements Serializable {
 
     @Override
     public void carregar(String param) {
+        try {
+            VerificarLogin();
+        } catch (IOException ex) {
+            Logger.getLogger(managerContrato.class.getName()).log(Level.SEVERE, null, ex);
+        }
         this.user = userServico.find(Long.parseLong(param));
     }
 
     @Override
     public void instanciar() {
+        try {
+            VerificarLogin();
+        } catch (IOException ex) {
+            Logger.getLogger(managerContrato.class.getName()).log(Level.SEVERE, null, ex);
+        }
         instanciarUsuario();
         instanciarListUser();
     }
@@ -74,11 +88,11 @@ public class managerUsuario extends managerPrincipal implements Serializable {
         }
 
     }
-    
-    public List<Usuario> getAll(){
+
+    public List<Usuario> getAll() {
         return userServico.FindAll();
     }
-    
+
     public void atualizar() {
         userServico.Update(this.user);
         Msg.messagemInfoRedirect("Operação realizada com sucesso !", "usuario.xhtml?visualizar=" + this.user.getId());

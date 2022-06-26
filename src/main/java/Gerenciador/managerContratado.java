@@ -6,10 +6,14 @@
 package Gerenciador;
 
 import Enum.NaturezaEnum;
+import static Gerenciador.managerLogin.VerificarLogin;
 import Servico.ContratadoServico;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -39,6 +43,11 @@ public class managerContratado extends managerPrincipal implements Serializable 
 
     @Override
     public void carregar(String param) {
+         try {
+            VerificarLogin();
+        } catch (IOException ex) {
+            Logger.getLogger(managerContrato.class.getName()).log(Level.SEVERE, null, ex);
+        }
         this.contratado = contratadoServico.find(Long.parseLong(param));
         cpf = contratado.getCpf();
         cnpj = contratado.getCnpj();
@@ -47,6 +56,11 @@ public class managerContratado extends managerPrincipal implements Serializable 
 
     @Override
     public void instanciar() {
+         try {
+            VerificarLogin();
+        } catch (IOException ex) {
+            Logger.getLogger(managerContrato.class.getName()).log(Level.SEVERE, null, ex);
+        }
         instanciarContratado();
         intanciarContratados();
     }
