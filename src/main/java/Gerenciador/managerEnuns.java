@@ -8,6 +8,7 @@ package Gerenciador;
 import Enum.GraficoEnum;
 import Enum.NaturezaEnum;
 import Enum.StatusContrato;
+import Enum.TipoUsuario;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +36,14 @@ public class managerEnuns implements Serializable {
         List<SelectItem> items = new ArrayList<>();
         for (StatusContrato item : StatusContrato.values()) {
             items.add(new SelectItem(item, item.getStatus()));
+        }
+        return items;
+    }
+
+    public List<SelectItem> getUsers() {
+        List<SelectItem> items = new ArrayList<>();
+        for (TipoUsuario item : TipoUsuario.values()) {
+            items.add(new SelectItem(item, item.getNome()));
         }
         return items;
     }

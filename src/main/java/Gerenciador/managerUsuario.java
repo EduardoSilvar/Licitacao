@@ -6,6 +6,8 @@
 package Gerenciador;
 
 import static Gerenciador.managerLogin.VerificarLogin;
+import Servico.SetorServico;
+import Servico.UnidadeOrganizacionalServico;
 import Servico.UsuarioServico;
 import java.io.IOException;
 import java.io.Serializable;
@@ -16,8 +18,9 @@ import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import modelo.Setor;
 import modelo.Usuario;
-import modelo.Usuario_;
+import modelo.UnidadeOrganizacional;
 import util.Msg;
 import util.Utils;
 
@@ -31,10 +34,16 @@ public class managerUsuario extends managerPrincipal implements Serializable {
 
     @EJB
     private UsuarioServico userServico;
+    @EJB
+    private UnidadeOrganizacionalServico unidadeServico;
+    @EJB
+    private SetorServico setorServico;
 
     private Usuario user;
     private List<Usuario> users;
     private String repetirSenha;
+    private List<Setor> setores;
+    private List<UnidadeOrganizacional> unidades;
 
     @Override
     public void carregar(String param) {
@@ -43,6 +52,7 @@ public class managerUsuario extends managerPrincipal implements Serializable {
         } catch (IOException ex) {
             Logger.getLogger(managerContrato.class.getName()).log(Level.SEVERE, null, ex);
         }
+        this.unidades = unidadeServico.FindAll();
         this.user = userServico.find(Long.parseLong(param));
     }
 
@@ -53,8 +63,13 @@ public class managerUsuario extends managerPrincipal implements Serializable {
         } catch (IOException ex) {
             Logger.getLogger(managerContrato.class.getName()).log(Level.SEVERE, null, ex);
         }
+        this.unidades = unidadeServico.FindAll();
         instanciarUsuario();
         instanciarListUser();
+    }
+
+    public List<Setor> getSetores() {
+        return setorServico.FindAll();
     }
 
     public void salvar() {
@@ -165,6 +180,14 @@ public class managerUsuario extends managerPrincipal implements Serializable {
 
     public void setRepetirSenha(String repetirSenha) {
         this.repetirSenha = repetirSenha;
+    }
+
+    public List<UnidadeOrganizacional> getUnidades() {
+        return unidades;
+    }
+
+    public void setUnidades(List<UnidadeOrganizacional> unidades) {
+        this.unidades = unidades;
     }
 
 }

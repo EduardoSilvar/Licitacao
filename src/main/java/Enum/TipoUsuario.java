@@ -11,10 +11,8 @@ package Enum;
  */
 public enum TipoUsuario {
     ADMINISTRADOR("Administrador"),
-    CFAP("Cfpa"),
-    CPAC("Cpac"),
-    CPAF("Cpaf"),
-    DORC("Dorc");
+    SUPERVISAO("Supervisão"),
+    GESTOR("Gestor");
 
     String nome;
 

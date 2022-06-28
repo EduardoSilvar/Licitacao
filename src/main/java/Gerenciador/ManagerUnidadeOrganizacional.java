@@ -9,11 +9,13 @@ import static Gerenciador.managerLogin.VerificarLogin;
 import Servico.UnidadeOrganizacionalServico;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import modelo.Endereco;
 import modelo.UnidadeOrganizacional;
 import util.Msg;
 
@@ -29,6 +31,7 @@ public class ManagerUnidadeOrganizacional extends managerPrincipal implements Se
     UnidadeOrganizacionalServico unidadeServico;
 
     private UnidadeOrganizacional unidade;
+    private List<UnidadeOrganizacional> unidades;
 
     public void salvar() {
         unidadeServico.Save(this.unidade);
@@ -39,6 +42,7 @@ public class ManagerUnidadeOrganizacional extends managerPrincipal implements Se
         UnidadeOrganizacional Novaunidade = unidadeServico.find(this.unidade.getId());
         Novaunidade.setAtivo(false);
         unidadeServico.Update(Novaunidade);
+        this.unidades.remove(Novaunidade);
         Msg.messagemInfo("Operação realizada com sucesso !");
     }
 
@@ -47,9 +51,13 @@ public class ManagerUnidadeOrganizacional extends managerPrincipal implements Se
         Msg.messagemInfo("Operação realizada com sucesso !");
     }
 
+    public void pesquisar() {
+        this.unidades = unidadeServico.pesquisar(this.unidade);
+    }
+
     @Override
     public void carregar(String param) {
-         try {
+        try {
             VerificarLogin();
         } catch (IOException ex) {
             Logger.getLogger(managerContrato.class.getName()).log(Level.SEVERE, null, ex);
@@ -59,7 +67,7 @@ public class ManagerUnidadeOrganizacional extends managerPrincipal implements Se
 
     @Override
     public void instanciar() {
-         try {
+        try {
             VerificarLogin();
         } catch (IOException ex) {
             Logger.getLogger(managerContrato.class.getName()).log(Level.SEVERE, null, ex);
@@ -79,6 +87,7 @@ public class ManagerUnidadeOrganizacional extends managerPrincipal implements Se
 
     public void instanciarUnidade() {
         this.unidade = new UnidadeOrganizacional();
+        this.unidade.setEndereco(new Endereco());
     }
 
     public UnidadeOrganizacional getUnidade() {
@@ -87,6 +96,14 @@ public class ManagerUnidadeOrganizacional extends managerPrincipal implements Se
 
     public void setUnidade(UnidadeOrganizacional unidade) {
         this.unidade = unidade;
+    }
+
+    public List<UnidadeOrganizacional> getUnidades() {
+        return unidades;
+    }
+
+    public void setUnidades(List<UnidadeOrganizacional> unidades) {
+        this.unidades = unidades;
     }
 
 }

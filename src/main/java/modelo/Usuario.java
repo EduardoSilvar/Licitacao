@@ -44,9 +44,11 @@ public class Usuario implements Serializable {
     private String senhaToken;
     private boolean ativo = true;
     @OneToOne
+    private Setor setor;
+    @OneToOne
     private UnidadeOrganizacional unidadeOrganizacional;
     @Enumerated(EnumType.STRING)
-    private List<TipoUsuario> TiposUsuario;
+    private TipoUsuario TiposUsuario;
 
     public Usuario() {
     }
@@ -94,6 +96,14 @@ public class Usuario implements Serializable {
         this.nome = nome;
     }
 
+    public Setor getSetor() {
+        return setor;
+    }
+
+    public void setSetor(Setor setor) {
+        this.setor = setor;
+    }
+
     public String getLogin() {
         return login;
     }
@@ -118,11 +128,11 @@ public class Usuario implements Serializable {
         this.senha = senha;
     }
 
-    public List<TipoUsuario> getTiposUsuario() {
+    public TipoUsuario getTiposUsuario() {
         return TiposUsuario;
     }
 
-    public void setTiposUsuario(List<TipoUsuario> TiposUsuario) {
+    public void setTiposUsuario(TipoUsuario TiposUsuario) {
         this.TiposUsuario = TiposUsuario;
     }
 
@@ -254,8 +264,6 @@ public class Usuario implements Serializable {
         }
         return true;
     }
-
-    
 
     @Override
     public String toString() {

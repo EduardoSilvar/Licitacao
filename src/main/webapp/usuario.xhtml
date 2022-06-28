@@ -40,13 +40,9 @@
     </ui:define>
     <ui:define name="barra">
         <div class="row" id="stylebarra">
-            <i class="pi pi-file-o" id="icon"></i> <h5 style="color: #e1e6e5"> Dados Gerais teste</h5>
+            <i class="pi pi-users" id="icon"></i> <h5 style="color: #e1e6e5"> Cadastro de Usuário</h5>
         </div>
     </ui:define>
-    <ui:define name="titulo">
-        <h4>Cadastro de Usuario</h4>
-    </ui:define>
-
     <ui:define name="corpo">
 
         <h:panelGroup id="usurarioPanelGroup" style="padding: 30px !important">
@@ -142,6 +138,60 @@
                         </div>
                     </div>
                     <div class="col-md-4">
+                        <div class="form-group" >
+                            <p:outputLabel value="Tipo de acesso" styleClass="control-label" for="acessoSelect" />
+                            <p:selectOneMenu id="acessoSelect"
+                                             value="#{managerUsuario.user.tiposUsuario}"
+                                             filter="true" 
+                                             placeholder="Tipo"
+                                             styleClass="form-control" 
+                                             required="true"
+                                             disabled="#{managerUsuario.visualizar}"
+                                              >
+                                <f:selectItem  itemLabel="Selecione..." noSelectionOption="true" />
+                                <f:selectItems value="#{managerEnuns.users}" var="tipo" itemLabel="#{tipo.label}" itemValue="#{tipo}"/>
+                                <p:ajax update="corpoInteiro:acessoSelect"/>
+                            </p:selectOneMenu>
+                        </div> 
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group" >
+                            <p:outputLabel value="Setor" styleClass="control-label" for="setorSelect" />
+                            <p:selectOneMenu id="setorSelect"
+                                             value="#{managerUsuario.user.setor}"
+                                             filter="true" 
+                                             placeholder="Tipo"
+                                             styleClass="form-control" 
+                                             required="true"
+                                             disabled="#{managerUsuario.visualizar}"
+                                             converter="setorconverter" >
+                                <f:selectItem  itemLabel="Selecione..." noSelectionOption="true" />
+                                <f:selectItems value="#{managerUsuario.setores}" var="setor" itemLabel="#{setor.nome}" itemValue="#{setor}"/>
+                            </p:selectOneMenu>
+                        </div> 
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group" >
+                            <p:outputLabel value="Unidade Organizacional" styleClass="control-label" for="unidadeSelect" />
+                            <p:selectOneMenu id="unidadeSelect"
+                                             value="#{managerUsuario.user.unidadeOrganizacional}"
+                                             filter="true" 
+                                             placeholder="Tipo"
+                                             styleClass="form-control" 
+                                             required="true"
+                                             disabled="#{managerUsuario.visualizar}"
+                                             converter="unidadeconverter" >
+                                <f:selectItem  itemLabel="Selecione..." noSelectionOption="true" />
+                                <f:selectItems value="#{managerUsuario.unidades}" var="unidade" itemLabel="#{unidade.nome}" itemValue="#{unidade}"/>
+                            </p:selectOneMenu>
+                        </div> 
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <p:outputLabel value="Login"
                                            for="loginUserInput" />
@@ -155,29 +205,26 @@
                             <p:message for="loginUserInput" />
                         </div>
                     </div>
-
-                </div>
-                <div class="row"  
-
-                     >
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <p:outputLabel value="Senha"
                                            for="senhaUserInput"
                                            rendered="#{managerUsuario.cadastrar}"/><br/>
-                            <p:password id="senhaUserInput" value="#{managerUsuario.user.senha}" toggleMask="true"
+                            <p:password id="senhaUserInput" value="#{managerUsuario.user.senha}"
+                                        placeholder="Senha"
                                         redisplay="true" requiredMessage="Este campo é obrigatório."
                                         styleClass="form-control"  disabled="#{managerUsuario.visualizar}"    rendered="#{managerUsuario.cadastrar}"/>
                             <p:message for="senhaUserInput" />
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <p:outputLabel value="Repita a senha"
                                            for="repSenhaUserInput" 
                                            rendered="#{managerUsuario.cadastrar}"/><br/>
-                            <p:password id="repSenhaUserInput" value="#{managerUsuario.repetirSenha}" toggleMask="true"
+                            <p:password id="repSenhaUserInput" value="#{managerUsuario.repetirSenha}" 
                                         redisplay="true" requiredMessage="Este campo é obrigatório."
+                                        placeholder="Repetir Senha"
                                         styleClass="form-control"  disabled="#{managerUsuario.visualizar}"    rendered="#{managerUsuario.cadastrar}"/>
                             <p:message for="repSenhaUserInput" />
                         </div>

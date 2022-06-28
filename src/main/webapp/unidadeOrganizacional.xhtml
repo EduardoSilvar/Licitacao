@@ -117,7 +117,7 @@
                             <p:outputLabel value="Bairro"
                                            for="bairroInput" />
                             <p:inputText id="bairroInput"
-                                         placeholder="Email"
+                                         placeholder="Bairro"
                                          required="true"
                                          styleClass="form-control" 
                                          value="#{managerUnidadeOrganizacional.unidade.endereco.bairro}"
@@ -132,7 +132,7 @@
                             <p:outputLabel value="Cidade"
                                            for="cidadeInput" />
                             <p:inputText id="cidadeInput"
-                                         placeholder="Email"
+                                         placeholder="Cidade"
                                          required="true"
                                          value="#{managerUnidadeOrganizacional.unidade.endereco.cidade}"
                                          rendered="true"
@@ -176,7 +176,7 @@
 
             </h:panelGroup>
             <center>
-                <p:commandButton value="Salvar" icon="pi pi-save" process="contratadoPanelGroup" update="corpoInteiro:messages" actionListener="#{managerUnidadeOrganizacional.salvar()}" rendered="#{managerUnidadeOrganizacional.cadastrar}" />
+                <p:commandButton value="Salvar" icon="pi pi-save" process="@this corpoInteiro:dadosGeraisPanelGroup" update="corpoInteiro:messages" actionListener="#{managerUnidadeOrganizacional.salvar()}" rendered="#{managerUnidadeOrganizacional.cadastrar}" />
                 <p:button value="Editar" icon="pi pi-pencil"  rendered="#{managerUnidadeOrganizacional.visualizar}" href="unidadeOrganizacional.xhtml?editar=#{managerUnidadeOrganizacional.unidade.id}" />
                 <p:commandButton value="Atualizar" icon="pi pi-sync" process="contratadoPanelGroup"  actionListener="#{managerContratado.atualizar()}" rendered="#{managerUnidadeOrganizacional.editar}"  />
                 <p:button value="Cancelar" icon="pi pi-ban"  href="unidadeOrganizacional.xhtml" rendered="#{managerUnidadeOrganizacional.visualizar}" />

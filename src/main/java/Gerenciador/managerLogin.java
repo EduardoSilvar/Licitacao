@@ -37,14 +37,23 @@ public class managerLogin implements Serializable {
     private Usuario userll;
     private String user;
     private String senha;
+    private String novaSenha;
+    private String repetirSenha;
 
     @PostConstruct
     public void init() {
         this.usuarioLogado = new Usuario();
         try {
+            instanciarLogado();
             VerificarLogin();
         } catch (IOException ex) {
             Logger.getLogger(managerLogin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void instanciarLogado() throws IOException {
+        if (Utils.isNotEmpty(getObjectSession("usuarioLogado"))) {
+            this.userll = (Usuario) getObjectSession("usuarioLogado");
         }
     }
 
@@ -153,6 +162,22 @@ public class managerLogin implements Serializable {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public String getNovaSenha() {
+        return novaSenha;
+    }
+
+    public void setNovaSenha(String novaSenha) {
+        this.novaSenha = novaSenha;
+    }
+
+    public String getRepetirSenha() {
+        return repetirSenha;
+    }
+
+    public void setRepetirSenha(String repetirSenha) {
+        this.repetirSenha = repetirSenha;
     }
 
 }

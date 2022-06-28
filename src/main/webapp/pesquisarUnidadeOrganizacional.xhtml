@@ -1,0 +1,193 @@
+<ui:composition template="/WEB-INF/template/layout.xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns="http://www.w3.org/1999/xhtml">
+    <ui:define name="acoes">
+        <h:panelGroup class="panelAcoes">
+            <p:splitButton value="Ações" style="margin: 0px -8px !important"
+                           icon="pi pi-cog"
+                           >
+
+                <p:menuitem value="Cadastrar" 
+                            icon="pi pi-save"
+                            url="tipoLicitacao.xhtml"
+                            process="@this"
+                            />
+
+            </p:splitButton>
+        </h:panelGroup>
+    </ui:define>
+    <ui:define name="barra">
+        <div class="row" id="stylebarra">
+            <i class="pi pi-search" id="icon"></i> <h5 style="color: #e1e6e5">Pesquisar Unidade Organizacional</h5>
+        </div>
+    </ui:define>
+    <ui:define name="corpo">
+        <p:growl id="messages" showDetail="true" />
+        <h:panelGroup id="panelPesquisa" >
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <p:outputLabel value="Nome" 
+                                       for="nomeInput" />
+                        <p:inputText id="nomeInput"
+                                     placeholder="tipo"
+                                     value="#{managerUnidadeOrganizacional.unidade.nome}"
+                                     rendered="true"
+                                     requiredMessage="Este campo é obrigatório."
+                                     styleClass="form-control" 
+                                     />
+                        <p:message for="nomeInput" />
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <p:outputLabel value="Representante"
+                                       for="representanteInput" />
+                        <p:inputText id="representanteInput"
+                                     placeholder="Nome"
+                                     value="#{managerUnidadeOrganizacional.unidade.nomeRepresentante}"
+                                     rendered="true"
+                                     requiredMessage="Este campo é obrigatório."
+                                     styleClass="form-control" 
+                                     />
+                        <p:message for="representanteInput" />
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <p:outputLabel value="CNPJ"
+                                       for="cnpjInput" />
+                        <p:inputText id="cnpjInput"
+                                     placeholder="CNPJ"
+                                     value="#{managerUnidadeOrganizacional.unidade.cnpj}"
+                                     rendered="true"
+                                     requiredMessage="Este campo é obrigatório."
+                                     styleClass="form-control" 
+                                     />
+                        <p:message for="cnpjInput" />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <p:outputLabel value="Bairro"
+                                       for="bairroInput" />
+                        <p:inputText id="bairroInput"
+                                     placeholder="Bairro"
+                                     value="#{managerUnidadeOrganizacional.unidade.endereco.bairro}"
+                                     rendered="true"
+                                     requiredMessage="Este campo é obrigatório."
+                                     styleClass="form-control" 
+                                     />
+                        <p:message for="bairroInput" />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <p:outputLabel value="Cidade"
+                                       for="cidadeInput" />
+                        <p:inputText id="cidadeInput"
+                                     placeholder="Cidade"
+                                     value="#{managerUnidadeOrganizacional.unidade.endereco.cidade}"
+                                     rendered="true"
+                                     requiredMessage="Este campo é obrigatório."
+                                     styleClass="form-control" 
+                                     />
+                        <p:message for="cidadeInput" />
+                    </div>
+                </div>
+            </div>
+
+        </h:panelGroup>
+
+        <center>
+            <p:commandButton value="Pesquisar" icon="pi pi-search" process="@this panelPesquisa" update="tipoLicitacaoDatatable messages" actionListener="#{managerUnidadeOrganizacional.pesquisar()}" />
+            <p:commandButton value="Limpar" icon="pi pi-ban" update="@form" actionListener="#{managerUnidadeOrganizacional.init()}"/>
+        </center>
+        <hr/>
+
+        <p:dataTable id="tipoLicitacaoDatatable" var="unidade" value="#{managerUnidadeOrganizacional.unidades}"
+                     resizeMode="5">
+            <f:facet name="header">
+                <center>
+                    tipos de Licitação
+                </center>
+            </f:facet>
+            <p:column headerText="ações" width="200">
+                <p:commandButton  icon="pi pi-trash" 
+                                  process="@this"
+                                  update="@form:tipoLicitacaoDatatable"
+                                  oncomplete="PF('removerLicitacaoConfirmDialog').show();" title="exluir">
+                    <f:setPropertyActionListener value="#{unidade}"
+                                                 target="#{managerUnidadeOrganizacional.unidade}"/>
+                </p:commandButton>
+                <p:button  icon="pi pi-eye" title="visualizar" href="unidadeOrganizacional.xhtml?visualizar=#{unidade.id}" />
+            </p:column>
+            <p:column headerText="Nome">
+                <h:outputText value="#{unidade.nome}" />
+            </p:column>
+
+            <p:column headerText="Email">
+                <h:outputText value="#{unidade.email}" />
+            </p:column>
+            <p:column headerText="Whatsapp">
+                <h:outputText value="#{unidade.whatsapp}" />
+            </p:column>
+
+        </p:dataTable>
+
+        <p:dialog id="removerLicitacaoConfirmDialog"
+                  widgetVar="removerLicitacaoConfirmDialog"
+                  header="Atenção!"
+                  closeOnEscape="true"
+                  draggable="false"
+                  maximizable="false"
+                  minimizable="false"
+                  modal="true"
+                  showEffect="fade"
+                  hideEffect="fade">
+
+            <div class="row">
+
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <h4>
+                            <i class="pi pi-exclamation-triangle"></i>
+                            Tem certeza de que deseja remover este Tipo de Licitação?
+                        </h4>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+
+                    <center>
+
+                        <p:commandButton value="Sim"
+                                         title="Confirmar Remoção"
+                                         icon="fa fa-check"
+                                         process="@this panelPesquisa"
+                                         update="messages corpoInteiro:tipoLicitacaoDatatable"
+                                         actionListener="#{managerUnidadeOrganizacional.deletar()}"
+                                         oncomplete="PF('removerLicitacaoConfirmDialog').hide();"
+                                         styleClass="mr-md-1"/>
+
+                        <p:commandButton value="Não"
+                                         title="Cancelar Remoção"
+                                         icon="fa fa-close"
+                                         process="@this"
+                                         oncomplete="PF('removerLicitacaoConfirmDialog').hide();"
+                                         styleClass="ml-md-1"/>
+
+                    </center>
+
+                </div>
+
+            </div>
+
+        </p:dialog>
+    </ui:define>
+</ui:composition>
