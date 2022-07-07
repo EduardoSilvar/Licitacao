@@ -6,6 +6,7 @@
 package Gerenciador;
 
 import static Gerenciador.managerLogin.VerificarLogin;
+import static Gerenciador.managerLogin.getObjectSession;
 import Servico.tipoContratoServico;
 import java.io.IOException;
 import java.io.Serializable;
@@ -21,6 +22,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 import modelo.TipoContrato;
+import modelo.Usuario;
 import util.Msg;
 import util.Utils;
 
@@ -31,16 +33,18 @@ import util.Utils;
 @ManagedBean
 @ViewScoped
 public class managerTipoContrato extends managerPrincipal implements Serializable {
-
+    
     @EJB
     private tipoContratoServico tipoContratoServico;
-
+    
     private TipoContrato tipoContrato;
     private List<TipoContrato> TipoContratos;
-
+    private Usuario user;
+    
     @Override
     public void carregar(String param) {
-         try {
+        try {
+            user = (Usuario) getObjectSession("usuarioLogado");
             VerificarLogin();
         } catch (IOException ex) {
             Logger.getLogger(managerContrato.class.getName()).log(Level.SEVERE, null, ex);
@@ -48,10 +52,11 @@ public class managerTipoContrato extends managerPrincipal implements Serializabl
         this.tipoContrato = tipoContratoServico.find(Long.parseLong(param));
         this.TipoContratos = new ArrayList<>();
     }
-
+    
     @Override
     public void instanciar() {
-         try {
+        try {
+            user = (Usuario) getObjectSession("usuarioLogado");
             VerificarLogin();
         } catch (IOException ex) {
             Logger.getLogger(managerContrato.class.getName()).log(Level.SEVERE, null, ex);
@@ -59,31 +64,32 @@ public class managerTipoContrato extends managerPrincipal implements Serializabl
         InstanciarTipoContrato();
         instanciarLista();
     }
-
+    
     @Override
     public String getUrlPesquisar() {
         return "pesquisarTipoContrato.xhtml";
     }
-
+    
     @Override
     public String getUrlVisualizar() {
         return "tipoContrato.xhtml?visualizar=" + this.tipoContrato.getId();
     }
-
+    
     public void salvar() {
+        tipoContrato.setUnidadeOrganizacional(user.getUnidadeOrganizacional());
         tipoContratoServico.Save(tipoContrato);
         Msg.messagemInfoRedirect("Operação realizada com sucesso !", "tipoContrato.xhtml?visualizar=" + this.tipoContrato.getId());
     }
-
+    
     public void atualizar() {
         tipoContratoServico.Update(this.tipoContrato);
         Msg.messagemInfoRedirect("Operação realizada com sucesso !", "tipoContrato.xhtml?visualizar=" + this.tipoContrato.getId());
     }
-
+    
     public List<TipoContrato> findall() {
         return tipoContratoServico.FindAll();
     }
-
+    
     public void deletar() {
         try {
             TipoContrato novoTipoContrato = tipoContratoServico.find(this.tipoContrato.getId());
@@ -94,13 +100,13 @@ public class managerTipoContrato extends managerPrincipal implements Serializabl
                 TipoContratos = tipoContratoServico.pesquisar(this.tipoContrato);
             }
             Msg.messagemInfoRedirect("Operação realizada com sucesso !", "pesquisarTipoContrato.xhtml");
-
+            
         } catch (Exception e) {
             e.getMessage();
         }
-
+        
     }
-
+    
     public void pesquisar() {
         TipoContratos = tipoContratoServico.pesquisar(this.tipoContrato);
         if (TipoContratos.size() > 0) {
@@ -109,29 +115,29 @@ public class managerTipoContrato extends managerPrincipal implements Serializabl
             Msg.messagemError("Nenhum tipo de contrato foi encontrato !");
         }
     }
-
+    
     public void instanciarLista() {
         TipoContratos = new ArrayList<>();
     }
-
+    
     public void InstanciarTipoContrato() {
         this.tipoContrato = new TipoContrato();
     }
-
+    
     public TipoContrato getTipoContrato() {
         return tipoContrato;
     }
-
+    
     public void setTipoContrato(TipoContrato tipoContrato) {
         this.tipoContrato = tipoContrato;
     }
-
+    
     public List<TipoContrato> getTipoContratos() {
         return TipoContratos;
     }
-
+    
     public void setTipoContratos(List<TipoContrato> TipoContratos) {
         this.TipoContratos = TipoContratos;
     }
-
+    
 }

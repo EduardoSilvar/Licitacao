@@ -10,7 +10,7 @@ package Enum;
  * @author eduardo
  */
 public enum StatusContrato {
-    CANCELADO("Candelado"),
+    CANCELADO("Cancelado"),
     FINALIZADO("Finalizado"),
     EXPIRADO("Expirado"),
     PAGO("Pago"),

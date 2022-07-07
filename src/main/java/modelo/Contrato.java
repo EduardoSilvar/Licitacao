@@ -7,6 +7,7 @@ package modelo;
 
 import Enum.StatusContrato;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Date;
 import java.util.Objects;
@@ -36,16 +37,16 @@ public class Contrato implements Serializable {
     private UnidadeOrganizacional unidadeOrganizacional;
     @OneToOne
     private Contratado contratado;
-    private BigInteger NumeroContrato;
-    private BigInteger NumeroProcesso;
-    private BigInteger NumeroLicitacao;
+    private Long NumeroContrato;
+    private Long NumeroProcesso;
+    private Long NumeroLicitacao;
     @OneToOne
     private TipoContrato tipoContrato;
     @OneToOne
     private Setor setor;
     @OneToOne
     private TipoLicitacao tipoLicitacao;
-    private Integer valor;
+    private BigDecimal valor;
     private boolean possuiTempoDeterminado;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date dataInicio;
@@ -55,38 +56,22 @@ public class Contrato implements Serializable {
     private Date dataAssinatura;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date dataRenovacao;
-    private Integer objetoContrato;
+    private Long objetoContrato;
     @ManyToOne
     private Usuario fiscalContrato;
     private String descricao;
     @Enumerated(EnumType.STRING)
     private StatusContrato status;
     private String banco;
-    private Integer numeroConta;
-    private Integer digito;
-    private Integer agencia;
-    private Integer operacao;
-    private Integer saldoInicial;
+    private Long numeroConta;
+    private Long digito;
+    private Long agencia;
+    private Long operacao;
+    private Long saldoInicial;
     private boolean ativo = true;
     private String corStatus;
 
     public Contrato() {
-    }
-
-    public UnidadeOrganizacional getUnidadeOrganizacional() {
-        return unidadeOrganizacional;
-    }
-
-    public void setUnidadeOrganizacional(UnidadeOrganizacional unidadeOrganizacional) {
-        this.unidadeOrganizacional = unidadeOrganizacional;
-    }
-
-    public String getCorStatus() {
-        return corStatus;
-    }
-
-    public void setCorStatus(String corStatus) {
-        this.corStatus = corStatus;
     }
 
     public Long getId() {
@@ -97,6 +82,14 @@ public class Contrato implements Serializable {
         this.id = id;
     }
 
+    public UnidadeOrganizacional getUnidadeOrganizacional() {
+        return unidadeOrganizacional;
+    }
+
+    public void setUnidadeOrganizacional(UnidadeOrganizacional unidadeOrganizacional) {
+        this.unidadeOrganizacional = unidadeOrganizacional;
+    }
+
     public Contratado getContratado() {
         return contratado;
     }
@@ -105,27 +98,27 @@ public class Contrato implements Serializable {
         this.contratado = contratado;
     }
 
-    public BigInteger getNumeroContrato() {
+    public Long getNumeroContrato() {
         return NumeroContrato;
     }
 
-    public void setNumeroContrato(BigInteger NumeroContrato) {
+    public void setNumeroContrato(Long NumeroContrato) {
         this.NumeroContrato = NumeroContrato;
     }
 
-    public BigInteger getNumeroProcesso() {
+    public Long getNumeroProcesso() {
         return NumeroProcesso;
     }
 
-    public void setNumeroProcesso(BigInteger NumeroProcesso) {
+    public void setNumeroProcesso(Long NumeroProcesso) {
         this.NumeroProcesso = NumeroProcesso;
     }
 
-    public BigInteger getNumeroLicitacao() {
+    public Long getNumeroLicitacao() {
         return NumeroLicitacao;
     }
 
-    public void setNumeroLicitacao(BigInteger NumeroLicitacao) {
+    public void setNumeroLicitacao(Long NumeroLicitacao) {
         this.NumeroLicitacao = NumeroLicitacao;
     }
 
@@ -137,6 +130,14 @@ public class Contrato implements Serializable {
         this.tipoContrato = tipoContrato;
     }
 
+    public Setor getSetor() {
+        return setor;
+    }
+
+    public void setSetor(Setor setor) {
+        this.setor = setor;
+    }
+
     public TipoLicitacao getTipoLicitacao() {
         return tipoLicitacao;
     }
@@ -145,11 +146,11 @@ public class Contrato implements Serializable {
         this.tipoLicitacao = tipoLicitacao;
     }
 
-    public Integer getValor() {
+    public BigDecimal getValor() {
         return valor;
     }
 
-    public void setValor(Integer valor) {
+    public void setValor(BigDecimal valor) {
         this.valor = valor;
     }
 
@@ -193,11 +194,11 @@ public class Contrato implements Serializable {
         this.dataRenovacao = dataRenovacao;
     }
 
-    public Integer getObjetoContrato() {
+    public Long getObjetoContrato() {
         return objetoContrato;
     }
 
-    public void setObjetoContrato(Integer objetoContrato) {
+    public void setObjetoContrato(Long objetoContrato) {
         this.objetoContrato = objetoContrato;
     }
 
@@ -233,43 +234,43 @@ public class Contrato implements Serializable {
         this.banco = banco;
     }
 
-    public Integer getNumeroConta() {
+    public Long getNumeroConta() {
         return numeroConta;
     }
 
-    public void setNumeroConta(Integer numeroConta) {
+    public void setNumeroConta(Long numeroConta) {
         this.numeroConta = numeroConta;
     }
 
-    public Integer getDigito() {
+    public Long getDigito() {
         return digito;
     }
 
-    public void setDigito(Integer digito) {
+    public void setDigito(Long digito) {
         this.digito = digito;
     }
 
-    public Integer getAgencia() {
+    public Long getAgencia() {
         return agencia;
     }
 
-    public void setAgencia(Integer agencia) {
+    public void setAgencia(Long agencia) {
         this.agencia = agencia;
     }
 
-    public Integer getOperacao() {
+    public Long getOperacao() {
         return operacao;
     }
 
-    public void setOperacao(Integer operacao) {
+    public void setOperacao(Long operacao) {
         this.operacao = operacao;
     }
 
-    public Integer getSaldoInicial() {
+    public Long getSaldoInicial() {
         return saldoInicial;
     }
 
-    public void setSaldoInicial(Integer saldoInicial) {
+    public void setSaldoInicial(Long saldoInicial) {
         this.saldoInicial = saldoInicial;
     }
 
@@ -281,44 +282,44 @@ public class Contrato implements Serializable {
         this.ativo = ativo;
     }
 
-    public Setor getSetor() {
-        return setor;
+    public String getCorStatus() {
+        return corStatus;
     }
 
-    public void setSetor(Setor setor) {
-        this.setor = setor;
+    public void setCorStatus(String corStatus) {
+        this.corStatus = corStatus;
     }
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 79 * hash + Objects.hashCode(this.id);
-        hash = 79 * hash + Objects.hashCode(this.unidadeOrganizacional);
-        hash = 79 * hash + Objects.hashCode(this.contratado);
-        hash = 79 * hash + Objects.hashCode(this.NumeroContrato);
-        hash = 79 * hash + Objects.hashCode(this.NumeroProcesso);
-        hash = 79 * hash + Objects.hashCode(this.NumeroLicitacao);
-        hash = 79 * hash + Objects.hashCode(this.tipoContrato);
-        hash = 79 * hash + Objects.hashCode(this.setor);
-        hash = 79 * hash + Objects.hashCode(this.tipoLicitacao);
-        hash = 79 * hash + Objects.hashCode(this.valor);
-        hash = 79 * hash + (this.possuiTempoDeterminado ? 1 : 0);
-        hash = 79 * hash + Objects.hashCode(this.dataInicio);
-        hash = 79 * hash + Objects.hashCode(this.dataFinal);
-        hash = 79 * hash + Objects.hashCode(this.dataAssinatura);
-        hash = 79 * hash + Objects.hashCode(this.dataRenovacao);
-        hash = 79 * hash + Objects.hashCode(this.objetoContrato);
-        hash = 79 * hash + Objects.hashCode(this.fiscalContrato);
-        hash = 79 * hash + Objects.hashCode(this.descricao);
-        hash = 79 * hash + Objects.hashCode(this.status);
-        hash = 79 * hash + Objects.hashCode(this.banco);
-        hash = 79 * hash + Objects.hashCode(this.numeroConta);
-        hash = 79 * hash + Objects.hashCode(this.digito);
-        hash = 79 * hash + Objects.hashCode(this.agencia);
-        hash = 79 * hash + Objects.hashCode(this.operacao);
-        hash = 79 * hash + Objects.hashCode(this.saldoInicial);
-        hash = 79 * hash + (this.ativo ? 1 : 0);
-        hash = 79 * hash + Objects.hashCode(this.corStatus);
+        int hash = 3;
+        hash = 29 * hash + Objects.hashCode(this.id);
+        hash = 29 * hash + Objects.hashCode(this.unidadeOrganizacional);
+        hash = 29 * hash + Objects.hashCode(this.contratado);
+        hash = 29 * hash + Objects.hashCode(this.NumeroContrato);
+        hash = 29 * hash + Objects.hashCode(this.NumeroProcesso);
+        hash = 29 * hash + Objects.hashCode(this.NumeroLicitacao);
+        hash = 29 * hash + Objects.hashCode(this.tipoContrato);
+        hash = 29 * hash + Objects.hashCode(this.setor);
+        hash = 29 * hash + Objects.hashCode(this.tipoLicitacao);
+        hash = 29 * hash + Objects.hashCode(this.valor);
+        hash = 29 * hash + (this.possuiTempoDeterminado ? 1 : 0);
+        hash = 29 * hash + Objects.hashCode(this.dataInicio);
+        hash = 29 * hash + Objects.hashCode(this.dataFinal);
+        hash = 29 * hash + Objects.hashCode(this.dataAssinatura);
+        hash = 29 * hash + Objects.hashCode(this.dataRenovacao);
+        hash = 29 * hash + Objects.hashCode(this.objetoContrato);
+        hash = 29 * hash + Objects.hashCode(this.fiscalContrato);
+        hash = 29 * hash + Objects.hashCode(this.descricao);
+        hash = 29 * hash + Objects.hashCode(this.status);
+        hash = 29 * hash + Objects.hashCode(this.banco);
+        hash = 29 * hash + Objects.hashCode(this.numeroConta);
+        hash = 29 * hash + Objects.hashCode(this.digito);
+        hash = 29 * hash + Objects.hashCode(this.agencia);
+        hash = 29 * hash + Objects.hashCode(this.operacao);
+        hash = 29 * hash + Objects.hashCode(this.saldoInicial);
+        hash = 29 * hash + (this.ativo ? 1 : 0);
+        hash = 29 * hash + Objects.hashCode(this.corStatus);
         return hash;
     }
 
@@ -418,7 +419,9 @@ public class Contrato implements Serializable {
         return true;
     }
 
-   
-
+    @Override
+    public String toString() {
+        return "Contrato{" + "id=" + id + ", unidadeOrganizacional=" + unidadeOrganizacional + ", contratado=" + contratado + ", NumeroContrato=" + NumeroContrato + ", NumeroProcesso=" + NumeroProcesso + ", NumeroLicitacao=" + NumeroLicitacao + ", tipoContrato=" + tipoContrato + ", setor=" + setor + ", tipoLicitacao=" + tipoLicitacao + ", valor=" + valor + ", possuiTempoDeterminado=" + possuiTempoDeterminado + ", dataInicio=" + dataInicio + ", dataFinal=" + dataFinal + ", dataAssinatura=" + dataAssinatura + ", dataRenovacao=" + dataRenovacao + ", objetoContrato=" + objetoContrato + ", fiscalContrato=" + fiscalContrato + ", descricao=" + descricao + ", status=" + status + ", banco=" + banco + ", numeroConta=" + numeroConta + ", digito=" + digito + ", agencia=" + agencia + ", operacao=" + operacao + ", saldoInicial=" + saldoInicial + ", ativo=" + ativo + ", corStatus=" + corStatus + '}';
+    }
 
 }

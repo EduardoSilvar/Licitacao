@@ -12,6 +12,7 @@ import javax.ejb.Stateless;
 import javax.persistence.Query;
 import modelo.Contratado;
 import modelo.Contrato;
+import modelo.UnidadeOrganizacional;
 import util.Utils;
 
 /**
@@ -25,16 +26,18 @@ public class ContratoServico extends ServicoGenerico<Contrato> implements Serial
         super(Contrato.class);
     }
 
-    public List<Contrato> findPesquisa(Contrato contrato) {
-        System.err.println("veio aqui");
+    public List<Contrato> findPesquisa(Contrato contrato, UnidadeOrganizacional unidade) {
         String sql = "select c from Contrato c where ";
         if (Utils.isNotEmpty(contrato.getContratado())) {
             sql += "c.contratado = :contratado and ";
         }
+        if (Utils.isNotEmpty(unidade)) {
+         sql += "c.unidadeOrganizacional.id = :unidade and ";
+        }
         if (Utils.isNotEmpty(contrato.getFiscalContrato())) {
             sql += "c.fiscalContrato = :fiscal and ";
         }
-         if (Utils.isNotEmpty(contrato.getNumeroContrato())) {
+        if (Utils.isNotEmpty(contrato.getNumeroContrato())) {
             sql += "c.numeroContrato = :numero and ";
         }
         if (Utils.isNotEmpty(contrato.getStatus())) {
@@ -46,7 +49,7 @@ public class ContratoServico extends ServicoGenerico<Contrato> implements Serial
         if (Utils.isNotEmpty(contrato.getDataInicio())) {
             sql += "c.dataInicio = :datai and ";
         }
-         if (Utils.isNotEmpty(contrato.getSetor())) {
+        if (Utils.isNotEmpty(contrato.getSetor())) {
             sql += "c.setor = :setor and ";
         }
         sql += "c.ativo = true";
@@ -64,19 +67,22 @@ public class ContratoServico extends ServicoGenerico<Contrato> implements Serial
         if (Utils.isNotEmpty(contrato.getDataFinal())) {
             query.setParameter("dataf", contrato.getDataFinal());
         }
+        if (Utils.isNotEmpty(unidade)) {
+          query.setParameter("unidade", unidade.getId());
+        }
         if (Utils.isNotEmpty(contrato.getDataInicio())) {
             query.setParameter("datai", contrato.getDataInicio());
         }
-          if (Utils.isNotEmpty(contrato.getNumeroContrato())) {
+        if (Utils.isNotEmpty(contrato.getNumeroContrato())) {
             query.setParameter("numero", contrato.getNumeroContrato());
         }
-            if (Utils.isNotEmpty(contrato.getSetor())) {
+        if (Utils.isNotEmpty(contrato.getSetor())) {
             query.setParameter("setor", contrato.getSetor());
         }
         return query.getResultList();
     }
 
-    public boolean existNumero(BigInteger numero) {
+    public boolean existNumero(Long numero) {
         String sql = "select c from Contrato c where c.ativo = true ";
         if (Utils.isNotEmpty(numero)) {
             sql += "and c.NumeroContrato = :numero ";

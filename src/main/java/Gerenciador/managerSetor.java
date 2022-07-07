@@ -6,6 +6,7 @@
 package Gerenciador;
 
 import static Gerenciador.managerLogin.VerificarLogin;
+import static Gerenciador.managerLogin.getObjectSession;
 import Servico.SetorServico;
 import java.io.IOException;
 import java.io.Serializable;
@@ -17,6 +18,7 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import modelo.Setor;
+import modelo.Usuario;
 import util.Msg;
 
 /**
@@ -26,15 +28,17 @@ import util.Msg;
 @ManagedBean
 @ViewScoped
 public class managerSetor extends managerPrincipal implements Serializable {
-
+    
     @EJB
     private SetorServico setorServico;
     private Setor setor;
     private List<Setor> setores;
-
+    private Usuario user;
+    
     @Override
     public void carregar(String param) {
-         try {
+        try {
+            user = (Usuario) getObjectSession("usuarioLogado");
             VerificarLogin();
         } catch (IOException ex) {
             Logger.getLogger(managerContrato.class.getName()).log(Level.SEVERE, null, ex);
@@ -42,10 +46,11 @@ public class managerSetor extends managerPrincipal implements Serializable {
         this.setor = setorServico.find(Long.parseLong(param));
         this.setores = new ArrayList<>();
     }
-
+    
     @Override
     public void instanciar() {
-         try {
+        try {
+            user = (Usuario) getObjectSession("usuarioLogado");
             VerificarLogin();
         } catch (IOException ex) {
             Logger.getLogger(managerContrato.class.getName()).log(Level.SEVERE, null, ex);
@@ -53,43 +58,44 @@ public class managerSetor extends managerPrincipal implements Serializable {
         instanciarSetor();
         instanciarSetores();
     }
-
+    
     public void instanciarSetores() {
         this.setores = new ArrayList<>();
     }
-
+    
     public void instanciarSetor() {
         this.setor = new Setor();
     }
-
+    
     @Override
     public String getUrlPesquisar() {
         return "pesquisarSetor.xhtml";
     }
-
+    
     @Override
     public String getUrlVisualizar() {
         return "setor.xhtml?visualizar=" + this.setor.getId();
     }
-
+    
     public void salvar() {
+        setor.setUnidadeOrganizacional(user.getUnidadeOrganizacional());
         setorServico.Save(this.setor);
         Msg.messagemInfoRedirect("Operação realizada com sucesso !", "setor.xhtml?visualizar=" + this.setor.getId());
     }
-
+    
     public void deletar() {
         this.setor.setAtivo(false);
         this.setores.remove(this.setor);
         setorServico.Update(this.setor);
         Msg.messagemInfo("Operação realizada com sucesso !");
-
+        
     }
-
+    
     public void atualizar() {
         setorServico.Update(this.setor);
         Msg.messagemInfoRedirect("Operação realizada com sucesso", "setor.xhtml?visualizar=" + this.setor.getId());
     }
-
+    
     public void pesquisar() {
         this.setores = setorServico.pesquisar(this.setor);
         if (this.setores.size() > 0) {
@@ -97,31 +103,31 @@ public class managerSetor extends managerPrincipal implements Serializable {
         } else {
             Msg.messagemError("Nennhum setor encontrato !");
         }
-
+        
     }
-
+    
     public SetorServico getSetorServico() {
         return setorServico;
     }
-
+    
     public void setSetorServico(SetorServico setorServico) {
         this.setorServico = setorServico;
     }
-
+    
     public Setor getSetor() {
         return setor;
     }
-
+    
     public void setSetor(Setor setor) {
         this.setor = setor;
     }
-
+    
     public List<Setor> getSetores() {
         return setores;
     }
-
+    
     public void setSetores(List<Setor> setores) {
         this.setores = setores;
     }
-
+    
 }

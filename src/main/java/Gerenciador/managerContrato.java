@@ -7,6 +7,7 @@ package Gerenciador;
 
 import Enum.StatusContrato;
 import static Gerenciador.managerLogin.VerificarLogin;
+import static Gerenciador.managerLogin.getObjectSession;
 import Servico.ContratadoServico;
 import Servico.ContratoServico;
 import Servico.SetorServico;
@@ -61,14 +62,19 @@ public class managerContrato extends managerPrincipal implements Serializable {
     private List<Contratado> contratados;
     private List<TipoContrato> tiposContratos;
     private List<Setor> setores;
+    private Usuario user;
 
     @Override
     public void carregar(String param) {
-         try {
+        try {
+            user = (Usuario) getObjectSession("usuarioLogado");
             VerificarLogin();
         } catch (IOException ex) {
             Logger.getLogger(managerContrato.class.getName()).log(Level.SEVERE, null, ex);
         }
+        instanciarSelect();
+        InstanciarContrato();
+        InstanciarContratos();
         this.contrato = contratoServico.find(Long.parseLong(param));
         this.contratos = new ArrayList<>();
         this.tiposContratos = tipocontratoServico.FindAll();
@@ -80,12 +86,18 @@ public class managerContrato extends managerPrincipal implements Serializable {
     @Override
     public void instanciar() {
         try {
+            user = (Usuario) getObjectSession("usuarioLogado");
             VerificarLogin();
         } catch (IOException ex) {
             Logger.getLogger(managerContrato.class.getName()).log(Level.SEVERE, null, ex);
         }
+        instanciarSelect();
         InstanciarContrato();
         InstanciarContratos();
+
+    }
+
+    public void instanciarSelect() {
         this.setores = setorServico.FindAll();
         this.tiposContratos = tipocontratoServico.FindAll();
         this.contratados = contratadoServico.FindAll();
@@ -108,6 +120,7 @@ public class managerContrato extends managerPrincipal implements Serializable {
             if (contratoServico.existNumero(this.contrato.getNumeroContrato())) {
                 Msg.messagemError("Número de contrato já registrado !");
             } else {
+                this.contrato.setUnidadeOrganizacional(user.getUnidadeOrganizacional());
                 this.contrato.setCorStatus(cores(this.contrato.getStatus()));
                 contratoServico.Save(this.contrato);
                 Msg.messagemInfoRedirect("Operação realizada com sucesso !", "contrato.xhtml?visualizar=" + this.contrato.getId());
@@ -116,10 +129,19 @@ public class managerContrato extends managerPrincipal implements Serializable {
     }
 
     public void pesquisar() {
-        this.contratos = contratoServico.findPesquisa(this.contrato);
+        if (Utils.isNotEmpty(user.getUnidadeOrganizacional())) {
+            this.contratos = contratoServico.findPesquisa(this.contrato, user.getUnidadeOrganizacional());
+            if (this.contratos.size() > 0) {
+                Msg.messagemInfo("Operação realizada com sucesso !!");
+            } else {
+                Msg.messagemError("Nenhum Contrato encontrato !");
+            }
+        } else {
+            this.contratos = contratoServico.findPesquisa(this.contrato, null);
+        }
     }
 
-    public void Deletar() {
+    public void deletar() {
         try {
             Contrato novoContrato = contratoServico.find(this.contrato.getId());
             novoContrato.setAtivo(false);
@@ -132,8 +154,8 @@ public class managerContrato extends managerPrincipal implements Serializable {
         }
     }
 
-    public void Atualizar() {
-        contratoServico.Update(contrato);
+    public void atualizar() {
+        contratoServico.Update(this.contrato);
         Msg.messagemInfoRedirect("Operação realizada com sucesso !", "contrato.xhtml?visualizar=" + this.contrato.getId());
     }
 

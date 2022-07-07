@@ -7,6 +7,7 @@ package Gerenciador;
 
 import Enum.NaturezaEnum;
 import static Gerenciador.managerLogin.VerificarLogin;
+import static Gerenciador.managerLogin.getObjectSession;
 import Servico.ContratadoServico;
 import java.io.IOException;
 import java.io.Serializable;
@@ -14,13 +15,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import modelo.Contratado;
-import modelo.Contrato_;
 import modelo.Endereco;
+import modelo.Usuario;
 import util.Msg;
 import util.Utils;
 
@@ -40,10 +40,12 @@ public class managerContratado extends managerPrincipal implements Serializable 
     private NaturezaEnum natureza;
     private String cpf;
     private String cnpj;
+    private Usuario user;
 
     @Override
     public void carregar(String param) {
-         try {
+        try {
+            user = (Usuario) getObjectSession("usuarioLogado");
             VerificarLogin();
         } catch (IOException ex) {
             Logger.getLogger(managerContrato.class.getName()).log(Level.SEVERE, null, ex);
@@ -56,7 +58,8 @@ public class managerContratado extends managerPrincipal implements Serializable 
 
     @Override
     public void instanciar() {
-         try {
+        try {
+            user = (Usuario) getObjectSession("usuarioLogado");
             VerificarLogin();
         } catch (IOException ex) {
             Logger.getLogger(managerContrato.class.getName()).log(Level.SEVERE, null, ex);
@@ -98,6 +101,7 @@ public class managerContratado extends managerPrincipal implements Serializable 
                 if (contratadoServico.existCpf(contratado.getCpf())) {
                     Msg.messagemError("CPF ja esta sendo usado !");
                 } else {
+                    contratado.setUnidadeOrganizacional(user.getUnidadeOrganizacional());
                     contratadoServico.Save(contratado);
                     Msg.messagemInfoRedirect("Operação realizada com sucesso !", "contratado.xhtml?visualizar=" + this.contratado.getId());
 

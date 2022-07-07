@@ -48,7 +48,7 @@ public class Usuario implements Serializable {
     @OneToOne
     private UnidadeOrganizacional unidadeOrganizacional;
     @Enumerated(EnumType.STRING)
-    private TipoUsuario TiposUsuario;
+    private TipoUsuario tipoUsuario;
 
     public Usuario() {
     }
@@ -128,14 +128,6 @@ public class Usuario implements Serializable {
         this.senha = senha;
     }
 
-    public TipoUsuario getTiposUsuario() {
-        return TiposUsuario;
-    }
-
-    public void setTiposUsuario(TipoUsuario TiposUsuario) {
-        this.TiposUsuario = TiposUsuario;
-    }
-
     public String getUrlArquivoToken() {
         return urlArquivoToken;
     }
@@ -192,6 +184,14 @@ public class Usuario implements Serializable {
         this.unidadeOrganizacional = unidadeOrganizacional;
     }
 
+    public TipoUsuario getTipoUsuario() {
+        return tipoUsuario;
+    }
+
+    public void setTipoUsuario(TipoUsuario tipoUsuario) {
+        this.tipoUsuario = tipoUsuario;
+    }
+
     @Override
     public int hashCode() {
         int hash = 7;
@@ -207,7 +207,7 @@ public class Usuario implements Serializable {
         hash = 97 * hash + Objects.hashCode(this.senhaToken);
         hash = 97 * hash + (this.ativo ? 1 : 0);
         hash = 97 * hash + Objects.hashCode(this.unidadeOrganizacional);
-        hash = 97 * hash + Objects.hashCode(this.TiposUsuario);
+        hash = 97 * hash + Objects.hashCode(this.tipoUsuario);
         return hash;
     }
 
@@ -259,7 +259,7 @@ public class Usuario implements Serializable {
         if (!Objects.equals(this.unidadeOrganizacional, other.unidadeOrganizacional)) {
             return false;
         }
-        if (!Objects.equals(this.TiposUsuario, other.TiposUsuario)) {
+        if (!Objects.equals(this.tipoUsuario, other.tipoUsuario)) {
             return false;
         }
         return true;
@@ -267,7 +267,7 @@ public class Usuario implements Serializable {
 
     @Override
     public String toString() {
-        return "Usuario{" + "id=" + id + ", cpf=" + cpf + ", telefone=" + telefone + ", nome=" + nome + ", login=" + login + ", email=" + email + ", senha=" + senha + ", whatsapp=" + whatsapp + ", ativo=" + ativo + ", TiposUsuario=" + TiposUsuario + '}';
+        return "Usuario{" + "id=" + id + ", cpf=" + cpf + ", telefone=" + telefone + ", nome=" + nome + ", login=" + login + ", email=" + email + ", senha=" + senha + ", whatsapp=" + whatsapp + ", ativo=" + ativo + ", TiposUsuario=" + tipoUsuario + '}';
     }
 
 }

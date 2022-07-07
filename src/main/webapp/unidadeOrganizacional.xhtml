@@ -4,10 +4,27 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns="http://www.w3.org/1999/xhtml">
+    
+     <ui:define name="acoes">
+        <h:panelGroup class="panelAcoes">
+            <p:splitButton value="Ações"
+                           icon="pi pi-align-justify"
+                           >
+
+                <p:menuitem value="Pesquisar"
+                            icon="pi pi-search"
+                            process="@this"
+                            url="pesquisarUnidadeOrganizacional.xhtml"
+                            />
+
+
+            </p:splitButton>
+        </h:panelGroup>
+    </ui:define>
 
     <ui:define name="barra">
         <div class="row" id="stylebarra">
-            <i class="pi pi-cog" id="icon"></i> <h5 style="color: #e1e6e5">Cadastro de Unidade Organizacional </h5>
+            <i class="pi pi-plus" id="icon"></i> <h5 style="color: #e1e6e5">Cadastro de Unidade Organizacional </h5>
         </div>
     </ui:define>
     <ui:define name="corpo">
@@ -26,6 +43,7 @@
                                          styleClass="form-control" 
                                          value="#{managerUnidadeOrganizacional.unidade.nome}"
                                          rendered="true"
+                                         disabled="#{managerUnidadeOrganizacional.visualizar}"
                                          requiredMessage="Este campo é obrigatório."
                                          />
                             <p:message for="nomeInput" />
@@ -39,6 +57,7 @@
                                          placeholder="Nome"
                                          required="true"
                                          styleClass="form-control" 
+                                         disabled="#{managerUnidadeOrganizacional.visualizar}"
                                          value="#{managerUnidadeOrganizacional.unidade.nomeRepresentante}"
                                          rendered="true"
                                          requiredMessage="Este campo é obrigatório."
@@ -56,6 +75,7 @@
                                          placeholder="CNPJ"
                                          mask="99.999.999/9999-99"                                         
                                          required="true"
+                                         disabled="#{managerUnidadeOrganizacional.visualizar}"
                                          styleClass="form-control" 
                                          value="#{managerUnidadeOrganizacional.unidade.cnpj}"
                                          rendered="true"
@@ -73,6 +93,7 @@
                                          placeholder="Telefone"
                                          required="true"
                                          styleClass="form-control" 
+                                         disabled="#{managerUnidadeOrganizacional.visualizar}"
                                          value="#{managerUnidadeOrganizacional.unidade.telefone}"
                                          rendered="true"
                                          requiredMessage="Este campo é obrigatório."
@@ -87,6 +108,7 @@
                             <p:inputText id="whatsInput"
                                          placeholder="Whatsapp"
                                          required="true"
+                                         disabled="#{managerUnidadeOrganizacional.visualizar}"
                                          styleClass="form-control" 
                                          value="#{managerUnidadeOrganizacional.unidade.whatsapp}"
                                          rendered="true"
@@ -101,6 +123,7 @@
                                            for="emailInput" />
                             <p:inputText id="emailInput"
                                          placeholder="Email"
+                                         disabled="#{managerUnidadeOrganizacional.visualizar}"
                                          required="true"
                                          styleClass="form-control" 
                                          value="#{managerUnidadeOrganizacional.unidade.email}"
@@ -118,6 +141,7 @@
                                            for="bairroInput" />
                             <p:inputText id="bairroInput"
                                          placeholder="Bairro"
+                                         disabled="#{managerUnidadeOrganizacional.visualizar}"
                                          required="true"
                                          styleClass="form-control" 
                                          value="#{managerUnidadeOrganizacional.unidade.endereco.bairro}"
@@ -133,6 +157,7 @@
                                            for="cidadeInput" />
                             <p:inputText id="cidadeInput"
                                          placeholder="Cidade"
+                                         disabled="#{managerUnidadeOrganizacional.visualizar}"
                                          required="true"
                                          value="#{managerUnidadeOrganizacional.unidade.endereco.cidade}"
                                          rendered="true"
@@ -149,6 +174,7 @@
                             <p:inputText id="cepInput"
                                          placeholder="Cep"
                                          styleClass="form-control" 
+                                         disabled="#{managerUnidadeOrganizacional.visualizar}"
                                          required="true"
                                          value="#{managerUnidadeOrganizacional.unidade.endereco.cep}"
                                          rendered="true"
@@ -163,6 +189,7 @@
                                            for="numeroInput" />
                             <p:inputText id="numeroInput"
                                          placeholder="Número"
+                                         disabled="#{managerUnidadeOrganizacional.visualizar}"
                                          required="true"
                                          styleClass="form-control" 
                                          value="#{managerUnidadeOrganizacional.unidade.endereco.numero}"
@@ -178,7 +205,7 @@
             <center>
                 <p:commandButton value="Salvar" icon="pi pi-save" process="@this corpoInteiro:dadosGeraisPanelGroup" update="corpoInteiro:messages" actionListener="#{managerUnidadeOrganizacional.salvar()}" rendered="#{managerUnidadeOrganizacional.cadastrar}" />
                 <p:button value="Editar" icon="pi pi-pencil"  rendered="#{managerUnidadeOrganizacional.visualizar}" href="unidadeOrganizacional.xhtml?editar=#{managerUnidadeOrganizacional.unidade.id}" />
-                <p:commandButton value="Atualizar" icon="pi pi-sync" process="contratadoPanelGroup"  actionListener="#{managerContratado.atualizar()}" rendered="#{managerUnidadeOrganizacional.editar}"  />
+                <p:commandButton value="Atualizar" icon="pi pi-sync" process="contratadoPanelGroup"  actionListener="#{managerUnidadeOrganizacional.atualizar()}" rendered="#{managerUnidadeOrganizacional.editar}"  />
                 <p:button value="Cancelar" icon="pi pi-ban"  href="unidadeOrganizacional.xhtml" rendered="#{managerUnidadeOrganizacional.visualizar}" />
                 <p:button value="Cancelar" icon="pi pi-ban"  href="unidadeOrganizacional.xhtml?visualizar=#{managerUnidadeOrganizacional.unidade.id}" rendered="#{managerUnidadeOrganizacional.editar}" />
                 <p:button value="Cancelar" icon="pi pi-ban"  href="index.xhtml" rendered="#{managerUnidadeOrganizacional.cadastrar}" />

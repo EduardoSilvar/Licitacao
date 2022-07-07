@@ -10,21 +10,37 @@
                       title="Pesquisar Bairro"
                       icon="pi pi-search"
                       href="pesquisarContrato.xhtml" style=" margin-right: 30px !important"/>
+            <p:splitButton value="Ações" style="margin: 0px -8px !important" rendered="#{not managerContrato.cadastrar}"
+                           icon="pi pi-cog"
+                           >
+
+                <p:menuitem value="Editar" 
+                            icon="pi pi-pencil"
+                            url="contrato.xhtml?editar=#{managerContrato.contrato.id}"
+                            process="@this"
+                            />
+                <p:menuitem value="Excluir" 
+                            icon="pi pi-trash"
+                            oncomplete="PF('removeraContratoConfirmDialog').show();"
+                            process="@this corpoInteiro"
+                            update="corpoInteiro:messages"
+                            >
+                    <f:setPropertyActionListener value="#{managerContrato.contrato}"
+                                                 target="#{managerContrato.contrato}"/>
+                </p:menuitem>
+
+            </p:splitButton>
 
         </h:panelGroup>
     </ui:define>
     <ui:define name="barra">
         <div class="row" id="stylebarra">
-            <i class="pi pi-file-o" id="icon"></i> <h5 style="color: #e1e6e5"> Dados Gerais</h5>
+            <i class="pi pi-file-o" id="icon"></i> <h5 style="color: #e1e6e5"> Contrato</h5>
         </div>
     </ui:define>
-    <ui:define name="titulo">
-        <h4>Cadastro de Contrato</h4>
-    </ui:define>
-
     <ui:define name="corpo">
-        <p:growl id="growl" showDetail="true" />
-        <h:panelGroup id="corpoInteiro">
+        <p:growl id="messages" showDetail="true" />
+        <h:panelGroup id="contratoPanelGroup">
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group" >
@@ -276,7 +292,7 @@
                         </p:selectOneMenu>
                     </div>
                 </div>
-                
+
                 <div class="col-md-6">
                     <div class="form-group">
                         <p:outputLabel value="Descrição"
@@ -403,8 +419,62 @@
         </h:panelGroup>
 
         <center>
-            <p:commandButton value="salvar" icon="pi pi-save" process="@this corpoInteiro" update="corpoInteiro" actionListener="#{managerContrato.salvar()}" style="margin: 0px 20px; background-color: #01415B; color: #fff; margin-bottom: 10px;"/>
+            <p:commandButton value="atualizar" icon="pi pi-refresh" rendered="#{managerContrato.editar}" process="@this corpoInteiro:contratoPanelGroup" update="corpoInteiro" actionListener="#{managerContrato.atualizar()}" style="margin: 0px 20px; background-color: #01415B; color: #fff; margin-bottom: 10px;"/>
+            <p:commandButton value="salvar" icon="pi pi-save" rendered="#{managerContrato.cadastrar}" process="@this corpoInteiro:contratoPanelGroup" update="corpoInteiro" actionListener="#{managerContrato.salvar()}" style="margin: 0px 20px; background-color: #01415B; color: #fff; margin-bottom: 10px;"/>
             <p:commandButton value="cancelar" icon="pi pi-ban"  style="background-color: #01415B; color: #fff;margin-bottom: 10px"/>
         </center>
+        
+        <p:dialog id="removeraContratoConfirmDialog"
+                  widgetVar="removeraContratoConfirmDialog"
+                  header="Atenção!"
+                  closeOnEscape="true"
+                  draggable="false"
+                  maximizable="false"
+                  minimizable="false"
+                  modal="true"
+                  width="850"
+                  showEffect="fade"
+                  hideEffect="fade">
+
+            <div class="row">
+
+                <div class="col-md-12">
+                    <div class="form-group" style="padding-left: 80px !important">
+                        <h4>
+                            <i class="pi pi-exclamation-triangle"></i>
+                            Tem certeza de que deseja remover este Contratado ?
+                        </h4>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+
+                    <center>
+
+                        <p:commandButton value="Sim"
+                                         title="Confirmar Remoção"
+                                         icon="fa fa-check"
+                                         update="corpoInteiro corpoInteiro:messages"
+                                         process="@this"
+                                         actionListener="#{managerContrato.deletar()}"
+                                         oncomplete="PF('removeraContratoConfirmDialog').hide();"
+                                         styleClass="mr-md-1"/>
+
+                        <p:commandButton value="Não"
+                                         title="Cancelar Remoção"
+                                         icon="fa fa-close"
+                                         process="@this"
+                                         update="@form"
+                                         oncomplete="PF('removeraContratadoConfirmDialog').hide();"
+                                         styleClass="ml-md-1"/>
+
+                    </center>
+
+                </div>
+
+            </div>
+
+
+        </p:dialog>
     </ui:define>
 </ui:composition>

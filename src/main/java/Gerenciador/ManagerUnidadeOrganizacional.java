@@ -48,7 +48,7 @@ public class ManagerUnidadeOrganizacional extends managerPrincipal implements Se
 
     public void atualizar() {
         unidadeServico.Update(this.unidade);
-        Msg.messagemInfo("Operação realizada com sucesso !");
+        Msg.messagemInfoRedirect("Operação realizada com sucesso !", "unidadeOrganizacional.xhtml?visualizar=" + this.unidade.getId());
     }
 
     public void pesquisar() {
