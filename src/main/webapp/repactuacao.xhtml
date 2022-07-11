@@ -1,0 +1,146 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/WEB-INF/template/layout.xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns="http://www.w3.org/1999/xhtml">
+
+    <ui:define name="titulo">
+        <h4>Repactuação de contrato</h4>
+    </ui:define>
+
+    <ui:define name="acoes">
+        <h:panelGroup class="panelAcoes">
+            <p:button value="Pesquisar"
+                      title="Pesquisar Bairro"
+                      icon="pi pi-search"
+                      href="pesquisarBairro.xhtml" style=" margin-right: 30px !important"/>
+
+            <p:splitButton value="Ações" style="margin: 0px -8px !important"
+                           icon="pi pi-cog"
+                           >
+
+                <p:menuitem value="Editar" 
+                            icon="pi pi-pencil"
+                            process="@this"
+                            />
+
+            </p:splitButton>
+        </h:panelGroup>
+    </ui:define>
+    <ui:define name="barra">
+        <div class="row" id="stylebarra">
+            <i class="pi pi-file-o" id="icon"></i> <h5 style="color: #e1e6e5"> Dados Gerais</h5>
+        </div>
+    </ui:define>
+    <ui:define name="corpo">
+        <h:panelGroup>
+            <p:growl id="mensage" showDetail="true" />
+            <h:panelGroup>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <p:outputLabel value="Contrato*" styleClass="control-label" for="contratoRepactuacao" />
+                            <p:selectOneMenu id="contratoRepactuacao"
+                                             filter="true" 
+                                             placeholder="Contrato"
+                                             styleClass="form-control" >
+                                <f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
+                                <f:selectItems  />
+                            </p:selectOneMenu>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <p:outputLabel value="Número do termo de apostilamento*"
+                                           for="numeroTermoApostilamento" />
+                            <p:inputText id="numeroTermoApostilamento"
+                                         placeholder="Número"
+                                         rendered="true"
+                                         requiredMessage="Este campo é obrigatório."
+                                         styleClass="form-control" 
+                                         />
+                            <p:message for="numeroTermoApostilamento" />
+                        </div>
+                    </div>
+                </div>
+            </h:panelGroup>
+
+            <h:panelGroup>
+                <div class="row">
+                    <div class="col-md-6">
+                        <p:outputLabel value="Valor*"
+                                       for="repactuacaoValor" />
+                        <p:inputMask id="repactuacaoValor"
+                                     style="display: flex; flex-direction: row"
+                                     styleClass="form-control" 
+                                     placeholder="Valor"
+                                     requiredMessage="Este campo é obrigatório." />
+                        <p:message for="repactuacaoValor" />
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <p:outputLabel value="Descrição*" for="descricao" />
+                            <p:inputText id="descricao"
+                                         placeholder="Descrição"
+                                         requiredMessage="Este campo é obrigatório."
+                                         styleClass="form-control" 
+                                         />
+                            <p:message for="descricao" />
+                        </div>
+                    </div>
+                </div>
+
+            </h:panelGroup>
+            <h3>Notas de empenho</h3>
+            <hr/>
+            <h:panelGroup>
+                <div class="row">
+                    <div class="col-md-4">
+                        <p:outputLabel value="Número*" for="numero" />
+                        <p:inputText id="numero"
+                                     placeholder="Número"
+                                     requiredMessage="Este campo é obrigatório."
+                                     styleClass="form-control" 
+                                     />
+                        <p:message for="numero" />
+                    </div>
+                    <div class="col-md-4">
+                        <p:outputLabel value="Data"
+                                       for="data" />
+                        <p:calendar id="data"
+                                    mask="true"
+                                    style="display: flex; flex-direction: row"
+                                    requiredMessage="Este campo é obrigatório."
+                                    inputStyleClass="form-control"
+                                    showOn="button"
+                                    />
+                        <p:message for="data" />
+                    </div>
+                    <div class="col-md-4">
+                        <p:outputLabel value="Valor*"
+                                       for="notaEmpenhoValor" />
+                        <p:inputMask id="notaEmpenhoValor"
+                                     style="display: flex; flex-direction: row"
+                                     styleClass="form-control" 
+                                     placeholder="Valor"
+                                     requiredMessage="Este campo é obrigatório." />
+                        <p:message for="notaEmpenhoValor" />
+                    </div>
+                </div>
+                <center>    
+                    <p:commandButton value="salvar" icon="pi pi-save"  actionListener="#{managercontratado.salvar()}"  style="margin: 0px 20px; background-color: #01415B; color: #fff; margin-bottom: 10px;"/>
+                    <p:commandButton value="cancelar" icon="pi pi-ban"  style="background-color: #01415B; color: #fff;margin-bottom: 10px"/>
+                </center>
+            </h:panelGroup>
+        </h:panelGroup>
+
+
+    </ui:define>
+
+</ui:composition>
+
+
+
