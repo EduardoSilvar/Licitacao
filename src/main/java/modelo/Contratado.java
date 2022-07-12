@@ -30,7 +30,7 @@ public class Contratado implements Serializable {
     @OneToOne(cascade = CascadeType.ALL)
     private Endereco endereco;
     private String especialidade;
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private NaturezaEnum natureza;
     private String email;
     private String telefone;

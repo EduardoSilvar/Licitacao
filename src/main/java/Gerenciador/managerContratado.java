@@ -38,9 +38,8 @@ public class managerContratado extends managerPrincipal implements Serializable 
     private Contratado contratado;
     private List<Contratado> contratados;
     private NaturezaEnum natureza;
-    private String cpf;
-    private String cnpj;
     private Usuario user;
+    private Long id;
 
     @Override
     public void carregar(String param) {
@@ -50,9 +49,8 @@ public class managerContratado extends managerPrincipal implements Serializable 
         } catch (IOException ex) {
             Logger.getLogger(managerContrato.class.getName()).log(Level.SEVERE, null, ex);
         }
+        this.id = Long.parseLong(param);
         this.contratado = contratadoServico.find(Long.parseLong(param));
-        cpf = contratado.getCpf();
-        cnpj = contratado.getCnpj();
         this.contratados = new ArrayList<>();
     }
 
@@ -89,13 +87,6 @@ public class managerContratado extends managerPrincipal implements Serializable 
     }
 
     public void salvar() {
-        if (contratado.getNatureza().equals(natureza.FISICA)) {
-            contratado.setCpf(cpf);
-            contratado.setCnpj("");
-        } else {
-            contratado.setCnpj(cnpj);
-            contratado.setCpf("");
-        }
         if (Utils.isNotEmpty(contratado.getCpf())) {
             if (contratadoServico.valida(contratado.getCpf())) {
                 if (contratadoServico.existCpf(contratado.getCpf())) {
@@ -118,13 +109,6 @@ public class managerContratado extends managerPrincipal implements Serializable 
     }
 
     public void atualizar() {
-        if (contratado.getNatureza().equals(natureza.FISICA)) {
-            contratado.setCpf(cpf);
-            contratado.setCnpj("");
-        } else {
-            contratado.setCnpj(cnpj);
-            contratado.setCpf("");
-        }
         contratadoServico.Update(contratado);
 
         Msg.messagemInfoRedirect("Operação realizada com sucesso !", "contratado.xhtml?visualizar=" + this.contratado.getId());
@@ -139,7 +123,11 @@ public class managerContratado extends managerPrincipal implements Serializable 
             if (Utils.isNotEmpty(contratado)) {
                 this.contratados = contratadoServico.findPesquisa(this.contratado);
             }
-            Msg.messagemInfo("Processo realizado com sucesso !");
+            if (Utils.isNotEmpty(this.id)) {
+                Msg.messagemInfoRedirect("operação realizada com sucesso !", "contratado.xhtml");
+            } else {
+                Msg.messagemInfo("Processo realizado com sucesso !");
+            }
         } catch (Exception e) {
             e.getMessage();
         }

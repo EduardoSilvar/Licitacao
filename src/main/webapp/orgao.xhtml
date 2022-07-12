@@ -8,7 +8,7 @@
     <ui:define name="acoes">
         <h:panelGroup class="panelAcoes">
             <p:splitButton value="Ações"
-                           icon="pi pi-align-justify"
+                           icon="pi pi-align-justify" style="margin: 0px -8px !important"
                            >
 
                 <p:menuitem value="Pesquisar"
@@ -16,7 +16,7 @@
                             process="@this"
                             url="pesquisarOrgao.xhtml"
                             />
-                <p:menuitem value="excluir"
+                <p:menuitem value="excluir" rendered="#{managerUnidadeOrganizacional.visualizar}"
                             icon="pi pi-trash"
                             process="@this"
                             oncomplete="PF('removerLicitacaoConfirmDialog').show();" title="exluir"
