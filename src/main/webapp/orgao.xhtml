@@ -4,8 +4,8 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns="http://www.w3.org/1999/xhtml">
-    
-     <ui:define name="acoes">
+
+    <ui:define name="acoes">
         <h:panelGroup class="panelAcoes">
             <p:splitButton value="Ações"
                            icon="pi pi-align-justify"
@@ -14,7 +14,12 @@
                 <p:menuitem value="Pesquisar"
                             icon="pi pi-search"
                             process="@this"
-                            url="pesquisarUnidadeOrganizacional.xhtml"
+                            url="pesquisarOrgao.xhtml"
+                            />
+                <p:menuitem value="excluir"
+                            icon="pi pi-trash"
+                            process="@this"
+                            oncomplete="PF('removerLicitacaoConfirmDialog').show();" title="exluir"
                             />
 
 
@@ -24,7 +29,7 @@
 
     <ui:define name="barra">
         <div class="row" id="stylebarra">
-            <i class="pi pi-plus" id="icon"></i> <h5 style="color: #e1e6e5">Cadastro de Unidade Organizacional </h5>
+            <i class="pi pi-plus" id="icon"></i> <h5 style="color: #e1e6e5">Cadastro de Orgão </h5>
         </div>
     </ui:define>
     <ui:define name="corpo">
@@ -89,9 +94,10 @@
                         <div class="form-group">
                             <p:outputLabel value="Telefone"
                                            for="telefoneInput" />
-                            <p:inputText id="telefoneInput"
+                            <p:inputMask id="telefoneInput"
                                          placeholder="Telefone"
                                          required="true"
+                                         mask="(99)9999-9999"
                                          styleClass="form-control" 
                                          disabled="#{managerUnidadeOrganizacional.visualizar}"
                                          value="#{managerUnidadeOrganizacional.unidade.telefone}"
@@ -105,8 +111,9 @@
                         <div class="form-group">
                             <p:outputLabel value="Whatsapp"
                                            for="whatsInput" />
-                            <p:inputText id="whatsInput"
+                            <p:inputMask id="whatsInput"
                                          placeholder="Whatsapp"
+                                         mask="(99)99999-9999"
                                          required="true"
                                          disabled="#{managerUnidadeOrganizacional.visualizar}"
                                          styleClass="form-control" 
@@ -171,7 +178,8 @@
                         <div class="form-group">
                             <p:outputLabel value="Cep"
                                            for="cepInput" />
-                            <p:inputText id="cepInput"
+                            <p:inputMask id="cepInput"
+                                         mask="99999-999"
                                          placeholder="Cep"
                                          styleClass="form-control" 
                                          disabled="#{managerUnidadeOrganizacional.visualizar}"
@@ -204,13 +212,61 @@
             </h:panelGroup>
             <center>
                 <p:commandButton value="Salvar" icon="pi pi-save" process="@this corpoInteiro:dadosGeraisPanelGroup" update="corpoInteiro:messages" actionListener="#{managerUnidadeOrganizacional.salvar()}" rendered="#{managerUnidadeOrganizacional.cadastrar}" />
-                <p:button value="Editar" icon="pi pi-pencil"  rendered="#{managerUnidadeOrganizacional.visualizar}" href="unidadeOrganizacional.xhtml?editar=#{managerUnidadeOrganizacional.unidade.id}" />
+                <p:button value="Editar" icon="pi pi-pencil"  rendered="#{managerUnidadeOrganizacional.visualizar}" href="orgao.xhtml?editar=#{managerUnidadeOrganizacional.unidade.id}" />
                 <p:commandButton value="Atualizar" icon="pi pi-sync" process="contratadoPanelGroup"  actionListener="#{managerUnidadeOrganizacional.atualizar()}" rendered="#{managerUnidadeOrganizacional.editar}"  />
-                <p:button value="Cancelar" icon="pi pi-ban"  href="unidadeOrganizacional.xhtml" rendered="#{managerUnidadeOrganizacional.visualizar}" />
-                <p:button value="Cancelar" icon="pi pi-ban"  href="unidadeOrganizacional.xhtml?visualizar=#{managerUnidadeOrganizacional.unidade.id}" rendered="#{managerUnidadeOrganizacional.editar}" />
+                <p:button value="Cancelar" icon="pi pi-ban"  href="orgao.xhtml" rendered="#{managerUnidadeOrganizacional.visualizar}" />
+                <p:button value="Cancelar" icon="pi pi-ban"  href="orgao.xhtml?visualizar=#{managerUnidadeOrganizacional.unidade.id}" rendered="#{managerUnidadeOrganizacional.editar}" />
                 <p:button value="Cancelar" icon="pi pi-ban"  href="index.xhtml" rendered="#{managerUnidadeOrganizacional.cadastrar}" />
             </center>
         </h:panelGroup>
+        <p:dialog id="removerLicitacaoConfirmDialog"
+                  widgetVar="removerLicitacaoConfirmDialog"
+                  header="Atenção!"
+                  closeOnEscape="true"
+                  draggable="false"
+                  maximizable="false"
+                  minimizable="false"
+                  modal="true"
+                  showEffect="fade"
+                  hideEffect="fade">
 
+            <div class="row">
+
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <h4>
+                            <i class="pi pi-exclamation-triangle"></i>
+                            Tem certeza de que deseja remover este Orgão?
+                        </h4>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+
+                    <center>
+
+                        <p:commandButton value="Sim"
+                                         title="Confirmar Remoção"
+                                         icon="pi pi-check"
+                                         process="@this @form"
+                                         update="messages corpoInteiro"
+                                         actionListener="#{managerUnidadeOrganizacional.deletar()}"
+                                         oncomplete="PF('removerLicitacaoConfirmDialog').hide();"
+                                         styleClass="mr-md-1"/>
+
+                        <p:commandButton value="Não"
+                                         title="Cancelar Remoção"
+                                         icon="pi pi-times"
+                                         process="@this"
+                                         oncomplete="PF('removerLicitacaoConfirmDialog').hide();"
+                                         styleClass="ml-md-1"/>
+
+                    </center>
+
+                </div>
+
+            </div>
+
+        </p:dialog>
     </ui:define>
 </ui:composition>

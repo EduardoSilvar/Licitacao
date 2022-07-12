@@ -9,15 +9,19 @@ import static Gerenciador.managerLogin.VerificarLogin;
 import Servico.UnidadeOrganizacionalServico;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import modelo.Endereco;
 import modelo.UnidadeOrganizacional;
 import util.Msg;
+import util.Utils;
 
 /**
  *
@@ -32,27 +36,38 @@ public class ManagerUnidadeOrganizacional extends managerPrincipal implements Se
 
     private UnidadeOrganizacional unidade;
     private List<UnidadeOrganizacional> unidades;
+    private Long id;
 
     public void salvar() {
         unidadeServico.Save(this.unidade);
-        Msg.messagemInfo("Operação realizada com sucesso !");
+        Msg.messagemInfoRedirect("Operação realizada com sucesso !", "orgao.xhtml?visualizar=" + this.unidade.getId());
     }
 
     public void deletar() {
         UnidadeOrganizacional Novaunidade = unidadeServico.find(this.unidade.getId());
         Novaunidade.setAtivo(false);
         unidadeServico.Update(Novaunidade);
-        this.unidades.remove(Novaunidade);
-        Msg.messagemInfo("Operação realizada com sucesso !");
+        if (Utils.isNotEmpty(id)) {
+            Msg.messagemInfoRedirect("Operação realizada com sucesso !", "orgao.xhtml");
+        } else {
+            this.unidades.remove(Novaunidade);
+            this.unidades = unidadeServico.pesquisar(this.unidade);
+            Msg.messagemInfo("Operação realizada com sucesso !");
+        }
     }
 
     public void atualizar() {
         unidadeServico.Update(this.unidade);
-        Msg.messagemInfoRedirect("Operação realizada com sucesso !", "unidadeOrganizacional.xhtml?visualizar=" + this.unidade.getId());
+        Msg.messagemInfoRedirect("Operação realizada com sucesso !", "orgao.xhtml?visualizar=" + this.unidade.getId());
     }
 
     public void pesquisar() {
         this.unidades = unidadeServico.pesquisar(this.unidade);
+        if (this.unidades.size() > 0) {
+            Msg.messagemInfo("Operação realizada com sucesso !!");
+        } else {
+            Msg.messagemError("Nenhum orgão encontrado");
+        }
     }
 
     @Override
@@ -62,6 +77,7 @@ public class ManagerUnidadeOrganizacional extends managerPrincipal implements Se
         } catch (IOException ex) {
             Logger.getLogger(managerContrato.class.getName()).log(Level.SEVERE, null, ex);
         }
+        this.id = Long.parseLong(param);
         this.unidade = unidadeServico.find(Long.parseLong(param));
     }
 
@@ -73,6 +89,7 @@ public class ManagerUnidadeOrganizacional extends managerPrincipal implements Se
             Logger.getLogger(managerContrato.class.getName()).log(Level.SEVERE, null, ex);
         }
         instanciarUnidade();
+        this.unidades = new ArrayList<>();
     }
 
     @Override
@@ -82,7 +99,7 @@ public class ManagerUnidadeOrganizacional extends managerPrincipal implements Se
 
     @Override
     public String getUrlVisualizar() {
-        return "unidadeOrganizacional.xhtml?visualizar=" + this.unidade.getId();
+        return "orgao.xhtml?visualizar=" + this.unidade.getId();
     }
 
     public void instanciarUnidade() {

@@ -29,7 +29,7 @@ public class UnidadeOrganizacionalServico extends ServicoGenerico<UnidadeOrganiz
             sql += " and u.nome = :nome";
         }
         if (Utils.isNotEmpty(unidade.getNomeRepresentante())) {
-            sql += " and u.nomeRepresentante = :nomerepresentante";
+            sql += " and u.NomeRepresentante = :nomerepresentante";
         }
         if (Utils.isNotEmpty(unidade.getCnpj())) {
             sql += " and u.cnpj = :cnpj";
