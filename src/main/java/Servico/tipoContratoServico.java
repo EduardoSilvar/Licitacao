@@ -35,16 +35,16 @@ public class tipoContratoServico extends ServicoGenerico<TipoContrato> implement
             sql += "t.nome = :nome and ";
         }
         if (Utils.isNotEmpty(tipo.getDescricao())) {
-            sql += "t.descricao = :desc and ";
+            sql += "t.descricao like :desc and ";
         }
         sql += "t.ativo = true";
 
         Query query = entityManager.createQuery(sql);
         if (Utils.isNotEmpty(tipo.getNome())) {
-            query.setParameter("nome", tipo.getNome());
+            query.setParameter("nome",  tipo.getNome());
         }
         if (Utils.isNotEmpty(tipo.getDescricao())) {
-            query.setParameter("desc", tipo.getDescricao());
+            query.setParameter("desc", "%" + tipo.getDescricao().trim() + "%");
         }
 
         return query.getResultList();

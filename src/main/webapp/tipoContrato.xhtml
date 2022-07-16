@@ -11,22 +11,16 @@
 
     <ui:define name="acoes">
         <h:panelGroup class="panelAcoes">
-            <p:button value="Pesquisar"
-                      title="Pesquisar Contratado"
-                      icon="pi pi-search"
-                      href="pesquisarTipoContrato.xhtml" style=" margin-right: 30px !important"/>
 
-            <p:splitButton value="Ações" style="margin: 0px -8px !important" rendered="#{not managerTipoContrato.cadastrar}"
-                           icon="pi pi-cog"
+            <p:splitButton value="Ações"
+                           icon="pi pi-align-justify" style="margin: 0px -8px !important"
                            >
 
-                <p:menuitem value="Editar" 
-                            icon="pi pi-pencil"
-                            rendered="#{managerTipoContrato.visualizar}"
-                            url="tipoContrato.xhtml?editar=#{managerTipoContrato.tipoContrato.id}"
-                            process="@this corpoInteiro"
+                <p:menuitem value="Pesquisar"
+                            icon="pi pi-search"
+                            process="@this"
+                            url="pesquisarTipoContrato.xhtml"
                             />
-
                 <p:menuitem value="Excluir" 
                             icon="pi pi-trash"
                             oncomplete="PF('removeraTipoConfirmDialog').show();"
