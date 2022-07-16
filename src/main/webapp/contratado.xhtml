@@ -78,6 +78,7 @@
                                     <p:inputMask id="cnpjPessoaJuriInput"
                                                  placeholder="CNPJ"
                                                  mask="99.999.999/9999-99"
+                                                 required="true"
                                                  value="#{managerContratado.contratado.cnpj}"
                                                  disabled="#{managerContratado.visualizar}"
                                                  requiredMessage="Este campo é obrigatório."
@@ -95,6 +96,7 @@
                                     <p:inputMask id="cpfPessoaJuriInput"
                                                  placeholder="CPF"
                                                  mask="999.999.999-99"
+                                                 required="true"
                                                  value="#{managerContratado.contratado.cpf}"
                                                  disabled="#{managerContratado.visualizar}"
                                                  requiredMessage="Este campo é obrigatório."
@@ -110,6 +112,7 @@
                                                for="especPessoaJuriInput" />
                                 <p:inputText id="especPessoaJuriInput"
                                              placeholder="Especialidade"
+                                             required="true"
                                              value="#{managerContratado.contratado.especialidade}"
                                              disabled="#{managerContratado.visualizar}"
                                              requiredMessage="Este campo é obrigatório."
@@ -126,6 +129,7 @@
                                                for="emailPessoaJuriInput" />
                                 <p:inputText id="emailPessoaJuriInput"
                                              placeholder="E-mail"
+                                             required="true"
                                              value="#{managerContratado.contratado.email}"
                                              disabled="#{managerContratado.visualizar}"
                                              requiredMessage="Este campo é obrigatório."
@@ -140,6 +144,7 @@
                                                for="telefonePessoaJuriInput" />
                                 <p:inputMask id="telefonePessoaJuriInput"
                                              placeholder="Telefone"
+                                             required="true"
                                              value="#{managerContratado.contratado.telefone}"
                                              disabled="#{managerContratado.visualizar}"
                                              mask="(99)9999-9999"
@@ -155,6 +160,7 @@
                                                for="whatsPessoaJuriInput" />
                                 <p:inputMask id="whatsPessoaJuriInput"
                                              placeholder="Whatsapp"
+                                             required="true"
                                              value="#{managerContratado.contratado.whatsapp}"
                                              disabled="#{managerContratado.visualizar}"
                                              mask="(99)99999-9999"
@@ -176,6 +182,7 @@
                                            for="cepPessoaJuriInput" />
                             <p:inputMask id="cepPessoaJuriInput"
                                          mask="99999-999"
+                                         required="true"
                                          value="#{managerContratado.contratado.endereco.cep}"
                                          disabled="#{managerContratado.visualizar}"
                                          placeholder="Cep"
@@ -193,6 +200,7 @@
                                          value="#{managerContratado.contratado.endereco.numero}"
                                          disabled="#{managerContratado.visualizar}"
                                          placeholder="Número"
+                                         required="true"
                                          requiredMessage="Este campo é obrigatório."
                                          styleClass="form-control" 
                                          />
@@ -207,6 +215,7 @@
                                          placeholder="Cidade"
                                          value="#{managerContratado.contratado.endereco.cidade}"
                                          disabled="#{managerContratado.visualizar}"
+                                         required="true"
                                          requiredMessage="Este campo é obrigatório."
                                          styleClass="form-control" 
                                          />
@@ -219,6 +228,7 @@
                                            for="bairroPessoaJuriInput" />
                             <p:inputText id="bairroPessoaJuriInput"
                                          placeholder="Bairro"
+                                         required="true"
                                          value="#{managerContratado.contratado.endereco.bairro}"
                                          disabled="#{managerContratado.visualizar}"
                                          requiredMessage="Este campo é obrigatório."

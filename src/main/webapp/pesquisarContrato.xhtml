@@ -65,7 +65,7 @@
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
-                            <p:outputLabel value="contratado" styleClass="control-label" for="contratadoSelect" />
+                            <p:outputLabel value="Contratado" styleClass="control-label" for="contratadoSelect" />
                             <p:selectOneMenu id="contratadoSelect"
                                              filter="true" 
                                              styleClass="form-control"
@@ -159,7 +159,7 @@
                         Contratos
                     </center>
                 </f:facet>
-                <p:column headerText="ações" width="200">
+                <p:column headerText="Ações" width="200">
                     <p:commandButton  icon="pi pi-trash" 
                                       process="@this"
                                       update="@form:removeraContratoConfirmDialog"
@@ -194,6 +194,9 @@
                 </p:column>
                 <p:column headerText="Vigência">
                     <h:outputText value="#{contrato.dataInicio}"  />
+                </p:column>
+                <p:column headerText="Fiscal">
+                    <h:outputText value="#{contrato.fiscalContrato.nome}"  />
                 </p:column>
 
 
