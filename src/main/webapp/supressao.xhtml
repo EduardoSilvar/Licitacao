@@ -82,6 +82,41 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
+                            <p:outputLabel value="Fiscal responsável" styleClass="control-label" for="fiscalSelect" />
+                            <p:selectOneMenu id="fiscalSelect"
+                                             filter="true" 
+                                             placeholder="fiscal"
+                                             required="true"
+                                             styleClass="form-control"
+                                             requiredMessage="Este campo é obrigatório."
+                                             converter="usuarioconverter"
+                                             value="#{managerContrato.contrato.fiscalContrato}"
+                                             >
+                                <f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
+                                <f:selectItems value="#{managerContrato.responsaveis}" var="user" itemLabel="#{user.nome}" itemValue="#{user}" />
+                            </p:selectOneMenu>
+                                <p:message for="fiscalSelect" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <p:outputLabel value="Data de assinatura"
+                                       for="dataassinaturaAcrescimo" />
+                        <p:calendar id="dataassinaturaAcrescimo"
+                                    rendered="true"
+                                    mask="true"
+                                    style="display: flex; flex-direction: row"
+                                    required="true"
+                                    requiredMessage="Este campo é obrigatório."
+                                    inputStyleClass="form-control"
+                                    value=""
+                                    showOn="button"
+                                    />
+                        <p:message for="dataassinaturaAcrescimo" />
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
                             <p:outputLabel value="Descrição*" for="descricao" />
                             <p:inputText id="descricao"
                                          placeholder="Descrição"
@@ -92,37 +127,21 @@
                         </div>
                     </div>
                 </div>
-                <center>    
-                    <p:commandButton value="salvar" icon="pi pi-save"  actionListener="#{managercontratado.salvar()}"  style="margin: 0px 20px; background-color: #01415B; color: #fff; margin-bottom: 10px;"/>
-                    <p:commandButton value="cancelar" icon="pi pi-ban"  style="background-color: #01415B; color: #fff;margin-bottom: 10px"/>
-                </center>
+                <p:fileUpload mode="advanced"
+                              label="PDF Termo"
+                              required="true"
+                              multiple="false"
+                              sizeLimit="900000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
+                              invalidSizeMessage="Maximum file size allowed is 10000 KB"
+                              invalidFileMessage="only gif | jpg | jpeg | png is allowed"
+                              style="margin-bottom: 20px"
+                              />
             </h:panelGroup>
             <hr/>
-            <p:dataTable id="tipoContratoDatatable" var="contrato" value="#{managerContratado.contratados}"
-                         resizeMode="5">
-                <f:facet name="header">
-                    <center>
-                        Contrato Selecionado
-                    </center>
-                </f:facet>
-                <p:column headerText="Ações" width="200">
-                    <p:commandButton  icon="pi pi-trash"/>
-                    <p:button  icon="pi pi-eye" title="visualizar" href="contratado.xhtml?visualizar=" />
-                </p:column>
-                <p:column headerText="Número">
-                    <h:outputText value="" />
-                </p:column>
-                <p:column headerText="Data da firmação">
-                    <h:outputText value="" />
-                </p:column>
-                <p:column headerText="Valor inicial">
-                    <h:outputText value="" />
-                </p:column>
-                <p:column headerText="Responsável">
-                    <h:outputText value="" />
-                </p:column>
-
-            </p:dataTable>
+            <center>    
+                <p:commandButton value="salvar" icon="pi pi-save"  actionListener="#{managercontratado.salvar()}"  style="margin: 0px 20px; background-color: #01415B; color: #fff; margin-bottom: 10px;"/>
+                <p:commandButton value="cancelar" icon="pi pi-ban"  style="background-color: #01415B; color: #fff;margin-bottom: 10px"/>
+            </center>
         </h:panelGroup>
 
 

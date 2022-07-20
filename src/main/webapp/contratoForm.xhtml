@@ -1,0 +1,163 @@
+<ui:composition template="/WEB-INF/template/layout.xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns="http://www.w3.org/1999/xhtml">
+    <ui:define name="acoes">
+        <h:panelGroup class="panelAcoes">
+            <p:button value="Pesquisar"
+                      title="Pesquisar Bairro"
+                      icon="pi pi-search"
+                      href="pesquisarBairro.xhtml" style=" margin-right: 30px !important"/>
+
+            <p:splitButton value="Ações" style="margin: 0px -8px !important"
+                           icon="pi pi-cog"
+                           >
+
+                <p:menuitem value="Editar" 
+                            icon="pi pi-pencil"
+                            process="@this"
+                            />
+
+            </p:splitButton>
+        </h:panelGroup>
+    </ui:define>
+    <ui:define name="barra">
+        <div class="row" id="stylebarra">
+            <i class="pi pi-file-o" id="icon"></i> <h5 style="color: #e1e6e5"> Detalhes do contrato ------- </h5>
+        </div>
+    </ui:define>
+    <ui:define name="titulo">
+        <h4>Dados do contrato</h4>
+    </ui:define>
+
+    <ui:define name="corpo">
+
+        <p:growl id="messages" showDetail="true" />
+        <h:panelGroup id="panelCorpo">
+            <p:tabView>
+                <p:tab title="PDF-Documentos">
+
+                </p:tab>
+                <p:tab title="Acréscimos">
+                    <p:dataTable id="acrescimoDatatable" var="contrato" value="#{managerContrato.contratos}"
+                                 resizeMode="5">
+                        <f:facet name="header">
+                            <center>
+                                Histórico de acréscimos
+                            </center>
+                        </f:facet>
+                        <p:column headerText="N° do Termo Aditivo">
+                            <h:outputText value="" />
+                        </p:column>
+                        <p:column headerText="Valor">
+                            <h:outputText value="" />
+                        </p:column>
+                        <p:column headerText="Fiscal responsável">
+                            <h:outputText value="" />
+                        </p:column>
+                        <p:column headerText="Data">
+                            <h:outputText value=""  />
+                        </p:column>
+                        <p:column headerText="Descrição">
+                            <h:outputText value=""  />
+                        </p:column>
+                    </p:dataTable>
+                </p:tab>
+                <p:tab title="Supressões">
+                    <p:dataTable id="supressaoDatatable" var="contrato" value="#{managerContrato.contratos}"
+                                 resizeMode="5">
+                        <f:facet name="header">
+                            <center>
+                                Histórico de supressão
+                            </center>
+                        </f:facet>
+                        <p:column headerText="N° do Termo Aditivo">
+                            <h:outputText value="" />
+                        </p:column>
+                        <p:column headerText="Valor">
+                            <h:outputText value="" />
+                        </p:column>
+                        <p:column headerText="Fiscal responsável">
+                            <h:outputText value="" />
+                        </p:column>
+                        <p:column headerText="Data">
+                            <h:outputText value=""  />
+                        </p:column>
+                        <p:column headerText="Descrição">
+                            <h:outputText value=""  />
+                        </p:column>
+                    </p:dataTable>
+
+
+                </p:tab>
+                <p:tab title="Renovações">
+                    <p:dataTable id="renovacaoDatatable" var="contrato" value="#{managerContrato.contratos}"
+                                 resizeMode="5">
+                        <f:facet name="header">
+                            <center>
+                                Histórico de renovação
+                            </center>
+                        </f:facet>
+                        <p:column headerText="N° do Termo Aditivo">
+                            <h:outputText value="" />
+                        </p:column>
+                        <p:column headerText="Valor foi alterado">
+                            <h:outputText value=""  />
+                        </p:column>
+                        <p:column headerText="Valor" width="100px">
+                            <h:outputText value="" />
+                        </p:column>
+                        <p:column headerText="Fiscal responsável">
+                            <h:outputText value="" />
+                        </p:column>
+                        <p:column headerText="Data de firmação">
+                            <h:outputText value=""  />
+                        </p:column>
+                        <p:column headerText="Nova vigência">
+                            <h:outputText value=""  />
+                        </p:column>
+                        <p:column headerText="Vigência anterior">
+                            <h:outputText value=""  />
+                        </p:column>
+                        <p:column headerText="Próxima renovação">
+                            <h:outputText value=""  />
+                        </p:column>
+                    </p:dataTable>
+                </p:tab>
+                <p:tab title="Repactuações">
+                    <p:dataTable id="repactuacaoDatatable" var="contrato" value="#{managerContrato.contratos}"
+                                 resizeMode="5">
+                        <f:facet name="header">
+                            <center>
+                                Histórico de repactuação
+                            </center>
+                        </f:facet>
+                        <p:column headerText="N° do Termo de Apostilamento" width="300px">
+                            <h:outputText value="" />
+                        </p:column>
+                        <p:column headerText="Valor alterado">
+                            <h:outputText value=""  />
+                        </p:column>
+                        <p:column headerText="Valor">
+                            <h:outputText value="" />
+                        </p:column>
+                        <p:column headerText="Fiscal responsável">
+                            <h:outputText value="" />
+                        </p:column>
+                        <p:column headerText="Data de firmação">
+                            <h:outputText value=""  />
+                        </p:column>
+                        <p:column headerText="Descrição">
+                            <h:outputText value=""  />
+                        </p:column>
+                    </p:dataTable>
+                </p:tab>
+            </p:tabView>
+
+        </h:panelGroup>
+
+
+    </ui:define>
+</ui:composition>
