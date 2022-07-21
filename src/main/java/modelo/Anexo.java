@@ -8,12 +8,14 @@ package modelo;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Transient;
@@ -42,17 +44,56 @@ public class Anexo implements Serializable {
     @Transient
     private Date dataArquivo;
 
+    @Column(name = "ordem_insercao")
+    private Integer ordemInsercao;
+
+    @Enumerated(EnumType.STRING)
+    private TipoAnexo caminho;
+
+    @Enumerated(EnumType.STRING)
+    private TipoAnexo tipoAnexo;
+
+    @Transient
+    private String base64;
+
+    @ManyToOne
+    private Contrato contrato;
+
     public Anexo() {
     }
 
-    public Anexo(Long id, String nome, String nomeExibicao, String url, boolean uploaded, UploadedFile arquivo, Date dataArquivo) {
+    public Anexo(Long id, String nome, String nomeExibicao, String url, boolean uploaded, UnidadeOrganizacional unidadeOrganizacional, UploadedFile arquivo, Date dataArquivo, Integer ordemInsercao, TipoAnexo caminho, TipoAnexo tipoAnexo, String base64, Contrato contrato) {
         this.id = id;
         this.nome = nome;
         this.nomeExibicao = nomeExibicao;
         this.url = url;
         this.uploaded = uploaded;
+        this.unidadeOrganizacional = unidadeOrganizacional;
         this.arquivo = arquivo;
         this.dataArquivo = dataArquivo;
+        this.ordemInsercao = ordemInsercao;
+        this.caminho = caminho;
+        this.tipoAnexo = tipoAnexo;
+        this.base64 = base64;
+        this.contrato = contrato;
+    }
+
+    public TipoAnexo getTipoAnexo() {
+        return tipoAnexo;
+    }
+
+    public void setTipoAnexo(TipoAnexo tipoAnexo) {
+        this.tipoAnexo = tipoAnexo;
+    }
+
+   
+
+    public Contrato getContrato() {
+        return contrato;
+    }
+
+    public void setContrato(Contrato contrato) {
+        this.contrato = contrato;
     }
 
     public Long getId() {
@@ -93,6 +134,30 @@ public class Anexo implements Serializable {
 
     public void setUploaded(boolean uploaded) {
         this.uploaded = uploaded;
+    }
+
+    public Integer getOrdemInsercao() {
+        return ordemInsercao;
+    }
+
+    public void setOrdemInsercao(Integer ordemInsercao) {
+        this.ordemInsercao = ordemInsercao;
+    }
+
+    public TipoAnexo getCaminho() {
+        return caminho;
+    }
+
+    public void setCaminho(TipoAnexo caminho) {
+        this.caminho = caminho;
+    }
+
+    public String getBase64() {
+        return base64;
+    }
+
+    public void setBase64(String base64) {
+        this.base64 = base64;
     }
 
     public UploadedFile getArquivo() {

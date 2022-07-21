@@ -10,6 +10,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -46,6 +47,8 @@ public class Contrato implements Serializable {
     private Setor setor;
     @OneToOne
     private TipoLicitacao tipoLicitacao;
+
+    private List<Anexo> anexos;
     private BigDecimal valor;
     private boolean possuiTempoDeterminado;
     @Temporal(javax.persistence.TemporalType.DATE)
@@ -136,6 +139,14 @@ public class Contrato implements Serializable {
 
     public void setSetor(Setor setor) {
         this.setor = setor;
+    }
+
+    public List<Anexo> getAnexos() {
+        return anexos;
+    }
+
+    public void setAnexos(List<Anexo> anexos) {
+        this.anexos = anexos;
     }
 
     public TipoLicitacao getTipoLicitacao() {

@@ -8,6 +8,7 @@ package Gerenciador;
 import Enum.StatusContrato;
 import static Gerenciador.managerLogin.VerificarLogin;
 import static Gerenciador.managerLogin.getObjectSession;
+import Servico.AnexoServico;
 import Servico.ContratadoServico;
 import Servico.ContratoServico;
 import Servico.SetorServico;
@@ -16,6 +17,7 @@ import Servico.UsuarioServico;
 import Servico.tipoContratoServico;
 import java.io.IOException;
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -24,12 +26,16 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import modelo.Anexo;
 import modelo.Contratado;
 import modelo.Contrato;
 import modelo.Setor;
+import modelo.TipoAnexo;
 import modelo.TipoContrato;
 import modelo.TipoLicitacao;
 import modelo.Usuario;
+import org.primefaces.PrimeFaces;
+import org.primefaces.event.FileUploadEvent;
 import util.Msg;
 import util.Utils;
 
@@ -53,6 +59,11 @@ public class managerContrato extends managerPrincipal implements Serializable {
     private TipoLicitacaoServico tipoLicitacaoServico;
     @EJB
     private SetorServico setorServico;
+    @EJB
+    private AnexoServico anexoServico;
+
+    private Anexo anexo;
+    private TipoAnexo tipoAnexo;
 
     private Contrato contrato;
     private List<Usuario> responsaveis;
@@ -113,6 +124,34 @@ public class managerContrato extends managerPrincipal implements Serializable {
     @Override
     public String getUrlPesquisar() {
         return "pesquisarContrato.xhtml";
+    }
+
+    public void selecionarAnexo(FileUploadEvent event) {
+        this.anexo.setArquivo(event.getFile());
+        this.anexo.setTipoAnexo(TipoAnexo.CONTRATO);
+        PrimeFaces.current().executeScript("PF('dlgAnexo').show();");
+    }
+
+    public void adicionarAnexo() {
+
+        try {
+            this.contrato.getAnexos().add(anexoServico.adicionarAnexo(this.anexo.getArquivo()));
+            int posicao = contrato.getAnexos().size();
+//            this.contrato.getAnexos().get(posicao - 1).setTipo(anexo.getTipo());
+            this.contrato.getAnexos().get(posicao - 1).setArquivo(anexo.getArquivo());
+            this.contrato.getAnexos().get(posicao - 1).setCaminho(TipoAnexo.CONTRATO);
+            this.contrato.getAnexos().get(posicao - 1).setTipoAnexo(this.anexo.getTipoAnexo());
+        } catch (SQLException | IOException ex) {
+            Logger.getLogger(managerContrato.class
+                    .getName()).log(Level.SEVERE, null, ex);
+        }
+        instanciarAnexo();
+        Msg.messagemInfo(Msg.SuccessFull);
+
+    }
+
+    public void instanciarAnexo() {
+        this.anexo = new Anexo();
     }
 
     public void salvar() {
