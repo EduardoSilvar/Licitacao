@@ -43,6 +43,7 @@ public class Acrescimo implements Serializable{
     private String descricao;
     @OneToMany
     private List<Anexo> imagem;
+    private boolean ativo = true;
 
     public Acrescimo() {
     }
@@ -111,17 +112,26 @@ public class Acrescimo implements Serializable{
         this.imagem = imagem;
     }
 
+    public boolean isAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(boolean ativo) {
+        this.ativo = ativo;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 61 * hash + Objects.hashCode(this.id);
-        hash = 61 * hash + Objects.hashCode(this.contrato);
-        hash = 61 * hash + Objects.hashCode(this.numeroTermo);
-        hash = 61 * hash + Objects.hashCode(this.valor);
-        hash = 61 * hash + Objects.hashCode(this.dataAssinatura);
-        hash = 61 * hash + Objects.hashCode(this.fiscal);
-        hash = 61 * hash + Objects.hashCode(this.descricao);
-        hash = 61 * hash + Objects.hashCode(this.imagem);
+        int hash = 5;
+        hash = 71 * hash + Objects.hashCode(this.id);
+        hash = 71 * hash + Objects.hashCode(this.contrato);
+        hash = 71 * hash + Objects.hashCode(this.numeroTermo);
+        hash = 71 * hash + Objects.hashCode(this.valor);
+        hash = 71 * hash + Objects.hashCode(this.dataAssinatura);
+        hash = 71 * hash + Objects.hashCode(this.fiscal);
+        hash = 71 * hash + Objects.hashCode(this.descricao);
+        hash = 71 * hash + Objects.hashCode(this.imagem);
+        hash = 71 * hash + (this.ativo ? 1 : 0);
         return hash;
     }
 
@@ -137,6 +147,9 @@ public class Acrescimo implements Serializable{
             return false;
         }
         final Acrescimo other = (Acrescimo) obj;
+        if (this.ativo != other.ativo) {
+            return false;
+        }
         if (!Objects.equals(this.descricao, other.descricao)) {
             return false;
         }
@@ -160,5 +173,7 @@ public class Acrescimo implements Serializable{
         }
         return Objects.equals(this.imagem, other.imagem);
     }
+
+    
 
 }

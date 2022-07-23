@@ -43,6 +43,7 @@ public class Supressao implements Serializable{
     private String descricao;
     @OneToMany
     private List<Anexo> imagem;
+    private boolean ativo = true;
 
     public Supressao() {
     }
@@ -111,17 +112,26 @@ public class Supressao implements Serializable{
         this.imagem = imagem;
     }
 
+    public boolean isAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(boolean ativo) {
+        this.ativo = ativo;
+    }
+
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 53 * hash + Objects.hashCode(this.id);
-        hash = 53 * hash + Objects.hashCode(this.contrato);
-        hash = 53 * hash + Objects.hashCode(this.numeroTermo);
-        hash = 53 * hash + Objects.hashCode(this.valor);
-        hash = 53 * hash + Objects.hashCode(this.dataAssinatura);
-        hash = 53 * hash + Objects.hashCode(this.fiscal);
-        hash = 53 * hash + Objects.hashCode(this.descricao);
-        hash = 53 * hash + Objects.hashCode(this.imagem);
+        hash = 59 * hash + Objects.hashCode(this.id);
+        hash = 59 * hash + Objects.hashCode(this.contrato);
+        hash = 59 * hash + Objects.hashCode(this.numeroTermo);
+        hash = 59 * hash + Objects.hashCode(this.valor);
+        hash = 59 * hash + Objects.hashCode(this.dataAssinatura);
+        hash = 59 * hash + Objects.hashCode(this.fiscal);
+        hash = 59 * hash + Objects.hashCode(this.descricao);
+        hash = 59 * hash + Objects.hashCode(this.imagem);
+        hash = 59 * hash + (this.ativo ? 1 : 0);
         return hash;
     }
 
@@ -137,6 +147,9 @@ public class Supressao implements Serializable{
             return false;
         }
         final Supressao other = (Supressao) obj;
+        if (this.ativo != other.ativo) {
+            return false;
+        }
         if (!Objects.equals(this.descricao, other.descricao)) {
             return false;
         }
@@ -161,5 +174,6 @@ public class Supressao implements Serializable{
         return Objects.equals(this.imagem, other.imagem);
     }
 
+    
     
 }

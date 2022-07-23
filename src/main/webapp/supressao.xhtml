@@ -44,11 +44,12 @@
                         <div class="form-group">
                             <p:outputLabel value="Contrato*" styleClass="control-label" for="contratoAcrescimo" />
                             <p:selectOneMenu id="contratoAcrescimo"
+                                             value="#{managerSupressao.supressao.contrato}"
                                              filter="true" 
                                              placeholder="Contrato"
                                              styleClass="form-control" >
                                 <f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
-                                <f:selectItems  />
+                                <f:selectItems value="#{managerSupressao.contratos}" var="contrato" itemLabel="#{contrato.numeroContrato}" itemValue="#{contrato}" />
                             </p:selectOneMenu>
                         </div>
                     </div>
@@ -57,6 +58,7 @@
                             <p:outputLabel value="Número do termo aditivo*"
                                            for="numeroTermoAditivo" />
                             <p:inputText id="numeroTermoAditivo"
+                                         value="#{managerSupressao.supressao.numeroTermo}"
                                          placeholder="Número"
                                          rendered="true"
                                          requiredMessage="Este campo é obrigatório."
@@ -76,6 +78,7 @@
                         <p:inputMask id="acrescimoValor"
                                      style="display: flex; flex-direction: row"
                                      styleClass="form-control" 
+                                     value="#{managerSupressao.supressao.valor}"
                                      placeholder="Valor"
                                      requiredMessage="Este campo é obrigatório." />
                         <p:message for="acrescimoValor" />
@@ -90,10 +93,10 @@
                                              styleClass="form-control"
                                              requiredMessage="Este campo é obrigatório."
                                              converter="usuarioconverter"
-                                             value="#{managerContrato.contrato.fiscalContrato}"
+                                             value="#{managerSupressao.supressao.fiscal}"
                                              >
                                 <f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
-                                <f:selectItems value="#{managerContrato.responsaveis}" var="user" itemLabel="#{user.nome}" itemValue="#{user}" />
+                                <f:selectItems value="#{managerSupressao.fiscais}" var="user" itemLabel="#{user.nome}" itemValue="#{user}" />
                             </p:selectOneMenu>
                                 <p:message for="fiscalSelect" />
                         </div>
@@ -104,13 +107,13 @@
                         <p:outputLabel value="Data de assinatura"
                                        for="dataassinaturaAcrescimo" />
                         <p:calendar id="dataassinaturaAcrescimo"
+                                    value="#{managerSupressao.supressao.dataAssinatura}"
                                     rendered="true"
                                     mask="true"
                                     style="display: flex; flex-direction: row"
                                     required="true"
                                     requiredMessage="Este campo é obrigatório."
                                     inputStyleClass="form-control"
-                                    value=""
                                     showOn="button"
                                     />
                         <p:message for="dataassinaturaAcrescimo" />
@@ -119,6 +122,7 @@
                         <div class="form-group">
                             <p:outputLabel value="Descrição*" for="descricao" />
                             <p:inputText id="descricao"
+                                         value="#{managerSupressao.supressao.descricao}"
                                          placeholder="Descrição"
                                          requiredMessage="Este campo é obrigatório."
                                          styleClass="form-control" 
@@ -139,7 +143,7 @@
             </h:panelGroup>
             <hr/>
             <center>    
-                <p:commandButton value="salvar" icon="pi pi-save"  actionListener="#{managercontratado.salvar()}"  style="margin: 0px 20px; background-color: #01415B; color: #fff; margin-bottom: 10px;"/>
+                <p:commandButton value="salvar" icon="pi pi-save"  actionListener="#{managerSupressao.salvar()}"  style="margin: 0px 20px; background-color: #01415B; color: #fff; margin-bottom: 10px;"/>
                 <p:commandButton value="cancelar" icon="pi pi-ban"  style="background-color: #01415B; color: #fff;margin-bottom: 10px"/>
             </center>
         </h:panelGroup>

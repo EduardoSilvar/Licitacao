@@ -46,6 +46,7 @@ public class Renovacao implements Serializable{
     private Usuario fiscal;
     @OneToMany
     private List<Anexo> imagem;
+    private boolean ativo = true;
 
     public Renovacao() {
     }
@@ -146,21 +147,30 @@ public class Renovacao implements Serializable{
         this.imagem = imagem;
     }
 
+    public boolean isAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(boolean ativo) {
+        this.ativo = ativo;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 79 * hash + Objects.hashCode(this.id);
-        hash = 79 * hash + Objects.hashCode(this.contrato);
-        hash = 79 * hash + Objects.hashCode(this.numeroTermo);
-        hash = 79 * hash + Objects.hashCode(this.dataInicial);
-        hash = 79 * hash + Objects.hashCode(this.dataFinal);
-        hash = 79 * hash + Objects.hashCode(this.dataAssinatura);
-        hash = 79 * hash + Objects.hashCode(this.proximaRenovacao);
-        hash = 79 * hash + Objects.hashCode(this.valorMudou);
-        hash = 79 * hash + Objects.hashCode(this.valor);
-        hash = 79 * hash + Objects.hashCode(this.vigenciaAnterior);
-        hash = 79 * hash + Objects.hashCode(this.fiscal);
-        hash = 79 * hash + Objects.hashCode(this.imagem);
+        int hash = 5;
+        hash = 59 * hash + Objects.hashCode(this.id);
+        hash = 59 * hash + Objects.hashCode(this.contrato);
+        hash = 59 * hash + Objects.hashCode(this.numeroTermo);
+        hash = 59 * hash + Objects.hashCode(this.dataInicial);
+        hash = 59 * hash + Objects.hashCode(this.dataFinal);
+        hash = 59 * hash + Objects.hashCode(this.dataAssinatura);
+        hash = 59 * hash + Objects.hashCode(this.proximaRenovacao);
+        hash = 59 * hash + Objects.hashCode(this.valorMudou);
+        hash = 59 * hash + Objects.hashCode(this.valor);
+        hash = 59 * hash + Objects.hashCode(this.vigenciaAnterior);
+        hash = 59 * hash + Objects.hashCode(this.fiscal);
+        hash = 59 * hash + Objects.hashCode(this.imagem);
+        hash = 59 * hash + (this.ativo ? 1 : 0);
         return hash;
     }
 
@@ -176,6 +186,9 @@ public class Renovacao implements Serializable{
             return false;
         }
         final Renovacao other = (Renovacao) obj;
+        if (this.ativo != other.ativo) {
+            return false;
+        }
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }
@@ -211,6 +224,8 @@ public class Renovacao implements Serializable{
         }
         return Objects.equals(this.imagem, other.imagem);
     }
+
+    
 
     
 }

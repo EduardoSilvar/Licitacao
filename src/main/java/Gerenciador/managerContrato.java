@@ -67,7 +67,6 @@ public class managerContrato extends managerPrincipal implements Serializable {
 
     private Contrato contrato;
     private List<Usuario> responsaveis;
-    private boolean valorMudou;
     private List<TipoLicitacao> tiposLicitacao;
     private List<Contrato> contratos;
     private List<Contratado> contratados;
@@ -276,20 +275,12 @@ public class managerContrato extends managerPrincipal implements Serializable {
 
     }
 
-    public boolean renderedNovoValor() {
-        return valorMudou;
-    }
-
     public boolean renderedTempoDeterminado() {
         return contrato.isPossuiTempoDeterminado();
     }
 
     public Contrato Pegar(Long id) {
         return contratoServico.find(id);
-    }
-
-    public void print() {
-        System.out.println(valorMudou);
     }
 
     public void PegarTodos() {
@@ -302,14 +293,6 @@ public class managerContrato extends managerPrincipal implements Serializable {
 
     public void InstanciarContrato() {
         contrato = new Contrato();
-    }
-
-    public boolean getValorMudou() {
-        return this.valorMudou;
-    }
-
-    public void setValorMudou(boolean valorMudou) {
-        this.valorMudou = valorMudou;
     }
 
     public Contrato getContrato() {

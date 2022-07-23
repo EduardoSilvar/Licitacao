@@ -40,6 +40,7 @@ public class Repactuacao implements Serializable{
     private String descricao;
     @OneToMany
     private List<Anexo> imagem;
+    private boolean ativo = true;
 
     public Repactuacao() {
     }
@@ -116,18 +117,27 @@ public class Repactuacao implements Serializable{
         this.imagem = imagem;
     }
 
+    public boolean isAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(boolean ativo) {
+        this.ativo = ativo;
+    }
+
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 29 * hash + Objects.hashCode(this.id);
-        hash = 29 * hash + Objects.hashCode(this.contrato);
-        hash = 29 * hash + Objects.hashCode(this.numeroTermo);
-        hash = 29 * hash + Objects.hashCode(this.dataAssinatura);
-        hash = 29 * hash + Objects.hashCode(this.valorMudou);
-        hash = 29 * hash + Objects.hashCode(this.valor);
-        hash = 29 * hash + Objects.hashCode(this.fiscal);
-        hash = 29 * hash + Objects.hashCode(this.descricao);
-        hash = 29 * hash + Objects.hashCode(this.imagem);
+        hash = 89 * hash + Objects.hashCode(this.id);
+        hash = 89 * hash + Objects.hashCode(this.contrato);
+        hash = 89 * hash + Objects.hashCode(this.numeroTermo);
+        hash = 89 * hash + Objects.hashCode(this.dataAssinatura);
+        hash = 89 * hash + Objects.hashCode(this.valorMudou);
+        hash = 89 * hash + Objects.hashCode(this.valor);
+        hash = 89 * hash + Objects.hashCode(this.fiscal);
+        hash = 89 * hash + Objects.hashCode(this.descricao);
+        hash = 89 * hash + Objects.hashCode(this.imagem);
+        hash = 89 * hash + (this.ativo ? 1 : 0);
         return hash;
     }
 
@@ -143,6 +153,9 @@ public class Repactuacao implements Serializable{
             return false;
         }
         final Repactuacao other = (Repactuacao) obj;
+        if (this.ativo != other.ativo) {
+            return false;
+        }
         if (!Objects.equals(this.descricao, other.descricao)) {
             return false;
         }
@@ -169,6 +182,8 @@ public class Repactuacao implements Serializable{
         }
         return Objects.equals(this.imagem, other.imagem);
     }
+
+    
     
     
 }
