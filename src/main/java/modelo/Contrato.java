@@ -8,7 +8,6 @@ package modelo;
 import Enum.StatusContrato;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -49,7 +48,7 @@ public class Contrato implements Serializable {
     private Setor setor;
     @OneToOne
     private TipoLicitacao tipoLicitacao;
-
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Anexo> anexos;
     private BigDecimal valor;
     private boolean possuiTempoDeterminado;
