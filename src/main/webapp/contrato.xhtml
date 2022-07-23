@@ -409,21 +409,35 @@
                     </div> 
                 </div>
             </div>
-            <p:fileUpload mode="advanced"
-                          multiple="false"
-                          sizeLimit="900000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
-                          invalidSizeMessage="Maximum file size allowed is 10000 KB"
-                          invalidFileMessage="only gif | jpg | jpeg | png is allowed"
-                          style="margin-bottom: 20px"
-                          />
+            <h:panelGroup id="anexoProtocoloPanelGroup">
+                <p:fileUpload
+                    required="true"
+                    requiredMessage="Os Documentos de Anexo devem ser enviados"
+                    auto="true"
+                    mode="advanced"
+                    label="Anexar"
+                    uploadLabel="Enviar"
+                    cancelLabel="Cancelar"
+                    listener="#{ managerContrato.selecionarAnexo }"
+                    multiple="true"
+                    allowTypes="/(\.|\/)(jpe?g|png|doc|docx|pdf|odt|tiff|tif)$/"
+                    dragDropSupport="true"
+                    invalidFileMessage="Tipo de arquivo não suportado."
+                    invalidSizeMessage="Tamanho do arquivo não é suportado"
+                    process="@this @form"
+                    update="@this, anexoProtocoloPanelGroup"
+                    rendered="#{not managerContrato.visualizar}"/>
+            </h:panelGroup>
         </h:panelGroup>
+
+        <img src="#{managerContrato.anexo}" style="width: 200px; height: 150px"/>
 
         <center>
             <p:commandButton value="atualizar" icon="pi pi-refresh" rendered="#{managerContrato.editar}" process="@this corpoInteiro:contratoPanelGroup" update="corpoInteiro" actionListener="#{managerContrato.atualizar()}" style="margin: 0px 20px; background-color: #01415B; color: #fff; margin-bottom: 10px;"/>
             <p:commandButton value="salvar" icon="pi pi-save" rendered="#{managerContrato.cadastrar}" process="@this corpoInteiro:contratoPanelGroup" update="corpoInteiro" actionListener="#{managerContrato.salvar()}" style="margin: 0px 20px; background-color: #01415B; color: #fff; margin-bottom: 10px;"/>
             <p:commandButton value="cancelar" icon="pi pi-ban"  style="background-color: #01415B; color: #fff;margin-bottom: 10px"/>
         </center>
-        
+
         <p:dialog id="removeraContratoConfirmDialog"
                   widgetVar="removeraContratoConfirmDialog"
                   header="Atenção!"

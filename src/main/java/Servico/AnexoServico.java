@@ -36,8 +36,8 @@ public class AnexoServico implements Serializable {
     @PersistenceContext
     EntityManager em;
     private int cont = 0;
-    public static final String REAL_PATH_TMP = "/tmp/Cerupi/uploads/";
-    public String REAL_PATH_OPT = "/opt/Cerupi/uploads/";
+    public static final String REAL_PATH_TMP = "/tmp/Licitacao/uploads/";
+    public String REAL_PATH_OPT = "/opt/Licitacao/uploads/";
 
     public Anexo adicionarAnexo(UploadedFile arquivo) throws FileNotFoundException, SQLException, IOException {
 
@@ -52,7 +52,7 @@ public class AnexoServico implements Serializable {
         nome = nome.toLowerCase();
         nome = nome.replaceAll(" ", "_");
 
-        return adicionarArquivo(arquivo, nome, REAL_PATH_TMP);
+        return adicionarArquivo(arquivo, nome, REAL_PATH_OPT);
     }
 
     public Anexo adicionarArquivo(UploadedFile arquivo, String nome, String caminho) throws FileNotFoundException, SQLException, IOException {

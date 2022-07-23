@@ -8,10 +8,10 @@ package modelo;
 import Enum.StatusContrato;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -19,6 +19,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Temporal;
@@ -47,7 +48,7 @@ public class Contrato implements Serializable {
     private Setor setor;
     @OneToOne
     private TipoLicitacao tipoLicitacao;
-
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Anexo> anexos;
     private BigDecimal valor;
     private boolean possuiTempoDeterminado;

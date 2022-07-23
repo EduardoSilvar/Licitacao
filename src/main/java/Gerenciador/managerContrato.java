@@ -86,6 +86,7 @@ public class managerContrato extends managerPrincipal implements Serializable {
         instanciarSelect();
         InstanciarContrato();
         InstanciarContratos();
+        this.anexo = new Anexo();
         this.contrato = contratoServico.find(Long.parseLong(param));
         this.contratos = new ArrayList<>();
         this.tiposContratos = tipocontratoServico.FindAll();
@@ -102,6 +103,7 @@ public class managerContrato extends managerPrincipal implements Serializable {
         } catch (IOException ex) {
             Logger.getLogger(managerContrato.class.getName()).log(Level.SEVERE, null, ex);
         }
+        this.anexo = new Anexo();
         instanciarSelect();
         InstanciarContrato();
         InstanciarContratos();
@@ -127,9 +129,14 @@ public class managerContrato extends managerPrincipal implements Serializable {
     }
 
     public void selecionarAnexo(FileUploadEvent event) {
-        this.anexo.setArquivo(event.getFile());
+        if (Utils.isNotEmpty(event)) {
+            if (Utils.isNotEmpty(event.getFile())) {
+                this.anexo.setArquivo(event.getFile());
+            }
+        }
         this.anexo.setTipoAnexo(TipoAnexo.CONTRATO);
-        PrimeFaces.current().executeScript("PF('dlgAnexo').show();");
+//        PrimeFaces.current().executeScript("PF('dlgAnexo').show();");
+        adicionarAnexo();
     }
 
     public void adicionarAnexo() {
@@ -302,6 +309,7 @@ public class managerContrato extends managerPrincipal implements Serializable {
 
     public void InstanciarContrato() {
         contrato = new Contrato();
+        contrato.setAnexos(new ArrayList<Anexo>());
     }
 
     public boolean getValorMudou() {
@@ -314,6 +322,11 @@ public class managerContrato extends managerPrincipal implements Serializable {
 
     public Contrato getContrato() {
         return contrato;
+    }
+
+    public String getAnexo() {
+        System.err.println(this.contrato.getAnexos().get(0).getUrl());
+        return this.contrato.getAnexos().get(0).getUrl() + "2307202214590800581_logo.jpeg";
     }
 
     public void setContrato(Contrato contrato) {
