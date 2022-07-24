@@ -396,8 +396,6 @@
         </h:panelGroup>
     </h:panelGroup>
 
-    <img src="#{managerContrato.anexo}" style="width: 200px; height: 150px"/>
-
     <center>
         <p:commandButton value="atualizar" icon="pi pi-refresh" rendered="#{managerContrato.editar}" process="@this corpoInteiro:contratoPanelGroup" update="corpoInteiro" actionListener="#{managerContrato.atualizar()}" style="margin: 0px 20px; background-color: #01415B; color: #fff; margin-bottom: 10px;"/>
         <p:commandButton value="salvar" icon="pi pi-save" rendered="#{managerContrato.cadastrar}" process="@this corpoInteiro:contratoPanelGroup" update="corpoInteiro" actionListener="#{managerContrato.salvar()}" style="margin: 0px 20px; background-color: #01415B; color: #fff; margin-bottom: 10px;"/>
@@ -434,7 +432,7 @@
                     <p:commandButton value="Sim"
                                      title="Confirmar Remoção"
                                      icon="fa fa-check"
-                                     update="corpoInteiro corpoInteiro:messages"
+                                     update="corpoInteiro "
                                      process="@this"
                                      actionListener="#{managerContrato.deletar()}"
                                      oncomplete="PF('removeraContratoConfirmDialog').hide();"
