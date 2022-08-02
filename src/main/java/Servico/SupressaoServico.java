@@ -5,6 +5,7 @@
 package Servico;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.Query;
 import modelo.Supressao;
@@ -35,6 +36,45 @@ public class SupressaoServico extends ServicoGenerico<Supressao> implements Seri
         } else {
             return false;
         }
+    }
+    
+    public List<Supressao> findPesquisa(Supressao supressao) {
+        String sql = "select c from Supressao c where ";
+        if (Utils.isNotEmpty(supressao.getContrato())) {
+            sql += "c.contrato = :ct and ";
+        }
+        if (Utils.isNotEmpty(supressao.getNumeroTermo())) {
+            sql += "c.numeroTermo = :nt and ";
+        }
+        if (Utils.isNotEmpty(supressao.getValor())) {
+            sql += "c.valor = :valor and ";
+        }
+        if (Utils.isNotEmpty(supressao.getDataAssinatura())) {
+            sql += "c.dataAssinatura = :da and ";
+        }
+        if (Utils.isNotEmpty(supressao.getFiscal())) {
+            sql += "c.fiscal = :fiscal and ";
+        }
+
+        sql += "c.ativo = true";
+        Query query = entityManager.createQuery(sql);
+
+        if (Utils.isNotEmpty(supressao.getContrato())) {
+            query.setParameter("ct", supressao.getContrato());
+        }
+        if (Utils.isNotEmpty(supressao.getNumeroTermo())) {
+            query.setParameter("nt", supressao.getNumeroTermo());
+        }
+        if (Utils.isNotEmpty(supressao.getValor())) {
+            query.setParameter("valor", supressao.getValor());
+        }
+        if (Utils.isNotEmpty(supressao.getDataAssinatura())) {
+            query.setParameter("da", supressao.getDataAssinatura());
+        }
+        if (Utils.isNotEmpty(supressao.getFiscal())) {
+            query.setParameter("fiscal", supressao.getFiscal());
+        }
+        return query.getResultList();
     }
     
 }

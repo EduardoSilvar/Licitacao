@@ -102,9 +102,34 @@ public class managerAcrescimo extends managerPrincipal implements Serializable{
                 Msg.messagemError("Número de termo aditivo já registrado !");
             } else {
                 acrescimoServico.Save(this.acrescimo);
-                //Msg.messagemInfoRedirect("Operação realizada com sucesso !", "acrescimo.xhtml?visualizar=" + this.acrescimo.getId());
+                Msg.messagemInfoRedirect("Operação realizada com sucesso !", "acrescimo.xhtml?visualizar=" + this.acrescimo.getId());
             }
         }
+    }
+    
+    public void atualizar() {
+        acrescimoServico.Update(acrescimo);
+        Msg.messagemInfoRedirect("Operação realizada com sucesso !", "acrescimo.xhtml?visualizar=" + this.acrescimo.getId());
+    }
+    
+    public void deletar() {
+        try {
+            Acrescimo NovoAcrescimo = acrescimoServico.find(this.acrescimo.getId());
+            NovoAcrescimo.setAtivo(false);
+            acrescimoServico.Update(NovoAcrescimo);
+            acrescimos.remove(NovoAcrescimo);
+            if (Utils.isNotEmpty(acrescimo)) {
+                this.acrescimos = acrescimoServico.findPesquisa(this.acrescimo);
+            }
+            if (Utils.isNotEmpty(this.id)) {
+                Msg.messagemInfoRedirect("operação realizada com sucesso !", "acrescimo.xhtml");
+            } else {
+                Msg.messagemInfo("Processo realizado com sucesso !");
+            }
+        } catch (Exception e) {
+            e.getMessage();
+        }
+
     }
 
     public AcrescimoServico getAcrescimoServico() {

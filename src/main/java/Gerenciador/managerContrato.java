@@ -307,11 +307,11 @@ public class managerContrato extends managerPrincipal implements Serializable {
         return contrato;
     }
 
-    public String getAnexo() {
+    //public String getAnexo() {
 //        System.err.println(this.contrato.getAnexos().get(0).getUrl());
 //        return this.contrato.getAnexos().get(0).getUrl() + "2307202214590800581_logo.jpeg";
-        return "";
-    }
+        //return "";
+    //}
 
     public void setContrato(Contrato contrato) {
         this.contrato = contrato;

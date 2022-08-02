@@ -5,6 +5,7 @@
 package Servico;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.Query;
 import modelo.Acrescimo;
@@ -35,5 +36,45 @@ public class AcrescimoServico extends ServicoGenerico<Acrescimo> implements Seri
         } else {
             return false;
         }
+    }
+    
+    
+    public List<Acrescimo> findPesquisa(Acrescimo acrescimo) {
+        String sql = "select c from Acrescimo c where ";
+        if (Utils.isNotEmpty(acrescimo.getContrato())) {
+            sql += "c.contrato = :ct and ";
+        }
+        if (Utils.isNotEmpty(acrescimo.getNumeroTermo())) {
+            sql += "c.numeroTermo = :nt and ";
+        }
+        if (Utils.isNotEmpty(acrescimo.getValor())) {
+            sql += "c.valor = :valor and ";
+        }
+        if (Utils.isNotEmpty(acrescimo.getDataAssinatura())) {
+            sql += "c.dataAssinatura = :da and ";
+        }
+        if (Utils.isNotEmpty(acrescimo.getFiscal())) {
+            sql += "c.fiscal = :fiscal and ";
+        }
+
+        sql += "c.ativo = true";
+        Query query = entityManager.createQuery(sql);
+
+        if (Utils.isNotEmpty(acrescimo.getContrato())) {
+            query.setParameter("ct", acrescimo.getContrato());
+        }
+        if (Utils.isNotEmpty(acrescimo.getNumeroTermo())) {
+            query.setParameter("nt", acrescimo.getNumeroTermo());
+        }
+        if (Utils.isNotEmpty(acrescimo.getValor())) {
+            query.setParameter("valor", acrescimo.getValor());
+        }
+        if (Utils.isNotEmpty(acrescimo.getDataAssinatura())) {
+            query.setParameter("da", acrescimo.getDataAssinatura());
+        }
+        if (Utils.isNotEmpty(acrescimo.getFiscal())) {
+            query.setParameter("fiscal", acrescimo.getFiscal());
+        }
+        return query.getResultList();
     }
 }
