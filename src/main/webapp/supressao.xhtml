@@ -37,14 +37,15 @@
     </ui:define>
     <ui:define name="corpo">
         <h:panelGroup>
-            <p:growl id="mensage" showDetail="true" />
-            <h:panelGroup>
+            <p:growl id="messages" showDetail="true" />
+            <h:panelGroup id="supressaoPanelGroup">
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
                             <p:outputLabel value="Contrato*" styleClass="control-label" for="contratoAcrescimo" />
                             <p:selectOneMenu id="contratoAcrescimo"
                                              value="#{managerSupressao.supressao.contrato}"
+                                             disabled="#{managerSupressao.visualizar}"
                                              filter="true" 
                                              placeholder="Contrato"
                                              styleClass="form-control" >
@@ -59,6 +60,7 @@
                                            for="numeroTermoAditivo" />
                             <p:inputText id="numeroTermoAditivo"
                                          value="#{managerSupressao.supressao.numeroTermo}"
+                                         disabled="#{managerSupressao.visualizar}"
                                          placeholder="Número"
                                          rendered="true"
                                          requiredMessage="Este campo é obrigatório."
@@ -77,6 +79,7 @@
                                        for="acrescimoValor" />
                         <p:inputMask id="acrescimoValor"
                                      style="display: flex; flex-direction: row"
+                                     disabled="#{managerSupressao.visualizar}"
                                      styleClass="form-control" 
                                      value="#{managerSupressao.supressao.valor}"
                                      placeholder="Valor"
@@ -88,6 +91,7 @@
                             <p:outputLabel value="Fiscal responsável" styleClass="control-label" for="fiscalSelect" />
                             <p:selectOneMenu id="fiscalSelect"
                                              filter="true" 
+                                             disabled="#{managerSupressao.visualizar}"
                                              placeholder="fiscal"
                                              required="true"
                                              styleClass="form-control"
@@ -98,7 +102,7 @@
                                 <f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
                                 <f:selectItems value="#{managerSupressao.fiscais}" var="user" itemLabel="#{user.nome}" itemValue="#{user}" />
                             </p:selectOneMenu>
-                                <p:message for="fiscalSelect" />
+                            <p:message for="fiscalSelect" />
                         </div>
                     </div>
                 </div>
@@ -109,6 +113,7 @@
                         <p:calendar id="dataassinaturaAcrescimo"
                                     value="#{managerSupressao.supressao.dataAssinatura}"
                                     rendered="true"
+                                    disabled="#{managerSupressao.visualizar}"
                                     mask="true"
                                     style="display: flex; flex-direction: row"
                                     required="true"
@@ -122,6 +127,7 @@
                         <div class="form-group">
                             <p:outputLabel value="Descrição*" for="descricao" />
                             <p:inputText id="descricao"
+                                         disabled="#{managerSupressao.visualizar}"
                                          value="#{managerSupressao.supressao.descricao}"
                                          placeholder="Descrição"
                                          requiredMessage="Este campo é obrigatório."
@@ -141,13 +147,69 @@
                               style="margin-bottom: 20px"
                               />
             </h:panelGroup>
-            <hr/>
-            <center>    
-                <p:commandButton value="salvar" icon="pi pi-save"  actionListener="#{managerSupressao.salvar()}"  style="margin: 0px 20px; background-color: #01415B; color: #fff; margin-bottom: 10px;"/>
-                <p:commandButton value="cancelar" icon="pi pi-ban"  style="background-color: #01415B; color: #fff;margin-bottom: 10px"/>
-            </center>
         </h:panelGroup>
 
+        <center>    
+            <p:commandButton value="Salvar" icon="pi pi-save" process="@this supressaoPanelGroup" update="corpoInteiro:messages" actionListener="#{managerSupressao.salvar()}" rendered="#{managerSupressao.cadastrar}" />
+            <p:button value="Editar" icon="pi pi-pencil"  rendered="#{managerSupressao.visualizar}" href="supressao.xhtml?editar=#{managerSupressao.supressao.id}" />
+            <p:commandButton value="Atualizar" icon="pi pi-sync" process="@this supressaoPanelGroup"  actionListener="#{managerSupressao.atualizar()}" rendered="#{managerSupressao.editar}"  />
+            <p:button value="Cancelar" icon="pi pi-ban"  href="supressao.xhtml" rendered="#{managerSupressao.visualizar}" />
+            <p:button value="Cancelar" icon="pi pi-ban"  href="supressao.xhtml?visualizar=#{managerSupressao.supressao.id}" rendered="#{managerSupressao.editar}" />
+            <p:button value="Cancelar" icon="pi pi-ban"  href="index.xhtml" rendered="#{managerSupressao.cadastrar}" />
+        </center>
+
+        <p:dialog id="removeraSupressaoConfirmDialog"
+                  widgetVar="removeraSupressaoConfirmDialog"
+                  header="Atenção!"
+                  closeOnEscape="true"
+                  draggable="false"
+                  maximizable="false"
+                  minimizable="false"
+                  modal="true"
+                  width="850"
+                  showEffect="fade"
+                  hideEffect="fade">
+
+            <div class="row">
+
+                <div class="col-md-12">
+                    <div class="form-group" style="padding-left: 80px !important">
+                        <h4>
+                            <i class="pi pi-exclamation-triangle"></i>
+                            Tem certeza de que deseja remover esta Supressao ?
+                        </h4>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+
+                    <center>
+
+                        <p:commandButton value="Sim"
+                                         title="Confirmar Remoção"
+                                         icon="pi pi-check"
+                                         update="corpoInteiro corpoInteiro:messages"
+                                         process="@this"
+                                         actionListener="#{managerSupressao.deletar()}"
+                                         oncomplete="PF('removeraSupressaoConfirmDialog').hide();"
+                                         styleClass="mr-md-1"/>
+
+                        <p:commandButton value="Não"
+                                         title="Cancelar Remoção"
+                                         icon="pi pi-ban"
+                                         process="@this"
+                                         update="@form"
+                                         oncomplete="PF('removeraSupressaoConfirmDialog').hide();"
+                                         styleClass="ml-md-1"/>
+
+                    </center>
+
+                </div>
+
+            </div>
+
+
+        </p:dialog>
 
     </ui:define>
 

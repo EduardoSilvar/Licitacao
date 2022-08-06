@@ -102,9 +102,34 @@ public class managerSupressao extends managerPrincipal implements Serializable{
                 Msg.messagemError("Número de termo aditivo já registrado !");
             } else {
                 supressaoServico.Save(this.supressao);
-                //Msg.messagemInfoRedirect("Operação realizada com sucesso !", "supressao.xhtml?visualizar=" + this.supressao.getId());
+                Msg.messagemInfoRedirect("Operação realizada com sucesso !", "supressao.xhtml?visualizar=" + this.supressao.getId());
             }
         }
+    }
+    
+    public void atualizar() {
+        supressaoServico.Update(supressao);
+        Msg.messagemInfoRedirect("Operação realizada com sucesso !", "supressao.xhtml?visualizar=" + this.supressao.getId());
+    }
+    
+    public void deletar() {
+        try {
+            Supressao NovaSupressao = supressaoServico.find(this.supressao.getId());
+            NovaSupressao.setAtivo(false);
+            supressaoServico.Update(NovaSupressao);
+            supressoes.remove(NovaSupressao);
+            if (Utils.isNotEmpty(supressao)) {
+                this.supressoes = supressaoServico.findPesquisa(this.supressao);
+            }
+            if (Utils.isNotEmpty(this.id)) {
+                Msg.messagemInfoRedirect("operação realizada com sucesso !", "supressao.xhtml");
+            } else {
+                Msg.messagemInfo("Processo realizado com sucesso !");
+            }
+        } catch (Exception e) {
+            e.getMessage();
+        }
+
     }
 
     public SupressaoServico getSupressaoServico() {

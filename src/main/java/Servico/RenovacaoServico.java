@@ -5,6 +5,7 @@
 package Servico;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.Query;
 import modelo.Renovacao;
@@ -34,5 +35,50 @@ public class RenovacaoServico extends ServicoGenerico<Renovacao> implements Seri
         } else {
             return false;
         }
+    }
+    
+    public List<Renovacao> findPesquisa(Renovacao renovacao) {
+        String sql = "select c from Renovacao c where ";
+        if (Utils.isNotEmpty(renovacao.getContrato())) {
+            sql += "c.contrato = :ct and ";
+        }
+        if (Utils.isNotEmpty(renovacao.getNumeroTermo())) {
+            sql += "c.numeroTermo = :nt and ";
+        }
+        if (Utils.isNotEmpty(renovacao.getDataInicial())) {
+            sql += "c.dataInicial = :di and ";
+        }
+        if (Utils.isNotEmpty(renovacao.getDataFinal())) {
+            sql += "c.dataFinal = :df and ";
+        }
+        if (Utils.isNotEmpty(renovacao.getDataAssinatura())) {
+            sql += "c.dataAssinatura = :da and ";
+        }
+        if (Utils.isNotEmpty(renovacao.getFiscal())) {
+            sql += "c.fiscal = :fiscal and ";
+        }
+
+        sql += "c.ativo = true";
+        Query query = entityManager.createQuery(sql);
+
+        if (Utils.isNotEmpty(renovacao.getContrato())) {
+            query.setParameter("ct", renovacao.getContrato());
+        }
+        if (Utils.isNotEmpty(renovacao.getNumeroTermo())) {
+            query.setParameter("nt", renovacao.getNumeroTermo());
+        }
+        if (Utils.isNotEmpty(renovacao.getDataInicial())) {
+            query.setParameter("di", renovacao.getDataInicial());
+        }
+        if (Utils.isNotEmpty(renovacao.getDataFinal())) {
+            query.setParameter("df", renovacao.getDataFinal());
+        }
+        if (Utils.isNotEmpty(renovacao.getDataAssinatura())) {
+            query.setParameter("da", renovacao.getDataAssinatura());
+        }
+        if (Utils.isNotEmpty(renovacao.getFiscal())) {
+            query.setParameter("fiscal", renovacao.getFiscal());
+        }
+        return query.getResultList();
     }
 }

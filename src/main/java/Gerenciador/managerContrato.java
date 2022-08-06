@@ -319,7 +319,7 @@ public class managerContrato extends managerPrincipal implements Serializable {
 //        conteudo_base64 = Base64.encodeBytes(FileUtils.readFileToByteArray(new File(caminhoLogo)));
 //        System.err.println(this.contrato.getAnexos().get(0).getUrl());
 //        return "data:image/png;base64" + conteudo_base64;
-return "";
+        return "";
     }
 
     public void setContrato(Contrato contrato) {
