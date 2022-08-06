@@ -52,7 +52,7 @@ public class AnexoServico implements Serializable {
         nome = nome.toLowerCase();
         nome = nome.replaceAll(" ", "_");
 
-        return adicionarArquivo(arquivo, nome, REAL_PATH_OPT);
+        return adicionarArquivo(arquivo, nome, REAL_PATH_TMP);
     }
 
     public Anexo adicionarArquivo(UploadedFile arquivo, String nome, String caminho) throws FileNotFoundException, SQLException, IOException {

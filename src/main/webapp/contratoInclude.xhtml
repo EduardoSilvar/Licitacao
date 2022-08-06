@@ -1,11 +1,11 @@
 <ui:composition 
-                xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:h="http://xmlns.jcp.org/jsf/html"
-                xmlns:p="http://primefaces.org/ui"
-                xmlns:f="http://xmlns.jcp.org/jsf/core"
-                xmlns="http://www.w3.org/1999/xhtml">
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns="http://www.w3.org/1999/xhtml">
 
-    
+
     <h:panelGroup id="contratoPanelGroup">
         <div class="row">
             <div class="col-md-6">
@@ -24,6 +24,8 @@
                     </p:selectOneMenu>
                 </div> 
             </div>
+            <p:outputLabel value="#{managerContrato.anexo}"/>
+            <h:graphicImage url="#{managerContrato.anexo}" value="imagem"/>
             <div class="col-md-2">
                 <div class="form-group">
                     <p:outputLabel value="Número"

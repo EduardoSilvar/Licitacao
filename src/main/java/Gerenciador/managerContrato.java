@@ -15,14 +15,16 @@ import Servico.SetorServico;
 import Servico.TipoLicitacaoServico;
 import Servico.UsuarioServico;
 import Servico.tipoContratoServico;
+import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Base64;
+import org.apache.commons.io.FileUtils;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -34,9 +36,9 @@ import modelo.TipoAnexo;
 import modelo.TipoContrato;
 import modelo.TipoLicitacao;
 import modelo.Usuario;
-import org.primefaces.PrimeFaces;
 import org.primefaces.event.FileUploadEvent;
 import util.Msg;
+import org.apache.commons.io.FileUtils;
 import util.Utils;
 
 /**
@@ -307,10 +309,17 @@ public class managerContrato extends managerPrincipal implements Serializable {
         return contrato;
     }
 
-    public String getAnexo() {
+    public String getAnexo() throws IOException {
+        String caminhoLogo = "";
+
+        caminhoLogo = this.contrato.getAnexos().get(0).getUrl() + "/" + this.contrato.getAnexos().get(0).getNome();
+//        String conteudo_base64;
+//         String conteudo_base64 = Base64.encodeBytes(FileUtils.readFileToByteArray(new File(caminhoLogo)));
+
+//        conteudo_base64 = Base64.encodeBytes(FileUtils.readFileToByteArray(new File(caminhoLogo)));
 //        System.err.println(this.contrato.getAnexos().get(0).getUrl());
-//        return this.contrato.getAnexos().get(0).getUrl() + "2307202214590800581_logo.jpeg";
-        return "";
+//        return "data:image/png;base64" + conteudo_base64;
+return "";
     }
 
     public void setContrato(Contrato contrato) {
