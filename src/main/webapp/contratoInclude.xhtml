@@ -10,6 +10,21 @@
 
         <div class="row">
             <div class="col-md-6">
+                <div class="form-group">
+                    <p:outputLabel value="Nome"
+                                   for="nomeContrato" />
+                    <p:inputText id="nomeContrato"
+                                 placeholder="Nome"
+                                 rendered="true"
+                                 disabled="#{managerContrato.visualizar}"
+                                 value="#{managerContrato.contrato.nome}"
+                                 requiredMessage="Este campo é obrigatório."
+                                 styleClass="form-control" 
+                                 />
+                    <p:message for="nomeContrato" />
+                </div>
+            </div>
+            <div class="col-md-6">
                 <div class="form-group" >
                     <p:outputLabel value="Contratado" styleClass="control-label" for="contratadoSelect" />
                     <p:selectOneMenu id="contratadoSelect"
@@ -25,7 +40,9 @@
                     </p:selectOneMenu>
                 </div> 
             </div>
-            <div class="col-md-2">
+        </div>
+        <div class="row">
+            <div class="col-md-4">
                 <div class="form-group">
                     <p:outputLabel value="Número"
                                    for="numeroContrato" />
@@ -41,7 +58,7 @@
                     <p:message for="numeroContrato" />
                 </div> 
             </div>
-            <div class="col-md-2">
+            <div class="col-md-4">
                 <div class="form-group">
                     <p:outputLabel value="N° do processo"
                                    for="numeroProcesso" />
@@ -57,7 +74,7 @@
                     <p:message for="numeroProcesso" />
                 </div>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-4">
                 <div class="form-group">
                     <p:outputLabel value="N° da licitação"
                                    for="numeroLicitacao" />
@@ -73,6 +90,7 @@
                     <p:message for="numeroLicitacao" />
                 </div>
             </div>
+
         </div>
         <!-- linha 2 -->
         <div class="row">

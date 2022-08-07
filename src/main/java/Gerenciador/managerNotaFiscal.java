@@ -49,7 +49,7 @@ public class managerNotaFiscal extends managerPrincipal {
     public void carregar(String param) {
         try {
             user = (Usuario) getObjectSession("usuarioLogado");
-            VerificarLogin();
+//            VerificarLogin();
             instanciarAnexo();
             this.notaFiscal = notaFiscalServico.find(Long.parseLong(param));
         } catch (IOException ex) {
@@ -65,13 +65,13 @@ public class managerNotaFiscal extends managerPrincipal {
     public void deletar() {
         NotaFiscal nt = notaFiscalServico.find(this.notaFiscal.getId());
         nt.setAtivo(false);
-        atualizar();
+        notaFiscalServico.Update(nt);
         Msg.messagemInfo("Operação realizada com sucesso !");
     }
 
     public void atualizar() {
         notaFiscalServico.Update(this.notaFiscal);
-        Msg.messagemInfo("Operação realizada com sucesso !");
+        Msg.messagemInfoRedirect("Operação realizada com sucesso !", "notaFiscal.xhtml?visualizar=" + this.notaFiscal.getId());
     }
 
     public void selecionarAnexo(FileUploadEvent event) {
@@ -131,7 +131,7 @@ public class managerNotaFiscal extends managerPrincipal {
     public void instanciar() {
         try {
             user = (Usuario) getObjectSession("usuarioLogado");
-            VerificarLogin();
+//            VerificarLogin();
         } catch (IOException ex) {
             Logger.getLogger(managerContrato.class.getName()).log(Level.SEVERE, null, ex);
         }

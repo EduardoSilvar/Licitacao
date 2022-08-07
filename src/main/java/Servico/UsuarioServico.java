@@ -26,6 +26,24 @@ public class UsuarioServico extends ServicoGenerico<Usuario> implements Serializ
         super(Usuario.class);
     }
 
+    public List<Usuario> findUsuario(String nome) {
+        String jpql = "select c from Usuario c where ";
+
+        if (nome != null && !nome.isEmpty()) {
+            jpql += "lower(c.nome) like lower(:nome) and ";
+        }
+
+        jpql += "c.ativo = true";
+
+        Query query = entityManager.createQuery(jpql);
+
+        if (nome != null && !nome.isEmpty()) {
+            query.setParameter("nome", "%" + nome + "%");
+        }
+
+        return query.getResultList();
+    }
+
     public void alterarSenha(Usuario usuario, String senhaAntiga, String novaSenha, String repetirSenha) throws Exception {
 
         if (!novaSenha.equals(repetirSenha)) {

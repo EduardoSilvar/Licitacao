@@ -34,7 +34,7 @@
             <h:panelGroup id="pesquisaPanel" >
                 <h:panelGroup id="dadosGeraisPanelGroup" >
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <p:outputLabel value="Responsável" styleClass="control-label" for="responNotaFiscal" />
                                 <p:selectOneMenu id="responNotaFiscal"
@@ -46,7 +46,7 @@
                                 </p:selectOneMenu>
                             </div> 
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <p:outputLabel value="Contrato" styleClass="control-label" for="contratNotaFiscal" />
                                 <p:selectOneMenu id="contratNotaFiscal"
@@ -58,6 +58,8 @@
                                 </p:selectOneMenu>
                             </div> 
                         </div>
+                    </div>
+                    <div class="row">
                         <div class="col-md-4">
                             <div class="form-group">
                                 <p:outputLabel value="Valor"
@@ -70,22 +72,6 @@
                                              styleClass="form-control" 
                                              />
                                 <p:message for="valorNotaFiscal" />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-5">
-                            <div class="form-group">
-                                <p:outputLabel value="Observação"
-                                               for="observacaoNotaFiscal" />
-                                <p:inputTextarea id="observacaoNotaFiscal"
-                                                 placeholder="Observação"
-                                                 rendered="true"
-                                                 value="#{managerNotaFiscal.notaFiscal.descricao}"
-                                                 requiredMessage="Este campo é obrigatório."
-                                                 styleClass="form-control" 
-                                                 />
-                                <p:message for="observacaoNotaFiscal" />
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -101,7 +87,7 @@
                                 <p:message for="numeroNotaFiscal" />
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <p:outputLabel value="Data do Pagamento"
                                                for="dataNotaFiscal"  />
@@ -121,12 +107,20 @@
                 </h:panelGroup>
 
                 <center>
-                    <p:commandButton value="Pesquisar" icon="pi pi-search" process="@this corpoInteiro:pesquisaPanel" update="corpoInteiro:tipoContratadoDatatable corpoInteiro:messages" actionListener="#{managerNotaFiscal.pesquisar()}" />
-                    <p:commandButton value="Limpar" icon="pi pi-ban" update="corpoInteiro:pesquisaPanel corpoInteiro:tipoContratadoDatatable" process="@this corpoInteiro:pesquisaPanel" actionListener="#{managerNotaFiscal.instanciar()}"/>
+                    <p:commandButton value="Pesquisar" icon="pi pi-search" 
+                                     process="@this corpoInteiro:pesquisaPanel" 
+                                     update="corpoInteiro:tipoNotaFiscalDatatable 
+
+                                     corpoInteiro:messages" actionListener="#{managerNotaFiscal.pesquisar()}" />
+                    <p:commandButton value="Limpar" icon="pi pi-ban" 
+                                     update="corpoInteiro:pesquisaPanel 
+                                     corpoInteiro:tipoNotaFiscalDatatable" 
+                                     process="@this corpoInteiro:pesquisaPanel" 
+                                     actionListener="#{managerNotaFiscal.instanciar()}"/>
                 </center>
                 <hr/>
 
-                <p:dataTable id="tipoContratadoDatatable" var="nota" value="#{managerNotaFiscal.notasFiscais}"
+                <p:dataTable id="tipoNotaFiscalDatatable" var="nota" value="#{managerNotaFiscal.notasFiscais}"
                              resizeMode="5">
                     <f:facet name="header">
                         <center>
@@ -136,8 +130,8 @@
                     <p:column headerText="Ações" width="200">
                         <p:commandButton  icon="pi pi-trash" 
                                           process="@this"
-                                          update="@form:removeraContratadoConfirmDialog"
-                                          oncomplete="PF('removeraContratadoConfirmDialog').show();" title="exluir" >
+                                          update="@form:removerNotaFiscalConfirmDialog"
+                                          oncomplete="PF('removerNotaFiscalConfirmDialog').show();" title="exluir" >
                             <f:setPropertyActionListener value="#{nota}"
                                                          target="#{managerNotaFiscal.notaFiscal}"/>
                         </p:commandButton>
@@ -159,8 +153,8 @@
 
                 </p:dataTable>
             </h:panelGroup>
-            <p:dialog id="removeraContratadoConfirmDialog"
-                      widgetVar="removeraContratadoConfirmDialog"
+            <p:dialog id="removerNotaFiscalConfirmDialog"
+                      widgetVar="removerNotaFiscalConfirmDialog"
                       header="Atenção!"
                       closeOnEscape="true"
                       draggable="false"
@@ -177,7 +171,7 @@
                         <div class="form-group" style="padding-left: 80px !important">
                             <h4>
                                 <i class="pi pi-exclamation-triangle"></i>
-                                Tem certeza de que deseja remover este Contratado ?
+                                Tem certeza de que deseja remover esta nota fiscal ?
                             </h4>
                         </div>
                     </div>
@@ -189,10 +183,10 @@
                             <p:commandButton value="Sim"
                                              title="Confirmar Remoção"
                                              icon="pi pi-check"
-                                             update="tipoContratadoDatatable messages"
+                                             update="tipoNotaFiscalDatatable messages"
                                              process="@this pesquisaPanel"
                                              actionListener="#{managerNotaFiscal.deletar()}"
-                                             oncomplete="PF('removeraContratadoConfirmDialog').hide();"
+                                             oncomplete="PF('removerNotaFiscalConfirmDialog').hide();"
                                              styleClass="mr-md-1"/>
 
                             <p:commandButton value="Não"
@@ -200,7 +194,7 @@
                                              icon="pi pi-ban"
                                              process="@this"
                                              update="@form"
-                                             oncomplete="PF('removeraContratadoConfirmDialog').hide();"
+                                             oncomplete="PF('removerNotaFiscalConfirmDialog').hide();"
                                              styleClass="ml-md-1"/>
 
                         </center>

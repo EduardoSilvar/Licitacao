@@ -22,8 +22,25 @@ public class ContratadoServico extends ServicoGenerico<Contratado> implements Se
     public ContratadoServico() {
         super(Contratado.class);
     }
-    
-    
+
+    public List<Contratado> findContratado(String nome) {
+        String jpql = "select c from Contratado c where ";
+
+        if (nome != null && !nome.isEmpty()) {
+            jpql += "lower(c.nome) like lower(:nome) and ";
+        }
+
+        jpql += "c.ativo = true";
+
+        Query query = entityManager.createQuery(jpql);
+
+        if (nome != null && !nome.isEmpty()) {
+            query.setParameter("nome", "%" + nome + "%");
+        }
+
+        return query.getResultList();
+    }
+
     public List<Contratado> findPesquisa(Contratado contratado) {
         String sql = "select c from Contratado c where ";
         if (Utils.isNotEmpty(contratado.getNatureza())) {

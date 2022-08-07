@@ -26,13 +26,31 @@ public class ContratoServico extends ServicoGenerico<Contrato> implements Serial
         super(Contrato.class);
     }
 
+    public List<Contrato> findContrato(String nome) {
+        String jpql = "select c from Contrato c where ";
+
+        if (nome != null && !nome.isEmpty()) {
+            jpql += "lower(c.nome) like lower(:nome) and ";
+        }
+
+        jpql += "c.ativo = true";
+
+        Query query = entityManager.createQuery(jpql);
+
+        if (nome != null && !nome.isEmpty()) {
+            query.setParameter("nome", "%" + nome + "%");
+        }
+
+        return query.getResultList();
+    }
+
     public List<Contrato> findPesquisa(Contrato contrato, UnidadeOrganizacional unidade) {
         String sql = "select c from Contrato c where ";
         if (Utils.isNotEmpty(contrato.getContratado())) {
             sql += "c.contratado = :contratado and ";
         }
         if (Utils.isNotEmpty(unidade)) {
-         sql += "c.unidadeOrganizacional.id = :unidade and ";
+            sql += "c.unidadeOrganizacional.id = :unidade and ";
         }
         if (Utils.isNotEmpty(contrato.getFiscalContrato())) {
             sql += "c.fiscalContrato = :fiscal and ";
@@ -68,7 +86,7 @@ public class ContratoServico extends ServicoGenerico<Contrato> implements Serial
             query.setParameter("dataf", contrato.getDataFinal());
         }
         if (Utils.isNotEmpty(unidade)) {
-          query.setParameter("unidade", unidade.getId());
+            query.setParameter("unidade", unidade.getId());
         }
         if (Utils.isNotEmpty(contrato.getDataInicio())) {
             query.setParameter("datai", contrato.getDataInicio());

@@ -39,6 +39,7 @@ public class Contrato implements Serializable {
     private UnidadeOrganizacional unidadeOrganizacional;
     @OneToOne
     private Contratado contratado;
+    private String nome;
     private Long NumeroContrato;
     private Long NumeroProcesso;
     private Long NumeroLicitacao;
@@ -96,6 +97,46 @@ public class Contrato implements Serializable {
 
     public UnidadeOrganizacional getUnidadeOrganizacional() {
         return unidadeOrganizacional;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public List<Acrescimo> getAcrescimos() {
+        return acrescimos;
+    }
+
+    public void setAcrescimos(List<Acrescimo> acrescimos) {
+        this.acrescimos = acrescimos;
+    }
+
+    public List<Supressao> getSupressoes() {
+        return supressoes;
+    }
+
+    public void setSupressoes(List<Supressao> supressoes) {
+        this.supressoes = supressoes;
+    }
+
+    public List<Renovacao> getRenovacoes() {
+        return renovacoes;
+    }
+
+    public void setRenovacoes(List<Renovacao> renovacoes) {
+        this.renovacoes = renovacoes;
+    }
+
+    public List<Repactuacao> getRepactuacoes() {
+        return repactuacoes;
+    }
+
+    public void setRepactuacoes(List<Repactuacao> repactuacoes) {
+        this.repactuacoes = repactuacoes;
     }
 
     public void setUnidadeOrganizacional(UnidadeOrganizacional unidadeOrganizacional) {
