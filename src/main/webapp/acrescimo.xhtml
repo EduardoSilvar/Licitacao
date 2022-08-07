@@ -1,43 +1,15 @@
-<?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition template="/WEB-INF/template/layout.xhtml"
+
+<ui:composition 
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns="http://www.w3.org/1999/xhtml">
 
-    <ui:define name="titulo">
-        <h4>Acréscimo de contrato</h4>
-    </ui:define>
-
-    <ui:define name="acoes">
-        <h:panelGroup class="panelAcoes">
-            <p:button value="Pesquisar"
-                      title="Pesquisar Bairro"
-                      icon="pi pi-search"
-                      href="pesquisarBairro.xhtml" style=" margin-right: 30px !important"/>
-
-            <p:splitButton value="Ações" style="margin: 0px -8px !important"
-                           icon="pi pi-cog"
-                           >
-
-                <p:menuitem value="Editar" 
-                            icon="pi pi-pencil"
-                            process="@this"
-                            />
-
-            </p:splitButton>
-        </h:panelGroup>
-    </ui:define>
-    <ui:define name="barra">
-        <div class="row" id="stylebarra">
-            <i class="pi pi-file-o" id="icon"></i> <h5 style="color: #e1e6e5"> Dados Gerais</h5>
-        </div>
-    </ui:define>
-    <ui:define name="corpo">
+    
+    
         <h:panelGroup id="acrescimoPanelGroup">
-            <p:growl id="messages" showDetail="true" />
+            
             <h:panelGroup>
                 <div class="row">
                     <div class="col-md-6">
@@ -48,7 +20,8 @@
                                              disabled="#{managerAcrescimo.visualizar}"
                                              filter="true" 
                                              placeholder="Contrato"
-                                             styleClass="form-control" >
+                                             styleClass="form-control" 
+                                             converter="contratoconverter">
                                 <f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
                                 <f:selectItems value="#{managerAcrescimo.contratos}" var="contrato" itemLabel="#{contrato.numeroContrato}" itemValue="#{contrato}" />
                             </p:selectOneMenu>
@@ -211,9 +184,6 @@
 
 
         </p:dialog>
-
-    </ui:define>
-
 </ui:composition>
 
 

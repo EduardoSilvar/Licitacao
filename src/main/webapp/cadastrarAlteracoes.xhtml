@@ -1,0 +1,63 @@
+<ui:composition
+    template="/WEB-INF/template/layout.xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns="http://www.w3.org/1999/xhtml">
+    <ui:define name="acoes">
+        <h:panelGroup class="panelAcoes">
+            <p:button value="Pesquisar"
+                      title="Pesquisar Bairro"
+                      icon="pi pi-search"
+                      href="pesquisarContrato.xhtml" style=" margin-right: 30px !important"/>
+            <p:splitButton value="Ações" style="margin: 0px -8px !important" rendered="#{not managerContrato.cadastrar}"
+                           icon="pi pi-cog"
+                           >
+
+                <p:menuitem value="Editar" 
+                            icon="pi pi-pencil"
+                            url="contrato.xhtml?editar=#{managerContrato.contrato.id}"
+                            process="@this"
+                            />
+                <p:menuitem value="Excluir" 
+                            icon="pi pi-trash"
+                            oncomplete="PF('removeraContratoConfirmDialog').show();"
+                            process="@this corpoInteiro"
+                            update="corpoInteiro:messages"
+                            >
+                    <f:setPropertyActionListener value="#{managerContrato.contrato}"
+                                                 target="#{managerContrato.contrato}"/>
+                </p:menuitem>
+
+            </p:splitButton>
+
+        </h:panelGroup>
+    </ui:define>
+    <ui:define name="barra">
+        <div class="row" id="stylebarra">
+            <i class="pi pi-file-o" id="icon"></i> <h5 style="color: #e1e6e5"> Alterações de contrato</h5>
+        </div>
+    </ui:define>
+    <ui:define name="corpo">
+        <p:growl id="messages"/>
+        <p:tabView>
+            <p:tab title="Acréscimo">
+                
+                <ui:include src="acrescimo.xhtml"/>
+            </p:tab>
+            <p:tab title="Supressão">
+                
+                <ui:include src="supressao.xhtml"/>
+            </p:tab>
+            <p:tab title="Renovação">
+                
+                <ui:include src="renovacao.xhtml"/>
+            </p:tab>
+            <p:tab title="Repactuação">
+                
+                <ui:include src="repactuacao.xhtml"/>
+            </p:tab>
+        </p:tabView>
+    </ui:define>
+</ui:composition>
