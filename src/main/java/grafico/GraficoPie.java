@@ -5,19 +5,37 @@
  */
 package grafico;
 
+import Enum.StatusContrato;
+import Servico.ContratadoServico;
+import Servico.ContratoServico;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import modelo.ContratoVo;
+import modelo.Setor;
 import org.primefaces.model.charts.ChartData;
+import org.primefaces.model.charts.axes.cartesian.CartesianScales;
+import org.primefaces.model.charts.axes.cartesian.linear.CartesianLinearAxes;
+import org.primefaces.model.charts.axes.cartesian.linear.CartesianLinearTicks;
+import org.primefaces.model.charts.bar.BarChartDataSet;
+import org.primefaces.model.charts.bar.BarChartModel;
+import org.primefaces.model.charts.bar.BarChartOptions;
+import org.primefaces.model.charts.optionconfig.animation.Animation;
+import org.primefaces.model.charts.optionconfig.legend.Legend;
+import org.primefaces.model.charts.optionconfig.legend.LegendLabel;
+import org.primefaces.model.charts.optionconfig.title.Title;
 import org.primefaces.model.charts.pie.PieChartDataSet;
 import org.primefaces.model.charts.pie.PieChartModel;
+import org.primefaces.model.charts.pie.PieChartOptions;
 import org.primefaces.model.charts.polar.PolarAreaChartDataSet;
 import org.primefaces.model.charts.polar.PolarAreaChartModel;
 import org.primefaces.model.charts.radar.RadarChartDataSet;
 import org.primefaces.model.charts.radar.RadarChartModel;
+import util.Utils;
 
 /**
  *
@@ -27,15 +45,97 @@ import org.primefaces.model.charts.radar.RadarChartModel;
 @ViewScoped
 public class GraficoPie implements Serializable {
 
+    @EJB
+    ContratoServico contratoServico;
+    private Setor setor;
+    private StatusContrato status;
+
     private PieChartModel pieModel;
     private PolarAreaChartModel polarAreaModel;
     private RadarChartModel radarModel;
+    private BarChartModel barModel;
 
     @PostConstruct
     public void init() {
+        this.setor = new Setor();
         createPieModel();
         createPolarAreaModel();
         createRadarModel();
+        createBarModel();
+    }
+
+    public void createBarModel() {
+        barModel = new BarChartModel();
+        ChartData data = new ChartData();
+
+        BarChartDataSet barDataSet = new BarChartDataSet();
+        barDataSet.setLabel("Tipo de Contrato");
+
+        List<Number> values = new ArrayList<>();
+        List<String> labels = new ArrayList<>();
+
+        List<String> bgColor = new ArrayList<>();
+        bgColor.add("rgba(255, 99, 132, 0.2)");
+        bgColor.add("rgba(255, 159, 64, 0.2)");
+        bgColor.add("rgba(255, 205, 86, 0.2)");
+        bgColor.add("rgba(75, 192, 192, 0.2)");
+        bgColor.add("rgba(54, 162, 235, 0.2)");
+        bgColor.add("rgba(153, 102, 255, 0.2)");
+        bgColor.add("rgba(201, 203, 207, 0.2)");
+        barDataSet.setBackgroundColor(bgColor);
+
+        List<String> borderColor = new ArrayList<>();
+        borderColor.add("rgb(255, 99, 132)");
+        borderColor.add("rgb(255, 159, 64)");
+        borderColor.add("rgb(255, 205, 86)");
+        borderColor.add("rgb(75, 192, 192)");
+        borderColor.add("rgb(54, 162, 235)");
+        borderColor.add("rgb(153, 102, 255)");
+        borderColor.add("rgb(201, 203, 207)");
+        barDataSet.setBorderColor(borderColor);
+        barDataSet.setBorderWidth(1);
+
+        data.addChartDataSet(barDataSet);
+        int contador = 0;
+        for (ContratoVo tipo : TiposContrato()) {
+            contador = contador + 1;
+            if (contador < 8) {
+                labels.add(tipo.getNome());
+                values.add(tipo.getQuantidade());
+            }
+        }
+        barDataSet.setData(values);
+        data.setLabels(labels);
+        barModel.setData(data);
+
+        //Options
+        BarChartOptions options = new BarChartOptions();
+        CartesianScales cScales = new CartesianScales();
+        CartesianLinearAxes linearAxes = new CartesianLinearAxes();
+        linearAxes.setOffset(true);
+        CartesianLinearTicks ticks = new CartesianLinearTicks();
+        linearAxes.setTicks(ticks);
+        cScales.addYAxesData(linearAxes);
+        options.setScales(cScales);
+
+        Title title = new Title();
+        title.setDisplay(true);
+        title.setText("Tipos de contratos mais utilizados");
+        options.setTitle(title);
+
+        Animation animation = new Animation();
+        animation.setDuration(0);
+        options.setAnimation(animation);
+
+        barModel.setOptions(options);
+    }
+
+    public List<ContratoVo> TiposContrato() {
+        return contratoServico.buscarTipoContrato();
+    }
+
+    public List<ContratoVo> buscarContratoSetor(Setor setor, StatusContrato status) {
+        return contratoServico.buscarContratoSetor(setor, status);
     }
 
     private void createPieModel() {
@@ -44,25 +144,65 @@ public class GraficoPie implements Serializable {
 
         PieChartDataSet dataSet = new PieChartDataSet();
         List<Number> values = new ArrayList<>();
-        values.add(300);
-        values.add(50);
-        values.add(100);
-        dataSet.setData(values);
-
-        List<String> bgColors = new ArrayList<>();
-        bgColors.add("rgb(255, 99, 132)");
-        bgColors.add("rgb(54, 162, 235)");
-        bgColors.add("rgb(255, 205, 86)");
-        dataSet.setBackgroundColor(bgColors);
-
         data.addChartDataSet(dataSet);
         List<String> labels = new ArrayList<>();
-        labels.add("Red");
-        labels.add("Blue");
-        labels.add("Yellow");
-        data.setLabels(labels);
+        List<String> bgColors = new ArrayList<>();
 
+        for (ContratoVo contra : contratoServico.buscarContratos()) {
+            values.add(contra.getQuantidade());
+            labels.add(contra.getNome());
+            bgColors.add(cores(contra.getNome()));
+        }
+        dataSet.setData(values);
+        PieChartOptions options = new PieChartOptions();
+        Title title = new Title();
+        title.setDisplay(true);
+        title.setText("Resumo dos Contratos");
+        options.setTitle(title);
+        dataSet.setBackgroundColor(bgColors);
+
+        data.setLabels(labels);
+        pieModel.setOptions(options);
         pieModel.setData(data);
+    }
+
+    public String cores(String stts) {
+        String cor = "teste";
+        if (Utils.isNotEmpty(stts)) {
+            switch (stts) {
+                case "Aprovado":
+                    cor = "rgb(0, 92, 254)";
+                    break;
+                case "Cancelado":
+                    cor = "rgb(255, 1, 0)";
+                    break;
+                case "Esperando início":
+                    cor = "rgb(119, 54, 255)";
+                    break;
+                case "Expirado":
+                    cor = "rgb(254, 216, 0)";
+                    break;
+                case "Finalizado":
+                    cor = "rgb(126, 14, 172)";
+                    break;
+                case "Iniciado":
+                    cor = "rgb(206, 217, 219)";
+                    break;
+                case "Pago":
+                    cor = "rgb(41, 185, 246)";
+                    break;
+                case "Proximo a expirar":
+                    cor = "rgb(249, 203, 0)";
+                    break;
+                case "Vigência":
+                    cor = "rgb(67, 135, 8)";
+                    break;
+                default:
+                    break;
+            }
+        }
+        return cor;
+
     }
 
     private void createPolarAreaModel() {
@@ -178,6 +318,30 @@ public class GraficoPie implements Serializable {
 
     public void setPolarAreaModel(PolarAreaChartModel polarAreaModel) {
         this.polarAreaModel = polarAreaModel;
+    }
+
+    public BarChartModel getBarModel() {
+        return barModel;
+    }
+
+    public void setBarModel(BarChartModel barModel) {
+        this.barModel = barModel;
+    }
+
+    public Setor getSetor() {
+        return setor;
+    }
+
+    public void setSetor(Setor setor) {
+        this.setor = setor;
+    }
+
+    public StatusContrato getStatus() {
+        return status;
+    }
+
+    public void setStatus(StatusContrato status) {
+        this.status = status;
     }
 
 }

@@ -15,9 +15,9 @@ public enum StatusContrato {
     EXPIRADO("Expirado"),
     PAGO("Pago"),
     INICIADO("Iniciado"),
-    ESPERANDO_INICIO("Esperando inicio"),
-    APROVADO("aprovado"),
-    VIGENCIA("Vigencia"),
+    ESPERANDO_INICIO("Esperando início"),
+    APROVADO("Aprovado"),
+    VIGENCIA("Vigência"),
     PROXIMO_EXPIRAR("Proximo a expirar");
 
     String status;

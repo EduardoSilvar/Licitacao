@@ -10,6 +10,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.Query;
 import modelo.Contratado;
+import modelo.ContratoVo;
 import util.Utils;
 
 /**

@@ -23,6 +23,24 @@ public class SetorServico extends ServicoGenerico<Setor> implements Serializable
         super(Setor.class);
     }
 
+    public List<Setor> findSetor(String nome) {
+        String jpql = "select c from Setor c where ";
+
+        if (nome != null && !nome.isEmpty()) {
+            jpql += "lower(c.nome) like lower(:nome) and ";
+        }
+
+        jpql += "c.ativo = true";
+
+        Query query = entityManager.createQuery(jpql);
+
+        if (nome != null && !nome.isEmpty()) {
+            query.setParameter("nome", "%" + nome + "%");
+        }
+
+        return query.getResultList();
+    }
+
     public List<Setor> pesquisar(Setor setor) {
         String sql = "select s from Setor s where s.ativo = true";
         if (Utils.isNotEmpty(setor.getNome())) {

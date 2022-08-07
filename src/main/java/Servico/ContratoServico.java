@@ -5,6 +5,7 @@
  */
 package Servico;
 
+import Enum.StatusContrato;
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.List;
@@ -12,6 +13,8 @@ import javax.ejb.Stateless;
 import javax.persistence.Query;
 import modelo.Contratado;
 import modelo.Contrato;
+import modelo.ContratoVo;
+import modelo.Setor;
 import modelo.UnidadeOrganizacional;
 import util.Utils;
 
@@ -24,6 +27,54 @@ public class ContratoServico extends ServicoGenerico<Contrato> implements Serial
 
     public ContratoServico() {
         super(Contrato.class);
+    }
+
+    public List<ContratoVo> buscarContratos() {
+
+        String sql = "select new modelo.ContratoVo(c.status, count(c)) "
+                + "from Contrato c ";
+        sql += "where c.ativo = true ";
+        sql += "group by c.status";
+
+        Query query = getEntityManager().createQuery(sql);
+
+        return query.getResultList();
+    }
+
+    public List<ContratoVo> buscarTipoContrato() {
+
+        String sql = "select new modelo.ContratoVo(c.tipoContrato, count(c)) "
+                + "from Contrato c ";
+        sql += "where c.ativo = true ";
+        sql += "group by c.tipoContrato.id";
+
+        Query query = getEntityManager().createQuery(sql);
+
+        return query.getResultList();
+    }
+
+    public List<ContratoVo> buscarContratoSetor(Setor setor, StatusContrato status) {
+
+        String sql = "select new modelo.ContratoVo(c.tipoContrato, count(c)) "
+                + "from Contrato c ";
+        sql += "where c.ativo = true ";
+        if (Utils.isNotEmpty(setor)) {
+            sql += "and c.setor = :setor ";
+        }
+        if (Utils.isNotEmpty(status)) {
+            sql += "and c.status = :status";
+        }
+        sql += "group by c.tipoContrato.id";
+
+        Query query = getEntityManager().createQuery(sql);
+
+        if (Utils.isNotEmpty(setor)) {
+            query.setParameter("setor", setor);
+        }
+        if (Utils.isNotEmpty(status)) {
+            query.setParameter("status", status);
+        }
+        return query.getResultList();
     }
 
     public List<Contrato> findContrato(String nome) {

@@ -4,34 +4,22 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns="http://www.w3.org/1999/xhtml">
-    <!--    <ui:define name="acoes">
-            <h:panelGroup class="panelAcoes">
-                <p:splitButton value="Ações" style="margin: -8px !important;" 
-                               icon="pi pi-cog"
-                               >
-    
-                    <p:menuitem value="Cadastrar" 
-                                icon="pi pi-save"
-                                url="contratado.xhtml"
-                                process="@this"
-                                />
-    
-                </p:splitButton>
-            </h:panelGroup>
-        </ui:define>-->
-    <!--    <ui:define name="barra">
-            <div class="row" id="stylebarra">
-                <i class="pi pi-file-o" id="icon"></i> <h5 style="color: #e1e6e5"> Dados Gerais</h5>
-            </div>
-        </ui:define>-->
     <ui:define name="corpo">
-        <div style="width: 300px">        
-            <div style="border: none !important">
-                <p:pieChart model="#{graficoPie.pieModel}" style="width: 100px; height: 250px;"/>
+        <div style="text-align: center">
+            <h3>Resumo dos Contratos </h3>
+        </div>
+        <div style="display: flex; flex-direction: row">
+            <div style="width: 300px">        
+                <div style="border: none !important">
+                    <p:pieChart model="#{graficoPie.pieModel}" style="width: 100px; height: 250px;"/>
+                </div>
+            </div>
+            <div style="width: 70%;margin-left: 40px">
+                <p:barChart model="#{graficoPie.barModel}" style="width: 100%; height: 300px;"/>
             </div>
         </div>
         <hr/>
-        <div class="p-grid">
+        <div style="display: flex; flex-direction: row">
             <div style="width: 300px">    
                 <div class="p-col-12 p-lg-6 p-xl-4">
                     <div style="border: none !important">
@@ -39,14 +27,35 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <hr/>
-        <div style="width: 300px">    
-            <div class="p-col-12 p-lg-6 p-xl-4" >
-                <div style="border: none !important">
-                    <p:radarChart model="#{graficoPie.radarModel}" />
+            <div style="width: 70%">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <p:outputLabel value="Setor" styleClass="control-label" for="contratoSetor" />
+                        <p:autoComplete id="contratoSetor" dropdown="true" converter="setorconverter"
+                                        var="setor" itemLabel="#{setor.nome}"
+                                        itemValue="#{setor}" value="#{graficoPie.setor}"
+                                        scrollHeight="200" forceSelection="true"
+                                        inputStyleClass="form-control"
+                                        style="display: flex;"
+                                        emptyMessage="Setor não encontrado" 
+                                        completeMethod="#{managerAutoComplete.autocompleteSetor}"
+                                        >
+                            <p:ajax event="itemSelect" />
+                        </p:autoComplete>
+                    </div> 
                 </div>
             </div>
+        </div>
+        <hr/>
+        <div style="display: flex; flex-direction: row">
+            <div style="width: 300px">    
+                <div class="p-col-12 p-lg-6 p-xl-4" >
+                    <div style="border: none !important">
+                        <p:radarChart model="#{graficoPie.radarModel}" />
+                    </div>
+                </div>
+            </div>
+
         </div>
     </ui:define>
     <script type="text/javascript">
