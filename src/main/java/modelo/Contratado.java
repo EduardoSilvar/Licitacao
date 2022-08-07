@@ -7,6 +7,7 @@ package modelo;
 
 import Enum.NaturezaEnum;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.*;
@@ -29,6 +30,8 @@ public class Contratado implements Serializable {
     private UnidadeOrganizacional unidadeOrganizacional;
     @OneToOne(cascade = CascadeType.ALL)
     private Endereco endereco;
+    @OneToOne(cascade = CascadeType.ALL)
+    private List<Anexo> anexos;
     private String especialidade;
     @Enumerated(EnumType.STRING)
     private NaturezaEnum natureza;
@@ -91,6 +94,14 @@ public class Contratado implements Serializable {
 
     public void setEspecialidade(String especialidade) {
         this.especialidade = especialidade;
+    }
+
+    public List<Anexo> getAnexos() {
+        return anexos;
+    }
+
+    public void setAnexos(List<Anexo> anexos) {
+        this.anexos = anexos;
     }
 
     public NaturezaEnum getNatureza() {

@@ -7,6 +7,7 @@
 
 
     <h:panelGroup id="contratoPanelGroup">
+
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group" >
@@ -24,8 +25,6 @@
                     </p:selectOneMenu>
                 </div> 
             </div>
-            <p:outputLabel value="#{managerContrato.anexo}"/>
-            <h:graphicImage url="#{managerContrato.anexo}" value="imagem"/>
             <div class="col-md-2">
                 <div class="form-group">
                     <p:outputLabel value="Número"
@@ -384,6 +383,7 @@
                 auto="true"
                 mode="advanced"
                 label="Anexar"
+                listener="#{ managerContrato.selecionarAnexo }"
                 uploadLabel="Enviar"
                 cancelLabel="Cancelar"
                 multiple="true"
@@ -392,8 +392,26 @@
                 invalidFileMessage="Tipo de arquivo não suportado."
                 invalidSizeMessage="Tamanho do arquivo não é suportado"
                 process="@this @form"
-                update="@this, anexoProtocoloPanelGroup"
+                update="@this, anexoProtocoloPanelGroup anexosPanelGroup" 
                 rendered="#{not managerContrato.visualizar}"/>
+        </h:panelGroup>
+        <h:panelGroup id="anexosPanelGroup">
+            <div style="display: flex; flex-direction: row">
+                <ui:repeat value="#{managerContrato.contrato.anexos}" var="anexo" >
+                    <div style="display: flex; flex-direction: row">
+                        <div style="display: flex; flex-direction: column;background: #e1e6e5;width: 200px; padding: 5px 10px; margin: 10px 30px ">
+                            <div style="display: flex; flex-direction: row;width: 200px">
+                                <p:commandButton actionListener="#{managerContrato.deletarAnexo(anexo)}" 
+                                                 update="corpoInteiro:messages corpoInteiro" disabled="#{managerContrato.visualizar}" icon="pi pi-trash" style="width: 25px; height: 30px;" />
+                                <p:outputLabel value="Contrato" style="font-weight: bold;margin-left: 10px;"/>
+                            </div>
+                            <a href="#{managerContrato.anexoUrl(anexo)}" target="_blank" title="anexo">
+                                <img  src="#{managerContrato.anexoUrl(anexo)}" style="width: 180px;" />
+                            </a>
+                        </div>
+                    </div>
+                </ui:repeat>
+            </div>
         </h:panelGroup>
     </h:panelGroup>
 

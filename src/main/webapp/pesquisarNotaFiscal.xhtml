@@ -1,0 +1,215 @@
+<ui:composition template="/WEB-INF/template/layout.xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns="http://www.w3.org/1999/xhtml">
+    <ui:define name="acoes">
+        <h:panelGroup class="panelAcoes">
+            <p:splitButton value="Ações" style="margin: 0px -8px !important" 
+                           icon="pi pi-cog"
+                           >
+
+                <p:menuitem value="Cadastrar" 
+                            icon="pi pi-save"
+                            url="notaFiscal.xhtml"
+                            process="@this"
+                            />
+
+            </p:splitButton>
+        </h:panelGroup>
+    </ui:define>
+    <ui:define name="barra">
+        <div class="row" id="stylebarra">
+            <i class="pi pi-file-o" id="icon"></i> <h5 style="color: #e1e6e5"> Dados Gerais</h5>
+        </div>
+    </ui:define>
+    <ui:define name="titulo">
+        <h4>Pesquisar Nota Fiscal</h4>
+    </ui:define>
+
+    <ui:define name="corpo">
+        <h:panelGroup>
+            <p:growl id="messages" showDetail="true" />
+            <h:panelGroup id="pesquisaPanel" >
+                <h:panelGroup id="dadosGeraisPanelGroup" >
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <p:outputLabel value="Responsável" styleClass="control-label" for="responNotaFiscal" />
+                                <p:selectOneMenu id="responNotaFiscal"
+                                                 filter="true" 
+                                                 placeholder="Responsável"
+                                                 styleClass="form-control" >
+                                    <f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
+                                    <f:selectItems  />
+                                </p:selectOneMenu>
+                            </div> 
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <p:outputLabel value="Contrato" styleClass="control-label" for="contratNotaFiscal" />
+                                <p:selectOneMenu id="contratNotaFiscal"
+                                                 filter="true" 
+                                                 placeholder="Contrato"
+                                                 styleClass="form-control" >
+                                    <f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
+                                    <f:selectItems  />
+                                </p:selectOneMenu>
+                            </div> 
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <p:outputLabel value="Valor"
+                                               for="valorNotaFiscal" />
+                                <p:inputText id="valorNotaFiscal"
+                                             placeholder="Valor"
+                                             rendered="true"
+                                             value="#{managerNotaFiscal.notaFiscal.valor}"
+                                             requiredMessage="Este campo é obrigatório."
+                                             styleClass="form-control" 
+                                             />
+                                <p:message for="valorNotaFiscal" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <p:outputLabel value="Observação"
+                                               for="observacaoNotaFiscal" />
+                                <p:inputTextarea id="observacaoNotaFiscal"
+                                                 placeholder="Observação"
+                                                 rendered="true"
+                                                 value="#{managerNotaFiscal.notaFiscal.descricao}"
+                                                 requiredMessage="Este campo é obrigatório."
+                                                 styleClass="form-control" 
+                                                 />
+                                <p:message for="observacaoNotaFiscal" />
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <p:outputLabel value="Número da conta"
+                                               for="numeroNotaFiscal" />
+                                <p:inputText id="numeroNotaFiscal"
+                                             placeholder="Número"
+                                             rendered="true"
+                                             requiredMessage="Este campo é obrigatório."
+                                             styleClass="form-control" 
+                                             />
+                                <p:message for="numeroNotaFiscal" />
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <p:outputLabel value="Data do Pagamento"
+                                               for="dataNotaFiscal"  />
+                                <p:calendar id="dataNotaFiscal"
+                                            rendered="true"
+                                            mask="true"
+                                            style="display: flex; flex-direction: row"
+                                            requiredMessage="Este campo é obrigatório."
+                                            value="#{managerNotaFiscal.notaFiscal.dataPagamento}"
+                                            inputStyleClass="form-control"
+                                            showOn="button"
+                                            />
+                                <p:message for="dataNotaFiscal" />
+                            </div>
+                        </div>
+                    </div>
+                </h:panelGroup>
+
+                <center>
+                    <p:commandButton value="Pesquisar" icon="pi pi-search" process="@this corpoInteiro:pesquisaPanel" update="corpoInteiro:tipoContratadoDatatable corpoInteiro:messages" actionListener="#{managerNotaFiscal.pesquisar()}" />
+                    <p:commandButton value="Limpar" icon="pi pi-ban" update="corpoInteiro:pesquisaPanel corpoInteiro:tipoContratadoDatatable" process="@this corpoInteiro:pesquisaPanel" actionListener="#{managerNotaFiscal.instanciar()}"/>
+                </center>
+                <hr/>
+
+                <p:dataTable id="tipoContratadoDatatable" var="nota" value="#{managerNotaFiscal.notasFiscais}"
+                             resizeMode="5">
+                    <f:facet name="header">
+                        <center>
+                            Notas Fiscais(#{managerNotaFiscal.notasFiscais.size()}) 
+                        </center>
+                    </f:facet>
+                    <p:column headerText="Ações" width="200">
+                        <p:commandButton  icon="pi pi-trash" 
+                                          process="@this"
+                                          update="@form:removeraContratadoConfirmDialog"
+                                          oncomplete="PF('removeraContratadoConfirmDialog').show();" title="exluir" >
+                            <f:setPropertyActionListener value="#{nota}"
+                                                         target="#{managerNotaFiscal.notaFiscal}"/>
+                        </p:commandButton>
+                        <p:button  icon="pi pi-eye" title="visualizar" href="notaFiscal.xhtml?visualizar=#{nota.id}" />
+                    </p:column>
+                    <p:column headerText="Data">
+                        <h:outputText value="#{nota.dataPagamento}" />
+                    </p:column>
+
+                    <p:column headerText="Responsável">
+                        <h:outputText value="#{nota.responsavel}" />
+                    </p:column>
+                    <p:column headerText="Contratado">
+                        <h:outputText value="#{nota.contratado}" />
+                    </p:column>
+                    <p:column headerText="Contrato">
+                        <h:outputText value="#{nota.contrato}" />
+                    </p:column>
+
+                </p:dataTable>
+            </h:panelGroup>
+            <p:dialog id="removeraContratadoConfirmDialog"
+                      widgetVar="removeraContratadoConfirmDialog"
+                      header="Atenção!"
+                      closeOnEscape="true"
+                      draggable="false"
+                      maximizable="false"
+                      minimizable="false"
+                      modal="true"
+                      width="850"
+                      showEffect="fade"
+                      hideEffect="fade">
+
+                <div class="row">
+
+                    <div class="col-md-12">
+                        <div class="form-group" style="padding-left: 80px !important">
+                            <h4>
+                                <i class="pi pi-exclamation-triangle"></i>
+                                Tem certeza de que deseja remover este Contratado ?
+                            </h4>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+
+                        <center>
+
+                            <p:commandButton value="Sim"
+                                             title="Confirmar Remoção"
+                                             icon="pi pi-check"
+                                             update="tipoContratadoDatatable messages"
+                                             process="@this pesquisaPanel"
+                                             actionListener="#{managerNotaFiscal.deletar()}"
+                                             oncomplete="PF('removeraContratadoConfirmDialog').hide();"
+                                             styleClass="mr-md-1"/>
+
+                            <p:commandButton value="Não"
+                                             title="Cancelar Remoção"
+                                             icon="pi pi-ban"
+                                             process="@this"
+                                             update="@form"
+                                             oncomplete="PF('removeraContratadoConfirmDialog').hide();"
+                                             styleClass="ml-md-1"/>
+
+                        </center>
+
+                    </div>
+
+                </div>
+
+            </p:dialog>
+        </h:panelGroup>
+    </ui:define>
+</ui:composition>
