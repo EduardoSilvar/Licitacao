@@ -17,17 +17,14 @@
 
                 <p:menuitem value="Editar" 
                             icon="pi pi-pencil"
-                            url="contrato.xhtml?editar=#{managerContrato.contrato.id}"
                             process="@this"
                             />
                 <p:menuitem value="Excluir" 
                             icon="pi pi-trash"
                             oncomplete="PF('removeraContratoConfirmDialog').show();"
-                            process="@this corpoInteiro"
-                            update="corpoInteiro:messages"
+
                             >
-                    <f:setPropertyActionListener value="#{managerContrato.contrato}"
-                                                 target="#{managerContrato.contrato}"/>
+
                 </p:menuitem>
 
             </p:splitButton>
@@ -41,21 +38,21 @@
     </ui:define>
     <ui:define name="corpo">
         <p:growl id="messages"/>
-        <p:tabView>
-            <p:tab title="Acréscimo">
-                
+        <p:tabView dynamic="true">
+            <p:tab title="Acréscimo" >
+
                 <ui:include src="acrescimo.xhtml"/>
             </p:tab>
             <p:tab title="Supressão">
-                
+
                 <ui:include src="supressao.xhtml"/>
             </p:tab>
             <p:tab title="Renovação">
-                
+
                 <ui:include src="renovacao.xhtml"/>
             </p:tab>
             <p:tab title="Repactuação">
-                
+
                 <ui:include src="repactuacao.xhtml"/>
             </p:tab>
         </p:tabView>

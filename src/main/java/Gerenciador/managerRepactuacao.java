@@ -106,14 +106,18 @@ public class managerRepactuacao extends managerPrincipal implements Serializable
                 Msg.messagemError("Número de termo aditivo já registrado !");
             } else {
                 repactuacaoServico.Save(this.repactuacao);
-                Msg.messagemInfoRedirect("Operação realizada com sucesso !", "repactuacao.xhtml?visualizar=" + this.repactuacao.getId());
+                Msg.messagemInfoRedirect("Operação realizada com sucesso !", "cadastrarAlteracoes.xhtml?visualizar=" + this.repactuacao.getId());
             }
         }
     }
     
     public void atualizar() {
         repactuacaoServico.Update(repactuacao);
-        Msg.messagemInfoRedirect("Operação realizada com sucesso !", "repactuacao.xhtml?visualizar=" + this.repactuacao.getId());
+        Msg.messagemInfoRedirect("Operação realizada com sucesso !", "cadastrarAlteracoes.xhtml?visualizar=" + this.repactuacao.getId());
+    }
+    
+    public void pesquisar() {
+        this.repactuacoes = repactuacaoServico.findPesquisa(this.repactuacao);
     }
     
     public void deletar() {

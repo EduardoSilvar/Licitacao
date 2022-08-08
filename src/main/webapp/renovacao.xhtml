@@ -7,9 +7,9 @@
                 xmlns="http://www.w3.org/1999/xhtml">
 
     
-        <h:panelGroup>
+        <h:panelGroup id="renovacaoPanelGroup">
             
-            <h:panelGroup id="renovacaoPanelGroup">
+            <h:panelGroup>
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
@@ -29,8 +29,8 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <p:outputLabel value="Número do termo aditivo*"
-                                           for="numeroTermoAditivo" />
-                            <p:inputText id="numeroTermoAditivo"
+                                           for="numeroTermoAditivoRenovacao" />
+                            <p:inputText id="numeroTermoAditivoRenovacao"
                                          value="#{managerRenovacao.renovacao.numeroTermo}"
                                          placeholder="Número"
                                          disabled="#{managerRenovacao.visualizar}"
@@ -38,7 +38,7 @@
                                          requiredMessage="Este campo é obrigatório."
                                          styleClass="form-control" 
                                          />
-                            <p:message for="numeroTermoAditivo" />
+                            <p:message for="numeroTermoAditivoRenovacao" />
                         </div>
                     </div>
                 </div>
@@ -48,8 +48,8 @@
                 <div class="row">
                     <div class="col-md-6">
                         <p:outputLabel value="Data inicial"
-                                       for="dataInicial" />
-                        <p:calendar id="dataInicial"
+                                       for="dataInicialRenovacao" />
+                        <p:calendar id="dataInicialRenovacao"
                                     value="#{managerRenovacao.renovacao.dataInicial}"
                                     rendered="true"
                                     disabled="#{managerRenovacao.visualizar}"
@@ -59,12 +59,12 @@
                                     inputStyleClass="form-control"
                                     showOn="button"
                                     />
-                        <p:message for="dataInicial" />
+                        <p:message for="dataInicialRenovacao" />
                     </div>
                     <div class="col-md-6">
                         <p:outputLabel value="Data final"
-                                       for="dataFinal" />
-                        <p:calendar id="dataFinal"
+                                       for="dataFinalRenovacao" />
+                        <p:calendar id="dataFinalRenovacao"
                                     value="#{managerRenovacao.renovacao.dataFinal}"
                                     rendered="true"
                                     disabled="#{managerRenovacao.visualizar}"
@@ -74,7 +74,7 @@
                                     inputStyleClass="form-control"
                                     showOn="button"
                                     />
-                        <p:message for="dataFinal" />
+                        <p:message for="dataFinalRenovacao" />
                     </div>
 
                 </div>
@@ -101,27 +101,27 @@
                             <p:outputLabel value="O valor do contrato mudou?" />
                             <div class="ui-inputgroup">
                                 <p:selectBooleanButton onLabel="Sim" offLabel="Não" value="#{managerRenovacao.renovacao.valorMudou}" disabled="#{managerRenovacao.visualizar}" style="width:12rem; color: white !important;border-radius: 5px">
-                                    <p:ajax update="corpoInteiro:atualizacaoValor"/>
+                                    <p:ajax update="atualizacaoValorRenovacao"/>
                                 </p:selectBooleanButton>
                             </div>
                         </div>
                     </div>
                 </div>
             </h:panelGroup>
-            <h:panelGroup id="atualizacaoValor" >
+            <h:panelGroup id="atualizacaoValorRenovacao" >
                 <h:panelGroup rendered="#{managerRenovacao.renderedValorMudou()}">
                     <div class="row">
                         <div class="col-md-6">
                             <p:outputLabel value="Valor"
-                                           for="novoValor" />
-                            <p:inputMask id="novoValor"
+                                           for="novoValorRenovacao" />
+                            <p:inputMask id="novoValorRenovacao"
                                          value="#{managerRenovacao.renovacao.valor}"
                                          style="display: flex; flex-direction: row"
                                          styleClass="form-control" 
                                          disabled="#{managerRenovacao.visualizar}"
                                          placeholder="Valor"
                                          requiredMessage="Este campo é obrigatório." />
-                            <p:message for="novoValor" />
+                            <p:message for="novoValorRenovacao" />
                         </div>
                     </div>
                 </h:panelGroup>
@@ -163,8 +163,8 @@
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
-                        <p:outputLabel value="Fiscal responsável" styleClass="control-label" for="fiscalSelect" />
-                        <p:selectOneMenu id="fiscalSelect"
+                        <p:outputLabel value="Fiscal responsável" styleClass="control-label" for="fiscalSelectRenovacao" />
+                        <p:selectOneMenu id="fiscalSelectRenovacao"
                                          value="#{managerRenovacao.renovacao.fiscal}"
                                          filter="true" 
                                          placeholder="fiscal"
@@ -178,7 +178,7 @@
                             <f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
                             <f:selectItems value="#{managerRenovacao.fiscais}" var="user" itemLabel="#{user.nome}" itemValue="#{user}" />
                         </p:selectOneMenu>
-                        <p:message for="fiscalSelect" />
+                        <p:message for="fiscalSelectRenovacao" />
                     </div>
                 </div>
             </div>
@@ -193,7 +193,7 @@
                           />
         </h:panelGroup>
             <center>    
-            <p:commandButton value="Salvar" icon="pi pi-save" process="@this renovacaoPanelGroup" update="corpoInteiro:messages" actionListener="#{managerRenovacao.salvar()}" rendered="#{managerRenovacao.cadastrar}" />
+            <p:commandButton value="Salvar" icon="pi pi-save" process="@this renovacaoPanelGroup" update="corpoInteiro" actionListener="#{managerRenovacao.salvar()}" rendered="#{managerRenovacao.cadastrar}" />
             <p:button value="Editar" icon="pi pi-pencil"  rendered="#{managerRenovacao.visualizar}" href="renovacao.xhtml?editar=#{managerRenovacao.renovacao.id}" />
             <p:commandButton value="Atualizar" icon="pi pi-sync" process="@this renovacaoPanelGroup"  actionListener="#{managerRenovacao.atualizar()}" rendered="#{managerRenovacao.editar}"  />
             <p:button value="Cancelar" icon="pi pi-ban"  href="renovacao.xhtml" rendered="#{managerRenovacao.visualizar}" />

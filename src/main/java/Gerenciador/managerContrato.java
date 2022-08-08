@@ -291,8 +291,9 @@ public class managerContrato extends managerPrincipal implements Serializable {
         return contratoServico.find(id);
     }
 
-    public void PegarTodos() {
+    public List<Contrato> PegarTodos() {
         contratos = contratoServico.FindAll();
+        return contratos;
     }
 
     public void InstanciarContratos() {

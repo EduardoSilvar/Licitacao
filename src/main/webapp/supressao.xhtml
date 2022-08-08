@@ -9,14 +9,14 @@
     
 
     
-        <h:panelGroup>
+        <h:panelGroup id="supressaoPanelGroup">
             
-            <h:panelGroup id="supressaoPanelGroup">
+            <h:panelGroup >
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <p:outputLabel value="Contrato*" styleClass="control-label" for="contratoAcrescimo" />
-                            <p:selectOneMenu id="contratoAcrescimo"
+                            <p:outputLabel value="Contrato*" styleClass="control-label" for="contratoSupressao" />
+                            <p:selectOneMenu id="contratoSupressao"
                                              value="#{managerSupressao.supressao.contrato}"
                                              disabled="#{managerSupressao.visualizar}"
                                              filter="true" 
@@ -31,8 +31,8 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <p:outputLabel value="Número do termo aditivo*"
-                                           for="numeroTermoAditivo" />
-                            <p:inputText id="numeroTermoAditivo"
+                                           for="numeroTermoAditivoSupressao" />
+                            <p:inputText id="numeroTermoAditivoSupressao"
                                          value="#{managerSupressao.supressao.numeroTermo}"
                                          disabled="#{managerSupressao.visualizar}"
                                          placeholder="Número"
@@ -40,7 +40,7 @@
                                          requiredMessage="Este campo é obrigatório."
                                          styleClass="form-control" 
                                          />
-                            <p:message for="numeroTermoAditivo" />
+                            <p:message for="numeroTermoAditivoSupressao" />
                         </div>
                     </div>
                 </div>
@@ -50,20 +50,20 @@
                 <div class="row">
                     <div class="col-md-6">
                         <p:outputLabel value="Valor*"
-                                       for="acrescimoValor" />
-                        <p:inputMask id="acrescimoValor"
+                                       for="supressaoValor" />
+                        <p:inputMask id="supressaoValor"
                                      style="display: flex; flex-direction: row"
                                      disabled="#{managerSupressao.visualizar}"
                                      styleClass="form-control" 
                                      value="#{managerSupressao.supressao.valor}"
                                      placeholder="Valor"
                                      requiredMessage="Este campo é obrigatório." />
-                        <p:message for="acrescimoValor" />
+                        <p:message for="supressaoValor" />
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <p:outputLabel value="Fiscal responsável" styleClass="control-label" for="fiscalSelect" />
-                            <p:selectOneMenu id="fiscalSelect"
+                            <p:outputLabel value="Fiscal responsável" styleClass="control-label" for="fiscalSelectSupressao" />
+                            <p:selectOneMenu id="fiscalSelectSupressao"
                                              filter="true" 
                                              disabled="#{managerSupressao.visualizar}"
                                              placeholder="fiscal"
@@ -76,15 +76,15 @@
                                 <f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
                                 <f:selectItems value="#{managerSupressao.fiscais}" var="user" itemLabel="#{user.nome}" itemValue="#{user}" />
                             </p:selectOneMenu>
-                            <p:message for="fiscalSelect" />
+                            <p:message for="fiscalSelectSupressao" />
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6">
                         <p:outputLabel value="Data de assinatura"
-                                       for="dataassinaturaAcrescimo" />
-                        <p:calendar id="dataassinaturaAcrescimo"
+                                       for="dataassinaturaSupressao" />
+                        <p:calendar id="dataassinaturaSupressao"
                                     value="#{managerSupressao.supressao.dataAssinatura}"
                                     rendered="true"
                                     disabled="#{managerSupressao.visualizar}"
@@ -95,19 +95,19 @@
                                     inputStyleClass="form-control"
                                     showOn="button"
                                     />
-                        <p:message for="dataassinaturaAcrescimo" />
+                        <p:message for="dataassinaturaSupressao" />
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <p:outputLabel value="Descrição*" for="descricao" />
-                            <p:inputText id="descricao"
+                            <p:outputLabel value="Descrição*" for="descricaoSupressao" />
+                            <p:inputText id="descricaoSupressao"
                                          disabled="#{managerSupressao.visualizar}"
                                          value="#{managerSupressao.supressao.descricao}"
                                          placeholder="Descrição"
                                          requiredMessage="Este campo é obrigatório."
                                          styleClass="form-control" 
                                          />
-                            <p:message for="descricao" />
+                            <p:message for="descricaoSupressao" />
                         </div>
                     </div>
                 </div>
@@ -124,11 +124,11 @@
         </h:panelGroup>
 
         <center>    
-            <p:commandButton value="Salvar" icon="pi pi-save" process="@this supressaoPanelGroup" update="corpoInteiro:messages" actionListener="#{managerSupressao.salvar()}" rendered="#{managerSupressao.cadastrar}" />
-            <p:button value="Editar" icon="pi pi-pencil"  rendered="#{managerSupressao.visualizar}" href="supressao.xhtml?editar=#{managerSupressao.supressao.id}" />
+            <p:commandButton value="Salvar" icon="pi pi-save" process="@this supressaoPanelGroup" update="corpoInteiro" actionListener="#{managerSupressao.salvar()}" rendered="#{managerSupressao.cadastrar}" />
+            <p:button value="Editar" icon="pi pi-pencil"  rendered="#{managerSupressao.visualizar}" href="cadastrarAlteracoes.xhtml?editar=#{managerSupressao.supressao.id}" />
             <p:commandButton value="Atualizar" icon="pi pi-sync" process="@this supressaoPanelGroup"  actionListener="#{managerSupressao.atualizar()}" rendered="#{managerSupressao.editar}"  />
-            <p:button value="Cancelar" icon="pi pi-ban"  href="supressao.xhtml" rendered="#{managerSupressao.visualizar}" />
-            <p:button value="Cancelar" icon="pi pi-ban"  href="supressao.xhtml?visualizar=#{managerSupressao.supressao.id}" rendered="#{managerSupressao.editar}" />
+            <p:button value="Cancelar" icon="pi pi-ban"  href="cadastrarAlteracoes.xhtml" rendered="#{managerSupressao.visualizar}" />
+            <p:button value="Cancelar" icon="pi pi-ban"  href="cadastrarAlteracoes.xhtml?visualizar=#{managerSupressao.supressao.id}" rendered="#{managerSupressao.editar}" />
             <p:button value="Cancelar" icon="pi pi-ban"  href="index.xhtml" rendered="#{managerSupressao.cadastrar}" />
         </center>
 
