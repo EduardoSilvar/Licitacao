@@ -19,33 +19,56 @@
             </div>
         </div>
         <hr/>
-        <div style="display: flex; flex-direction: row">
-            <div style="width: 300px">    
-                <div class="p-col-12 p-lg-6 p-xl-4">
-                    <div style="border: none !important">
-                        <p:polarAreaChart model="#{graficoPie.polarAreaModel}" style="width: 100%; height: 500px;"/>
+        <h:panelGroup id="pesquisaPanelGroup">
+            <div style="display: flex; flex-direction: row">
+                <div style="width: 300px">    
+                    <div class="p-col-12 p-lg-6 p-xl-4">
+                        <div style="border: none !important">
+                            <p:polarAreaChart model="#{graficoPie.polarAreaModel}" style="width: 100%; height: 500px;"/>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div style="width: 70%">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <p:outputLabel value="Setor" styleClass="control-label" for="contratoSetor" />
-                        <p:autoComplete id="contratoSetor" dropdown="true" converter="setorconverter"
-                                        var="setor" itemLabel="#{setor.nome}"
-                                        itemValue="#{setor}" value="#{graficoPie.setor}"
-                                        scrollHeight="200" forceSelection="true"
-                                        inputStyleClass="form-control"
-                                        style="display: flex;"
-                                        emptyMessage="Setor não encontrado" 
-                                        completeMethod="#{managerAutoComplete.autocompleteSetor}"
-                                        >
-                            <p:ajax event="itemSelect" />
-                        </p:autoComplete>
-                    </div> 
+                <div style="display: flex; flex-direction: column">
+                    <div class="row" style="width: 100%">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <p:outputLabel value="Setor" styleClass="control-label" for="contratoSetor" />
+                                <p:autoComplete id="contratoSetor" dropdown="true" converter="setorconverter"
+                                                var="setor" itemLabel="#{setor.nome}"
+                                                itemValue="#{setor}" value="#{graficoPie.setor}"
+                                                scrollHeight="200" forceSelection="true"
+                                                inputStyleClass="form-control"
+                                                style="display: flex;"
+                                                emptyMessage="Setor não encontrado" 
+                                                completeMethod="#{managerAutoComplete.autocompleteSetor}"
+                                                >
+                                    <p:ajax event="itemSelect" />
+                                </p:autoComplete>
+                            </div> 
+                        </div>
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <p:outputLabel value="Contratado" styleClass="control-label" for="contratoContratado" />
+                                <p:autoComplete id="contratoContratado" dropdown="true" converter="contratadoconverter"
+                                                var="contratado" itemLabel="#{contratado.nome}"
+                                                itemValue="#{contratado}" value="#{graficoPie.contratado}"
+                                                scrollHeight="200" forceSelection="true"
+                                                inputStyleClass="form-control"
+                                                style="display: flex;"
+                                                emptyMessage="Contratado não encontrado" 
+                                                completeMethod="#{managerAutoComplete.autocompletaContratado}"
+                                                >
+                                    <p:ajax event="itemSelect" />
+                                </p:autoComplete>
+                            </div> 
+                        </div>
+                        <p:commandButton value="Pesquisar" icon="pi pi-search" process="pesquisaPanelGroup @this" update="pesquisaPanelGroup @this" actionListener="#{graficoPie.buscarContratoSetor()}"
+                                         style="width: 120px;height: 40px; margin-top: 30px !important" />
+                    </div>
+                    <p:lineChart model="#{graficoPie.cartesianLinerModel}" style="width: 100%; height: 200px;"/>
                 </div>
             </div>
-        </div>
+        </h:panelGroup>
         <hr/>
         <div style="display: flex; flex-direction: row">
             <div style="width: 300px">    

@@ -15,6 +15,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import modelo.Contratado;
 import modelo.ContratoVo;
 import modelo.Setor;
 import org.primefaces.model.charts.ChartData;
@@ -24,6 +25,9 @@ import org.primefaces.model.charts.axes.cartesian.linear.CartesianLinearTicks;
 import org.primefaces.model.charts.bar.BarChartDataSet;
 import org.primefaces.model.charts.bar.BarChartModel;
 import org.primefaces.model.charts.bar.BarChartOptions;
+import org.primefaces.model.charts.line.LineChartDataSet;
+import org.primefaces.model.charts.line.LineChartModel;
+import org.primefaces.model.charts.line.LineChartOptions;
 import org.primefaces.model.charts.optionconfig.animation.Animation;
 import org.primefaces.model.charts.optionconfig.legend.Legend;
 import org.primefaces.model.charts.optionconfig.legend.LegendLabel;
@@ -49,7 +53,9 @@ public class GraficoPie implements Serializable {
     ContratoServico contratoServico;
     private Setor setor;
     private StatusContrato status;
-
+    private Contratado contratado;
+    private List<ContratoVo> contratoVos;
+    private LineChartModel cartesianLinerModel;
     private PieChartModel pieModel;
     private PolarAreaChartModel polarAreaModel;
     private RadarChartModel radarModel;
@@ -58,10 +64,80 @@ public class GraficoPie implements Serializable {
     @PostConstruct
     public void init() {
         this.setor = new Setor();
+        this.contratoVos = new ArrayList<>();
+        this.contratado = new Contratado();
         createPieModel();
+        createCartesianLinerModel();
         createPolarAreaModel();
         createRadarModel();
         createBarModel();
+    }
+
+    public void createCartesianLinerModel() {
+        cartesianLinerModel = new LineChartModel();
+        ChartData data = new ChartData();
+
+        LineChartDataSet dataSet = new LineChartDataSet();
+        List<Object> values = new ArrayList<>();
+        values.add(20);
+        values.add(50);
+        values.add(100);
+        values.add(75);
+        values.add(25);
+        values.add(0);
+        dataSet.setData(values);
+        dataSet.setLabel("Left Dataset");
+        dataSet.setYaxisID("left-y-axis");
+        dataSet.setFill(true);
+        dataSet.setTension(0.5);
+
+        LineChartDataSet dataSet2 = new LineChartDataSet();
+        List<Object> values2 = new ArrayList<>();
+        values2.add(0.1);
+        values2.add(0.5);
+        values2.add(1.0);
+        values2.add(2.0);
+        values2.add(1.5);
+        values2.add(0);
+        dataSet2.setData(values2);
+        dataSet2.setLabel("Right Dataset");
+        dataSet2.setYaxisID("right-y-axis");
+        dataSet2.setFill(true);
+        dataSet2.setTension(0.5);
+
+        data.addChartDataSet(dataSet);
+        data.addChartDataSet(dataSet2);
+
+        List<String> labels = new ArrayList<>();
+        labels.add("Jan");
+        labels.add("Feb");
+        labels.add("Mar");
+        labels.add("Apr");
+        labels.add("May");
+        labels.add("Jun");
+        data.setLabels(labels);
+        cartesianLinerModel.setData(data);
+
+        //Options
+        LineChartOptions options = new LineChartOptions();
+        CartesianScales cScales = new CartesianScales();
+        CartesianLinearAxes linearAxes = new CartesianLinearAxes();
+        linearAxes.setId("left-y-axis");
+        linearAxes.setPosition("left");
+        CartesianLinearAxes linearAxes2 = new CartesianLinearAxes();
+        linearAxes2.setId("right-y-axis");
+        linearAxes2.setPosition("right");
+
+        cScales.addYAxesData(linearAxes);
+        cScales.addYAxesData(linearAxes2);
+        options.setScales(cScales);
+
+        Title title = new Title();
+        title.setDisplay(true);
+        title.setText("Cartesian Linear Chart");
+        options.setTitle(title);
+
+        cartesianLinerModel.setOptions(options);
     }
 
     public void createBarModel() {
@@ -134,8 +210,10 @@ public class GraficoPie implements Serializable {
         return contratoServico.buscarTipoContrato();
     }
 
-    public List<ContratoVo> buscarContratoSetor(Setor setor, StatusContrato status) {
-        return contratoServico.buscarContratoSetor(setor, status);
+    public void buscarContratoSetor() {
+        this.contratoVos = contratoServico.buscarContratoSetor(this.setor, this.contratado);
+       
+        createPolarAreaModel();
     }
 
     private void createPieModel() {
@@ -211,28 +289,27 @@ public class GraficoPie implements Serializable {
 
         PolarAreaChartDataSet dataSet = new PolarAreaChartDataSet();
         List<Number> values = new ArrayList<>();
-        values.add(11);
-        values.add(16);
-        values.add(7);
-        values.add(3);
-        values.add(14);
+        List<String> bgColors = new ArrayList<>();
+        List<String> labels = new ArrayList<>();
+
+        if (Utils.isNotEmpty(contratoVos)) {
+            for (ContratoVo contratoSetor : this.contratoVos) {
+                values.add(contratoSetor.getQuantidade());
+                labels.add(contratoSetor.getNome());
+            }
+        }
+
         dataSet.setData(values);
 
-        List<String> bgColors = new ArrayList<>();
-        bgColors.add("rgb(255, 99, 132)");
-        bgColors.add("rgb(75, 192, 192)");
-        bgColors.add("rgb(255, 205, 86)");
-        bgColors.add("rgb(201, 203, 207)");
-        bgColors.add("rgb(54, 162, 235)");
+        bgColors.add("rgba(255, 99, 132,0.4)");
+        bgColors.add("rgba(75, 192, 192,0.4)");
+        bgColors.add("rgba(255, 205, 86,0.4)");
+        bgColors.add("rgba(201, 203, 207,0.4)");
+        bgColors.add("rgba(54, 162, 235,0.4)");
         dataSet.setBackgroundColor(bgColors);
 
         data.addChartDataSet(dataSet);
-        List<String> labels = new ArrayList<>();
-        labels.add("Red");
-        labels.add("Green");
-        labels.add("Yellow");
-        labels.add("Grey");
-        labels.add("Blue");
+
         data.setLabels(labels);
 
         polarAreaModel.setData(data);
@@ -300,6 +377,14 @@ public class GraficoPie implements Serializable {
         return radarModel;
     }
 
+    public Contratado getContratado() {
+        return contratado;
+    }
+
+    public void setContratado(Contratado contratado) {
+        this.contratado = contratado;
+    }
+
     public void setRadarModel(RadarChartModel radarModel) {
         this.radarModel = radarModel;
     }
@@ -342,6 +427,14 @@ public class GraficoPie implements Serializable {
 
     public void setStatus(StatusContrato status) {
         this.status = status;
+    }
+
+    public LineChartModel getCartesianLinerModel() {
+        return cartesianLinerModel;
+    }
+
+    public void setCartesianLinerModel(LineChartModel cartesianLinerModel) {
+        this.cartesianLinerModel = cartesianLinerModel;
     }
 
 }

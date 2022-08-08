@@ -53,26 +53,26 @@ public class ContratoServico extends ServicoGenerico<Contrato> implements Serial
         return query.getResultList();
     }
 
-    public List<ContratoVo> buscarContratoSetor(Setor setor, StatusContrato status) {
+    public List<ContratoVo> buscarContratoSetor(Setor setor, Contratado contratado) {
 
-        String sql = "select new modelo.ContratoVo(c.tipoContrato, count(c)) "
+        String sql = "select new modelo.ContratoVo(c.status, count(c)) "
                 + "from Contrato c ";
         sql += "where c.ativo = true ";
         if (Utils.isNotEmpty(setor)) {
             sql += "and c.setor = :setor ";
         }
-        if (Utils.isNotEmpty(status)) {
-            sql += "and c.status = :status";
+        if (Utils.isNotEmpty(contratado)) {
+            sql += "and c.contratado = :contratado";
         }
-        sql += "group by c.tipoContrato.id";
+        sql += "group by c.status";
 
         Query query = getEntityManager().createQuery(sql);
 
         if (Utils.isNotEmpty(setor)) {
             query.setParameter("setor", setor);
         }
-        if (Utils.isNotEmpty(status)) {
-            query.setParameter("status", status);
+        if (Utils.isNotEmpty(contratado)) {
+            query.setParameter("contratado", contratado);
         }
         return query.getResultList();
     }
