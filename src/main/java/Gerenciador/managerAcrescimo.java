@@ -80,7 +80,7 @@ public class managerAcrescimo extends managerPrincipal implements Serializable{
 
     @Override
     public String getUrlVisualizar() {
-        return "acrescimo.xhtml?visualizar=" + this.acrescimo.getId();
+        return "cadastrarAlteracoes.xhtml?visualizar=" + this.acrescimo.getId();
     }
 
     private void instanciarAcrescimo() {
@@ -102,14 +102,18 @@ public class managerAcrescimo extends managerPrincipal implements Serializable{
                 Msg.messagemError("Número de termo aditivo já registrado !");
             } else {
                 acrescimoServico.Save(this.acrescimo);
-                Msg.messagemInfoRedirect("Operação realizada com sucesso !", "acrescimo.xhtml?visualizar=" + this.acrescimo.getId());
+                Msg.messagemInfoRedirect("Operação realizada com sucesso !", "cadastrarAlteracoes.xhtml?visualizar=" + this.acrescimo.getId());
             }
         }
     }
     
     public void atualizar() {
         acrescimoServico.Update(acrescimo);
-        Msg.messagemInfoRedirect("Operação realizada com sucesso !", "acrescimo.xhtml?visualizar=" + this.acrescimo.getId());
+        Msg.messagemInfoRedirect("Operação realizada com sucesso !", "cadastrarAlteracoes.xhtml?visualizar=" + this.acrescimo.getId());
+    }
+    
+    public void pesquisar() {
+        this.acrescimos = acrescimoServico.findPesquisa(this.acrescimo);
     }
     
     public void deletar() {

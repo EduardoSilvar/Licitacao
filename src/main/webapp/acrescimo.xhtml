@@ -30,8 +30,8 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <p:outputLabel value="Número do termo aditivo*"
-                                           for="numeroTermoAditivo" />
-                            <p:inputText id="numeroTermoAditivo"
+                                           for="numeroTermoAditivoAcrescimo" />
+                            <p:inputText id="numeroTermoAditivoAcrescimo"
                                          placeholder="Número"
                                          value="#{managerAcrescimo.acrescimo.numeroTermo}"
                                          disabled="#{managerAcrescimo.visualizar}"
@@ -39,7 +39,7 @@
                                          requiredMessage="Este campo é obrigatório."
                                          styleClass="form-control" 
                                          />
-                            <p:message for="numeroTermoAditivo" />
+                            <p:message for="numeroTermoAditivoAcrescimo" />
                         </div>
                     </div>
                 </div>
@@ -61,8 +61,8 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <p:outputLabel value="Fiscal responsável" styleClass="control-label" for="fiscalSelect" />
-                            <p:selectOneMenu id="fiscalSelect"
+                            <p:outputLabel value="Fiscal responsável" styleClass="control-label" for="fiscalSelectAcrescimo" />
+                            <p:selectOneMenu id="fiscalSelectAcrescimo"
                                              filter="true" 
                                              placeholder="fiscal"
                                              required="true"
@@ -75,7 +75,7 @@
                                 <f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
                                 <f:selectItems value="#{managerAcrescimo.fiscais}" var="user" itemLabel="#{user.nome}" itemValue="#{user}" />
                             </p:selectOneMenu>
-                            <p:message for="fiscalSelect" />
+                            <p:message for="fiscalSelectAcrescimo" />
                         </div>
                     </div>
                 </div>
@@ -98,15 +98,15 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <p:outputLabel value="Descrição*" for="descricao" />
-                            <p:inputText id="descricao"
+                            <p:outputLabel value="Descrição*" for="descricaoAcrescimo" />
+                            <p:inputText id="descricaoAcrescimo"
                                          value="#{managerAcrescimo.acrescimo.descricao}"
                                          disabled="#{managerAcrescimo.visualizar}"
                                          placeholder="Descrição"
                                          requiredMessage="Este campo é obrigatório."
                                          styleClass="form-control" 
                                          />
-                            <p:message for="descricao" />
+                            <p:message for="descricaoAcrescimo" />
                         </div>
                     </div>
                 </div>
@@ -125,11 +125,11 @@
 
 
         <center>    
-            <p:commandButton value="Salvar" icon="pi pi-save" process="@this acrescimoPanelGroup" update="corpoInteiro:messages" actionListener="#{managerAcrescimo.salvar()}" rendered="#{managerAcrescimo.cadastrar}" />
-            <p:button value="Editar" icon="pi pi-pencil"  rendered="#{managerAcrescimo.visualizar}" href="acrescimo.xhtml?editar=#{managerAcrescimo.acrescimo.id}" />
+            <p:commandButton value="Salvar" icon="pi pi-save" process="@this acrescimoPanelGroup" update="corpoInteiro" actionListener="#{managerAcrescimo.salvar()}" rendered="#{managerAcrescimo.cadastrar}" />
+            <p:button value="Editar" icon="pi pi-pencil"  rendered="#{managerAcrescimo.visualizar}" href="cadastrarAlteracoes.xhtml?editar=#{managerAcrescimo.acrescimo.id}" />
             <p:commandButton value="Atualizar" icon="pi pi-sync" process="@this acrescimoPanelGroup"  actionListener="#{managerAcrescimo.atualizar()}" rendered="#{managerAcrescimo.editar}"  />
-            <p:button value="Cancelar" icon="pi pi-ban"  href="acrescimo.xhtml" rendered="#{managerAcrescimo.visualizar}" />
-            <p:button value="Cancelar" icon="pi pi-ban"  href="acrescimo.xhtml?visualizar=#{managerAcrescimo.acrescimo.id}" rendered="#{managerAcrescimo.editar}" />
+            <p:button value="Cancelar" icon="pi pi-ban"  href="cadastrarAlteracoes.xhtml" rendered="#{managerAcrescimo.visualizar}" />
+            <p:button value="Cancelar" icon="pi pi-ban"  href="cadastrarAlteracoes.xhtml?visualizar=#{managerAcrescimo.acrescimo.id}" rendered="#{managerAcrescimo.editar}" />
             <p:button value="Cancelar" icon="pi pi-ban"  href="index.xhtml" rendered="#{managerAcrescimo.cadastrar}" />
         </center>
         <p:dialog id="removeraAcrescimoConfirmDialog"

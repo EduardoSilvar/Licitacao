@@ -1,58 +1,117 @@
-<ui:composition template="/WEB-INF/template/layout.xhtml"
-                xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:h="http://xmlns.jcp.org/jsf/html"
-                xmlns:p="http://primefaces.org/ui"
-                xmlns:f="http://xmlns.jcp.org/jsf/core"
-                xmlns="http://www.w3.org/1999/xhtml">
-    <ui:define name="acoes">
-        <h:panelGroup class="panelAcoes">
-            <p:button value="Pesquisar"
-                      title="Pesquisar contrato"
-                      icon="pi pi-search"
-                      href="pesquisarContrato.xhtml" style=" margin-right: 30px !important"/>
+<ui:composition 
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns="http://www.w3.org/1999/xhtml">
 
-            <p:splitButton value="Ações" style="margin: 0px -8px !important"
-                           icon="pi pi-cog"
-                           >
-
-                <p:menuitem value="Editar" 
-                            icon="pi pi-pencil"
-                            process="@this"
-                            />
-
-            </p:splitButton>
+    <h:panelGroup id="acrescimoPanelPrincipal">
+        <h:panelGroup id="acrescimoSubPanel">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <p:outputLabel value="Contrato*" styleClass="control-label" for="contratoAcrescimo" />
+                        <p:selectOneMenu id="contratoAcrescimo"
+                                         value="#{managerAcrescimo.acrescimo.contrato}"
+                                         disabled="#{managerAcrescimo.visualizar}"
+                                         filter="true" 
+                                         placeholder="Contrato"
+                                         styleClass="form-control" 
+                                         converter="contratoconverter">
+                            <f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
+                            <f:selectItems value="#{managerAcrescimo.contratos}" var="contrato" itemLabel="#{contrato.numeroContrato}" itemValue="#{contrato}" />
+                        </p:selectOneMenu>
+                    </div>
+                </div>
+            </div>
         </h:panelGroup>
-    </ui:define>
-    <ui:define name="barra">
-        <div class="row" id="stylebarra">
-            <i class="pi pi-file-o" id="icon"></i> <h5 style="color: #e1e6e5"> Pesquisar Contrato</h5>
-        </div>
-    </ui:define>
+        <center>
+            <p:commandButton value="Pesquisar" icon="pi pi-search" process="@this acrescimoSubPanel" update="acrescimoDatatable" actionListener="#{managerAcrescimo.pesquisar()}" />
+        </center>
+        <hr/>
+        <p:dataTable id="acrescimoDatatable" var="acrescimo" value="#{managerAcrescimo.acrescimos}"
+                     resizeMode="5">
+            <f:facet name="header">
+                <center>
+                    Histórico de acréscimos
+                </center>
+            </f:facet>
+            <p:column headerText="Ações" width="200">
+                    <p:commandButton  icon="pi pi-trash" 
+                                      process="@this"
+                                      oncomplete="PF('removeraAcrescimoConfirmDialog').show();" title="exluir" >
+                        <f:setPropertyActionListener value="#{acrescimo}"
+                                                     target="#{managerAcrescimo.acrescimo}"/>
+                    </p:commandButton>
+                    <p:button  icon="pi pi-eye" title="visualizar" href="cadastrarAlteracoes.xhtml?visualizar=#{acrescimo.id}" />
+                </p:column>
+            <p:column headerText="N° do Termo Aditivo">
+                <h:outputText value="#{acrescimo.numeroTermo}" />
+            </p:column>
+            <p:column headerText="Valor">
+                <h:outputText value="#{acrescimo.valor}" />
+            </p:column>
+            <p:column headerText="Fiscal responsável">
+                <h:outputText value="#{acrescimo.fiscal.nome}" />
+            </p:column>
+            <p:column headerText="Data">
+                <h:outputText value="#{acrescimo.dataAssinatura}"/>
+            </p:column>
+            <p:column headerText="Descrição">
+                <h:outputText value="#{acrescimo.descricao}"  />
+            </p:column>
+        </p:dataTable>
+        <p:dialog id="removeraAcrescimoConfirmDialog"
+                  widgetVar="removeraAcrescimoConfirmDialog"
+                  header="Atenção!"
+                  closeOnEscape="true"
+                  draggable="false"
+                  maximizable="false"
+                  minimizable="false"
+                  modal="true"
+                  width="850"
+                  showEffect="fade"
+                  hideEffect="fade">
 
-    <ui:define name="corpo">
-        <p:dataTable id="acrescimoDatatable" var="contrato" value="#{managerContrato.contratos}"
-                                 resizeMode="5">
-                        <f:facet name="header">
-                            <center>
-                                Histórico de acréscimos
-                            </center>
-                        </f:facet>
-                        <p:column headerText="N° do Termo Aditivo">
-                            <h:outputText value="" />
-                        </p:column>
-                        <p:column headerText="Valor">
-                            <h:outputText value="" />
-                        </p:column>
-                        <p:column headerText="Fiscal responsável">
-                            <h:outputText value="" />
-                        </p:column>
-                        <p:column headerText="Data">
-                            <h:outputText value=""  />
-                        </p:column>
-                        <p:column headerText="Descrição">
-                            <h:outputText value=""  />
-                        </p:column>
-                    </p:dataTable>
+            <div class="row">
 
-    </ui:define>
+                <div class="col-md-12">
+                    <div class="form-group" style="padding-left: 80px !important">
+                        <h4>
+                            <i class="pi pi-exclamation-triangle"></i>
+                            Tem certeza de que deseja remover este Acrescimo ?
+                        </h4>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+
+                    <center>
+
+                        <p:commandButton value="Sim"
+                                         title="Confirmar Remoção"
+                                         icon="pi pi-check"
+                                         update="acrescimoDatatable  "
+                                         process="@this"
+                                         actionListener="#{managerAcrescimo.deletar()}"
+                                         oncomplete="PF('removeraAcrescimoConfirmDialog').hide();"
+                                         styleClass="mr-md-1"/>
+
+                        <p:commandButton value="Não"
+                                         title="Cancelar Remoção"
+                                         icon="pi pi-ban"
+                                         process="@this"
+                                         update="@form"
+                                         oncomplete="PF('removeraAcrescimoConfirmDialog').hide();"
+                                         styleClass="ml-md-1"/>
+
+                    </center>
+
+                </div>
+
+            </div>
+
+
+        </p:dialog>
+    </h:panelGroup>
 </ui:composition>

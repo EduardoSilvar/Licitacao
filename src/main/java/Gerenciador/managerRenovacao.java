@@ -107,7 +107,7 @@ public class managerRenovacao extends managerPrincipal implements Serializable{
                 Msg.messagemError("Número de termo aditivo já registrado !");
             } else {
                 renovacaoServico.Save(this.renovacao);
-                Msg.messagemInfoRedirect("Operação realizada com sucesso !", "renovacao.xhtml?visualizar=" + this.renovacao.getId());
+                Msg.messagemInfoRedirect("Operação realizada com sucesso !", "cadastrarAlteracoes.xhtml?visualizar=" + this.renovacao.getId());
             }
         }
     }
@@ -115,7 +115,11 @@ public class managerRenovacao extends managerPrincipal implements Serializable{
     
     public void atualizar() {
         renovacaoServico.Update(renovacao);
-        Msg.messagemInfoRedirect("Operação realizada com sucesso !", "renovacao.xhtml?visualizar=" + this.renovacao.getId());
+        Msg.messagemInfoRedirect("Operação realizada com sucesso !", "cadastrarAlteracoes.xhtml?visualizar=" + this.renovacao.getId());
+    }
+    
+    public void pesquisar() {
+        this.renovacoes = renovacaoServico.findPesquisa(this.renovacao);
     }
     
     public void deletar() {
