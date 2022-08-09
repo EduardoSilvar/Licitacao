@@ -35,6 +35,12 @@ public class ContratoVo {
         this.valor = valor;
     }
 
+    public ContratoVo(String status, BigDecimal valor) {
+        this.nome = status;
+        this.quantidade = 0l;
+        this.valor = valor;
+    }
+
     public String getNome() {
         return nome;
     }

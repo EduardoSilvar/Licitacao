@@ -62,7 +62,7 @@ public class ContratoServico extends ServicoGenerico<Contrato> implements Serial
             sql += "and c.setor = :setor ";
         }
         if (Utils.isNotEmpty(contratado)) {
-            sql += "and c.contratado = :contratado";
+            sql += "and c.contratado = :contratado ";
         }
         sql += "group by c.status";
 
@@ -73,6 +73,19 @@ public class ContratoServico extends ServicoGenerico<Contrato> implements Serial
         }
         if (Utils.isNotEmpty(contratado)) {
             query.setParameter("contratado", contratado);
+        }
+        return query.getResultList();
+    }
+
+    public List<Contrato> buscarValorContrato(Setor setor) {
+        String sql = "select c from Contrato c where c.ativo = true ";
+        if (Utils.isNotEmpty(setor)) {
+            sql += "and c.setor = :setor ";
+        }
+        Query query = getEntityManager().createQuery(sql);
+
+        if (Utils.isNotEmpty(setor)) {
+            query.setParameter("setor", setor);
         }
         return query.getResultList();
     }

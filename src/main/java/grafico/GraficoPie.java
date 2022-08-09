@@ -9,6 +9,7 @@ import Enum.StatusContrato;
 import Servico.ContratadoServico;
 import Servico.ContratoServico;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -16,6 +17,7 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import modelo.Contratado;
+import modelo.Contrato;
 import modelo.ContratoVo;
 import modelo.Setor;
 import org.primefaces.model.charts.ChartData;
@@ -79,42 +81,46 @@ public class GraficoPie implements Serializable {
 
         LineChartDataSet dataSet = new LineChartDataSet();
         List<Object> values = new ArrayList<>();
-        values.add(20);
-        values.add(50);
-        values.add(100);
-        values.add(75);
-        values.add(25);
-        values.add(0);
+        List<String> labels = new ArrayList<>();
+        for (ContratoVo c : buscarValorContrato()) {
+            values.add(c.getValor());
+            labels.add(c.getNome());
+        }
+//        values.add(20);
+//        values.add(50);
+//        values.add(100);
+//        values.add(75);
+//        values.add(25);
+//        values.add(0);
         dataSet.setData(values);
         dataSet.setLabel("Left Dataset");
         dataSet.setYaxisID("left-y-axis");
         dataSet.setFill(true);
         dataSet.setTension(0.5);
 
-        LineChartDataSet dataSet2 = new LineChartDataSet();
-        List<Object> values2 = new ArrayList<>();
-        values2.add(0.1);
-        values2.add(0.5);
-        values2.add(1.0);
-        values2.add(2.0);
-        values2.add(1.5);
-        values2.add(0);
-        dataSet2.setData(values2);
-        dataSet2.setLabel("Right Dataset");
-        dataSet2.setYaxisID("right-y-axis");
-        dataSet2.setFill(true);
-        dataSet2.setTension(0.5);
-
+//        LineChartDataSet dataSet2 = new LineChartDataSet();
+//        List<Object> values2 = new ArrayList<>();
+//        values2.add(0.1);
+//        values2.add(0.5);
+//        values2.add(1.0);
+//        values2.add(2.0);
+//        values2.add(1.5);
+//        values2.add(0);
+//        dataSet2.setData(values2);
+//        dataSet2.setLabel("Right Dataset");
+//        dataSet2.setYaxisID("right-y-axis");
+//        dataSet2.setFill(true);
+//        dataSet2.setTension(0.5);
         data.addChartDataSet(dataSet);
-        data.addChartDataSet(dataSet2);
+//        data.addChartDataSet(dataSet2);
 
-        List<String> labels = new ArrayList<>();
-        labels.add("Jan");
-        labels.add("Feb");
-        labels.add("Mar");
-        labels.add("Apr");
-        labels.add("May");
-        labels.add("Jun");
+//        List<String> labels = new ArrayList<>();
+//        labels.add("Jan");
+//        labels.add("Feb");
+//        labels.add("Mar");
+//        labels.add("Apr");
+//        labels.add("May");
+//        labels.add("Jun");
         data.setLabels(labels);
         cartesianLinerModel.setData(data);
 
@@ -212,8 +218,24 @@ public class GraficoPie implements Serializable {
 
     public void buscarContratoSetor() {
         this.contratoVos = contratoServico.buscarContratoSetor(this.setor, this.contratado);
-       
+        createCartesianLinerModel();
         createPolarAreaModel();
+    }
+
+    public List<ContratoVo> buscarValorContrato() {
+        List<ContratoVo> contratoValor = new ArrayList<>();
+        List<Contrato> contratos = contratoServico.buscarValorContrato(this.setor);
+        BigDecimal valor = new BigDecimal(0);
+        for (ContratoVo cv : contratoVos) {
+            for (Contrato c : contratos) {
+                System.err.println(contratos.size());
+                if (c.getStatus().getStatus().equals(cv.getNome())) {
+                    valor = valor.add(c.getValor());
+                }
+            }
+            contratoValor.add(new ContratoVo(cv.getNome(), valor));
+        }
+        return contratoValor;
     }
 
     private void createPieModel() {
