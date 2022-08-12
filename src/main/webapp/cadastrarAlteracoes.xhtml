@@ -39,19 +39,19 @@
     <ui:define name="corpo">
         <p:growl id="messages"/>
         <p:tabView dynamic="true">
-            <p:tab title="Acréscimo" >
+            <p:tab title="Acréscimo" rendered="#{managerAcrescimo.verificarAcrescimo()}">
 
                 <ui:include src="acrescimo.xhtml"/>
             </p:tab>
-            <p:tab title="Supressão">
+            <p:tab title="Supressão" rendered="#{managerSupressao.verificarSupressao()}">
 
                 <ui:include src="supressao.xhtml"/>
             </p:tab>
-            <p:tab title="Renovação">
+            <p:tab title="Renovação" rendered="#{managerRenovacao.verificarRenovacao()}">
 
                 <ui:include src="renovacao.xhtml"/>
             </p:tab>
-            <p:tab title="Repactuação">
+            <p:tab title="Repactuação" rendered="#{managerRepactuacao.verificarRepactuacao()}">
 
                 <ui:include src="repactuacao.xhtml"/>
             </p:tab>

@@ -38,14 +38,15 @@
                 </center>
             </f:facet>
             <p:column headerText="Ações" width="200">
-                    <p:commandButton  icon="pi pi-trash" 
-                                      process="@this"
-                                      oncomplete="PF('removeraRenovacaoConfirmDialog').show();" title="exluir" >
-                        <f:setPropertyActionListener value="#{renovacao}"
-                                                     target="#{managerRenovacao.renovacao}"/>
-                    </p:commandButton>
-                    <p:button  icon="pi pi-eye" title="visualizar" href="cadastrarAlteracoes.xhtml?visualizar=#{renovacao.id}" />
-                </p:column>
+                <p:commandButton  icon="pi pi-trash" 
+                                  process="@this"
+
+                                  oncomplete="PF('removeraRenovacaoConfirmDialog').show();" title="exluir" >
+                    <f:setPropertyActionListener value="#{renovacao}"
+                                                 target="#{managerRenovacao.renovacao}"/>
+                </p:commandButton>
+                <p:button  icon="pi pi-eye" title="visualizar" href="#{managerRenovacao.urlVisualizar(renovacao.id)}" />
+            </p:column>
             <p:column headerText="N° do Termo Aditivo">
                 <h:outputText value="#{renovacao.numeroTermo}" />
             </p:column>
@@ -101,7 +102,7 @@
                         <p:commandButton value="Sim"
                                          title="Confirmar Remoção"
                                          icon="pi pi-check"
-                                         update="corpoInteiro"
+                                         update="@this renovacaoDatatable"
                                          process="@this"
                                          actionListener="#{managerRenovacao.deletar()}"
                                          oncomplete="PF('removeraRenovacaoConfirmDialog').hide();"

@@ -39,10 +39,12 @@
                                 <p:outputLabel value="Responsável" styleClass="control-label" for="responNotaFiscal" />
                                 <p:selectOneMenu id="responNotaFiscal"
                                                  filter="true" 
+                                                 value="#{managerNotaFiscal.notaFiscal.responsavel}"
                                                  placeholder="Responsável"
-                                                 styleClass="form-control" >
+                                                 styleClass="form-control" 
+                                                 converter="contratadoconverter">
                                     <f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
-                                    <f:selectItems  />
+                                    <f:selectItems value="#{managerNotaFiscal.responsaveis}" var="responsavel" itemLabel="#{responsavel.nome}" itemValue="#{responsavel}" />
                                 </p:selectOneMenu>
                             </div> 
                         </div>
@@ -52,15 +54,17 @@
                                 <p:selectOneMenu id="contratNotaFiscal"
                                                  filter="true" 
                                                  placeholder="Contrato"
-                                                 styleClass="form-control" >
+                                                 styleClass="form-control" 
+                                                 converter="contratoconverter"
+                                                 value="#{managerNotaFiscal.notaFiscal.contrato}">
                                     <f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
-                                    <f:selectItems  />
+                                    <f:selectItems value="#{managerNotaFiscal.contratos}" var="contrato" itemLabel="#{contrato.nome}" itemValue="#{contrato}" />
                                 </p:selectOneMenu>
                             </div> 
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <p:outputLabel value="Valor"
                                                for="valorNotaFiscal" />
@@ -74,20 +78,7 @@
                                 <p:message for="valorNotaFiscal" />
                             </div>
                         </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <p:outputLabel value="Número da conta"
-                                               for="numeroNotaFiscal" />
-                                <p:inputText id="numeroNotaFiscal"
-                                             placeholder="Número"
-                                             rendered="true"
-                                             requiredMessage="Este campo é obrigatório."
-                                             styleClass="form-control" 
-                                             />
-                                <p:message for="numeroNotaFiscal" />
-                            </div>
-                        </div>
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <p:outputLabel value="Data do Pagamento"
                                                for="dataNotaFiscal"  />
@@ -142,14 +133,24 @@
                     </p:column>
 
                     <p:column headerText="Responsável">
-                        <h:outputText value="#{nota.responsavel}" />
+                        <h:outputText value="#{nota.contrato.fiscalContrato.nome}" />
                     </p:column>
                     <p:column headerText="Contratado">
-                        <h:outputText value="#{nota.contratado}" />
+                        <h:outputText value="#{nota.contrato.contratado}" />
                     </p:column>
                     <p:column headerText="Contrato">
-                        <h:outputText value="#{nota.contrato}" />
+                        <h:outputText value="#{nota.contrato.numeroContrato}" />
                     </p:column>
+                    <p:column headerText="Valor pago">
+                        <h:outputText value="#{nota.valor}" />
+                    </p:column>
+                    <p:column headerText="Valor contratual">
+                        <h:outputText value="#{nota.contrato.valor}" />
+                    </p:column>
+                    <p:column headerText="Valor restante">
+                        <h:outputText value="" />
+                    </p:column>
+                    
 
                 </p:dataTable>
             </h:panelGroup>

@@ -11,13 +11,16 @@ import Servico.ContratoServico;
 import Servico.UsuarioServico;
 import java.io.IOException;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import modelo.Acrescimo;
 import modelo.Contrato;
 import modelo.Usuario;
@@ -39,6 +42,7 @@ public class managerAcrescimo extends managerPrincipal implements Serializable{
     private UsuarioServico userServico;
     
     private Acrescimo acrescimo;
+    private String verificadorRendered;
     private List<Acrescimo> acrescimos;
     private List<Usuario> fiscais;
     private List<Contrato> contratos;
@@ -102,14 +106,14 @@ public class managerAcrescimo extends managerPrincipal implements Serializable{
                 Msg.messagemError("Número de termo aditivo já registrado !");
             } else {
                 acrescimoServico.Save(this.acrescimo);
-                Msg.messagemInfoRedirect("Operação realizada com sucesso !", "cadastrarAlteracoes.xhtml?visualizar=" + this.acrescimo.getId());
+                Msg.messagemInfoRedirect("Operação realizada com sucesso !", "cadastrarAlteracoes.xhtml?visualizar=" + this.acrescimo.getId() + "&acrescimo=TRUE");
             }
         }
     }
     
     public void atualizar() {
-        acrescimoServico.Update(acrescimo);
-        Msg.messagemInfoRedirect("Operação realizada com sucesso !", "cadastrarAlteracoes.xhtml?visualizar=" + this.acrescimo.getId());
+        acrescimoServico.Update(this.acrescimo);
+        Msg.messagemInfoRedirect("Operação realizada com sucesso !", "cadastrarAlteracoes.xhtml?visualizar=" + this.acrescimo.getId() + "&acrescimo=TRUE");
     }
     
     public void pesquisar() {
@@ -134,6 +138,29 @@ public class managerAcrescimo extends managerPrincipal implements Serializable{
             e.getMessage();
         }
 
+    }
+    
+    public String urlVisualizar(long id){
+        return "cadastrarAlteracoes.xhtml?visualizar="+id+"&acrescimo=TRUE";
+    }
+    
+    public String urlEditar(long id){
+        return "cadastrarAlteracoes.xhtml?editar="+id+"&acrescimo=TRUE";
+    }
+    
+    public boolean verificarAcrescimo(){
+        boolean verificarMetodo = false;
+        Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+        this.verificadorRendered = params.get("acrescimo");
+        if(isVisualizar() || isEditar()){
+            if(this.verificadorRendered != null && !this.verificadorRendered.isEmpty()){
+                verificarMetodo = true;
+            }
+        }
+        if(isCadastrar()) {
+            verificarMetodo = true;
+        } 
+        return verificarMetodo;
     }
 
     public AcrescimoServico getAcrescimoServico() {
@@ -206,6 +233,14 @@ public class managerAcrescimo extends managerPrincipal implements Serializable{
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getVerificadorRendered() {
+        return verificadorRendered;
+    }
+
+    public void setVerificadorRendered(String verificadorRendered) {
+        this.verificadorRendered = verificadorRendered;
     }
     
     

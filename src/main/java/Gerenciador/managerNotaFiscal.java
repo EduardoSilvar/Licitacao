@@ -7,9 +7,12 @@ package Gerenciador;
 import static Gerenciador.managerLogin.VerificarLogin;
 import static Gerenciador.managerLogin.getObjectSession;
 import Servico.AnexoServico;
+import Servico.ContratoServico;
 import Servico.NotaFiscalServico;
+import Servico.UsuarioServico;
 import java.io.File;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +22,8 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import modelo.Anexo;
+import modelo.Contratado;
+import modelo.Contrato;
 import modelo.NotaFiscal;
 import modelo.TipoAnexo;
 import modelo.Usuario;
@@ -40,7 +45,13 @@ public class managerNotaFiscal extends managerPrincipal {
     private NotaFiscalServico notaFiscalServico;
     @EJB
     private AnexoServico anexoServico;
+    @EJB
+    private ContratoServico contratoServico;
+    @EJB
+    private UsuarioServico userServico;
     private NotaFiscal notaFiscal;
+    private List<Contrato> contratos;
+    private List<Usuario> responsaveis;
     private List<NotaFiscal> notasFiscais;
     private Anexo anexo;
     private Usuario user;
@@ -94,6 +105,18 @@ public class managerNotaFiscal extends managerPrincipal {
         }
     }
 
+    public BigDecimal valorRestante(NotaFiscal nota){
+        List<NotaFiscal> listaNotas;
+        BigDecimal valoresNotas = new BigDecimal(0);
+        BigDecimal restoValor = new BigDecimal(0);
+        listaNotas = nota.getContrato().getNotasFiscais();
+        for(NotaFiscal n : listaNotas){
+            valoresNotas.add(n.getValor());
+        }
+        restoValor = nota.getContrato().getValor().subtract(valoresNotas);
+        return restoValor;
+    }
+    
     public void adicionarAnexo() {
 
         try {
@@ -137,10 +160,16 @@ public class managerNotaFiscal extends managerPrincipal {
         }
         instanciarNotaFical();
         instanciarAnexo();
+        instanciarSelect();
         instanciarListaNotaFiscal();
 
     }
-
+    
+    public void instanciarSelect() {
+        this.contratos = contratoServico.FindAll();
+        this.responsaveis = userServico.FindAll();
+    }
+    
     @Override
     public String getUrlPesquisar() {
         return "pesquisarNotaFiscal.xhtml";
@@ -202,6 +231,50 @@ public class managerNotaFiscal extends managerPrincipal {
 
     public void setUser(Usuario user) {
         this.user = user;
+    }
+
+    public NotaFiscalServico getNotaFiscalServico() {
+        return notaFiscalServico;
+    }
+
+    public void setNotaFiscalServico(NotaFiscalServico notaFiscalServico) {
+        this.notaFiscalServico = notaFiscalServico;
+    }
+
+    public ContratoServico getContratoServico() {
+        return contratoServico;
+    }
+
+    public void setContratoServico(ContratoServico contratoServico) {
+        this.contratoServico = contratoServico;
+    }
+
+    public List<Contrato> getContratos() {
+        return contratos;
+    }
+
+    public void setContratos(List<Contrato> contratos) {
+        this.contratos = contratos;
+    }
+
+    
+
+    public UsuarioServico getUserServico() {
+        return userServico;
+    }
+
+    public void setUserServico(UsuarioServico userServico) {
+        this.userServico = userServico;
+    }
+
+    
+
+    public List<Usuario> getResponsaveis() {
+        return responsaveis;
+    }
+
+    public void setResponsaveis(List<Usuario> responsaveis) {
+        this.responsaveis = responsaveis;
     }
 
 }

@@ -43,7 +43,7 @@
                         <f:setPropertyActionListener value="#{acrescimo}"
                                                      target="#{managerAcrescimo.acrescimo}"/>
                     </p:commandButton>
-                    <p:button  icon="pi pi-eye" title="visualizar" href="cadastrarAlteracoes.xhtml?visualizar=#{acrescimo.id}" />
+                <p:button  icon="pi pi-eye" title="visualizar" href="#{managerAcrescimo.urlVisualizar(acrescimo.id)}" />
                 </p:column>
             <p:column headerText="N° do Termo Aditivo">
                 <h:outputText value="#{acrescimo.numeroTermo}" />
@@ -91,7 +91,7 @@
                         <p:commandButton value="Sim"
                                          title="Confirmar Remoção"
                                          icon="pi pi-check"
-                                         update="acrescimoDatatable  "
+                                         update="@this acrescimoDatatable"
                                          process="@this"
                                          actionListener="#{managerAcrescimo.deletar()}"
                                          oncomplete="PF('removeraAcrescimoConfirmDialog').hide();"

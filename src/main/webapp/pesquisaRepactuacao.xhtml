@@ -43,7 +43,7 @@
                     <f:setPropertyActionListener value="#{repactuacao}"
                                                  target="#{managerRepactuacao.repactuacao}"/>
                 </p:commandButton>
-                <p:button  icon="pi pi-eye" title="visualizar" href="cadastrarAlteracoes.xhtml?visualizar=#{repactuacao.id}" />
+                <p:button  icon="pi pi-eye" title="visualizar" href="#{managerRepactuacao.urlVisualizar(repactuacao.id)}" />
             </p:column>
 
             <p:column headerText="N° do Termo de Apostilamento" width="300px">
@@ -96,7 +96,7 @@
                     <p:commandButton value="Sim"
                                      title="Confirmar Remoção"
                                      icon="pi pi-check"
-                                     update="corpoInteiro "
+                                     update="@this repactuacaoDatatable"
                                      process="@this"
                                      actionListener="#{managerRepactuacao.deletar()}"
                                      oncomplete="PF('removeraRepactuacaoConfirmDialog').hide();"

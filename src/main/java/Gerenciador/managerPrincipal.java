@@ -99,7 +99,7 @@ public abstract class managerPrincipal implements Serializable {
     private void carregarParametros() {
         Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
         this.visualizar = params.get("visualizar");
-        this.editar = params.get("editar");
+        this.editar = params.get("editar");   
     }
 
     public boolean isVisualizar() {

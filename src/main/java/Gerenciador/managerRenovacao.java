@@ -13,11 +13,13 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import modelo.Contrato;
 import modelo.Renovacao;
 import modelo.Usuario;
@@ -40,6 +42,7 @@ public class managerRenovacao extends managerPrincipal implements Serializable{
     private UsuarioServico userServico;
     
     private Renovacao renovacao;
+    private String verificadorRendered;
     private List<Renovacao> renovacoes;
     private List<Usuario> fiscais;
     private List<Contrato> contratos;
@@ -106,8 +109,10 @@ public class managerRenovacao extends managerPrincipal implements Serializable{
             if (renovacaoServico.existNumero(this.renovacao.getNumeroTermo())) {
                 Msg.messagemError("Número de termo aditivo já registrado !");
             } else {
+                this.renovacao.getContrato().setValor(this.renovacao.getValor());
+                contratoServico.Update(this.renovacao.getContrato());
                 renovacaoServico.Save(this.renovacao);
-                Msg.messagemInfoRedirect("Operação realizada com sucesso !", "cadastrarAlteracoes.xhtml?visualizar=" + this.renovacao.getId());
+                Msg.messagemInfoRedirect("Operação realizada com sucesso !", "cadastrarAlteracoes.xhtml?visualizar=" + this.renovacao.getId() + "&renovacao=TRUE");
             }
         }
     }
@@ -115,7 +120,7 @@ public class managerRenovacao extends managerPrincipal implements Serializable{
     
     public void atualizar() {
         renovacaoServico.Update(renovacao);
-        Msg.messagemInfoRedirect("Operação realizada com sucesso !", "cadastrarAlteracoes.xhtml?visualizar=" + this.renovacao.getId());
+        Msg.messagemInfoRedirect("Operação realizada com sucesso !", "cadastrarAlteracoes.xhtml?visualizar=" + this.renovacao.getId() + "&renovacao=TRUE");
     }
     
     public void pesquisar() {
@@ -141,6 +146,30 @@ public class managerRenovacao extends managerPrincipal implements Serializable{
         }
 
     }
+    
+    public String urlVisualizar(long id){
+        return "cadastrarAlteracoes.xhtml?visualizar="+id+"&renovacao=TRUE";
+    }
+    
+    public String urlEditar(long id){
+        return "cadastrarAlteracoes.xhtml?editar="+id+"&renovacao=TRUE";
+    }
+    
+    public boolean verificarRenovacao(){
+        boolean verificarMetodo = false;
+        Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+        this.verificadorRendered = params.get("renovacao");
+        if(isVisualizar() || isEditar()){
+            if(this.verificadorRendered != null && !this.verificadorRendered.isEmpty()){
+                verificarMetodo = true;
+            }
+        }
+        if(isCadastrar()) {
+            verificarMetodo = true;
+        } 
+        return verificarMetodo;
+    }
+    
     public RenovacaoServico getRenovacaoServico() {
         return renovacaoServico;
     }
@@ -212,6 +241,14 @@ public class managerRenovacao extends managerPrincipal implements Serializable{
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getVerificadorRendered() {
+        return verificadorRendered;
+    }
+
+    public void setVerificadorRendered(String verificadorRendered) {
+        this.verificadorRendered = verificadorRendered;
     }
     
     

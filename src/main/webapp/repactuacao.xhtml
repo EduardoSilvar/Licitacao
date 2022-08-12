@@ -136,10 +136,10 @@
 
     <center>    
         <p:commandButton value="Salvar" icon="pi pi-save" process="@this repactuacaoPanelGroup" update="corpoInteiro" actionListener="#{managerRepactuacao.salvar()}" rendered="#{managerRepactuacao.cadastrar}" />
-        <p:button value="Editar" icon="pi pi-pencil"  rendered="#{managerRepactuacao.visualizar}" href="cadastrarAlteracoes.xhtml?editar=#{managerRepactuacao.repactuacao.id}" />
+        <p:button value="Editar" icon="pi pi-pencil"  rendered="#{managerRepactuacao.visualizar}" href="#{managerRepactuacao.urlEditar(managerRepactuacao.repactuacao.id)}" />
         <p:commandButton value="Atualizar" icon="pi pi-sync" process="@this repactuacaoPanelGroup"  actionListener="#{managerRepactuacao.atualizar()}" rendered="#{managerRepactuacao.editar}"  />
         <p:button value="Cancelar" icon="pi pi-ban"  href="cadastrarAlteracoes.xhtml" rendered="#{managerRepactuacao.visualizar}" />
-        <p:button value="Cancelar" icon="pi pi-ban"  href="cadastrarAlteracoes.xhtml?visualizar=#{managerRepactuacao.repactuacao.id}" rendered="#{managerRepactuacao.editar}" />
+        <p:button value="Cancelar" icon="pi pi-ban"  href="#{managerRepactuacao.urlVisualizar(managerRepactuacao.repactuacao.id)}" rendered="#{managerRepactuacao.editar}" />
         <p:button value="Cancelar" icon="pi pi-ban"  href="index.xhtml" rendered="#{managerRepactuacao.cadastrar}" />
     </center>
 

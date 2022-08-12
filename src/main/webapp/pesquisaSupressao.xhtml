@@ -44,7 +44,7 @@
                         <f:setPropertyActionListener value="#{supressao}"
                                                      target="#{managerSupressao.supressao}"/>
                     </p:commandButton>
-                    <p:button  icon="pi pi-eye" title="visualizar" href="cadastrarAlteracoes.xhtml?visualizar=#{supressao.id}" />
+                <p:button  icon="pi pi-eye" title="visualizar" href="#{managerSupressao.urlVisualizar(supressao.id)}" />
                 </p:column>
             <p:column headerText="N° do Termo Aditivo">
                 <h:outputText value="#{supressao.numeroTermo}" />
@@ -92,7 +92,7 @@
                         <p:commandButton value="Sim"
                                          title="Confirmar Remoção"
                                          icon="pi pi-check"
-                                         update="corpoInteiro"
+                                         update="@this supressaoDatatable"
                                          process="@this"
                                          actionListener="#{managerSupressao.deletar()}"
                                          oncomplete="PF('removeraSupressaoConfirmDialog').hide();"

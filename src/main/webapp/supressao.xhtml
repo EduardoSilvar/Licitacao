@@ -125,10 +125,10 @@
 
         <center>    
             <p:commandButton value="Salvar" icon="pi pi-save" process="@this supressaoPanelGroup" update="corpoInteiro" actionListener="#{managerSupressao.salvar()}" rendered="#{managerSupressao.cadastrar}" />
-            <p:button value="Editar" icon="pi pi-pencil"  rendered="#{managerSupressao.visualizar}" href="cadastrarAlteracoes.xhtml?editar=#{managerSupressao.supressao.id}" />
+            <p:button value="Editar" icon="pi pi-pencil"  rendered="#{managerSupressao.visualizar}" href="#{managerSupressao.urlEditar(managerSupressao.supressao.id)}" />
             <p:commandButton value="Atualizar" icon="pi pi-sync" process="@this supressaoPanelGroup"  actionListener="#{managerSupressao.atualizar()}" rendered="#{managerSupressao.editar}"  />
             <p:button value="Cancelar" icon="pi pi-ban"  href="cadastrarAlteracoes.xhtml" rendered="#{managerSupressao.visualizar}" />
-            <p:button value="Cancelar" icon="pi pi-ban"  href="cadastrarAlteracoes.xhtml?visualizar=#{managerSupressao.supressao.id}" rendered="#{managerSupressao.editar}" />
+            <p:button value="Cancelar" icon="pi pi-ban"  href="#{managerSupressao.urlVisualizar(managerSupressao.supressao.id)}" rendered="#{managerSupressao.editar}" />
             <p:button value="Cancelar" icon="pi pi-ban"  href="index.xhtml" rendered="#{managerSupressao.cadastrar}" />
         </center>
 

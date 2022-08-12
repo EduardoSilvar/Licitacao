@@ -126,10 +126,10 @@
 
         <center>    
             <p:commandButton value="Salvar" icon="pi pi-save" process="@this acrescimoPanelGroup" update="corpoInteiro" actionListener="#{managerAcrescimo.salvar()}" rendered="#{managerAcrescimo.cadastrar}" />
-            <p:button value="Editar" icon="pi pi-pencil"  rendered="#{managerAcrescimo.visualizar}" href="cadastrarAlteracoes.xhtml?editar=#{managerAcrescimo.acrescimo.id}" />
+            <p:button value="Editar" icon="pi pi-pencil"  rendered="#{managerAcrescimo.visualizar}" href="#{managerAcrescimo.urlEditar(managerAcrescimo.acrescimo.id)}" />
             <p:commandButton value="Atualizar" icon="pi pi-sync" process="@this acrescimoPanelGroup"  actionListener="#{managerAcrescimo.atualizar()}" rendered="#{managerAcrescimo.editar}"  />
             <p:button value="Cancelar" icon="pi pi-ban"  href="cadastrarAlteracoes.xhtml" rendered="#{managerAcrescimo.visualizar}" />
-            <p:button value="Cancelar" icon="pi pi-ban"  href="cadastrarAlteracoes.xhtml?visualizar=#{managerAcrescimo.acrescimo.id}" rendered="#{managerAcrescimo.editar}" />
+            <p:button value="Cancelar" icon="pi pi-ban"  href="#{managerAcrescimo.urlVisualizar(managerAcrescimo.acrescimo.id)}" rendered="#{managerAcrescimo.editar}" />
             <p:button value="Cancelar" icon="pi pi-ban"  href="index.xhtml" rendered="#{managerAcrescimo.cadastrar}" />
         </center>
         <p:dialog id="removeraAcrescimoConfirmDialog"

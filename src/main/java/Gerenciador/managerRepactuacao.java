@@ -13,11 +13,13 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import modelo.Contrato;
 import modelo.Repactuacao;
 import modelo.Usuario;
@@ -39,6 +41,7 @@ public class managerRepactuacao extends managerPrincipal implements Serializable
     private UsuarioServico userServico;
     
     private Repactuacao repactuacao;
+    private String verificadorRendered;
     private List<Repactuacao> repactuacoes;
     private List<Usuario> fiscais;
     private List<Contrato> contratos;
@@ -105,15 +108,17 @@ public class managerRepactuacao extends managerPrincipal implements Serializable
             if (repactuacaoServico.existNumero(this.repactuacao.getNumeroTermo())) {
                 Msg.messagemError("Número de termo aditivo já registrado !");
             } else {
+                this.repactuacao.getContrato().setValor(this.repactuacao.getValor());
+                contratoServico.Update(this.repactuacao.getContrato());
                 repactuacaoServico.Save(this.repactuacao);
-                Msg.messagemInfoRedirect("Operação realizada com sucesso !", "cadastrarAlteracoes.xhtml?visualizar=" + this.repactuacao.getId());
+                Msg.messagemInfoRedirect("Operação realizada com sucesso !", "cadastrarAlteracoes.xhtml?visualizar=" + this.repactuacao.getId() + "&repactuacao=TRUE");
             }
         }
     }
     
     public void atualizar() {
         repactuacaoServico.Update(repactuacao);
-        Msg.messagemInfoRedirect("Operação realizada com sucesso !", "cadastrarAlteracoes.xhtml?visualizar=" + this.repactuacao.getId());
+        Msg.messagemInfoRedirect("Operação realizada com sucesso !", "cadastrarAlteracoes.xhtml?visualizar=" + this.repactuacao.getId() + "&repactuacao=TRUE");
     }
     
     public void pesquisar() {
@@ -138,6 +143,29 @@ public class managerRepactuacao extends managerPrincipal implements Serializable
             e.getMessage();
         }
 
+    }
+    
+    public String urlVisualizar(long id){
+        return "cadastrarAlteracoes.xhtml?visualizar="+id+"&repactuacao=TRUE";
+    }
+    
+    public String urlEditar(long id){
+        return "cadastrarAlteracoes.xhtml?editar="+id+"&repactuacao=TRUE";
+    }
+    
+    public boolean verificarRepactuacao(){
+        boolean verificarMetodo = false;
+        Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+        this.verificadorRendered = params.get("repactuacao");
+        if(isVisualizar() || isEditar()){
+            if(this.verificadorRendered != null && !this.verificadorRendered.isEmpty()){
+                verificarMetodo = true;
+            }
+        }
+        if(isCadastrar()) {
+            verificarMetodo = true;
+        } 
+        return verificarMetodo;
     }
 
     public RepactuacaoServico getRepactuacaoServico() {
@@ -210,6 +238,14 @@ public class managerRepactuacao extends managerPrincipal implements Serializable
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getVerificadorRendered() {
+        return verificadorRendered;
+    }
+
+    public void setVerificadorRendered(String verificadorRendered) {
+        this.verificadorRendered = verificadorRendered;
     }
     
     
