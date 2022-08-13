@@ -11,6 +11,7 @@ import Servico.RenovacaoServico;
 import Servico.UsuarioServico;
 import java.io.IOException;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -32,15 +33,15 @@ import util.Utils;
  */
 @ManagedBean
 @ViewScoped
-public class managerRenovacao extends managerPrincipal implements Serializable{
-    
+public class managerRenovacao extends managerPrincipal implements Serializable {
+
     @EJB
     private RenovacaoServico renovacaoServico;
     @EJB
     private ContratoServico contratoServico;
     @EJB
     private UsuarioServico userServico;
-    
+
     private Renovacao renovacao;
     private String verificadorRendered;
     private List<Renovacao> renovacoes;
@@ -94,8 +95,8 @@ public class managerRenovacao extends managerPrincipal implements Serializable{
     private void intanciarRenovacoes() {
         this.renovacoes = new ArrayList<>();
     }
-    
-    public boolean renderedValorMudou(){
+
+    public boolean renderedValorMudou() {
         return renovacao.getValorMudou();
     }
 
@@ -103,13 +104,26 @@ public class managerRenovacao extends managerPrincipal implements Serializable{
         this.fiscais = userServico.FindAll();
         this.contratos = contratoServico.FindAll();
     }
-    
+
     public void salvar() {
         if (Utils.isNotEmpty(this.renovacao.getNumeroTermo())) {
             if (renovacaoServico.existNumero(this.renovacao.getNumeroTermo())) {
                 Msg.messagemError("Número de termo aditivo já registrado !");
             } else {
                 this.renovacao.getContrato().setValor(this.renovacao.getValor());
+                BigDecimal valorFinal = BigDecimal.ZERO;
+                if (this.renovacao.getValor().compareTo(this.renovacao.getContrato().getValor()) < 0) {
+                    BigDecimal valorDiferenca = BigDecimal.ZERO;
+                    valorDiferenca = this.renovacao.getContrato().getValor().subtract(this.renovacao.getValor());
+                    valorFinal = this.renovacao.getContrato().getValorRestante().subtract(valorDiferenca);
+                } else if (this.renovacao.getValor().compareTo(this.renovacao.getContrato().getValor()) > 0) {
+                    BigDecimal valorDiferenca = BigDecimal.ZERO;
+                    valorDiferenca = this.renovacao.getValor().subtract(this.renovacao.getContrato().getValor());
+                    valorFinal = this.renovacao.getContrato().getValorRestante().add(valorDiferenca);
+                } else {
+                    valorFinal = this.renovacao.getContrato().getValorRestante();
+                }
+                this.renovacao.getContrato().setValorRestante(valorFinal);
                 contratoServico.Update(this.renovacao.getContrato());
                 renovacaoServico.Save(this.renovacao);
                 Msg.messagemInfoRedirect("Operação realizada com sucesso !", "cadastrarAlteracoes.xhtml?visualizar=" + this.renovacao.getId() + "&renovacao=TRUE");
@@ -117,16 +131,16 @@ public class managerRenovacao extends managerPrincipal implements Serializable{
         }
     }
 
-    
     public void atualizar() {
         renovacaoServico.Update(renovacao);
+        System.out.println("qualquer coisa");
         Msg.messagemInfoRedirect("Operação realizada com sucesso !", "cadastrarAlteracoes.xhtml?visualizar=" + this.renovacao.getId() + "&renovacao=TRUE");
     }
-    
+
     public void pesquisar() {
         this.renovacoes = renovacaoServico.findPesquisa(this.renovacao);
     }
-    
+
     public void deletar() {
         try {
             Renovacao NovaRenovacao = renovacaoServico.find(this.renovacao.getId());
@@ -146,30 +160,30 @@ public class managerRenovacao extends managerPrincipal implements Serializable{
         }
 
     }
-    
-    public String urlVisualizar(long id){
-        return "cadastrarAlteracoes.xhtml?visualizar="+id+"&renovacao=TRUE";
+
+    public String urlVisualizar(long id) {
+        return "cadastrarAlteracoes.xhtml?visualizar=" + id + "&renovacao=TRUE";
     }
-    
-    public String urlEditar(long id){
-        return "cadastrarAlteracoes.xhtml?editar="+id+"&renovacao=TRUE";
+
+    public String urlEditar(long id) {
+        return "cadastrarAlteracoes.xhtml?editar=" + id + "&renovacao=TRUE";
     }
-    
-    public boolean verificarRenovacao(){
+
+    public boolean verificarRenovacao() {
         boolean verificarMetodo = false;
         Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
         this.verificadorRendered = params.get("renovacao");
-        if(isVisualizar() || isEditar()){
-            if(this.verificadorRendered != null && !this.verificadorRendered.isEmpty()){
+        if (isVisualizar() || isEditar()) {
+            if (this.verificadorRendered != null && !this.verificadorRendered.isEmpty()) {
                 verificarMetodo = true;
             }
         }
-        if(isCadastrar()) {
+        if (isCadastrar()) {
             verificarMetodo = true;
-        } 
+        }
         return verificarMetodo;
     }
-    
+
     public RenovacaoServico getRenovacaoServico() {
         return renovacaoServico;
     }
@@ -226,7 +240,6 @@ public class managerRenovacao extends managerPrincipal implements Serializable{
         this.contratos = contratos;
     }
 
-    
     public Usuario getUser() {
         return user;
     }
@@ -250,6 +263,5 @@ public class managerRenovacao extends managerPrincipal implements Serializable{
     public void setVerificadorRendered(String verificadorRendered) {
         this.verificadorRendered = verificadorRendered;
     }
-    
-    
+
 }

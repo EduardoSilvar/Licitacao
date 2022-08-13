@@ -11,6 +11,7 @@ import Servico.RepactuacaoServico;
 import Servico.UsuarioServico;
 import java.io.IOException;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -109,6 +110,19 @@ public class managerRepactuacao extends managerPrincipal implements Serializable
                 Msg.messagemError("Número de termo aditivo já registrado !");
             } else {
                 this.repactuacao.getContrato().setValor(this.repactuacao.getValor());
+                BigDecimal valorFinal = BigDecimal.ZERO;
+                if (this.repactuacao.getValor().compareTo(this.repactuacao.getContrato().getValor()) < 0) {
+                    BigDecimal valorDiferenca = BigDecimal.ZERO;
+                    valorDiferenca = this.repactuacao.getContrato().getValor().subtract(this.repactuacao.getValor());
+                    valorFinal = this.repactuacao.getContrato().getValorRestante().subtract(valorDiferenca);
+                } else if (this.repactuacao.getValor().compareTo(this.repactuacao.getContrato().getValor()) > 0) {
+                    BigDecimal valorDiferenca = BigDecimal.ZERO;
+                    valorDiferenca = this.repactuacao.getValor().subtract(this.repactuacao.getContrato().getValor());
+                    valorFinal = this.repactuacao.getContrato().getValorRestante().add(valorDiferenca);
+                } else {
+                    valorFinal = this.repactuacao.getContrato().getValorRestante();
+                }
+                this.repactuacao.getContrato().setValorRestante(valorFinal);
                 contratoServico.Update(this.repactuacao.getContrato());
                 repactuacaoServico.Save(this.repactuacao);
                 Msg.messagemInfoRedirect("Operação realizada com sucesso !", "cadastrarAlteracoes.xhtml?visualizar=" + this.repactuacao.getId() + "&repactuacao=TRUE");

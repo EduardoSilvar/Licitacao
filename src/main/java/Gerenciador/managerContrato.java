@@ -168,6 +168,7 @@ public class managerContrato extends managerPrincipal implements Serializable {
             } else {
                 this.contrato.setUnidadeOrganizacional(user.getUnidadeOrganizacional());
                 this.contrato.setCorStatus(cores(this.contrato.getStatus()));
+                this.contrato.setValorRestante(this.contrato.getValor());
                 contratoServico.Save(this.contrato);
                 Msg.messagemInfoRedirect("Operação realizada com sucesso !", "contrato.xhtml?visualizar=" + this.contrato.getId());
             }

@@ -104,6 +104,10 @@ public class managerSupressao extends managerPrincipal implements Serializable{
             if (supressaoServico.existNumero(this.supressao.getNumeroTermo())) {
                 Msg.messagemError("Número de termo aditivo já registrado !");
             } else {
+                Contrato contrato = this.supressao.getContrato();
+                contrato.setValor(contrato.getValor().subtract(this.supressao.getValor()));
+                contrato.setValorRestante(contrato.getValorRestante().subtract(this.supressao.getValor()));
+                contratoServico.Update(contrato);
                 supressaoServico.Save(this.supressao);
                 Msg.messagemInfoRedirect("Operação realizada com sucesso !", "cadastrarAlteracoes.xhtml?visualizar=" + this.supressao.getId() + "&supressao=TRUE");
             }

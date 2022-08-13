@@ -12,7 +12,6 @@ import Servico.NotaFiscalServico;
 import Servico.UsuarioServico;
 import java.io.File;
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -69,6 +68,9 @@ public class managerNotaFiscal extends managerPrincipal {
     }
 
     public void salvar() {
+        Contrato contrato = this.notaFiscal.getContrato();
+        contrato.setValorRestante(contrato.getValorRestante().subtract(this.notaFiscal.getValor()));
+        contratoServico.Update(contrato);
         notaFiscalServico.Save(this.notaFiscal);
         Msg.messagemInfoRedirect("Operação realizada com sucesso !", "notaFiscal.xhtml?visualizar=" + this.notaFiscal.getId());
     }
@@ -105,17 +107,7 @@ public class managerNotaFiscal extends managerPrincipal {
         }
     }
 
-    public BigDecimal valorRestante(NotaFiscal nota){
-        List<NotaFiscal> listaNotas;
-        BigDecimal valoresNotas = new BigDecimal(0);
-        BigDecimal restoValor = new BigDecimal(0);
-        listaNotas = nota.getContrato().getNotasFiscais();
-        for(NotaFiscal n : listaNotas){
-            valoresNotas.add(n.getValor());
-        }
-        restoValor = nota.getContrato().getValor().subtract(valoresNotas);
-        return restoValor;
-    }
+    
     
     public void adicionarAnexo() {
 

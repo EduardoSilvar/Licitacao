@@ -195,7 +195,7 @@
             <center>    
             <p:commandButton value="Salvar" icon="pi pi-save" process="@this renovacaoPanelGroup" update="corpoInteiro" actionListener="#{managerRenovacao.salvar()}" rendered="#{managerRenovacao.cadastrar}" />
             <p:button value="Editar" icon="pi pi-pencil"  rendered="#{managerRenovacao.visualizar}" href="#{managerRenovacao.urlEditar(managerRenovacao.renovacao.id)}" />
-            <p:commandButton value="Atualizar" icon="pi pi-sync" process="@this renovacaoPanelGroup"  actionListener="#{managerRenovacao.atualizar()}" rendered="#{managerRenovacao.editar}"  />
+            <p:commandButton value="Atualizar" icon="pi pi-sync" process="@this renovacaoPanelGroup" update="@form" actionListener="#{managerRenovacao.atualizar()}" rendered="#{managerRenovacao.editar}"  />
             <p:button value="Cancelar" icon="pi pi-ban"  href="cadastrarAlteracoes.xhtml" rendered="#{managerRenovacao.visualizar}" />
             <p:button value="Cancelar" icon="pi pi-ban"  href="#{managerRenovacao.urlVisualizar(managerRenovacao.renovacao.id)}" rendered="#{managerRenovacao.editar}" />
             <p:button value="Cancelar" icon="pi pi-ban"  href="index.xhtml" rendered="#{managerRenovacao.cadastrar}" />

@@ -11,7 +11,6 @@ import Servico.ContratoServico;
 import Servico.UsuarioServico;
 import java.io.IOException;
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -105,6 +104,10 @@ public class managerAcrescimo extends managerPrincipal implements Serializable{
             if (acrescimoServico.existNumero(this.acrescimo.getNumeroTermo())) {
                 Msg.messagemError("Número de termo aditivo já registrado !");
             } else {
+                Contrato contrato = this.acrescimo.getContrato();
+                contrato.setValor(this.acrescimo.getValor().add(contrato.getValor()));
+                contrato.setValorRestante(contrato.getValorRestante().add(this.acrescimo.getValor()));
+                contratoServico.Update(contrato);
                 acrescimoServico.Save(this.acrescimo);
                 Msg.messagemInfoRedirect("Operação realizada com sucesso !", "cadastrarAlteracoes.xhtml?visualizar=" + this.acrescimo.getId() + "&acrescimo=TRUE");
             }
