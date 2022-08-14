@@ -52,12 +52,6 @@ public class managerRenovacao extends managerPrincipal implements Serializable {
 
     @Override
     public void carregar(String param) {
-        try {
-            user = (Usuario) getObjectSession("usuarioLogado");
-            VerificarLogin();
-        } catch (IOException ex) {
-            Logger.getLogger(managerContrato.class.getName()).log(Level.SEVERE, null, ex);
-        }
         this.id = Long.parseLong(param);
         this.renovacao = renovacaoServico.find(Long.parseLong(param));
         this.renovacoes = new ArrayList<>();

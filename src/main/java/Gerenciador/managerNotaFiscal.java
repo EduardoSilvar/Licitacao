@@ -57,14 +57,8 @@ public class managerNotaFiscal extends managerPrincipal {
 
     @Override
     public void carregar(String param) {
-        try {
-            user = (Usuario) getObjectSession("usuarioLogado");
-//            VerificarLogin();
-            instanciarAnexo();
-            this.notaFiscal = notaFiscalServico.find(Long.parseLong(param));
-        } catch (IOException ex) {
-            Logger.getLogger(managerContrato.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        instanciarAnexo();
+        this.notaFiscal = notaFiscalServico.find(Long.parseLong(param));
     }
 
     public void salvar() {
@@ -107,8 +101,6 @@ public class managerNotaFiscal extends managerPrincipal {
         }
     }
 
-    
-    
     public void adicionarAnexo() {
 
         try {
@@ -144,24 +136,18 @@ public class managerNotaFiscal extends managerPrincipal {
 
     @Override
     public void instanciar() {
-        try {
-            user = (Usuario) getObjectSession("usuarioLogado");
-//            VerificarLogin();
-        } catch (IOException ex) {
-            Logger.getLogger(managerContrato.class.getName()).log(Level.SEVERE, null, ex);
-        }
         instanciarNotaFical();
         instanciarAnexo();
         instanciarSelect();
         instanciarListaNotaFiscal();
 
     }
-    
+
     public void instanciarSelect() {
         this.contratos = contratoServico.FindAll();
         this.responsaveis = userServico.FindAll();
     }
-    
+
     @Override
     public String getUrlPesquisar() {
         return "pesquisarNotaFiscal.xhtml";
@@ -249,8 +235,6 @@ public class managerNotaFiscal extends managerPrincipal {
         this.contratos = contratos;
     }
 
-    
-
     public UsuarioServico getUserServico() {
         return userServico;
     }
@@ -258,8 +242,6 @@ public class managerNotaFiscal extends managerPrincipal {
     public void setUserServico(UsuarioServico userServico) {
         this.userServico = userServico;
     }
-
-    
 
     public List<Usuario> getResponsaveis() {
         return responsaveis;

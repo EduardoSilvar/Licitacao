@@ -44,12 +44,6 @@ public class managerTipoContrato extends managerPrincipal implements Serializabl
 
     @Override
     public void carregar(String param) {
-        try {
-            user = (Usuario) getObjectSession("usuarioLogado");
-            VerificarLogin();
-        } catch (IOException ex) {
-            Logger.getLogger(managerContrato.class.getName()).log(Level.SEVERE, null, ex);
-        }
         this.id = Long.parseLong(param);
         this.tipoContrato = tipoContratoServico.find(Long.parseLong(param));
         this.TipoContratos = new ArrayList<>();
@@ -57,12 +51,6 @@ public class managerTipoContrato extends managerPrincipal implements Serializabl
 
     @Override
     public void instanciar() {
-        try {
-            user = (Usuario) getObjectSession("usuarioLogado");
-            VerificarLogin();
-        } catch (IOException ex) {
-            Logger.getLogger(managerContrato.class.getName()).log(Level.SEVERE, null, ex);
-        }
         InstanciarTipoContrato();
         instanciarLista();
     }

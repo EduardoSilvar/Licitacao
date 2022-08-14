@@ -51,12 +51,6 @@ public class managerRepactuacao extends managerPrincipal implements Serializable
 
     @Override
     public void carregar(String param) {
-        try {
-            user = (Usuario) getObjectSession("usuarioLogado");
-            VerificarLogin();
-        } catch (IOException ex) {
-            Logger.getLogger(managerContrato.class.getName()).log(Level.SEVERE, null, ex);
-        }
         this.id = Long.parseLong(param);
         this.repactuacao = repactuacaoServico.find(Long.parseLong(param));
         this.repactuacoes = new ArrayList<>();
@@ -66,12 +60,6 @@ public class managerRepactuacao extends managerPrincipal implements Serializable
 
     @Override
     public void instanciar() {
-        try {
-            user = (Usuario) getObjectSession("usuarioLogado");
-            VerificarLogin();
-        } catch (IOException ex) {
-            Logger.getLogger(managerContrato.class.getName()).log(Level.SEVERE, null, ex);
-        }
         instanciarSelect();
         instanciarRepactuacao();
         intanciarRepactuacoes();

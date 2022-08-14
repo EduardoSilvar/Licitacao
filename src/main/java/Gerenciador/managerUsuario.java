@@ -47,22 +47,12 @@ public class managerUsuario extends managerPrincipal implements Serializable {
 
     @Override
     public void carregar(String param) {
-        try {
-            VerificarLogin();
-        } catch (IOException ex) {
-            Logger.getLogger(managerContrato.class.getName()).log(Level.SEVERE, null, ex);
-        }
         this.unidades = unidadeServico.FindAll();
         this.user = userServico.find(Long.parseLong(param));
     }
 
     @Override
     public void instanciar() {
-        try {
-            VerificarLogin();
-        } catch (IOException ex) {
-            Logger.getLogger(managerContrato.class.getName()).log(Level.SEVERE, null, ex);
-        }
         this.unidades = unidadeServico.FindAll();
         instanciarUsuario();
         instanciarListUser();

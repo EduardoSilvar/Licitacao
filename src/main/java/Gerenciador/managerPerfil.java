@@ -42,11 +42,6 @@ public class managerPerfil implements Serializable {
 
     @PostConstruct
     public void init() {
-         try {
-            VerificarLogin();
-        } catch (IOException ex) {
-            Logger.getLogger(managerContrato.class.getName()).log(Level.SEVERE, null, ex);
-        }
         carregarUsuarioLogado();
     }
 

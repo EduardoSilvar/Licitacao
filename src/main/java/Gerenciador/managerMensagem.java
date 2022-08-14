@@ -1,26 +1,20 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Gerenciador;
 
-import static Gerenciador.managerLogin.VerificarLogin;
+import Servico.ChatServico;
 import Servico.MensagemServico;
-import java.io.IOException;
+import Servico.UsuarioServico;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import modelo.Contrato;
-import modelo.PedidoRenovacao;
+import javax.persistence.Entity;
+import modelo.Chat;
+import modelo.Mensagem;
 import modelo.Usuario;
-import util.Msg;
 
 /**
  *
@@ -28,71 +22,93 @@ import util.Msg;
  */
 @ViewScoped
 @ManagedBean
-public class managerMensagem implements Serializable {
+public class managerMensagem extends managerPrincipal implements Serializable {
 
+    private Mensagem mensagem;
     @EJB
-    private MensagemServico msgServico;
+    private UsuarioServico userServico;
+    @EJB
+    private MensagemServico mesnagemServico;
+    @EJB
+    private ChatServico chatServico;
+    private Chat chat;
 
-    private List<Contrato> contratosAprovados;
-    private List<Contrato> contratosPertodeExpirar;
-    private List<Contrato> contratosFinalizados;
-    private List<PedidoRenovacao> pedidoDeRedefinirSenha;
-    private List<String> cores;
+    @Override
+    public void carregar(String param) {
+        this.chat = chatServico.find(Long.parseLong(param));
+        instanciarMensagem();
+    }
 
-    @PostConstruct
-    public void init() {
-         try {
-            VerificarLogin();
-        } catch (IOException ex) {
-            Logger.getLogger(managerContrato.class.getName()).log(Level.SEVERE, null, ex);
+    public void enviarMensagem() {
+         Usuario user = userServico.find(558l);
+         this.mensagem.setEscritor(user);
+        this.chat.getMensagens().add(mensagem);
+        chatServico.Update(this.chat);
+        this.mensagem = new Mensagem();
+    }
+
+    public String posicaoMensagem(Mensagem msg) {
+        Usuario user = userServico.find(1l);
+        if (msg.getEscritor().equals(user)) {
+            return "margin-left:600px !important";
+        } else {
+            return "margin-right:100px !important";
         }
-        this.contratosPertodeExpirar = new ArrayList<>();
-        this.contratosAprovados = msgServico.aprovado();
-        this.contratosPertodeExpirar = msgServico.expirar();
     }
 
-    public void aprovados() {
-        contratosAprovados = msgServico.aprovado();
+    @Override
+    public void instanciar() {
+        instanciarMensagem();
     }
 
-    public void proxExpirar() {
-        contratosPertodeExpirar = msgServico.expirar();
+    public void instanciarMensagem() {
+        this.mensagem = new Mensagem();
     }
 
-    public void pedidos() {
-        pedidoDeRedefinirSenha = msgServico.pedidoRenovacao();
+    public void instanciarChat() {
+        this.chat = new Chat();
     }
 
-    public List<Contrato> getContratosAprovados() {
-        return contratosAprovados;
+    @Override
+    public String getUrlPesquisar() {
+        return "mensagem.xhtml?visualizar=" + this.mensagem.getId();
     }
 
-    public void setContratosAprovados(List<Contrato> contratosAprovados) {
-        this.contratosAprovados = contratosAprovados;
+    @Override
+    public String getUrlVisualizar() {
+        return "pesquisarMensagem.xhtml";
     }
 
-    public List<Contrato> getContratosPertodeExpirar() {
-        return contratosPertodeExpirar;
+    public Mensagem getMensagem() {
+        return mensagem;
     }
 
-    public void setContratosPertodeExpirar(List<Contrato> contratosPertodeExpirar) {
-        this.contratosPertodeExpirar = contratosPertodeExpirar;
+    public void setMensagem(Mensagem mensagem) {
+        this.mensagem = mensagem;
     }
 
-    public List<Contrato> getContratosFinalizados() {
-        return contratosFinalizados;
+    public MensagemServico getMesnagemServico() {
+        return mesnagemServico;
     }
 
-    public void setContratosFinalizados(List<Contrato> contratosFinalizados) {
-        this.contratosFinalizados = contratosFinalizados;
+    public void setMesnagemServico(MensagemServico mesnagemServico) {
+        this.mesnagemServico = mesnagemServico;
     }
 
-    public List<PedidoRenovacao> getPedidoDeRedefinirSenha() {
-        return pedidoDeRedefinirSenha;
+    public ChatServico getChatServico() {
+        return chatServico;
     }
 
-    public void setPedidoDeRedefinirSenha(List<PedidoRenovacao> pedidoDeRedefinirSenha) {
-        this.pedidoDeRedefinirSenha = pedidoDeRedefinirSenha;
+    public void setChatServico(ChatServico chatServico) {
+        this.chatServico = chatServico;
+    }
+
+    public Chat getChat() {
+        return chat;
+    }
+
+    public void setChat(Chat chat) {
+        this.chat = chat;
     }
 
 }

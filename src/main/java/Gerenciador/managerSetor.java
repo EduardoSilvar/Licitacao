@@ -37,24 +37,12 @@ public class managerSetor extends managerPrincipal implements Serializable {
     
     @Override
     public void carregar(String param) {
-        try {
-            user = (Usuario) getObjectSession("usuarioLogado");
-            VerificarLogin();
-        } catch (IOException ex) {
-            Logger.getLogger(managerContrato.class.getName()).log(Level.SEVERE, null, ex);
-        }
         this.setor = setorServico.find(Long.parseLong(param));
         this.setores = new ArrayList<>();
     }
     
     @Override
     public void instanciar() {
-        try {
-            user = (Usuario) getObjectSession("usuarioLogado");
-            VerificarLogin();
-        } catch (IOException ex) {
-            Logger.getLogger(managerContrato.class.getName()).log(Level.SEVERE, null, ex);
-        }
         instanciarSetor();
         instanciarSetores();
     }

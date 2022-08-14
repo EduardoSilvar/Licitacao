@@ -32,14 +32,15 @@ import util.Utils;
  */
 @ManagedBean
 @ViewScoped
-public class managerAcrescimo extends managerPrincipal implements Serializable{
+public class managerAcrescimo extends managerPrincipal implements Serializable {
+
     @EJB
     private AcrescimoServico acrescimoServico;
     @EJB
     private ContratoServico contratoServico;
     @EJB
     private UsuarioServico userServico;
-    
+
     private Acrescimo acrescimo;
     private String verificadorRendered;
     private List<Acrescimo> acrescimos;
@@ -50,12 +51,6 @@ public class managerAcrescimo extends managerPrincipal implements Serializable{
 
     @Override
     public void carregar(String param) {
-        try {
-            user = (Usuario) getObjectSession("usuarioLogado");
-            VerificarLogin();
-        } catch (IOException ex) {
-            Logger.getLogger(managerContrato.class.getName()).log(Level.SEVERE, null, ex);
-        }
         this.id = Long.parseLong(param);
         this.acrescimo = acrescimoServico.find(Long.parseLong(param));
         this.acrescimos = new ArrayList<>();
@@ -65,12 +60,6 @@ public class managerAcrescimo extends managerPrincipal implements Serializable{
 
     @Override
     public void instanciar() {
-        try {
-            user = (Usuario) getObjectSession("usuarioLogado");
-            VerificarLogin();
-        } catch (IOException ex) {
-            Logger.getLogger(managerContrato.class.getName()).log(Level.SEVERE, null, ex);
-        }
         instanciarSelect();
         instanciarAcrescimo();
         instanciarAcrescimos();
@@ -98,7 +87,7 @@ public class managerAcrescimo extends managerPrincipal implements Serializable{
         this.fiscais = userServico.FindAll();
         this.contratos = contratoServico.FindAll();
     }
-    
+
     public void salvar() {
         if (Utils.isNotEmpty(this.acrescimo.getNumeroTermo())) {
             if (acrescimoServico.existNumero(this.acrescimo.getNumeroTermo())) {
@@ -113,16 +102,16 @@ public class managerAcrescimo extends managerPrincipal implements Serializable{
             }
         }
     }
-    
+
     public void atualizar() {
         acrescimoServico.Update(this.acrescimo);
         Msg.messagemInfoRedirect("Operação realizada com sucesso !", "cadastrarAlteracoes.xhtml?visualizar=" + this.acrescimo.getId() + "&acrescimo=TRUE");
     }
-    
+
     public void pesquisar() {
         this.acrescimos = acrescimoServico.findPesquisa(this.acrescimo);
     }
-    
+
     public void deletar() {
         try {
             Acrescimo NovoAcrescimo = acrescimoServico.find(this.acrescimo.getId());
@@ -142,27 +131,27 @@ public class managerAcrescimo extends managerPrincipal implements Serializable{
         }
 
     }
-    
-    public String urlVisualizar(long id){
-        return "cadastrarAlteracoes.xhtml?visualizar="+id+"&acrescimo=TRUE";
+
+    public String urlVisualizar(long id) {
+        return "cadastrarAlteracoes.xhtml?visualizar=" + id + "&acrescimo=TRUE";
     }
-    
-    public String urlEditar(long id){
-        return "cadastrarAlteracoes.xhtml?editar="+id+"&acrescimo=TRUE";
+
+    public String urlEditar(long id) {
+        return "cadastrarAlteracoes.xhtml?editar=" + id + "&acrescimo=TRUE";
     }
-    
-    public boolean verificarAcrescimo(){
+
+    public boolean verificarAcrescimo() {
         boolean verificarMetodo = false;
         Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
         this.verificadorRendered = params.get("acrescimo");
-        if(isVisualizar() || isEditar()){
-            if(this.verificadorRendered != null && !this.verificadorRendered.isEmpty()){
+        if (isVisualizar() || isEditar()) {
+            if (this.verificadorRendered != null && !this.verificadorRendered.isEmpty()) {
                 verificarMetodo = true;
             }
         }
-        if(isCadastrar()) {
+        if (isCadastrar()) {
             verificarMetodo = true;
-        } 
+        }
         return verificarMetodo;
     }
 
@@ -245,7 +234,5 @@ public class managerAcrescimo extends managerPrincipal implements Serializable{
     public void setVerificadorRendered(String verificadorRendered) {
         this.verificadorRendered = verificadorRendered;
     }
-    
-    
-    
+
 }

@@ -103,24 +103,12 @@ public class managerTipoLicitacao extends managerPrincipal implements Serializab
     
     @Override
     public void carregar(String param) {
-        try {
-            user = (Usuario) getObjectSession("usuarioLogado");
-            VerificarLogin();
-        } catch (IOException ex) {
-            Logger.getLogger(managerContrato.class.getName()).log(Level.SEVERE, null, ex);
-        }
         this.tipoLicitacao = tipoLicitacaoServico.find(Long.parseLong(param));
         this.tiposLicitacoes = new ArrayList<>();
     }
     
     @Override
     public void instanciar() {
-        try {
-            user = (Usuario) getObjectSession("usuarioLogado");
-            VerificarLogin();
-        } catch (IOException ex) {
-            Logger.getLogger(managerContrato.class.getName()).log(Level.SEVERE, null, ex);
-        }
         instanciarTipoLicitacao();
         instanciarListaTipoLicitacao();
     }

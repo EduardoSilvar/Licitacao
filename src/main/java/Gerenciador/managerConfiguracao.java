@@ -34,11 +34,6 @@ public class managerConfiguracao implements Serializable {
 
     @PostConstruct
     public void init() {
-         try {
-            VerificarLogin();
-        } catch (IOException ex) {
-            Logger.getLogger(managerContrato.class.getName()).log(Level.SEVERE, null, ex);
-        }
         if (configuracaoServico.FindAll().size() > 0) {
             System.err.println("sla");
         } else {

@@ -50,12 +50,6 @@ public class managerSupressao extends managerPrincipal implements Serializable{
     
     @Override
     public void carregar(String param) {
-        try {
-            user = (Usuario) getObjectSession("usuarioLogado");
-            VerificarLogin();
-        } catch (IOException ex) {
-            Logger.getLogger(managerContrato.class.getName()).log(Level.SEVERE, null, ex);
-        }
         this.id = Long.parseLong(param);
         this.supressao = supressaoServico.find(Long.parseLong(param));
         this.supressoes = new ArrayList<>();
@@ -65,12 +59,6 @@ public class managerSupressao extends managerPrincipal implements Serializable{
 
     @Override
     public void instanciar() {
-        try {
-            user = (Usuario) getObjectSession("usuarioLogado");
-            VerificarLogin();
-        } catch (IOException ex) {
-            Logger.getLogger(managerContrato.class.getName()).log(Level.SEVERE, null, ex);
-        }
         instanciarSelect();
         instanciarAcrescimo();
         instanciarAcrescimos();

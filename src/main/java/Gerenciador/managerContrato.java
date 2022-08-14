@@ -77,32 +77,20 @@ public class managerContrato extends managerPrincipal implements Serializable {
 
     @Override
     public void carregar(String param) {
-        try {
-            user = (Usuario) getObjectSession("usuarioLogado");
-            VerificarLogin();
-            instanciarSelect();
-            InstanciarContrato();
-            InstanciarContratos();
-            this.anexo = new Anexo();
-            this.contrato = contratoServico.find(Long.parseLong(param));
-            this.contratos = new ArrayList<>();
-            this.tiposContratos = tipocontratoServico.FindAll();
-            this.responsaveis = userServico.FindAll();
-            this.setores = setorServico.FindAll();
-        } catch (IOException ex) {
-            Logger.getLogger(managerContrato.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        instanciarSelect();
+        InstanciarContrato();
+        InstanciarContratos();
+        this.anexo = new Anexo();
+        this.contrato = contratoServico.find(Long.parseLong(param));
+        this.contratos = new ArrayList<>();
+        this.tiposContratos = tipocontratoServico.FindAll();
+        this.responsaveis = userServico.FindAll();
+        this.setores = setorServico.FindAll();
 
     }
 
     @Override
     public void instanciar() {
-        try {
-            user = (Usuario) getObjectSession("usuarioLogado");
-            VerificarLogin();
-        } catch (IOException ex) {
-            Logger.getLogger(managerContrato.class.getName()).log(Level.SEVERE, null, ex);
-        }
         this.anexo = new Anexo();
         instanciarSelect();
         InstanciarContrato();

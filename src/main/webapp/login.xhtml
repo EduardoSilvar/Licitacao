@@ -22,72 +22,89 @@ and open the template in the editor.
         </style>
     </h:head>
     <h:body style="background-color: #e6e6e6">
-        <h:form id="loginForm">
-            <p:growl id="messages"/>
-            <div style="width: 960px;
-                 background: #fff;
-                 border-radius: 10px;display: flex;
-                 flex-wrap: wrap;
-                 justify-content: space-between;
-                 position: absolute;
-                 top: 50%;
-                 left: 50%;
-                 transform: translate(-50%, -50%);
-                 padding: 177px 130px 33px 95px;">
+        <!--        <h:form id="loginForm">
+                    <p:growl id="messages"/>
+                    <div style="width: 960px;
+                         background: #fff;
+                         border-radius: 10px;display: flex;
+                         flex-wrap: wrap;
+                         justify-content: space-between;
+                         position: absolute;
+                         top: 50%;
+                         left: 50%;
+                         transform: translate(-50%, -50%);
+                         padding: 177px 130px 33px 95px;">
+        
+                        <img src="img/img-01.png" style="width: 316px; height: 289px;   vertical-align: middle;
+                             border-style: none; margin-top: -50px; padding-bottom: 10px;will-change: transform; transform: perspective(300px) rotateX(0deg) rotateY(0deg);"/>
+        
+                        <div style="width: 300px; background-color: #fff;">
+                            <h3 style="text-align: center; margin-top: -40px;font-family: Poppins-Bold;">Bem vindo !</h3>
+                            <h5 style="text-align: center; color: #7B838A;">Preencha com seus dados de login</h5>
+                            <div style="margin-top: 20px; margin-left: 30px">
+                                <span class="ui-input-icon-left">
+                                    <i class="pi pi-envelope" style="margin-left: 10px;" />
+                                    <p:inputText id="email" placeholder="E-mail" value="{managerLogin.usuarioLogado.login}"  style=" background-color: #E6E6E6 !important; border-radius: 40px; font-family: Poppins-Medium;
+                                                 font-size: 15px;
+                                                 line-height: 1.5;
+                                                 color: #666666;
+                                                 display: block;
+                                                 width: 100%;
+                                                 background: #e6e6e6;
+                                                 height: 50px;
+                                                 border-radius: 25px;
+                                                 padding: 0 30px 0 44px;" />
+                                </span>
+                            </div>
+                            <div style="margin-top: 5px; margin-left:30px;">
+                                <span class="ui-input-icon-left">
+                                    <i class="pi pi-key" style="margin-left: 10px;" />
+                                    <p:password id="senha" placeholder="Senha" value="{managerLogin.senha}" toggleMask="true" style=" background-color: #E6E6E6 !important; border-radius: 40px; font-family: Poppins-Medium; font-size: 15px;  line-height: 1.5; color: #666666;
+                                                display: block;
+                                                width: 100%;
+                                                line-height: 1.5;
+                                                background: #e6e6e6;
+                                                height: 50px;
+                                                border-radius: 25px;
+                                                padding: 0 30px 0 44px;"  />
+                                </span>
+                                <p:commandButton  class="bt" actionListener="{managerLogin.verificarLogin()}" process="@this loginForm:email loginForm:senha " update="loginForm:messages" value="Entrar" style="font-family: Montserrat-Bold;
+                                                  font-size: 15px;
+                                                  line-height: 1.5;
+                                                  color: #fff;
+                                                  margin-top: 20px;
+                                                  background: #64BF4B;
+                                                  text-transform: uppercase;
+                                                  width: 95%;
+                                                  height: 50px;
+                                                  border-radius: 25px;display: flex;
+                                                  justify-content: center;
+                                                  align-items: center;
+                                                  padding: 0 25px;transition: all 0.4s; " styleClass="ui-button-raised ui-button-info ui-button-flat" />
+                            </div>
+                            <div style="text-align: left; width: 100%;">
+                                
+                                <a href="index.xhtml" style="color: cadetblue; margin-left:60px; margin-top: 5px;">Esqueceu a senha ? </a> 
+                            </div>
+                        </div>
+                    </div>
+                </h:form>-->
+        <form action="j_security_check" method="POST">
 
-                <img src="img/img-01.png" style="width: 316px; height: 289px;   vertical-align: middle;
-                     border-style: none; margin-top: -50px; padding-bottom: 10px;will-change: transform; transform: perspective(300px) rotateX(0deg) rotateY(0deg);"/>
-
-                <div style="width: 300px; background-color: #fff;">
-                    <h3 style="text-align: center; margin-top: -40px;font-family: Poppins-Bold;">Bem vindo !</h3>
-                    <h5 style="text-align: center; color: #7B838A;">Preencha com seus dados de login</h5>
-                    <div style="margin-top: 20px; margin-left: 30px">
-                        <span class="ui-input-icon-left">
-                            <i class="pi pi-envelope" style="margin-left: 10px;" />
-                            <p:inputText id="email" placeholder="E-mail" value="#{managerLogin.usuarioLogado.login}"  style=" background-color: #E6E6E6 !important; border-radius: 40px; font-family: Poppins-Medium;
-                                         font-size: 15px;
-                                         line-height: 1.5;
-                                         color: #666666;
-                                         display: block;
-                                         width: 100%;
-                                         background: #e6e6e6;
-                                         height: 50px;
-                                         border-radius: 25px;
-                                         padding: 0 30px 0 44px;" />
-                        </span>
-                    </div>
-                    <div style="margin-top: 5px; margin-left:30px;">
-                        <span class="ui-input-icon-left">
-                            <i class="pi pi-key" style="margin-left: 10px;" />
-                            <p:password id="senha" placeholder="Senha" value="#{managerLogin.senha}" toggleMask="true" style=" background-color: #E6E6E6 !important; border-radius: 40px; font-family: Poppins-Medium; font-size: 15px;  line-height: 1.5; color: #666666;
-                                        display: block;
-                                        width: 100%;
-                                        line-height: 1.5;
-                                        background: #e6e6e6;
-                                        height: 50px;
-                                        border-radius: 25px;
-                                        padding: 0 30px 0 44px;"  />
-                        </span>
-                        <p:commandButton  class="bt" actionListener="#{managerLogin.verificarLogin()}" process="@this loginForm:email loginForm:senha " update="loginForm:messages" value="Entrar" style="font-family: Montserrat-Bold;
-                                          font-size: 15px;
-                                          line-height: 1.5;
-                                          color: #fff;
-                                          margin-top: 20px;
-                                          background: #64BF4B;
-                                          text-transform: uppercase;
-                                          width: 95%;
-                                          height: 50px;
-                                          border-radius: 25px;display: flex;
-                                          justify-content: center;
-                                          align-items: center;
-                                          padding: 0 25px;transition: all 0.4s; " styleClass="ui-button-raised ui-button-info ui-button-flat" />
-                    </div>
-                    <div style="text-align: left; width: 100%;">
-                        
-                        <a href="index.xhtml" style="color: cadetblue; margin-left:60px; margin-top: 5px;">Esqueceu a senha ? </a> 
-                    </div>
-                </div>
+            <div class="form-group credencial">
+                <label for="exampleInputUsername1">Digite o seu Login</label>
+                <input type="text" name="j_username" class="form-control" id="exampleInputUsername1" placeholder="Login"/>
             </div>
-        </h:form>
+            <div class="form-group credencial">
+                <label for="exampleInputEmail1">Digite a sua Senha</label>
+                <input type="password" name="j_password" class="form-control" id="exampleInputEmail1" placeholder="Senha" />
+            </div>
+
+            <button type="submit" style="width: 100%" class="btn btn-primary" > Acessar </button>
+            <div style="margin-top: 10px;">
+                <a style="color: #aaa; font-size: 14px;" >Não sou usuário / </a>
+                <a href="inscricao.xhtml" style="font-size: 14px; color: #0c4160;">cadastre-se </a> 
+            </div>
+        </form>
     </h:body>
 </html>

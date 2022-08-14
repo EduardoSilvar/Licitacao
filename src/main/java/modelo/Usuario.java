@@ -19,6 +19,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 
@@ -45,6 +46,8 @@ public class Usuario implements Serializable {
     private boolean ativo = true;
     @OneToOne
     private Setor setor;
+    @ManyToMany
+    private List<Grupo> grupos;
     @OneToOne
     private UnidadeOrganizacional unidadeOrganizacional;
     @Enumerated(EnumType.STRING)

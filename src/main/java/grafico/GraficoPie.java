@@ -228,7 +228,6 @@ public class GraficoPie implements Serializable {
         BigDecimal valor = new BigDecimal(0);
         for (ContratoVo cv : contratoVos) {
             for (Contrato c : contratos) {
-                System.err.println(contratos.size());
                 if (c.getStatus().getStatus().equals(cv.getNome())) {
                     valor = valor.add(c.getValor());
                 }

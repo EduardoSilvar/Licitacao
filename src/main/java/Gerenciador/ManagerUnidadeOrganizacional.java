@@ -72,22 +72,12 @@ public class ManagerUnidadeOrganizacional extends managerPrincipal implements Se
 
     @Override
     public void carregar(String param) {
-        try {
-            VerificarLogin();
-        } catch (IOException ex) {
-            Logger.getLogger(managerContrato.class.getName()).log(Level.SEVERE, null, ex);
-        }
         this.id = Long.parseLong(param);
         this.unidade = unidadeServico.find(Long.parseLong(param));
     }
 
     @Override
     public void instanciar() {
-        try {
-            VerificarLogin();
-        } catch (IOException ex) {
-            Logger.getLogger(managerContrato.class.getName()).log(Level.SEVERE, null, ex);
-        }
         instanciarUnidade();
         this.unidades = new ArrayList<>();
     }
