@@ -11,6 +11,7 @@ import Servico.SupressaoServico;
 import Servico.UsuarioServico;
 import java.io.IOException;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -115,7 +116,31 @@ public class managerSupressao extends managerPrincipal implements Serializable{
     }
     
     public void atualizar() {
-        supressaoServico.Update(supressao);
+        Contrato contrato = this.supressao.getContrato();
+        Supressao supressaoBD = supressaoServico.find(this.supressao.getId());
+        Contrato contratoBD = supressaoBD.getContrato();
+        BigDecimal valorBD = supressaoBD.getValor();
+        BigDecimal valorCampo = this.supressao.getValor();
+        BigDecimal valorFinal = BigDecimal.ZERO;
+        if (contratoBD.equals(this.supressao.getContrato())) {
+            if (valorBD.compareTo(valorCampo) == 1) {
+                BigDecimal valorDiferenca = BigDecimal.ZERO;
+                valorDiferenca = valorBD.subtract(valorCampo);
+                valorFinal = supressaoBD.getContrato().getValorRestante().subtract(valorDiferenca);
+            } else if (valorCampo.compareTo(valorBD) == 1) {
+                BigDecimal valorDiferenca = BigDecimal.ZERO;
+                valorDiferenca = valorCampo.subtract(valorBD);
+                valorFinal = supressaoBD.getContrato().getValorRestante().add(valorDiferenca);
+            } else {
+                valorFinal = supressaoBD.getContrato().getValorRestante();
+            }
+        } else{
+            valorFinal = this.supressao.getContrato().getValorRestante().subtract(this.supressao.getValor());
+        }
+        contrato.setValor(this.supressao.getContrato().getValor().subtract(this.supressao.getValor()));
+        contrato.setValorRestante(valorFinal);
+        contratoServico.Update(contrato);
+        supressaoServico.Update(this.supressao);
         Msg.messagemInfoRedirect("Operação realizada com sucesso !", "cadastrarAlteracoes.xhtml?visualizar=" + this.supressao.getId() + "&supressao=TRUE");
     }
     

@@ -11,6 +11,7 @@ import Servico.ContratoServico;
 import Servico.UsuarioServico;
 import java.io.IOException;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -32,14 +33,15 @@ import util.Utils;
  */
 @ManagedBean
 @ViewScoped
-public class managerAcrescimo extends managerPrincipal implements Serializable{
+public class managerAcrescimo extends managerPrincipal implements Serializable {
+
     @EJB
     private AcrescimoServico acrescimoServico;
     @EJB
     private ContratoServico contratoServico;
     @EJB
     private UsuarioServico userServico;
-    
+
     private Acrescimo acrescimo;
     private String verificadorRendered;
     private List<Acrescimo> acrescimos;
@@ -98,7 +100,7 @@ public class managerAcrescimo extends managerPrincipal implements Serializable{
         this.fiscais = userServico.FindAll();
         this.contratos = contratoServico.FindAll();
     }
-    
+
     public void salvar() {
         if (Utils.isNotEmpty(this.acrescimo.getNumeroTermo())) {
             if (acrescimoServico.existNumero(this.acrescimo.getNumeroTermo())) {
@@ -113,16 +115,40 @@ public class managerAcrescimo extends managerPrincipal implements Serializable{
             }
         }
     }
-    
+
     public void atualizar() {
+        Contrato contrato = this.acrescimo.getContrato();
+        Acrescimo acrescimoBD = acrescimoServico.find(this.acrescimo.getId());
+        Contrato contratoBD = acrescimoBD.getContrato();
+        BigDecimal valorBD = acrescimoBD.getValor();
+        BigDecimal valorCampo = this.acrescimo.getValor();
+        BigDecimal valorFinal = BigDecimal.ZERO;
+        if (contratoBD.equals(this.acrescimo.getContrato())) {
+            if (valorBD.compareTo(valorCampo) == 1) {
+                BigDecimal valorDiferenca = BigDecimal.ZERO;
+                valorDiferenca = valorBD.subtract(valorCampo);
+                valorFinal = acrescimoBD.getContrato().getValorRestante().subtract(valorDiferenca);
+            } else if (valorCampo.compareTo(valorBD) == 1) {
+                BigDecimal valorDiferenca = BigDecimal.ZERO;
+                valorDiferenca = valorCampo.subtract(valorBD);
+                valorFinal = acrescimoBD.getContrato().getValorRestante().add(valorDiferenca);
+            } else {
+                valorFinal = acrescimoBD.getContrato().getValorRestante();
+            }
+        } else{
+            valorFinal = this.acrescimo.getContrato().getValorRestante().add(this.acrescimo.getValor());
+        }
+        contrato.setValor(this.acrescimo.getValor().add(contrato.getValor()));
+        contrato.setValorRestante(valorFinal);
+        contratoServico.Update(contrato);
         acrescimoServico.Update(this.acrescimo);
         Msg.messagemInfoRedirect("Operação realizada com sucesso !", "cadastrarAlteracoes.xhtml?visualizar=" + this.acrescimo.getId() + "&acrescimo=TRUE");
     }
-    
+
     public void pesquisar() {
         this.acrescimos = acrescimoServico.findPesquisa(this.acrescimo);
     }
-    
+
     public void deletar() {
         try {
             Acrescimo NovoAcrescimo = acrescimoServico.find(this.acrescimo.getId());
@@ -142,27 +168,27 @@ public class managerAcrescimo extends managerPrincipal implements Serializable{
         }
 
     }
-    
-    public String urlVisualizar(long id){
-        return "cadastrarAlteracoes.xhtml?visualizar="+id+"&acrescimo=TRUE";
+
+    public String urlVisualizar(long id) {
+        return "cadastrarAlteracoes.xhtml?visualizar=" + id + "&acrescimo=TRUE";
     }
-    
-    public String urlEditar(long id){
-        return "cadastrarAlteracoes.xhtml?editar="+id+"&acrescimo=TRUE";
+
+    public String urlEditar(long id) {
+        return "cadastrarAlteracoes.xhtml?editar=" + id + "&acrescimo=TRUE";
     }
-    
-    public boolean verificarAcrescimo(){
+
+    public boolean verificarAcrescimo() {
         boolean verificarMetodo = false;
         Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
         this.verificadorRendered = params.get("acrescimo");
-        if(isVisualizar() || isEditar()){
-            if(this.verificadorRendered != null && !this.verificadorRendered.isEmpty()){
+        if (isVisualizar() || isEditar()) {
+            if (this.verificadorRendered != null && !this.verificadorRendered.isEmpty()) {
                 verificarMetodo = true;
             }
         }
-        if(isCadastrar()) {
+        if (isCadastrar()) {
             verificarMetodo = true;
-        } 
+        }
         return verificarMetodo;
     }
 
@@ -245,7 +271,5 @@ public class managerAcrescimo extends managerPrincipal implements Serializable{
     public void setVerificadorRendered(String verificadorRendered) {
         this.verificadorRendered = verificadorRendered;
     }
-    
-    
-    
+
 }
