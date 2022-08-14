@@ -18,6 +18,7 @@ import Servico.tipoContratoServico;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -190,6 +191,22 @@ public class managerContrato extends managerPrincipal implements Serializable {
     }
 
     public void atualizar() {
+        Contrato contratoBD = contratoServico.find(this.contrato.getId());
+        BigDecimal valorBD = contratoBD.getValor();
+        BigDecimal valorCampo = this.contrato.getValor();
+        BigDecimal valorFinal = BigDecimal.ZERO;
+        if (valorBD.compareTo(valorCampo) == 1) {
+            BigDecimal valorDiferenca = BigDecimal.ZERO;
+            valorDiferenca = valorBD.subtract(valorCampo);
+            valorFinal = contratoBD.getValorRestante().subtract(valorDiferenca);
+        } else if (valorCampo.compareTo(valorBD) == 1) {
+            BigDecimal valorDiferenca = BigDecimal.ZERO;
+            valorDiferenca = valorCampo.subtract(valorBD);
+            valorFinal = contratoBD.getValorRestante().add(valorDiferenca);
+        } else {
+            valorFinal = contratoBD.getValorRestante();
+        }
+        this.contrato.setValorRestante(valorFinal);
         contratoServico.Update(this.contrato);
         Msg.messagemInfoRedirect("Operação realizada com sucesso !", "contrato.xhtml?visualizar=" + this.contrato.getId());
     }

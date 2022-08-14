@@ -7,6 +7,7 @@ package Servico;
 
 import Enum.StatusContrato;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -40,7 +41,7 @@ public class ContratoServico extends ServicoGenerico<Contrato> implements Serial
 
         return query.getResultList();
     }
-
+    
     public List<ContratoVo> buscarTipoContrato() {
 
         String sql = "select new modelo.ContratoVo(c.tipoContrato, count(c)) "
