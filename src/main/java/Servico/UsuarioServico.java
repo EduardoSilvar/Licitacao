@@ -13,6 +13,7 @@ import javax.ejb.Stateless;
 import javax.faces.context.FacesContext;
 import javax.persistence.Query;
 import modelo.Usuario;
+import util.Msg;
 import util.Utils;
 
 /**
@@ -48,10 +49,12 @@ public class UsuarioServico extends ServicoGenerico<Usuario> implements Serializ
 
         if (!novaSenha.equals(repetirSenha)) {
             throw new Exception("Senhas informadas são diferentes!");
+//            Msg.messagemError("Senhas informadas são diferentes!");
         }
 
         if (!Usuario.encryptPassword(senhaAntiga).equals(usuario.getSenha())) {
             throw new Exception("Senha atual não está correta!");
+//             Msg.messagemError("Senha atual não está correta!");
         }
 
         usuario.setSenha(Usuario.encryptPassword(novaSenha));

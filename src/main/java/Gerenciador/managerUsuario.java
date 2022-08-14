@@ -5,16 +5,12 @@
  */
 package Gerenciador;
 
-import static Gerenciador.managerLogin.VerificarLogin;
 import Servico.SetorServico;
 import Servico.UnidadeOrganizacionalServico;
 import Servico.UsuarioServico;
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -82,7 +78,7 @@ public class managerUsuario extends managerPrincipal implements Serializable {
                                 Msg.messagemError("As senhas não conferem !");
                             }
                         } else {
-                            Msg.messagemError("Você precisa precisa repetir a senha !");
+                            Msg.messagemError("Você precisa repetir a senha !");
                         }
                     } else {
                         Msg.messagemError("CPF invalido !!");

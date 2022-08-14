@@ -5,22 +5,14 @@
  */
 package Gerenciador;
 
-import static Gerenciador.managerLogin.VerificarLogin;
-import static Gerenciador.managerLogin.getObjectSession;
+import Servico.UsuarioServico;
 import Servico.tipoContratoServico;
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpServletRequest;
 import modelo.TipoContrato;
 import modelo.Usuario;
 import util.Msg;
@@ -37,13 +29,17 @@ public class managerTipoContrato extends managerPrincipal implements Serializabl
     @EJB
     private tipoContratoServico tipoContratoServico;
 
+    @EJB
+    private UsuarioServico userServico;
+
     private TipoContrato tipoContrato;
     private List<TipoContrato> TipoContratos;
     private Long id;
-    private Usuario user;
+    private Usuario userLogado;
 
     @Override
     public void carregar(String param) {
+        userLogado = userServico.getCurrentUser();
         this.id = Long.parseLong(param);
         this.tipoContrato = tipoContratoServico.find(Long.parseLong(param));
         this.TipoContratos = new ArrayList<>();
@@ -51,6 +47,7 @@ public class managerTipoContrato extends managerPrincipal implements Serializabl
 
     @Override
     public void instanciar() {
+        userLogado = userServico.getCurrentUser();
         InstanciarTipoContrato();
         instanciarLista();
     }
@@ -66,7 +63,9 @@ public class managerTipoContrato extends managerPrincipal implements Serializabl
     }
 
     public void salvar() {
-        tipoContrato.setUnidadeOrganizacional(user.getUnidadeOrganizacional());
+        if (Utils.isNotEmpty(TipoContratos)) {
+        }
+        tipoContrato.setUnidadeOrganizacional(userLogado.getUnidadeOrganizacional());
         tipoContratoServico.Save(tipoContrato);
         Msg.messagemInfoRedirect("Operação realizada com sucesso !", "tipoContrato.xhtml?visualizar=" + this.tipoContrato.getId());
     }
@@ -86,11 +85,11 @@ public class managerTipoContrato extends managerPrincipal implements Serializabl
             novoTipoContrato.setAtivo(false);
             tipoContratoServico.Update(novoTipoContrato);
             TipoContratos.remove(novoTipoContrato);
-           
+
             if (Utils.isNotEmpty(this.id)) {
                 Msg.messagemInfoRedirect("Operação realizada com sucesso !", "tipoContrato.xhtml");
             } else {
-                 TipoContratos = tipoContratoServico.pesquisar(this.tipoContrato);
+                TipoContratos = tipoContratoServico.pesquisar(this.tipoContrato, userLogado);
                 Msg.messagemInfo("Operação realizada com sucesso !");
             }
         } catch (Exception e) {
@@ -100,7 +99,7 @@ public class managerTipoContrato extends managerPrincipal implements Serializabl
     }
 
     public void pesquisar() {
-        TipoContratos = tipoContratoServico.pesquisar(this.tipoContrato);
+        TipoContratos = tipoContratoServico.pesquisar(this.tipoContrato, userLogado);
         if (TipoContratos.size() > 0) {
             Msg.messagemInfo("Pesquisa feita com sucesso !");
         } else {

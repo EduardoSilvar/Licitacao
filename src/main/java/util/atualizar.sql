@@ -1,7 +1,3 @@
-alter table contrato ADD column valorRestante numeric(10,2);
-
-alter table mensagem add column escritor_id bigint;
-ALTER TABLE mensagem ADD CONSTRAINT fk_escritor_id FOREIGN KEY (escritor_id) REFERENCES usuario (id);
 
 INSERT INTO grupo (id, descricao, nome) VALUES 
 (1, 'usuario', 'usuario' );
@@ -17,3 +13,11 @@ SELECT u.login AS username, g.nome AS grupo, u.senha AS senha
 FROM usuario u, grupo g, usuario_grupo ug
 WHERE u.id = ug.usuarios_id AND g.id = ug.grupos_id 
 and u.ativo = true;
+
+alter table contrato ADD column valorRestante numeric(10,2);
+
+alter table mensagem add column escritor_id bigint;
+ALTER TABLE mensagem ADD CONSTRAINT fk_escritor_id FOREIGN KEY (escritor_id) REFERENCES usuario (id);
+
+
+alter table Acrescimo ADD column ativo boolean;

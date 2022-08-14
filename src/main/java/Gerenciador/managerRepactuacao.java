@@ -4,19 +4,14 @@
  */
 package Gerenciador;
 
-import static Gerenciador.managerLogin.VerificarLogin;
-import static Gerenciador.managerLogin.getObjectSession;
 import Servico.ContratoServico;
 import Servico.RepactuacaoServico;
 import Servico.UsuarioServico;
-import java.io.IOException;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;

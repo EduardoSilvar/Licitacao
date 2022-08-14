@@ -5,12 +5,8 @@
  */
 package Gerenciador;
 
-import static Gerenciador.managerLogin.VerificarLogin;
 import Servico.UsuarioServico;
-import java.io.IOException;
 import java.io.Serializable;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -60,7 +56,7 @@ public class managerPerfil implements Serializable {
     public void salvar() {
         try {
             usuarioServico.alterarSenha(this.usuario, this.senhaAtual, this.novaSenha, this.repetirSenha);
-            Msg.messagemInfoRedirect(Msg.SuccessFull, "index.xhtml");
+            Msg.messagemInfoRedirect(Msg.SuccessFull, "perfil.xhtml");
         } catch (Exception ex) {
             Msg.messagemError(ex.getMessage());
         }

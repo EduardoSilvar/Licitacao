@@ -5,20 +5,13 @@
  */
 package Gerenciador;
 
-import static Gerenciador.managerLogin.VerificarLogin;
-import static Gerenciador.managerLogin.getObjectSession;
 import Servico.TipoLicitacaoServico;
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.persistence.PersistenceContext;
 import modelo.TipoLicitacao;
 import modelo.Usuario;
 import util.Msg;

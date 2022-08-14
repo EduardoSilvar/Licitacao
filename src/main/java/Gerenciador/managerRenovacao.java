@@ -4,8 +4,6 @@
  */
 package Gerenciador;
 
-import static Gerenciador.managerLogin.VerificarLogin;
-import static Gerenciador.managerLogin.getObjectSession;
 import Servico.ContratoServico;
 import Servico.RenovacaoServico;
 import Servico.UsuarioServico;
@@ -61,12 +59,6 @@ public class managerRenovacao extends managerPrincipal implements Serializable {
 
     @Override
     public void instanciar() {
-        try {
-            user = (Usuario) getObjectSession("usuarioLogado");
-            VerificarLogin();
-        } catch (IOException ex) {
-            Logger.getLogger(managerContrato.class.getName()).log(Level.SEVERE, null, ex);
-        }
         instanciarSelect();
         instanciarRenovacao();
         intanciarRenovacoes();

@@ -10,6 +10,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.Query;
 import modelo.TipoContrato;
+import modelo.Usuario;
 import util.Utils;
 
 /**
@@ -17,19 +18,19 @@ import util.Utils;
  * @author eduardo
  */
 @Stateless
-public class tipoContratoServico extends ServicoGenerico<TipoContrato> implements Serializable{
+public class tipoContratoServico extends ServicoGenerico<TipoContrato> implements Serializable {
 
     public tipoContratoServico() {
         super(TipoContrato.class);
     }
-    
-    public List<TipoContrato> findAllTiposContrato(){
+
+    public List<TipoContrato> findAllTiposContrato() {
         String sql = "select t from TipoContrato t where t.ativo = true";
         Query query = entityManager.createQuery(sql);
         return query.getResultList();
     }
-    
-    public List<TipoContrato> pesquisar(TipoContrato tipo) {
+
+    public List<TipoContrato> pesquisar(TipoContrato tipo, Usuario user) {
         String sql = "select t from TipoContrato t where ";
         if (Utils.isNotEmpty(tipo.getNome())) {
             sql += "t.nome = :nome and ";
@@ -37,14 +38,21 @@ public class tipoContratoServico extends ServicoGenerico<TipoContrato> implement
         if (Utils.isNotEmpty(tipo.getDescricao())) {
             sql += "t.descricao like :desc and ";
         }
+        if (Utils.isNotEmpty(user.getUnidadeOrganizacional())) {
+            sql += "t.unidadeOrganizacional = :unidade and ";
+        }
         sql += "t.ativo = true";
 
         Query query = entityManager.createQuery(sql);
         if (Utils.isNotEmpty(tipo.getNome())) {
-            query.setParameter("nome",  tipo.getNome());
+            query.setParameter("nome", tipo.getNome());
         }
         if (Utils.isNotEmpty(tipo.getDescricao())) {
             query.setParameter("desc", "%" + tipo.getDescricao().trim() + "%");
+        }
+        if (Utils.isNotEmpty(user.getUnidadeOrganizacional())) {
+            query.setParameter("unidade", user.getUnidadeOrganizacional());
+
         }
 
         return query.getResultList();

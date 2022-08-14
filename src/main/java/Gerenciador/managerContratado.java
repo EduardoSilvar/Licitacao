@@ -6,15 +6,11 @@
 package Gerenciador;
 
 import Enum.NaturezaEnum;
-import static Gerenciador.managerLogin.VerificarLogin;
-import static Gerenciador.managerLogin.getObjectSession;
 import Servico.ContratadoServico;
-import java.io.IOException;
+import Servico.UsuarioServico;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -34,15 +30,18 @@ public class managerContratado extends managerPrincipal implements Serializable 
 
     @EJB
     private ContratadoServico contratadoServico;
+    @EJB
+    private UsuarioServico userServico;
 
     private Contratado contratado;
     private List<Contratado> contratados;
     private NaturezaEnum natureza;
-    private Usuario user;
+    private Usuario userLogado;
     private Long id;
 
     @Override
     public void carregar(String param) {
+        userLogado = userServico.getCurrentUser();
         this.id = Long.parseLong(param);
         this.contratado = contratadoServico.find(Long.parseLong(param));
         this.contratados = new ArrayList<>();
@@ -50,6 +49,7 @@ public class managerContratado extends managerPrincipal implements Serializable 
 
     @Override
     public void instanciar() {
+        userLogado = userServico.getCurrentUser();
         instanciarContratado();
         intanciarContratados();
     }
@@ -80,10 +80,11 @@ public class managerContratado extends managerPrincipal implements Serializable 
                 if (contratadoServico.existCpf(contratado.getCpf())) {
                     Msg.messagemError("CPF ja esta sendo usado !");
                 } else {
-                    contratado.setUnidadeOrganizacional(user.getUnidadeOrganizacional());
+                    if (Utils.isNotEmpty(userLogado)) {
+                        contratado.setUnidadeOrganizacional(userLogado.getUnidadeOrganizacional());
+                    }
                     contratadoServico.Save(contratado);
                     Msg.messagemInfoRedirect("Operação realizada com sucesso !", "contratado.xhtml?visualizar=" + this.contratado.getId());
-
                 }
             } else {
                 Msg.messagemError("CPF invalido !");
@@ -109,7 +110,7 @@ public class managerContratado extends managerPrincipal implements Serializable 
             contratadoServico.Update(NovoContratado);
             contratados.remove(NovoContratado);
             if (Utils.isNotEmpty(contratado)) {
-                this.contratados = contratadoServico.findPesquisa(this.contratado);
+                this.contratados = contratadoServico.findPesquisa(this.contratado, userLogado);
             }
             if (Utils.isNotEmpty(this.id)) {
                 Msg.messagemInfoRedirect("operação realizada com sucesso !", "contratado.xhtml");
@@ -139,7 +140,7 @@ public class managerContratado extends managerPrincipal implements Serializable 
     }
 
     public void pesquisar() {
-        this.contratados = contratadoServico.findPesquisa(this.contratado);
+        this.contratados = contratadoServico.findPesquisa(this.contratado, userLogado);
         if (contratados.size() > 0) {
             Msg.messagemInfo("Pesquisa realizada com sucesso !");
         } else {

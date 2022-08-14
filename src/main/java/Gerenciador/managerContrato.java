@@ -6,8 +6,6 @@
 package Gerenciador;
 
 import Enum.StatusContrato;
-import static Gerenciador.managerLogin.VerificarLogin;
-import static Gerenciador.managerLogin.getObjectSession;
 import Servico.AnexoServico;
 import Servico.ContratadoServico;
 import Servico.ContratoServico;
@@ -74,10 +72,11 @@ public class managerContrato extends managerPrincipal implements Serializable {
     private List<Contratado> contratados;
     private List<TipoContrato> tiposContratos;
     private List<Setor> setores;
-    private Usuario user;
+    private Usuario userLogado;
 
     @Override
     public void carregar(String param) {
+        userLogado = userServico.getCurrentUser();
         instanciarSelect();
         InstanciarContrato();
         InstanciarContratos();
@@ -92,6 +91,7 @@ public class managerContrato extends managerPrincipal implements Serializable {
 
     @Override
     public void instanciar() {
+        userLogado = userServico.getCurrentUser();
         this.anexo = new Anexo();
         instanciarSelect();
         InstanciarContrato();
@@ -155,7 +155,9 @@ public class managerContrato extends managerPrincipal implements Serializable {
             if (contratoServico.existNumero(this.contrato.getNumeroContrato())) {
                 Msg.messagemError("Número de contrato já registrado !");
             } else {
-                this.contrato.setUnidadeOrganizacional(user.getUnidadeOrganizacional());
+                if (Utils.isNotEmpty(userLogado.getUnidadeOrganizacional())) {
+                    this.contrato.setUnidadeOrganizacional(userLogado.getUnidadeOrganizacional());
+                }
                 this.contrato.setCorStatus(cores(this.contrato.getStatus()));
                 this.contrato.setValorRestante(this.contrato.getValor());
                 contratoServico.Save(this.contrato);
@@ -165,8 +167,8 @@ public class managerContrato extends managerPrincipal implements Serializable {
     }
 
     public void pesquisar() {
-        if (Utils.isNotEmpty(user.getUnidadeOrganizacional())) {
-            this.contratos = contratoServico.findPesquisa(this.contrato, user.getUnidadeOrganizacional());
+        if (Utils.isNotEmpty(userLogado.getUnidadeOrganizacional())) {
+            this.contratos = contratoServico.findPesquisa(this.contrato, userLogado.getUnidadeOrganizacional());
             if (this.contratos.size() > 0) {
                 Msg.messagemInfo("Operação realizada com sucesso !!");
             } else {

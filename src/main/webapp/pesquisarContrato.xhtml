@@ -147,7 +147,7 @@
             </h:panelGroup>
 
             <center>
-                <p:commandButton value="Pesquisar" icon="pi pi-search" process="@this corpoInteiro:pesquisaPanel" update="corpoInteiro:contratoDatatable" actionListener="#{managerContrato.pesquisar()}" />
+                <p:commandButton value="Pesquisar" icon="pi pi-search" process="@this corpoInteiro:pesquisaPanel" update="corpoInteiro:contratoDatatable messages" actionListener="#{managerContrato.pesquisar()}" />
                 <p:commandButton value="Limpar" icon="pi pi-ban" update="corpoInteiro:pesquisaPanel corpoInteiro:contratoDatatable" process="@this corpoInteiro:pesquisaPanel" actionListener="#{managerContrato.instanciar()}"/>
             </center>
             <hr/>

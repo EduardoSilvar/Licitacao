@@ -4,8 +4,6 @@
  */
 package Gerenciador;
 
-import static Gerenciador.managerLogin.VerificarLogin;
-import static Gerenciador.managerLogin.getObjectSession;
 import Servico.AnexoServico;
 import Servico.ContratoServico;
 import Servico.NotaFiscalServico;
@@ -21,7 +19,6 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import modelo.Anexo;
-import modelo.Contratado;
 import modelo.Contrato;
 import modelo.NotaFiscal;
 import modelo.TipoAnexo;

@@ -5,19 +5,13 @@
  */
 package Gerenciador;
 
-import static Gerenciador.managerLogin.VerificarLogin;
 import Servico.UnidadeOrganizacionalServico;
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
 import modelo.Endereco;
 import modelo.UnidadeOrganizacional;
 import util.Msg;
@@ -84,7 +78,7 @@ public class ManagerUnidadeOrganizacional extends managerPrincipal implements Se
 
     @Override
     public String getUrlPesquisar() {
-        return "pesquisarUnidadeOrganizacional.xhtml";
+        return "pesquisarOrgao.xhtml";
     }
 
     @Override

@@ -27,11 +27,14 @@ and open the template in the editor.
                 width: 300px !important ;
             }
             .panelAcoes{
-                float: right !important;margin-top: 1px; margin-right: 30px !important;
+                float: right !important;
+                margin-top: 1px;
+                margin-right: 30px !important;
 
             }
             #icon{
-                margin: 2px 10px 5px 20px; color: #e1e6e5
+                margin: 2px 10px 5px 20px;
+                color: #e1e6e5
             }
             .ui-menu.ui-menubar{
                 background: #01415B !important;
@@ -48,7 +51,8 @@ and open the template in the editor.
             }
             .ui-icon-triangle-1-s{
                 color: white !important;
-            }.ui-menu-list {
+            }
+            .ui-menu-list {
                 background: #01415B !important;
             }
             .ui-menuitem-link.ui-state-hover{
@@ -84,7 +88,7 @@ and open the template in the editor.
             }
             .ui-panelmenu .ui-panelmenu-panel:first-child .ui-panelmenu-header{
                 background: #01415B !important;
-                color: #fff !important; 
+                color: #fff !important;
             }
             .ui-panelmenu h3.ui-panelmenu-header a{
                 font-size: 15px !important;
@@ -96,7 +100,7 @@ and open the template in the editor.
                 border-color: #0e526e !important;
             }
             .ui-panelmenu h3.ui-panelmenu-header{
-                border:none !important; 
+                border:none !important;
             }
             body .ui-panelmenu .ui-panelmenu-content .ui-menuitem-link{
                 background: #0e526e !important;
@@ -104,7 +108,7 @@ and open the template in the editor.
 
             .ui-panelmenu h3.ui-panelmenu-header{
                 background: #01415B !important;
-                color: #fff !important; 
+                color: #fff !important;
                 margin-left: 5px !important;
                 border-top: 1px solid #01415B !important;
             }
@@ -142,12 +146,15 @@ and open the template in the editor.
                                     </div>
                                 </div>
                             </div>
+                            <!--<div style="display: flex;flex-direction: column">--> 
                             <div class="row" style="margin-left: 86%;margin-top: -60px">
-                                <!--<p>{managerLogin.retornanome().unidadeOrganizacional.nome}"</p>-->
                                 <p:button icon="pi pi-user" styleClass="rounded-button ui-button-info" href="perfil.xhtml"/>
                                 <p:button icon="pi pi-cog" styleClass="rounded-button ui-button-info" href="configuracao.xhtml"/>
                                 <p:button icon="pi pi-envelope" styleClass="rounded-button ui-button-info" href="mensagens.xhtml"  style="margin-left: 0px !important;" />
                                 <p style="border-radius: 140%; background: red;height: 18px; width: 18px; font-size: 12px;text-align: center;margin-left: 110px;position: absolute">10</p>
+                                <div style="width: 400px;margin-right: 10px;margin-left:-400px;margin-top: 40px;">
+                                    <p:outputLabel style="float: right;margin-right: 0px">#{managerLogin.usuarioLogado.nome}</p:outputLabel>
+                                </div>
                             </div>
                         </div>
                         <div style="margin-top: -20px;">

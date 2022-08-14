@@ -11,6 +11,7 @@ import javax.ejb.Stateless;
 import javax.persistence.Query;
 import modelo.Contratado;
 import modelo.ContratoVo;
+import modelo.Usuario;
 import util.Utils;
 
 /**
@@ -42,7 +43,7 @@ public class ContratadoServico extends ServicoGenerico<Contratado> implements Se
         return query.getResultList();
     }
 
-    public List<Contratado> findPesquisa(Contratado contratado) {
+    public List<Contratado> findPesquisa(Contratado contratado, Usuario user) {
         String sql = "select c from Contratado c where ";
         if (Utils.isNotEmpty(contratado.getNatureza())) {
             sql += "c.natureza = :nt and ";
@@ -58,6 +59,9 @@ public class ContratadoServico extends ServicoGenerico<Contratado> implements Se
         }
         if (Utils.isNotEmpty(contratado.getNome())) {
             sql += "c.nome = :nome and ";
+        }
+        if (Utils.isNotEmpty(user.getUnidadeOrganizacional())) {
+            sql += " c.unidadeOrganizacional = :unidade and ";
         }
 
         sql += "c.ativo = true";
@@ -77,6 +81,9 @@ public class ContratadoServico extends ServicoGenerico<Contratado> implements Se
         }
         if (Utils.isNotEmpty(contratado.getNatureza())) {
             query.setParameter("nt", contratado.getNatureza());
+        }
+        if (Utils.isNotEmpty(user.getUnidadeOrganizacional())) {
+            query.setParameter("unidade", user.getUnidadeOrganizacional());
         }
         return query.getResultList();
     }

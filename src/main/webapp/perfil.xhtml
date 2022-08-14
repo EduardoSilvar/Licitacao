@@ -12,7 +12,7 @@
 
                 <p:menuitem value="Redefinir Senha"
                             icon="pi pi-key"
-                            update="corpoInteiro:teste:senhas "
+                            update="corpoInteiro:perfilForm:senhas corpoInteiro:botaoPanelGroup"
                             process="@this"
                             actionListener="#{managerPerfil.alterarSenha()}"
                             />
@@ -27,9 +27,9 @@
         </div>
     </ui:define>
     <ui:define name="corpo">
-        <h:form id="teste">
+        <h:form id="perfilForm">
+            <p:growl id="messages" showDetail="true" />
             <h:panelGroup id="corpoPerfil">
-                <p:growl id="messages" showDetail="true" />
                 <div class="row">
                     <div class="col-md-3">
                         <div class="form-group">
@@ -40,7 +40,7 @@
                                          rendered="true"
                                          disabled="true"
                                          styleClass="form-control" 
-                                         value="#{managerLogin.userll.nome}"
+                                         value="#{managerLogin.usuarioLogado.nome}"
                                          />
                             <p:message for="nomeUser" />
                         </div> 
@@ -54,7 +54,7 @@
                                          rendered="true"
                                          disabled="true"
                                          styleClass="form-control" 
-                                         value="#{managerLogin.userll.email}"
+                                         value="#{managerLogin.usuarioLogado.email}"
                                          />
                             <p:message for="emailUser" />
                         </div> 
@@ -68,25 +68,25 @@
                                          rendered="true"
                                          disabled="true"
                                          styleClass="form-control" 
-                                         value="#{managerLogin.userll.whatsapp}"
+                                         value="#{managerLogin.usuarioLogado.whatsapp}"
                                          />
                             <p:message for="whatsUser" />
                         </div> 
                     </div>
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <p:outputLabel value="Tipo de Acesso"
-                                           for="tipoUser" />
-                            <p:inputText id="tipoUser"
-                                         placeholder="Tipo de Acesso"
-                                         rendered="true"
-                                         disabled="true"
-                                         styleClass="form-control" 
-                                         value="#{managerLogin.userll.tiposUsuario}"
-                                         />
-                            <p:message for="tipoUser" />
-                        </div> 
-                    </div>
+                    <!--                    <div class="col-md-3">
+                                            <div class="form-group">
+                                                <p:outputLabel value="Tipo de Acesso"
+                                                               for="tipoUser" />
+                                                <p:inputText id="tipoUser"
+                                                             placeholder="Tipo de Acesso"
+                                                             rendered="true"
+                                                             disabled="true"
+                                                             styleClass="form-control" 
+                                                             value="{managerLogin.usuarioLogado.tiposUsuario}"
+                                                             />
+                                                <p:message for="tipoUser" />
+                                            </div> 
+                                        </div>-->
                 </div>
                 <div class="row">
                     <div class="col-md-6">
@@ -98,7 +98,7 @@
                                          rendered="true"
                                          disabled="true"
                                          styleClass="form-control" 
-                                         value="#{managerLogin.userll.unidadeOrganizacional.nome}"
+                                         value="#{managerLogin.usuarioLogado.unidadeOrganizacional.nome}"
                                          />
                             <p:message for="organizacaoInput" />
                         </div> 
@@ -112,7 +112,7 @@
                                          rendered="true"
                                          disabled="true"
                                          styleClass="form-control" 
-                                         value="#{managerLogin.userll.tiposUsuario}"
+                                         value="#{managerLogin.usuarioLogado.tipoUsuario}"
                                          />
                             <p:message for="setorInput" />
                         </div> 
@@ -131,7 +131,7 @@
                                             required="true"
                                             requiredMessage="Este campo é obrigatório."
                                             styleClass="form-control"
-                                            value="#{managerLogin.senha}"
+                                            value="#{managerPerfil.senhaAtual}"
                                             />
                             </div>
                         </div>
@@ -144,7 +144,7 @@
                                             required="true"
                                             requiredMessage="Este campo é obrigatório."
                                             styleClass="form-control"
-                                            value="#{managerLogin.novaSenha}"
+                                            value="#{managerPerfil.novaSenha}"
                                             />
                             </div>
                         </div>
@@ -157,7 +157,7 @@
                                             required="true"
                                             requiredMessage="Este campo é obrigatório."
                                             styleClass="form-control"
-                                            value="#{managerLogin.repetirSenha}"
+                                            value="#{managerPerfil.repetirSenha}"
                                             />
                             </div>
                         </div>
@@ -166,8 +166,10 @@
             </h:panelGroup>
         </h:form>
         <center>
-            <p:button value="atualizar" icon="pi pi-sync" />
-            <p:button value="Cancelar" icon="pi pi-ban"  href="index.xhtml"/>           
+            <h:panelGroup id="botaoPanelGroup">
+                <p:commandButton actionListener="#{managerPerfil.salvar()}"  rendered="#{managerPerfil.alteracaoSenha}"  process="corpoInteiro:perfilForm:corpoPerfil @this" update="@this corpoInteiro:perfilForm:messages" value="atualizar" icon="pi pi-sync" />
+            </h:panelGroup>
+            <p:button value="Cancelar" icon="pi pi-ban"  href="index.xhtml"/>   
         </center>
 
     </ui:define>
