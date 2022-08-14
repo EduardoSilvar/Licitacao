@@ -10,6 +10,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.Query;
 import modelo.TipoLicitacao;
+import modelo.Usuario;
 import util.Utils;
 
 /**
@@ -17,19 +18,19 @@ import util.Utils;
  * @author eduardo
  */
 @Stateless
-public class TipoLicitacaoServico extends ServicoGenerico<TipoLicitacao> implements Serializable{
-    
+public class TipoLicitacaoServico extends ServicoGenerico<TipoLicitacao> implements Serializable {
+
     public TipoLicitacaoServico() {
         super(TipoLicitacao.class);
     }
-    
-    public List<TipoLicitacao> findAllTiposLicitacao(){
+
+    public List<TipoLicitacao> findAllTiposLicitacao() {
         String sql = "select a from TipoLicitacao a";
         Query query = getEntityManager().createQuery(sql);
         return query.getResultList();
     }
-    
-    public List<TipoLicitacao> pesquisar(TipoLicitacao tipo) {
+
+    public List<TipoLicitacao> pesquisar(TipoLicitacao tipo, Usuario user) {
         String sql = "select a from TipoLicitacao a where ";
         if (Utils.isNotEmpty(tipo.getDescricao())) {
             sql += "a.descricao = :desc and ";
@@ -37,17 +38,23 @@ public class TipoLicitacaoServico extends ServicoGenerico<TipoLicitacao> impleme
         if (Utils.isNotEmpty(tipo.getTipo())) {
             sql += "a.tipo = :tipo and ";
         }
+        if (Utils.isNotEmpty(user.getUnidadeOrganizacional())) {
+            sql += "a.unidadeOrganizacional = :unidade and ";
+        }
         sql += "a.ativo = true";
-        
+
         Query query = getEntityManager().createQuery(sql);
-        
+
         if (Utils.isNotEmpty(tipo.getDescricao())) {
             query.setParameter("desc", tipo.getDescricao().trim());
         }
         if (Utils.isNotEmpty(tipo.getTipo())) {
             query.setParameter("tipo", tipo.getTipo().trim());
         }
+        if (Utils.isNotEmpty(user.getUnidadeOrganizacional())) {
+            query.setParameter("unidade", user.getUnidadeOrganizacional());
+        }
         return query.getResultList();
     }
-    
+
 }

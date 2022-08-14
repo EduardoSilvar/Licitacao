@@ -9,6 +9,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.Query;
 import modelo.NotaFiscal;
+import modelo.Usuario;
 import util.Utils;
 
 /**
@@ -22,7 +23,7 @@ public class NotaFiscalServico extends ServicoGenerico<NotaFiscal> implements Se
         super(NotaFiscal.class);
     }
 
-    public List<NotaFiscal> pesquisar(NotaFiscal nota) {
+    public List<NotaFiscal> pesquisar(NotaFiscal nota, Usuario user) {
         String sql = "select n from NotaFiscal n where n.ativo = true ";
         if (Utils.isNotEmpty(nota.getContrato())) {
             sql += "and n.contrato = :contrato ";
@@ -33,6 +34,9 @@ public class NotaFiscalServico extends ServicoGenerico<NotaFiscal> implements Se
         if (Utils.isNotEmpty(nota.getValor())) {
             sql += "and n.valor = :valor";
         }
+        if (Utils.isNotEmpty(user.getUnidadeOrganizacional())) {
+            sql += "and n.unidadeOrganizacional = :unidade";
+        }
         Query query = getEntityManager().createQuery(sql);
         if (Utils.isNotEmpty(nota.getContrato())) {
             query.setParameter("contrato", nota.getContrato());
@@ -42,6 +46,9 @@ public class NotaFiscalServico extends ServicoGenerico<NotaFiscal> implements Se
         }
         if (Utils.isNotEmpty(nota.getValor())) {
             query.setParameter("valor", nota.getValor());
+        }
+        if (Utils.isNotEmpty(user.getUnidadeOrganizacional())) {
+            query.setParameter("unidade", user.getUnidadeOrganizacional());
         }
         return query.getResultList();
     }

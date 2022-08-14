@@ -10,6 +10,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.Query;
 import modelo.Setor;
+import modelo.Usuario;
 import util.Utils;
 
 /**
@@ -41,7 +42,7 @@ public class SetorServico extends ServicoGenerico<Setor> implements Serializable
         return query.getResultList();
     }
 
-    public List<Setor> pesquisar(Setor setor) {
+    public List<Setor> pesquisar(Setor setor, Usuario user) {
         String sql = "select s from Setor s where s.ativo = true";
         if (Utils.isNotEmpty(setor.getNome())) {
             sql += " and s.nome = :nome";
@@ -55,6 +56,9 @@ public class SetorServico extends ServicoGenerico<Setor> implements Serializable
         if (Utils.isNotEmpty(setor.getTelefone())) {
             sql += " and s.telefone = :telefone";
         }
+        if (Utils.isNotEmpty(user.getUnidadeOrganizacional())) {
+            sql += " and s.unidadeOrganizacional = :unidade";
+        }
         Query query = getEntityManager().createQuery(sql);
         if (Utils.isNotEmpty(setor.getNome())) {
             query.setParameter("nome", setor.getNome());
@@ -67,6 +71,9 @@ public class SetorServico extends ServicoGenerico<Setor> implements Serializable
         }
         if (Utils.isNotEmpty(setor.getTelefone())) {
             query.setParameter("telefone", setor.getTelefone());
+        }
+        if (Utils.isNotEmpty(user.getUnidadeOrganizacional())) {
+            query.setParameter("unidade", user.getUnidadeOrganizacional());
         }
         return query.getResultList();
     }

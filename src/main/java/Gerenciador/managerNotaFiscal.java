@@ -50,15 +50,19 @@ public class managerNotaFiscal extends managerPrincipal {
     private List<Usuario> responsaveis;
     private List<NotaFiscal> notasFiscais;
     private Anexo anexo;
-    private Usuario user;
+    private Usuario userLogado;
 
     @Override
     public void carregar(String param) {
+        userLogado = userServico.getCurrentUser();
         instanciarAnexo();
         this.notaFiscal = notaFiscalServico.find(Long.parseLong(param));
     }
 
     public void salvar() {
+        if (Utils.isNotEmpty(userLogado.getUnidadeOrganizacional())) {
+            this.notaFiscal.setUnidadeOrganizacional(userLogado.getUnidadeOrganizacional());
+        }
         Contrato contrato = this.notaFiscal.getContrato();
         contrato.setValorRestante(contrato.getValorRestante().subtract(this.notaFiscal.getValor()));
         contratoServico.Update(contrato);
@@ -90,7 +94,7 @@ public class managerNotaFiscal extends managerPrincipal {
     }
 
     public void pesquisar() {
-        this.notasFiscais = notaFiscalServico.pesquisar(notaFiscal);
+        this.notasFiscais = notaFiscalServico.pesquisar(notaFiscal, userLogado);
         if (this.notasFiscais.size() > 0) {
             Msg.messagemInfo("Pesquisa realizada com sucesso !");
         } else {
@@ -133,6 +137,7 @@ public class managerNotaFiscal extends managerPrincipal {
 
     @Override
     public void instanciar() {
+        userLogado = userServico.getCurrentUser();
         instanciarNotaFical();
         instanciarAnexo();
         instanciarSelect();
@@ -198,14 +203,6 @@ public class managerNotaFiscal extends managerPrincipal {
 
     public void setAnexo(Anexo anexo) {
         this.anexo = anexo;
-    }
-
-    public Usuario getUser() {
-        return user;
-    }
-
-    public void setUser(Usuario user) {
-        this.user = user;
     }
 
     public NotaFiscalServico getNotaFiscalServico() {

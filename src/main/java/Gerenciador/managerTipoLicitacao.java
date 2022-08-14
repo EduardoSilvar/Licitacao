@@ -6,6 +6,7 @@
 package Gerenciador;
 
 import Servico.TipoLicitacaoServico;
+import Servico.UsuarioServico;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,96 +25,102 @@ import util.Utils;
 @ManagedBean
 @ViewScoped
 public class managerTipoLicitacao extends managerPrincipal implements Serializable {
-    
+
     @EJB
     private TipoLicitacaoServico tipoLicitacaoServico;
-    
+    @EJB
+    private UsuarioServico userServico;
+
     private TipoLicitacao tipoLicitacao;
     private List<TipoLicitacao> tiposLicitacoes;
-    private Usuario user;
-    
+    private Usuario userLogado;
+
     public void salvar() {
-        this.tipoLicitacao.setUnidadeOrganizacional(user.getUnidadeOrganizacional());
+        if (Utils.isNotEmpty(userLogado.getUnidadeOrganizacional())) {
+            this.tipoLicitacao.setUnidadeOrganizacional(userLogado.getUnidadeOrganizacional());
+        }
         tipoLicitacaoServico.Save(this.tipoLicitacao);
         Msg.messagemInfoRedirect("Operação realizada com sucesso !", "tipoLicitacao.xhtml?visualizar=" + this.tipoLicitacao.getId());
         instanciarTipoLicitacao();
     }
-    
+
     public void deletar() {
         TipoLicitacao novoTipoLicitacao = tipoLicitacaoServico.find(this.tipoLicitacao.getId());
         novoTipoLicitacao.setAtivo(false);
         tipoLicitacaoServico.Update(novoTipoLicitacao);
         tiposLicitacoes.remove(novoTipoLicitacao);
         if (Utils.isNotEmpty(tipoLicitacao)) {
-            this.tiposLicitacoes = tipoLicitacaoServico.pesquisar(tipoLicitacao);
+            this.tiposLicitacoes = tipoLicitacaoServico.pesquisar(tipoLicitacao, userLogado);
         }
         Msg.messagemInfo("Operação realizada com sucesso !");
-        
+
     }
-    
+
     public void atualizar() {
         tipoLicitacaoServico.Update(this.tipoLicitacao);
         Msg.messagemInfoRedirect("Operação realizada com sucesso !", "tipoLicitacao.xhtml?visualizar=" + this.tipoLicitacao.getId());
     }
-    
+
     public List<TipoLicitacao> getAll() {
         return tipoLicitacaoServico.findAllTiposLicitacao();
     }
-    
+
     public void pesquisar() {
-        this.tiposLicitacoes = tipoLicitacaoServico.pesquisar(tipoLicitacao);
+        this.tiposLicitacoes = tipoLicitacaoServico.pesquisar(tipoLicitacao, userLogado);
         if (this.tiposLicitacoes.size() > 0) {
             Msg.messagemInfo("Pesquisa realizada com suceso !");
         } else {
             Msg.messagemError("Sua Pesquisa não trouxe nenhum tipo de licitação !");
         }
-        
+
     }
-    
+
     public void instanciarTipoLicitacao() {
         this.tipoLicitacao = new TipoLicitacao();
     }
-    
+
     public void instanciarListaTipoLicitacao() {
         this.tiposLicitacoes = new ArrayList<>();
     }
-    
+
     public TipoLicitacao getTipoLicitacao() {
         return tipoLicitacao;
     }
-    
+
     public void setTipoLicitacao(TipoLicitacao tipoLicitacao) {
         this.tipoLicitacao = tipoLicitacao;
     }
-    
+
     public List<TipoLicitacao> getTiposLicitacoes() {
         return tiposLicitacoes;
     }
-    
+
     public void setTiposLicitacoes(List<TipoLicitacao> tiposLicitacoes) {
         this.tiposLicitacoes = tiposLicitacoes;
     }
-    
+
     @Override
     public void carregar(String param) {
+        userLogado = userServico.getCurrentUser();
         this.tipoLicitacao = tipoLicitacaoServico.find(Long.parseLong(param));
         this.tiposLicitacoes = new ArrayList<>();
     }
-    
+
     @Override
     public void instanciar() {
+        userLogado = userServico.getCurrentUser();
         instanciarTipoLicitacao();
         instanciarListaTipoLicitacao();
     }
-    
+
     @Override
     public String getUrlPesquisar() {
         return "pesquisarTipoLicitacao.xhtml";
     }
-    
+
     @Override
     public String getUrlVisualizar() {
         return "tipoLicitacao.xhtml?visualizar=" + this.tipoLicitacao.getId();
     }
-    
+
 }

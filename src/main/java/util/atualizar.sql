@@ -19,5 +19,7 @@ alter table contrato ADD column valorRestante numeric(10,2);
 alter table mensagem add column escritor_id bigint;
 ALTER TABLE mensagem ADD CONSTRAINT fk_escritor_id FOREIGN KEY (escritor_id) REFERENCES usuario (id);
 
-
 alter table Acrescimo ADD column ativo boolean;
+
+alter table notaFiscal add column unidadeOrganizacional_id bigint;
+ALTER TABLE notaFiscal ADD CONSTRAINT fk_unidadeOrganizacional_id FOREIGN KEY (unidadeOrganizacional_id) REFERENCES unidadeOrganizacional (id);
