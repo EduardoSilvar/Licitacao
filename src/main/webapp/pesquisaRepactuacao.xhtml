@@ -1,4 +1,5 @@
 <ui:composition 
+
     xmlns:ui="http://java.sun.com/jsf/facelets"
     xmlns:h="http://xmlns.jcp.org/jsf/html"
     xmlns:p="http://primefaces.org/ui"
@@ -10,23 +11,33 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <p:outputLabel value="Contrato*" styleClass="control-label" for="contratoRepactuacao" />
-                        <p:selectOneMenu id="contratoRepactuacao"
-                                         value="#{managerRepactuacao.repactuacao.contrato}"
-                                         filter="true" 
-                                         disabled="#{managerRepactuacao.visualizar}"
-                                         placeholder="Contrato"
-                                         styleClass="form-control" 
-                                         converter="contratoconverter">
-                            <f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
-                            <f:selectItems value="#{managerRepactuacao.contratos}" var="contrato" itemLabel="#{contrato.numeroContrato}" itemValue="#{contrato}" />
-                        </p:selectOneMenu>
+                        <p:outputLabel value="Número do termo de apostilamento*"
+                                       for="numeroTermoApostilamento" />
+                        <p:inputText id="numeroTermoApostilamento"
+                                     value="#{managerRepactuacao.repactuacao.numeroTermo}"
+                                     placeholder="Número"
+                                     rendered="true"
+                                     requiredMessage="Este campo é obrigatório."
+                                     styleClass="form-control" 
+                                     />
+                        <p:message for="numeroTermoApostilamento" />
                     </div>
+                </div>
+                <div class="col-md-6">
+                    <p:outputLabel value="Valor"
+                                   for="novoValorRepactuacao" />
+                    <p:inputMask id="novoValorRepactuacao"
+                                 style="display: flex; flex-direction: row"
+                                 value="#{managerRepactuacao.repactuacao.valor}"
+                                 styleClass="form-control" 
+                                 placeholder="Valor"
+                                 requiredMessage="Este campo é obrigatório." />
+                    <p:message for="novoValorRepactuacao" />
                 </div>
             </div>
         </h:panelGroup>
         <center>
-            <p:commandButton value="Pesquisar" icon="pi pi-search" process="@this repactuacaoSubPanel" update="repactuacaoDatatable" actionListener="#{managerRepactuacao.pesquisar()}" />
+            <p:commandButton value="Pesquisar" icon="pi pi-search" process="@this repactuacaoSubPanel" update="repactuacaoDatatable" actionListener="#{managerRepactuacao.pesquisar(managerContrato.contrato)}" />
         </center>
         <hr/>
         <p:dataTable id="repactuacaoDatatable" var="repactuacao" value="#{managerRepactuacao.repactuacoes}"
@@ -43,7 +54,7 @@
                     <f:setPropertyActionListener value="#{repactuacao}"
                                                  target="#{managerRepactuacao.repactuacao}"/>
                 </p:commandButton>
-                <p:button  icon="pi pi-eye" title="visualizar" href="#{managerRepactuacao.urlVisualizar(repactuacao.id)}" />
+                <p:button  icon="pi pi-eye" title="visualizar" href="repactuacao.xhtml?visualizar=#{repactuacao.id}" />
             </p:column>
 
             <p:column headerText="N° do Termo de Apostilamento" width="300px">

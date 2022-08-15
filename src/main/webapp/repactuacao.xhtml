@@ -1,202 +1,244 @@
 
 <ui:composition 
+    template="/WEB-INF/template/layout.xhtml"
     xmlns:ui="http://java.sun.com/jsf/facelets"
     xmlns:h="http://xmlns.jcp.org/jsf/html"
     xmlns:p="http://primefaces.org/ui"
     xmlns:f="http://xmlns.jcp.org/jsf/core"
     xmlns="http://www.w3.org/1999/xhtml">
 
+    <ui:define name="acoes">
+        <h:panelGroup class="panelAcoes">
+            <p:button value="Pesquisar"
+                      title="Pesquisar Bairro"
+                      icon="pi pi-search"
+                      href="pesquisarContrato.xhtml" style=" margin-right: 30px !important"/>
+            <p:splitButton value="Alterações"  style="margin: 0px -8px !important" rendered="#{not managerContrato.visualizar}" icon="pi pi-list">
+                <p:menuitem value="Acréscimo" url="acrescimo.xhtml"/>
+                <p:menuitem value="Supressão" url="supressao.xhtml"/>
+                <p:menuitem value="Renovação" url="renovacao.xhtml"/>
+                <p:menuitem value="Repactuação" url="repactuacao.xhtml"/>
+            </p:splitButton>
+            <p:splitButton value="Ações" style="margin: 0px -8px !important" rendered="#{not managerContrato.cadastrar}"
+                           icon="pi pi-cog"
+                           >
+                <p:menuitem value="Cadastrar"
+                            icon="pi pi-save"
+                            url="repactuacao.xhtml"
+                            process="@this"/>
+                <p:menuitem value="Editar" 
+                            icon="pi pi-pencil"
+                            url="repactuacao.xhtml?editar=#{managerRepactuacao.repactuacao.id}"
+                            process="@this"
+                            />
+                <p:menuitem value="Excluir" 
+                            icon="pi pi-trash"
+                            oncomplete="PF('removeraContratoConfirmDialog').show();"
 
+                            >
 
+                </p:menuitem>
 
-    <h:panelGroup id="repactuacaoPanelGroup">
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <p:outputLabel value="Contrato*" styleClass="control-label" for="contratoRepactuacao" />
-                    <p:selectOneMenu id="contratoRepactuacao"
-                                     value="#{managerRepactuacao.repactuacao.contrato}"
-                                     filter="true" 
-                                     disabled="#{managerRepactuacao.visualizar}"
-                                     placeholder="Contrato"
-                                     styleClass="form-control" 
-                                     converter="contratoconverter">
-                        <f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
-                        <f:selectItems value="#{managerRepactuacao.contratos}" var="contrato" itemLabel="#{contrato.numeroContrato}" itemValue="#{contrato}" />
-                    </p:selectOneMenu>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <p:outputLabel value="Número do termo de apostilamento*"
-                                   for="numeroTermoApostilamento" />
-                    <p:inputText id="numeroTermoApostilamento"
-                                 value="#{managerRepactuacao.repactuacao.numeroTermo}"
-                                 placeholder="Número"
-                                 rendered="true"
-                                 disabled="#{managerRepactuacao.visualizar}"
-                                 requiredMessage="Este campo é obrigatório."
-                                 styleClass="form-control" 
-                                 />
-                    <p:message for="numeroTermoApostilamento" />
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <p:outputLabel value="Data de assinatura"
-                                   for="dataAssinaturaRepactuacao" />
-                    <p:calendar id="dataAssinaturaRepactuacao"
-                                rendered="true"
-                                value="#{managerRepactuacao.repactuacao.dataAssinatura}"
-                                mask="true"
-                                style="display: flex; flex-direction: row"
-                                required="true"
-                                disabled="#{managerRepactuacao.visualizar}"
-                                requiredMessage="Este campo é obrigatório."
-                                inputStyleClass="form-control"
-                                showOn="button"
-                                />
-                    <p:message for="dataAssinaturaRepactuacao" />
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="form-group">
-                    <p:outputLabel value="O valor do contrato mudou?" />
-                    <div class="ui-inputgroup">
-                        <p:selectBooleanButton onLabel="Sim" offLabel="Não" value="#{managerRepactuacao.repactuacao.valorMudou}" disabled="#{managerRepactuacao.visualizar}" style="width:12rem; color: white !important;border-radius: 5px">
-                            <p:ajax update="atualizacaoValorRepactuacao"/>
-                        </p:selectBooleanButton>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <h:panelGroup id="atualizacaoValorRepactuacao" >
-            <h:panelGroup rendered="#{managerRepactuacao.renderedValorMudou()}">
-                <div class="row">
-                    <div class="col-md-6">
-                        <p:outputLabel value="Valor"
-                                       for="novoValorRepactuacao" />
-                        <p:inputMask id="novoValorRepactuacao"
-                                     disabled="#{managerRepactuacao.visualizar}"
-                                     style="display: flex; flex-direction: row"
-                                     value="#{managerRepactuacao.repactuacao.valor}"
-                                     styleClass="form-control" 
-                                     placeholder="Valor"
-                                     requiredMessage="Este campo é obrigatório." />
-                        <p:message for="novoValorRepactuacao" />
-                    </div>
-                </div>
-            </h:panelGroup>
+            </p:splitButton>
+
         </h:panelGroup>
-        <div class="row">
-            <div class="col-md-4">
-                <p:outputLabel value="Fiscal responsável" styleClass="control-label" for="fiscalSelectRepactuacao" />
-                <p:selectOneMenu id="fiscalSelectRepactuacao"
-                                 filter="true" 
-                                 placeholder="fiscal"
-                                 required="true"
-                                 styleClass="form-control"
-                                 disabled="#{managerRepactuacao.visualizar}"
-                                 requiredMessage="Este campo é obrigatório."
-                                 converter="usuarioconverter"
-                                 value="#{managerRepactuacao.repactuacao.fiscal}"
-                                 >
-                    <f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
-                    <f:selectItems value="#{managerRepactuacao.fiscais}" var="user" itemLabel="#{user.nome}" itemValue="#{user}"  />
-                </p:selectOneMenu>
-                <p:message for="fiscalSelectRepactuacao" />
-            </div>
-            <div class="col-md-8">
-                <div class="form-group">
-                    <p:outputLabel value="Descrição*" for="descricaoRepactuacao" />
-                    <p:inputText id="descricaoRepactuacao"
-                                 placeholder="Descrição"
-                                 disabled="#{managerRepactuacao.visualizar}"
-                                 value="#{managerRepactuacao.repactuacao.descricao}"
-                                 requiredMessage="Este campo é obrigatório."
-                                 styleClass="form-control" 
-                                 />
-                    <p:message for="descricaoRepactuacao" />
+    </ui:define>
+    <ui:define name="barra">
+        <div class="row" id="stylebarra">
+            <i class="pi pi-file-o" id="icon"></i> <h5 style="color: #e1e6e5"> Alterações de contrato</h5>
+        </div>
+    </ui:define>
+    <ui:define name="corpo">
+        <p:growl id="messages"/>
+
+        <h:panelGroup id="repactuacaoPanelGroup">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <p:outputLabel value="Contrato*" styleClass="control-label" for="contratoRepactuacao" />
+                        <p:selectOneMenu id="contratoRepactuacao"
+                                         value="#{managerRepactuacao.repactuacao.contrato}"
+                                         filter="true" 
+                                         disabled="#{managerRepactuacao.visualizar}"
+                                         placeholder="Contrato"
+                                         styleClass="form-control" 
+                                         converter="contratoconverter">
+                            <f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
+                            <f:selectItems value="#{managerRepactuacao.contratos}" var="contrato" itemLabel="#{contrato.numeroContrato}" itemValue="#{contrato}" />
+                        </p:selectOneMenu>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <p:outputLabel value="Número do termo de apostilamento*"
+                                       for="numeroTermoApostilamento" />
+                        <p:inputText id="numeroTermoApostilamento"
+                                     value="#{managerRepactuacao.repactuacao.numeroTermo}"
+                                     placeholder="Número"
+                                     rendered="true"
+                                     disabled="#{managerRepactuacao.visualizar}"
+                                     requiredMessage="Este campo é obrigatório."
+                                     styleClass="form-control" 
+                                     />
+                        <p:message for="numeroTermoApostilamento" />
+                    </div>
                 </div>
             </div>
-        </div>
-        <p:fileUpload mode="advanced"
-                      label="PDF Termo"
-                      required="true"
-                      multiple="false"
-                      sizeLimit="900000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
-                      invalidSizeMessage="Maximum file size allowed is 10000 KB"
-                      invalidFileMessage="only gif | jpg | jpeg | png is allowed"
-                      style="margin-bottom: 20px"
-                      />
-    </h:panelGroup>
-
-
-    <center>    
-        <p:commandButton value="Salvar" icon="pi pi-save" process="@this repactuacaoPanelGroup" update="corpoInteiro" actionListener="#{managerRepactuacao.salvar()}" rendered="#{managerRepactuacao.cadastrar}" />
-        <p:button value="Editar" icon="pi pi-pencil"  rendered="#{managerRepactuacao.visualizar}" href="#{managerRepactuacao.urlEditar(managerRepactuacao.repactuacao.id)}" />
-        <p:commandButton value="Atualizar" icon="pi pi-sync" process="@this repactuacaoPanelGroup"  actionListener="#{managerRepactuacao.atualizar()}" rendered="#{managerRepactuacao.editar}"  />
-        <p:button value="Cancelar" icon="pi pi-ban"  href="cadastrarAlteracoes.xhtml" rendered="#{managerRepactuacao.visualizar}" />
-        <p:button value="Cancelar" icon="pi pi-ban"  href="#{managerRepactuacao.urlVisualizar(managerRepactuacao.repactuacao.id)}" rendered="#{managerRepactuacao.editar}" />
-        <p:button value="Cancelar" icon="pi pi-ban"  href="index.xhtml" rendered="#{managerRepactuacao.cadastrar}" />
-    </center>
-
-    <p:dialog id="removeraRepactuacaoConfirmDialog"
-              widgetVar="removeraRepactuacaoConfirmDialog"
-              header="Atenção!"
-              closeOnEscape="true"
-              draggable="false"
-              maximizable="false"
-              minimizable="false"
-              modal="true"
-              width="850"
-              showEffect="fade"
-              hideEffect="fade">
-
-        <div class="row">
-
-            <div class="col-md-12">
-                <div class="form-group" style="padding-left: 80px !important">
-                    <h4>
-                        <i class="pi pi-exclamation-triangle"></i>
-                        Tem certeza de que deseja remover esta Repactuacao ?
-                    </h4>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <p:outputLabel value="Data de assinatura"
+                                       for="dataAssinaturaRepactuacao" />
+                        <p:calendar id="dataAssinaturaRepactuacao"
+                                    rendered="true"
+                                    value="#{managerRepactuacao.repactuacao.dataAssinatura}"
+                                    mask="true"
+                                    style="display: flex; flex-direction: row"
+                                    required="true"
+                                    disabled="#{managerRepactuacao.visualizar}"
+                                    requiredMessage="Este campo é obrigatório."
+                                    inputStyleClass="form-control"
+                                    showOn="button"
+                                    />
+                        <p:message for="dataAssinaturaRepactuacao" />
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <p:outputLabel value="O valor do contrato mudou?" />
+                        <div class="ui-inputgroup">
+                            <p:selectBooleanButton onLabel="Sim" offLabel="Não" value="#{managerRepactuacao.repactuacao.valorMudou}" disabled="#{managerRepactuacao.visualizar}" style="width:12rem; color: white !important;border-radius: 5px">
+                                <p:ajax update="atualizacaoValorRepactuacao"/>
+                            </p:selectBooleanButton>
+                        </div>
+                    </div>
                 </div>
             </div>
+            <h:panelGroup id="atualizacaoValorRepactuacao" >
+                <h:panelGroup rendered="#{managerRepactuacao.renderedValorMudou()}">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p:outputLabel value="Valor"
+                                           for="novoValorRepactuacao" />
+                            <p:inputMask id="novoValorRepactuacao"
+                                         disabled="#{managerRepactuacao.visualizar}"
+                                         style="display: flex; flex-direction: row"
+                                         value="#{managerRepactuacao.repactuacao.valor}"
+                                         styleClass="form-control" 
+                                         placeholder="Valor"
+                                         requiredMessage="Este campo é obrigatório." />
+                            <p:message for="novoValorRepactuacao" />
+                        </div>
+                    </div>
+                </h:panelGroup>
+            </h:panelGroup>
+            <div class="row">
+                <div class="col-md-4">
+                    <p:outputLabel value="Fiscal responsável" styleClass="control-label" for="fiscalSelectRepactuacao" />
+                    <p:selectOneMenu id="fiscalSelectRepactuacao"
+                                     filter="true" 
+                                     placeholder="fiscal"
+                                     required="true"
+                                     styleClass="form-control"
+                                     disabled="#{managerRepactuacao.visualizar}"
+                                     requiredMessage="Este campo é obrigatório."
+                                     converter="usuarioconverter"
+                                     value="#{managerRepactuacao.repactuacao.fiscal}"
+                                     >
+                        <f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
+                        <f:selectItems value="#{managerRepactuacao.fiscais}" var="user" itemLabel="#{user.nome}" itemValue="#{user}"  />
+                    </p:selectOneMenu>
+                    <p:message for="fiscalSelectRepactuacao" />
+                </div>
+                <div class="col-md-8">
+                    <div class="form-group">
+                        <p:outputLabel value="Descrição*" for="descricaoRepactuacao" />
+                        <p:inputText id="descricaoRepactuacao"
+                                     placeholder="Descrição"
+                                     disabled="#{managerRepactuacao.visualizar}"
+                                     value="#{managerRepactuacao.repactuacao.descricao}"
+                                     requiredMessage="Este campo é obrigatório."
+                                     styleClass="form-control" 
+                                     />
+                        <p:message for="descricaoRepactuacao" />
+                    </div>
+                </div>
+            </div>
+            <p:fileUpload mode="advanced"
+                          label="PDF Termo"
+                          required="true"
+                          multiple="false"
+                          sizeLimit="900000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
+                          invalidSizeMessage="Maximum file size allowed is 10000 KB"
+                          invalidFileMessage="only gif | jpg | jpeg | png is allowed"
+                          style="margin-bottom: 20px"
+                          />
+        </h:panelGroup>
 
-            <div class="col-md-12">
 
-                <center>
+        <center>    
+            <p:commandButton value="Salvar" icon="pi pi-save" process="@this repactuacaoPanelGroup" update="corpoInteiro" actionListener="#{managerRepactuacao.salvar()}" rendered="#{managerRepactuacao.cadastrar}" />
+            <p:button value="Editar" icon="pi pi-pencil"  rendered="#{managerRepactuacao.visualizar}" href="repactuacao.xhtml?editar=#{managerRepactuacao.repactuacao.id}" />
+            <p:commandButton value="Atualizar" icon="pi pi-sync" process="@this repactuacaoPanelGroup"  actionListener="#{managerRepactuacao.atualizar()}" rendered="#{managerRepactuacao.editar}"  />
+            <p:button value="Cancelar" icon="pi pi-ban"  href="contrato.xhtml?visualizar=#{managerRepactuacao.repactuacao.contrato.id}" rendered="#{managerRepactuacao.visualizar}" />
+            <p:button value="Cancelar" icon="pi pi-ban"  href="repactuacao.xhtml?visualizar=#{managerRepactuacao.repactuacao.id}" rendered="#{managerRepactuacao.editar}" />
+            <p:button value="Cancelar" icon="pi pi-ban"  href="repactuacao.xhtml" rendered="#{managerRepactuacao.cadastrar}" />
+        </center>
 
-                    <p:commandButton value="Sim"
-                                     title="Confirmar Remoção"
-                                     icon="pi pi-check"
-                                     update="corpoInteiro "
-                                     process="@this"
-                                     actionListener="#{managerRepactuacao.deletar()}"
-                                     oncomplete="PF('removeraRepactuacaoConfirmDialog').hide();"
-                                     styleClass="mr-md-1"/>
+        <p:dialog id="removeraRepactuacaoConfirmDialog"
+                  widgetVar="removeraRepactuacaoConfirmDialog"
+                  header="Atenção!"
+                  closeOnEscape="true"
+                  draggable="false"
+                  maximizable="false"
+                  minimizable="false"
+                  modal="true"
+                  width="850"
+                  showEffect="fade"
+                  hideEffect="fade">
 
-                    <p:commandButton value="Não"
-                                     title="Cancelar Remoção"
-                                     icon="pi pi-ban"
-                                     process="@this"
-                                     update="@form"
-                                     oncomplete="PF('removeraRepactuacaoConfirmDialog').hide();"
-                                     styleClass="ml-md-1"/>
+            <div class="row">
 
-                </center>
+                <div class="col-md-12">
+                    <div class="form-group" style="padding-left: 80px !important">
+                        <h4>
+                            <i class="pi pi-exclamation-triangle"></i>
+                            Tem certeza de que deseja remover esta Repactuacao ?
+                        </h4>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+
+                    <center>
+
+                        <p:commandButton value="Sim"
+                                         title="Confirmar Remoção"
+                                         icon="pi pi-check"
+                                         update="corpoInteiro "
+                                         process="@this"
+                                         actionListener="#{managerRepactuacao.deletar()}"
+                                         oncomplete="PF('removeraRepactuacaoConfirmDialog').hide();"
+                                         styleClass="mr-md-1"/>
+
+                        <p:commandButton value="Não"
+                                         title="Cancelar Remoção"
+                                         icon="pi pi-ban"
+                                         process="@this"
+                                         update="@form"
+                                         oncomplete="PF('removeraRepactuacaoConfirmDialog').hide();"
+                                         styleClass="ml-md-1"/>
+
+                    </center>
+
+                </div>
 
             </div>
 
-        </div>
 
+        </p:dialog>
 
-    </p:dialog>
-
-
+    </ui:define>
 
 </ui:composition>
 

@@ -1,14 +1,56 @@
 
-<ui:composition
+<ui:composition template="/WEB-INF/template/layout.xhtml"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns="http://www.w3.org/1999/xhtml">
+    <ui:define name="acoes">
+        <h:panelGroup class="panelAcoes">
+            <p:button value="Pesquisar"
+                      title="Pesquisar Bairro"
+                      icon="pi pi-search"
+                      href="pesquisarContrato.xhtml" style=" margin-right: 30px !important"/>
+            <p:splitButton value="Alterações"  style="margin: 0px -8px !important" rendered="#{not managerContrato.visualizar}" icon="pi pi-list">
+                <p:menuitem value="Acréscimo" url="acrescimo.xhtml"/>
+                <p:menuitem value="Supressão" url="supressao.xhtml"/>
+                <p:menuitem value="Renovação" url="renovacao.xhtml"/>
+                <p:menuitem value="Repactuação" url="repactuacao.xhtml"/>
+            </p:splitButton>
+            <p:splitButton value="Ações" style="margin: 0px -8px !important" rendered="#{not managerContrato.cadastrar}"
+                           icon="pi pi-cog"
+                           >
 
-    
+                <p:menuitem value="Cadastrar"
+                            icon="pi pi-save"
+                            url="renovacao.xhtml"
+                            process="@this"/>
+                <p:menuitem value="Editar" 
+                            icon="pi pi-pencil"
+                            url="renovacao.xhtml?editar=#{managerRenovacao.renovacao.id}"
+                            process="@this"
+                            />
+                <p:menuitem value="Excluir" 
+                            icon="pi pi-trash"
+                            oncomplete="PF('removeraContratoConfirmDialog').show();"
+
+                            >
+
+                </p:menuitem>
+
+            </p:splitButton>
+
+        </h:panelGroup>
+    </ui:define>
+    <ui:define name="barra">
+        <div class="row" id="stylebarra">
+            <i class="pi pi-file-o" id="icon"></i> <h5 style="color: #e1e6e5"> Alterações de contrato</h5>
+        </div>
+    </ui:define>
+    <ui:define name="corpo">
+        <p:growl id="messages"/>
         <h:panelGroup id="renovacaoPanelGroup">
-            
+
             <h:panelGroup>
                 <div class="row">
                     <div class="col-md-6">
@@ -86,12 +128,12 @@
                         <p:outputLabel value="Início da próxima renovação"
                                        for="proximaRenovacao" />
                         <p:inputText id="proximaRenovacao"
-                                       value="#{managerRenovacao.renovacao.proximaRenovacao}"
-                                       style="display: flex; flex-direction: row"
-                                       styleClass="form-control"
-                                       disabled="#{managerRenovacao.visualizar}"
-                                       placeholder="Número de dias"
-                                       requiredMessage="Este campo é obrigatório." />
+                                     value="#{managerRenovacao.renovacao.proximaRenovacao}"
+                                     style="display: flex; flex-direction: row"
+                                     styleClass="form-control"
+                                     disabled="#{managerRenovacao.visualizar}"
+                                     placeholder="Número de dias"
+                                     requiredMessage="Este campo é obrigatório." />
 
 
                         <p:message for="proximaRenovacao" />
@@ -128,23 +170,23 @@
             </h:panelGroup>
             <div class="row">
                 <div class="col-md-4">
-                            <div class="form-group">
-                                <p:outputLabel value="Data de assinatura"
-                                               for="dataAssinaturaRenovacao" />
-                                <p:calendar id="dataAssinaturaRenovacao"
-                                            rendered="true"
-                                            value="#{managerRenovacao.renovacao.dataAssinatura}"
-                                            mask="true"
-                                            style="display: flex; flex-direction: row"
-                                            required="true"
-                                            disabled="#{managerRenovacao.visualizar}"
-                                            requiredMessage="Este campo é obrigatório."
-                                            inputStyleClass="form-control"
-                                            showOn="button"
-                                            />
-                                <p:message for="dataAssinaturaRenovacao" />
-                            </div>
-                        </div>
+                    <div class="form-group">
+                        <p:outputLabel value="Data de assinatura"
+                                       for="dataAssinaturaRenovacao" />
+                        <p:calendar id="dataAssinaturaRenovacao"
+                                    rendered="true"
+                                    value="#{managerRenovacao.renovacao.dataAssinatura}"
+                                    mask="true"
+                                    style="display: flex; flex-direction: row"
+                                    required="true"
+                                    disabled="#{managerRenovacao.visualizar}"
+                                    requiredMessage="Este campo é obrigatório."
+                                    inputStyleClass="form-control"
+                                    showOn="button"
+                                    />
+                        <p:message for="dataAssinaturaRenovacao" />
+                    </div>
+                </div>
                 <div class="col-md-4">
                     <p:outputLabel value="Data limite da vigência anterior"
                                    for="dataVigenciaRenovacao" />
@@ -192,13 +234,13 @@
                           style="margin-bottom: 20px"
                           />
         </h:panelGroup>
-            <center>    
+        <center>    
             <p:commandButton value="Salvar" icon="pi pi-save" process="@this renovacaoPanelGroup" update="corpoInteiro" actionListener="#{managerRenovacao.salvar()}" rendered="#{managerRenovacao.cadastrar}" />
-            <p:button value="Editar" icon="pi pi-pencil"  rendered="#{managerRenovacao.visualizar}" href="#{managerRenovacao.urlEditar(managerRenovacao.renovacao.id)}" />
+            <p:button value="Editar" icon="pi pi-pencil"  rendered="#{managerRenovacao.visualizar}" href="renovacao.xhtml?editar=#{managerRenovacao.renovacao.id}" />
             <p:commandButton value="Atualizar" icon="pi pi-sync" process="@this renovacaoPanelGroup" actionListener="#{managerRenovacao.atualizar()}" rendered="#{managerRenovacao.editar}"  />
-            <p:button value="Cancelar" icon="pi pi-ban"  href="cadastrarAlteracoes.xhtml" rendered="#{managerRenovacao.visualizar}" />
-            <p:button value="Cancelar" icon="pi pi-ban"  href="#{managerRenovacao.urlVisualizar(managerRenovacao.renovacao.id)}" rendered="#{managerRenovacao.editar}" />
-            <p:button value="Cancelar" icon="pi pi-ban"  href="index.xhtml" rendered="#{managerRenovacao.cadastrar}" />
+            <p:button value="Cancelar" icon="pi pi-ban"  href="contrato.xhtml?visualizar=#{managerRenovacao.renovacao.contrato.id}" rendered="#{managerRenovacao.visualizar}" />
+            <p:button value="Cancelar" icon="pi pi-ban"  href="renovacao.xhtml?visualizar=#{managerRenovacao.renovacao.id}" rendered="#{managerRenovacao.editar}" />
+            <p:button value="Cancelar" icon="pi pi-ban"  href="renovacao.xhtml" rendered="#{managerRenovacao.cadastrar}" />
         </center>
 
         <p:dialog id="removeraRenovacaoConfirmDialog"
@@ -253,8 +295,8 @@
 
 
         </p:dialog>
-    
 
+    </ui:define>
 </ui:composition>
 
 

@@ -1,4 +1,5 @@
 <ui:composition 
+    
     xmlns:ui="http://java.sun.com/jsf/facelets"
     xmlns:h="http://xmlns.jcp.org/jsf/html"
     xmlns:p="http://primefaces.org/ui"
@@ -10,23 +11,33 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <p:outputLabel value="Contrato*" styleClass="control-label" for="contratoAcrescimo" />
-                        <p:selectOneMenu id="contratoAcrescimo"
-                                         value="#{managerAcrescimo.acrescimo.contrato}"
-                                         disabled="#{managerAcrescimo.visualizar}"
-                                         filter="true" 
-                                         placeholder="Contrato"
+                        <p:outputLabel value="Número do termo aditivo"
+                                           for="numeroTermoAditivoAcrescimo" />
+                            <p:inputText id="numeroTermoAditivoAcrescimo"
+                                         placeholder="Número"
+                                         value="#{managerAcrescimo.acrescimo.numeroTermo}"
+                                         rendered="true"
+                                         requiredMessage="Este campo é obrigatório."
                                          styleClass="form-control" 
-                                         converter="contratoconverter">
-                            <f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
-                            <f:selectItems value="#{managerAcrescimo.contratos}" var="contrato" itemLabel="#{contrato.numeroContrato}" itemValue="#{contrato}" />
-                        </p:selectOneMenu>
+                                         />
+                            <p:message for="numeroTermoAditivoAcrescimo" />
                     </div>
                 </div>
+                <div class="col-md-6">
+                        <p:outputLabel value="Valor"
+                                       for="acrescimoValor" />
+                        <p:inputMask id="acrescimoValor"
+                                     value="#{managerAcrescimo.acrescimo.valor}"
+                                     style="display: flex; flex-direction: row"
+                                     styleClass="form-control" 
+                                     placeholder="Valor"
+                                     requiredMessage="Este campo é obrigatório." />
+                        <p:message for="acrescimoValor" />
+                    </div>
             </div>
         </h:panelGroup>
         <center>
-            <p:commandButton value="Pesquisar" icon="pi pi-search" process="@this acrescimoSubPanel" update="acrescimoDatatable" actionListener="#{managerAcrescimo.pesquisar()}" />
+            <p:commandButton value="Pesquisar" icon="pi pi-search" process="@this acrescimoSubPanel" update="acrescimoDatatable" actionListener="#{managerAcrescimo.pesquisar(managerContrato.contrato)}" />
         </center>
         <hr/>
         <p:dataTable id="acrescimoDatatable" var="acrescimo" value="#{managerAcrescimo.acrescimos}"
@@ -43,7 +54,7 @@
                         <f:setPropertyActionListener value="#{acrescimo}"
                                                      target="#{managerAcrescimo.acrescimo}"/>
                     </p:commandButton>
-                <p:button  icon="pi pi-eye" title="visualizar" href="#{managerAcrescimo.urlVisualizar(acrescimo.id)}" />
+                <p:button  icon="pi pi-eye" title="visualizar" href="acrescimo.xhtml?visualizar=#{acrescimo.id}" />
                 </p:column>
             <p:column headerText="N° do Termo Aditivo">
                 <h:outputText value="#{acrescimo.numeroTermo}" />

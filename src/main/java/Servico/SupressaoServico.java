@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.Query;
+import modelo.Contrato;
 import modelo.Supressao;
 import util.Utils;
 
@@ -36,6 +37,26 @@ public class SupressaoServico extends ServicoGenerico<Supressao> implements Seri
         } else {
             return false;
         }
+    }
+    
+    public List<Supressao> pesquisarSupressaoPorContrato(Contrato contrato,Supressao supressao){
+        String sql = "select c from Supressao c where c.contrato = :ct ";
+        if (Utils.isNotEmpty(supressao.getNumeroTermo())) {
+            sql += "and c.numeroTermo = :nt ";
+        }
+        if (Utils.isNotEmpty(supressao.getValor())) {
+            sql += "and c.valor = :valor ";
+        }
+        sql += "and c.ativo = true";
+        Query query = entityManager.createQuery(sql);
+        query.setParameter("ct", contrato);
+        if (Utils.isNotEmpty(supressao.getNumeroTermo())) {
+            query.setParameter("nt", supressao.getNumeroTermo());
+        }
+        if (Utils.isNotEmpty(supressao.getValor())) {
+            query.setParameter("valor", supressao.getValor());
+        }
+        return query.getResultList();
     }
     
     public List<Supressao> findPesquisa(Supressao supressao) {

@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.Query;
+import modelo.Contrato;
 import modelo.Repactuacao;
 import util.Utils;
 
@@ -36,6 +37,26 @@ public class RepactuacaoServico extends ServicoGenerico<Repactuacao> implements 
         } else {
             return false;
         }
+    }
+    
+    public List<Repactuacao> pesquisarAcrescimoPorContrato(Contrato contrato,Repactuacao repactuacao){
+        String sql = "select c from Repactuacao c where c.contrato = :ct ";
+        if (Utils.isNotEmpty(repactuacao.getNumeroTermo())) {
+            sql += "and c.numeroTermo = :nt ";
+        }
+        if (Utils.isNotEmpty(repactuacao.getValor())) {
+            sql += "and c.valor = :valor ";
+        }
+        sql += "and c.ativo = true";
+        Query query = entityManager.createQuery(sql);
+        query.setParameter("ct", contrato);
+        if (Utils.isNotEmpty(repactuacao.getNumeroTermo())) {
+            query.setParameter("nt", repactuacao.getNumeroTermo());
+        }
+        if (Utils.isNotEmpty(repactuacao.getValor())) {
+            query.setParameter("valor", repactuacao.getValor());
+        }
+        return query.getResultList();
     }
     
     public List<Repactuacao> findPesquisa(Repactuacao repactuacao) {

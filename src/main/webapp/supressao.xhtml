@@ -1,16 +1,57 @@
 
-<ui:composition 
+<ui:composition template="/WEB-INF/template/layout.xhtml"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns="http://www.w3.org/1999/xhtml">
 
-    
+    <ui:define name="acoes">
+        <h:panelGroup class="panelAcoes">
+            <p:button value="Pesquisar"
+                      title="Pesquisar Bairro"
+                      icon="pi pi-search"
+                      href="pesquisarContrato.xhtml" style=" margin-right: 30px !important"/>
+            <p:splitButton value="Alterações"  style="margin: 0px -8px !important" rendered="#{not managerContrato.visualizar}" icon="pi pi-list">
+                <p:menuitem value="Acréscimo" url="acrescimo.xhtml"/>
+                <p:menuitem value="Supressão" url="supressao.xhtml"/>
+                <p:menuitem value="Renovação" url="renovacao.xhtml"/>
+                <p:menuitem value="Repactuação" url="repactuacao.xhtml"/>
+            </p:splitButton>
+            <p:splitButton value="Ações" style="margin: 0px -8px !important" rendered="#{not managerContrato.cadastrar}"
+                           icon="pi pi-cog"
+                           >
+                <p:menuitem value="Cadastrar"
+                            icon="pi pi-save"
+                            url="supressao.xhtml"
+                            process="@this"/>
+                <p:menuitem value="Editar" 
+                            icon="pi pi-pencil"
+                            url="supressao.xhtml?editar=#{managerSupressao.supressao.id}"
+                            process="@this"
+                            />
+                <p:menuitem value="Excluir" 
+                            icon="pi pi-trash"
+                            oncomplete="PF('removeraContratoConfirmDialog').show();"
 
-    
+                            >
+
+                </p:menuitem>
+
+            </p:splitButton>
+
+        </h:panelGroup>
+    </ui:define>
+    <ui:define name="barra">
+        <div class="row" id="stylebarra">
+            <i class="pi pi-file-o" id="icon"></i> <h5 style="color: #e1e6e5"> Alterações de contrato</h5>
+        </div>
+    </ui:define>
+    <ui:define name="corpo">
+        <p:growl id="messages"/>
+
         <h:panelGroup id="supressaoPanelGroup">
-            
+
             <h:panelGroup >
                 <div class="row">
                     <div class="col-md-6">
@@ -125,11 +166,11 @@
 
         <center>    
             <p:commandButton value="Salvar" icon="pi pi-save" process="@this supressaoPanelGroup" update="corpoInteiro" actionListener="#{managerSupressao.salvar()}" rendered="#{managerSupressao.cadastrar}" />
-            <p:button value="Editar" icon="pi pi-pencil"  rendered="#{managerSupressao.visualizar}" href="#{managerSupressao.urlEditar(managerSupressao.supressao.id)}" />
+            <p:button value="Editar" icon="pi pi-pencil"  rendered="#{managerSupressao.visualizar}" href="supressao.xhtml?editar=#{managerSupressao.supressao.id}" />
             <p:commandButton value="Atualizar" icon="pi pi-sync" process="@this supressaoPanelGroup"  actionListener="#{managerSupressao.atualizar()}" rendered="#{managerSupressao.editar}"  />
-            <p:button value="Cancelar" icon="pi pi-ban"  href="cadastrarAlteracoes.xhtml" rendered="#{managerSupressao.visualizar}" />
-            <p:button value="Cancelar" icon="pi pi-ban"  href="#{managerSupressao.urlVisualizar(managerSupressao.supressao.id)}" rendered="#{managerSupressao.editar}" />
-            <p:button value="Cancelar" icon="pi pi-ban"  href="index.xhtml" rendered="#{managerSupressao.cadastrar}" />
+            <p:button value="Cancelar" icon="pi pi-ban"  href="contrato.xhtml?visualizar=#{managerSupressao.supressao.contrato.id}" rendered="#{managerSupressao.visualizar}" />
+            <p:button value="Cancelar" icon="pi pi-ban"  href="supressao.xhtml?visualizar=#{managerSupressao.supressao.id}" rendered="#{managerSupressao.editar}" />
+            <p:button value="Cancelar" icon="pi pi-ban"  href="supressao.xhtml.xhtml" rendered="#{managerSupressao.cadastrar}" />
         </center>
 
         <p:dialog id="removeraSupressaoConfirmDialog"
@@ -185,7 +226,7 @@
 
         </p:dialog>
 
-    
+    </ui:define>
 
 </ui:composition>
 

@@ -1,4 +1,5 @@
 <ui:composition
+    
     xmlns:ui="http://java.sun.com/jsf/facelets"
     xmlns:h="http://xmlns.jcp.org/jsf/html"
     xmlns:p="http://primefaces.org/ui"
@@ -11,23 +12,33 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <p:outputLabel value="Contrato*" styleClass="control-label" for="contratoSupressao" />
-                        <p:selectOneMenu id="contratoSupressao"
-                                         value="#{managerSupressao.supressao.contrato}"
-                                         disabled="#{managerSupressao.visualizar}"
-                                         filter="true" 
-                                         placeholder="Contrato"
-                                         styleClass="form-control"
-                                         converter="contratoconverter">
-                            <f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
-                            <f:selectItems value="#{managerSupressao.contratos}" var="contrato" itemLabel="#{contrato.numeroContrato}" itemValue="#{contrato}" />
-                        </p:selectOneMenu>
+                        <p:outputLabel value="Número do termo aditivo*"
+                                           for="numeroTermoAditivoSupressao" />
+                            <p:inputText id="numeroTermoAditivoSupressao"
+                                         value="#{managerSupressao.supressao.numeroTermo}"
+                                         placeholder="Número"
+                                         rendered="true"
+                                         requiredMessage="Este campo é obrigatório."
+                                         styleClass="form-control" 
+                                         />
+                            <p:message for="numeroTermoAditivoSupressao" />
                     </div>
                 </div>
+                <div class="col-md-6">
+                        <p:outputLabel value="Valor*"
+                                       for="supressaoValor" />
+                        <p:inputMask id="supressaoValor"
+                                     style="display: flex; flex-direction: row"
+                                     styleClass="form-control" 
+                                     value="#{managerSupressao.supressao.valor}"
+                                     placeholder="Valor"
+                                     requiredMessage="Este campo é obrigatório." />
+                        <p:message for="supressaoValor" />
+                    </div>
             </div>
         </h:panelGroup>
         <center>
-            <p:commandButton value="Pesquisar" icon="pi pi-search" process="@this supressaoSubPanel" update="supressaoDatatable" actionListener="#{managerSupressao.pesquisar()}" />
+            <p:commandButton value="Pesquisar" icon="pi pi-search" process="@this supressaoSubPanel" update="supressaoDatatable" actionListener="#{managerSupressao.pesquisar(managerContrato.contrato)}" />
         </center>
         <hr/>
         <p:dataTable id="supressaoDatatable" var="supressao" value="#{managerSupressao.supressoes}"
@@ -44,7 +55,7 @@
                         <f:setPropertyActionListener value="#{supressao}"
                                                      target="#{managerSupressao.supressao}"/>
                     </p:commandButton>
-                <p:button  icon="pi pi-eye" title="visualizar" href="#{managerSupressao.urlVisualizar(supressao.id)}" />
+                <p:button  icon="pi pi-eye" title="visualizar" href="supressao.xhtml?visualizar=#{supressao.id}" />
                 </p:column>
             <p:column headerText="N° do Termo Aditivo">
                 <h:outputText value="#{supressao.numeroTermo}" />

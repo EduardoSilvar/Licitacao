@@ -28,14 +28,15 @@ import util.Utils;
  */
 @ManagedBean
 @ViewScoped
-public class managerRepactuacao extends managerPrincipal implements Serializable{
+public class managerRepactuacao extends managerPrincipal implements Serializable {
+
     @EJB
     private RepactuacaoServico repactuacaoServico;
     @EJB
     private ContratoServico contratoServico;
     @EJB
     private UsuarioServico userServico;
-    
+
     private Repactuacao repactuacao;
     private String verificadorRendered;
     private List<Repactuacao> repactuacoes;
@@ -69,7 +70,7 @@ public class managerRepactuacao extends managerPrincipal implements Serializable
     public String getUrlVisualizar() {
         return "repactuacao.xhtml?visualizar=" + this.repactuacao.getId();
     }
-    
+
     private void instanciarSelect() {
         this.fiscais = userServico.FindAll();
         this.contratos = contratoServico.FindAll();
@@ -82,11 +83,11 @@ public class managerRepactuacao extends managerPrincipal implements Serializable
     private void intanciarRepactuacoes() {
         this.repactuacoes = new ArrayList<>();
     }
-    
-    public boolean renderedValorMudou(){
+
+    public boolean renderedValorMudou() {
         return repactuacao.getValorMudou();
     }
-    
+
     public void salvar() {
         if (Utils.isNotEmpty(this.repactuacao.getNumeroTermo())) {
             if (repactuacaoServico.existNumero(this.repactuacao.getNumeroTermo())) {
@@ -94,6 +95,58 @@ public class managerRepactuacao extends managerPrincipal implements Serializable
             } else {
                 Contrato contrato = this.repactuacao.getContrato();
                 BigDecimal valorFinal = BigDecimal.ZERO;
+                if (this.repactuacao.getValorMudou()) {
+                    contrato.setValor(this.repactuacao.getValor());
+                    if (this.repactuacao.getContrato().getValor().compareTo(this.repactuacao.getValor()) == 1) {
+                        BigDecimal valorDiferenca = BigDecimal.ZERO;
+                        valorDiferenca = this.repactuacao.getContrato().getValor().subtract(this.repactuacao.getValor());
+                        valorFinal = contrato.getValorRestante().subtract(valorDiferenca);
+                    } else if (this.repactuacao.getValor().compareTo(this.repactuacao.getContrato().getValor()) == 1) {
+                        BigDecimal valorDiferenca = BigDecimal.ZERO;
+                        valorDiferenca = this.repactuacao.getValor().subtract(this.repactuacao.getContrato().getValor());
+                        valorFinal = contrato.getValorRestante().add(valorDiferenca);
+                    } else {
+                        valorFinal = contrato.getValorRestante();
+                    }
+                } else {
+                    valorFinal = contrato.getValorRestante();
+                }
+                contrato.setValorRestante(valorFinal);
+                contratoServico.Update(this.repactuacao.getContrato());
+                repactuacaoServico.Save(this.repactuacao);
+                Msg.messagemInfoRedirect("Operação realizada com sucesso !", "repactuacao.xhtml?visualizar=" + this.repactuacao.getId() + "&repactuacao=TRUE");
+            }
+        }
+    }
+
+    public void atualizar() {
+        Contrato contrato = this.repactuacao.getContrato();
+        Repactuacao repactuacaoBD = repactuacaoServico.find(this.repactuacao.getId());
+        Contrato contratoBD = repactuacaoBD.getContrato();
+        BigDecimal valorBD = repactuacaoBD.getValor();
+        BigDecimal valorCampo = this.repactuacao.getValor();
+        BigDecimal valorFinal = BigDecimal.ZERO;
+        if (contratoBD.equals(this.repactuacao.getContrato())) {
+            if (this.repactuacao.getValorMudou()) {
+                contrato.setValor(this.repactuacao.getValor());
+                if (valorBD.compareTo(valorCampo) == 1) {
+                    BigDecimal valorDiferenca = BigDecimal.ZERO;
+                    valorDiferenca = valorBD.subtract(valorCampo);
+                    valorFinal = repactuacaoBD.getContrato().getValorRestante().subtract(valorDiferenca);
+                } else if (valorCampo.compareTo(valorBD) == 1) {
+                    BigDecimal valorDiferenca = BigDecimal.ZERO;
+                    valorDiferenca = valorCampo.subtract(valorBD);
+                    valorFinal = repactuacaoBD.getContrato().getValorRestante().add(valorDiferenca);
+                } else {
+                    valorFinal = repactuacaoBD.getContrato().getValorRestante();
+                }
+            }else {
+                valorFinal = repactuacaoBD.getContrato().getValorRestante();
+            }
+
+        } else {
+            if (this.repactuacao.getValorMudou()) {
+                contrato.setValor(this.repactuacao.getValor());
                 if (this.repactuacao.getContrato().getValor().compareTo(this.repactuacao.getValor()) == 1) {
                     BigDecimal valorDiferenca = BigDecimal.ZERO;
                     valorDiferenca = this.repactuacao.getContrato().getValor().subtract(this.repactuacao.getValor());
@@ -105,58 +158,21 @@ public class managerRepactuacao extends managerPrincipal implements Serializable
                 } else {
                     valorFinal = contrato.getValorRestante();
                 }
-                contrato.setValorRestante(valorFinal);
-                contrato.setValor(this.repactuacao.getValor());
-                contratoServico.Update(this.repactuacao.getContrato());
-                repactuacaoServico.Save(this.repactuacao);
-                Msg.messagemInfoRedirect("Operação realizada com sucesso !", "cadastrarAlteracoes.xhtml?visualizar=" + this.repactuacao.getId() + "&repactuacao=TRUE");
-            }
-        }
-    }
-    
-    public void atualizar() {
-        Contrato contrato = this.repactuacao.getContrato();
-        Repactuacao repactuacaoBD = repactuacaoServico.find(this.repactuacao.getId());
-        Contrato contratoBD = repactuacaoBD.getContrato();
-        BigDecimal valorBD = repactuacaoBD.getValor();
-        BigDecimal valorCampo = this.repactuacao.getValor();
-        BigDecimal valorFinal = BigDecimal.ZERO;
-        if (contratoBD.equals(this.repactuacao.getContrato())) {
-            if (valorBD.compareTo(valorCampo) == 1) {
-                BigDecimal valorDiferenca = BigDecimal.ZERO;
-                valorDiferenca = valorBD.subtract(valorCampo);
-                valorFinal = repactuacaoBD.getContrato().getValorRestante().subtract(valorDiferenca);
-            } else if (valorCampo.compareTo(valorBD) == 1) {
-                BigDecimal valorDiferenca = BigDecimal.ZERO;
-                valorDiferenca = valorCampo.subtract(valorBD);
-                valorFinal = repactuacaoBD.getContrato().getValorRestante().add(valorDiferenca);
             } else {
-                valorFinal = repactuacaoBD.getContrato().getValorRestante();
+                valorFinal = contrato.getValorRestante();
             }
-        } else {
-            if (this.repactuacao.getContrato().getValor().compareTo(this.repactuacao.getValor()) == 1) {
-                    BigDecimal valorDiferenca = BigDecimal.ZERO;
-                    valorDiferenca = this.repactuacao.getContrato().getValor().subtract(this.repactuacao.getValor());
-                    valorFinal = contrato.getValorRestante().subtract(valorDiferenca);
-                } else if (this.repactuacao.getValor().compareTo(this.repactuacao.getContrato().getValor()) == 1) {
-                    BigDecimal valorDiferenca = BigDecimal.ZERO;
-                    valorDiferenca = this.repactuacao.getValor().subtract(this.repactuacao.getContrato().getValor());
-                    valorFinal = contrato.getValorRestante().add(valorDiferenca);
-                } else {
-                    valorFinal = contrato.getValorRestante();
-                }
+
         }
-        contrato.setValor(this.repactuacao.getValor());
         contrato.setValorRestante(valorFinal);
         contratoServico.Update(contrato);
         repactuacaoServico.Update(repactuacao);
-        Msg.messagemInfoRedirect("Operação realizada com sucesso !", "cadastrarAlteracoes.xhtml?visualizar=" + this.repactuacao.getId() + "&repactuacao=TRUE");
+        Msg.messagemInfoRedirect("Operação realizada com sucesso !", "repactuacao.xhtml?visualizar=" + this.repactuacao.getId() + "&repactuacao=TRUE");
     }
-    
-    public void pesquisar() {
-        this.repactuacoes = repactuacaoServico.findPesquisa(this.repactuacao);
+
+    public void pesquisar(Contrato contrato) {
+        this.repactuacoes = repactuacaoServico.pesquisarAcrescimoPorContrato(contrato, this.repactuacao);
     }
-    
+
     public void deletar() {
         try {
             Repactuacao NovaRepactuacao = repactuacaoServico.find(this.repactuacao.getId());
@@ -176,30 +192,29 @@ public class managerRepactuacao extends managerPrincipal implements Serializable
         }
 
     }
-    
-    public String urlVisualizar(long id){
-        return "cadastrarAlteracoes.xhtml?visualizar="+id+"&repactuacao=TRUE";
-    }
-    
-    public String urlEditar(long id){
-        return "cadastrarAlteracoes.xhtml?editar="+id+"&repactuacao=TRUE";
-    }
-    
-    public boolean verificarRepactuacao(){
-        boolean verificarMetodo = false;
-        Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
-        this.verificadorRendered = params.get("repactuacao");
-        if(isVisualizar() || isEditar()){
-            if(this.verificadorRendered != null && !this.verificadorRendered.isEmpty()){
-                verificarMetodo = true;
-            }
-        }
-        if(isCadastrar()) {
-            verificarMetodo = true;
-        } 
-        return verificarMetodo;
-    }
 
+//    public String urlVisualizar(long id){
+//        return "cadastrarAlteracoes.xhtml?visualizar="+id+"&repactuacao=TRUE";
+//    }
+//    
+//    public String urlEditar(long id){
+//        return "cadastrarAlteracoes.xhtml?editar="+id+"&repactuacao=TRUE";
+//    }
+//    
+//    public boolean verificarRepactuacao(){
+//        boolean verificarMetodo = false;
+//        Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+//        this.verificadorRendered = params.get("repactuacao");
+//        if(isVisualizar() || isEditar()){
+//            if(this.verificadorRendered != null && !this.verificadorRendered.isEmpty()){
+//                verificarMetodo = true;
+//            }
+//        }
+//        if(isCadastrar()) {
+//            verificarMetodo = true;
+//        } 
+//        return verificarMetodo;
+//    }
     public RepactuacaoServico getRepactuacaoServico() {
         return repactuacaoServico;
     }
@@ -279,6 +294,5 @@ public class managerRepactuacao extends managerPrincipal implements Serializable
     public void setVerificadorRendered(String verificadorRendered) {
         this.verificadorRendered = verificadorRendered;
     }
-    
-    
+
 }

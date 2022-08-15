@@ -11,10 +11,19 @@
                       title="Pesquisar Bairro"
                       icon="pi pi-search"
                       href="pesquisarContrato.xhtml" style=" margin-right: 30px !important"/>
+            <p:splitButton value="Alterações"  style="margin: 0px -8px !important" rendered="#{not managerContrato.visualizar}" icon="pi pi-list">
+                <p:menuitem value="Acréscimo" url="acrescimo.xhtml"/>
+                <p:menuitem value="Supressão" url="supressao.xhtml"/>
+                <p:menuitem value="Renovação" url="renovacao.xhtml"/>
+                <p:menuitem value="Repactuação" url="repactuacao.xhtml"/>
+            </p:splitButton>
             <p:splitButton value="Ações" style="margin: 0px -8px !important" rendered="#{not managerContrato.cadastrar}"
                            icon="pi pi-cog"
                            >
-
+                <p:menuitem value="Cadastrar"
+                            icon="pi pi-save"
+                            url="contrato.xhtml"
+                            process="@this"/>
                 <p:menuitem value="Editar" 
                             icon="pi pi-pencil"
                             url="contrato.xhtml?editar=#{managerContrato.contrato.id}"

@@ -93,7 +93,7 @@ public class managerSupressao extends managerPrincipal implements Serializable{
                 contrato.setValorRestante(contrato.getValorRestante().subtract(this.supressao.getValor()));
                 contratoServico.Update(contrato);
                 supressaoServico.Save(this.supressao);
-                Msg.messagemInfoRedirect("Operação realizada com sucesso !", "cadastrarAlteracoes.xhtml?visualizar=" + this.supressao.getId() + "&supressao=TRUE");
+                Msg.messagemInfoRedirect("Operação realizada com sucesso !", "supressao.xhtml?visualizar=" + this.supressao.getId() + "&supressao=TRUE");
             }
         }
     }
@@ -124,11 +124,11 @@ public class managerSupressao extends managerPrincipal implements Serializable{
         contrato.setValorRestante(valorFinal);
         contratoServico.Update(contrato);
         supressaoServico.Update(this.supressao);
-        Msg.messagemInfoRedirect("Operação realizada com sucesso !", "cadastrarAlteracoes.xhtml?visualizar=" + this.supressao.getId() + "&supressao=TRUE");
+        Msg.messagemInfoRedirect("Operação realizada com sucesso !", "supressao.xhtml?visualizar=" + this.supressao.getId() + "&supressao=TRUE");
     }
     
-    public void pesquisar() {
-        this.supressoes = supressaoServico.findPesquisa(this.supressao);
+    public void pesquisar(Contrato contrato) {
+        this.supressoes = supressaoServico.pesquisarSupressaoPorContrato(contrato, this.supressao);
     }
     
     public void deletar() {
@@ -151,28 +151,28 @@ public class managerSupressao extends managerPrincipal implements Serializable{
 
     }
     
-    public String urlVisualizar(long id){
-        return "cadastrarAlteracoes.xhtml?visualizar="+id+"&supressao=TRUE";
-    }
-    
-    public String urlEditar(long id){
-        return "cadastrarAlteracoes.xhtml?editar="+id+"&supressao=TRUE";
-    }
-    
-    public boolean verificarSupressao(){
-        boolean verificarMetodo = false;
-        Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
-        this.verificadorRendered = params.get("supressao");
-        if(isVisualizar() || isEditar()){
-            if(this.verificadorRendered != null && !this.verificadorRendered.isEmpty()){
-                verificarMetodo = true;
-            }
-        }
-        if(isCadastrar()) {
-            verificarMetodo = true;
-        } 
-        return verificarMetodo;
-    }
+//    public String urlVisualizar(long id){
+//        return "cadastrarAlteracoes.xhtml?visualizar="+id+"&supressao=TRUE";
+//    }
+//    
+//    public String urlEditar(long id){
+//        return "cadastrarAlteracoes.xhtml?editar="+id+"&supressao=TRUE";
+//    }
+//    
+//    public boolean verificarSupressao(){
+//        boolean verificarMetodo = false;
+//        Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+//        this.verificadorRendered = params.get("supressao");
+//        if(isVisualizar() || isEditar()){
+//            if(this.verificadorRendered != null && !this.verificadorRendered.isEmpty()){
+//                verificarMetodo = true;
+//            }
+//        }
+//        if(isCadastrar()) {
+//            verificarMetodo = true;
+//        } 
+//        return verificarMetodo;
+//    }
 
     public SupressaoServico getSupressaoServico() {
         return supressaoServico;

@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.Query;
+import modelo.Contrato;
 import modelo.Renovacao;
 import util.Utils;
 
@@ -35,6 +36,26 @@ public class RenovacaoServico extends ServicoGenerico<Renovacao> implements Seri
         } else {
             return false;
         }
+    }
+    
+    public List<Renovacao> pesquisarRenovacaoPorContrato(Contrato contrato,Renovacao renovacao){
+        String sql = "select c from Renovacao c where c.contrato = :ct ";
+        if (Utils.isNotEmpty(renovacao.getNumeroTermo())) {
+            sql += "and c.numeroTermo = :nt ";
+        }
+        if (Utils.isNotEmpty(renovacao.getValor())) {
+            sql += "and c.valor = :valor ";
+        }
+        sql += "and c.ativo = true";
+        Query query = entityManager.createQuery(sql);
+        query.setParameter("ct", contrato);
+        if (Utils.isNotEmpty(renovacao.getNumeroTermo())) {
+            query.setParameter("nt", renovacao.getNumeroTermo());
+        }
+        if (Utils.isNotEmpty(renovacao.getValor())) {
+            query.setParameter("valor", renovacao.getValor());
+        }
+        return query.getResultList();
     }
     
     public List<Renovacao> findPesquisa(Renovacao renovacao) {

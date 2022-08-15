@@ -1,4 +1,5 @@
 <ui:composition 
+
     xmlns:ui="http://java.sun.com/jsf/facelets"
     xmlns:h="http://xmlns.jcp.org/jsf/html"
     xmlns:p="http://primefaces.org/ui"
@@ -11,23 +12,33 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <p:outputLabel value="Contrato*" styleClass="control-label" for="contratoRenovacao" />
-                        <p:selectOneMenu id="contratoRenovacao"
-                                         value="#{managerRenovacao.renovacao.contrato}"
-                                         filter="true" 
-                                         placeholder="Contrato"
-                                         disabled="#{managerRenovacao.visualizar}"
-                                         styleClass="form-control" 
-                                         converter="contratoconverter">
-                            <f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
-                            <f:selectItems value="#{managerRenovacao.contratos}" var="contrato" itemLabel="#{contrato.numeroContrato}" itemValue="#{contrato}" />
-                        </p:selectOneMenu>
+                        <p:outputLabel value="Número do termo aditivo*"
+                                       for="numeroTermoAditivoRenovacao" />
+                        <p:inputText id="numeroTermoAditivoRenovacao"
+                                     value="#{managerRenovacao.renovacao.numeroTermo}"
+                                     placeholder="Número"
+                                     rendered="true"
+                                     requiredMessage="Este campo é obrigatório."
+                                     styleClass="form-control" 
+                                     />
+                        <p:message for="numeroTermoAditivoRenovacao" />
                     </div>
+                </div>
+                <div class="col-md-6">
+                    <p:outputLabel value="Valor"
+                                   for="novoValorRenovacao" />
+                    <p:inputMask id="novoValorRenovacao"
+                                 value="#{managerRenovacao.renovacao.valor}"
+                                 style="display: flex; flex-direction: row"
+                                 styleClass="form-control"
+                                 placeholder="Valor"
+                                 requiredMessage="Este campo é obrigatório." />
+                    <p:message for="novoValorRenovacao" />
                 </div>
             </div>
         </h:panelGroup>
         <center>
-            <p:commandButton value="Pesquisar" icon="pi pi-search" process="@this renovacaoSubPanel" update="renovacaoDatatable" actionListener="#{managerRenovacao.pesquisar()}" />
+            <p:commandButton value="Pesquisar" icon="pi pi-search" process="@this renovacaoSubPanel" update="renovacaoDatatable" actionListener="#{managerRenovacao.pesquisar(managerContrato.contrato)}" />
         </center>
         <hr/>
         <p:dataTable id="renovacaoDatatable" var="renovacao" value="#{managerRenovacao.renovacoes}"
@@ -45,7 +56,7 @@
                     <f:setPropertyActionListener value="#{renovacao}"
                                                  target="#{managerRenovacao.renovacao}"/>
                 </p:commandButton>
-                <p:button  icon="pi pi-eye" title="visualizar" href="#{managerRenovacao.urlVisualizar(renovacao.id)}" />
+                <p:button  icon="pi pi-eye" title="visualizar" href="renovacao.xhtml?visualizar=#{renovacao.id}" />
             </p:column>
             <p:column headerText="N° do Termo Aditivo">
                 <h:outputText value="#{renovacao.numeroTermo}" />

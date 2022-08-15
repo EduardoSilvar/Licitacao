@@ -94,7 +94,7 @@ public class managerAcrescimo extends managerPrincipal implements Serializable {
                 contrato.setValorRestante(contrato.getValorRestante().add(this.acrescimo.getValor()));
                 contratoServico.Update(contrato);
                 acrescimoServico.Save(this.acrescimo);
-                Msg.messagemInfoRedirect("Operação realizada com sucesso !", "cadastrarAlteracoes.xhtml?visualizar=" + this.acrescimo.getId() + "&acrescimo=TRUE");
+                Msg.messagemInfoRedirect("Operação realizada com sucesso !", "acrescimo.xhtml?visualizar=" + this.acrescimo.getId() + "&acrescimo=TRUE");
             }
         }
     }
@@ -125,11 +125,11 @@ public class managerAcrescimo extends managerPrincipal implements Serializable {
         contrato.setValorRestante(valorFinal);
         contratoServico.Update(contrato);
         acrescimoServico.Update(this.acrescimo);
-        Msg.messagemInfoRedirect("Operação realizada com sucesso !", "cadastrarAlteracoes.xhtml?visualizar=" + this.acrescimo.getId() + "&acrescimo=TRUE");
+        Msg.messagemInfoRedirect("Operação realizada com sucesso !", "acrescimo.xhtml?visualizar=" + this.acrescimo.getId() + "&acrescimo=TRUE");
     }
 
-    public void pesquisar() {
-        this.acrescimos = acrescimoServico.findPesquisa(this.acrescimo);
+    public void pesquisar(Contrato contrato) {
+        this.acrescimos = acrescimoServico.pesquisarAcrescimoPorContrato(contrato, this.acrescimo);
     }
 
     public void deletar() {
@@ -152,28 +152,28 @@ public class managerAcrescimo extends managerPrincipal implements Serializable {
 
     }
 
-    public String urlVisualizar(long id) {
-        return "cadastrarAlteracoes.xhtml?visualizar=" + id + "&acrescimo=TRUE";
-    }
+//    public String urlVisualizar(long id) {
+//        return "cadastrarAlteracoes.xhtml?visualizar=" + id + "&acrescimo=TRUE";
+//    }
+//
+//    public String urlEditar(long id) {
+//        return "cadastrarAlteracoes.xhtml?editar=" + id + "&acrescimo=TRUE";
+//    }
 
-    public String urlEditar(long id) {
-        return "cadastrarAlteracoes.xhtml?editar=" + id + "&acrescimo=TRUE";
-    }
-
-    public boolean verificarAcrescimo() {
-        boolean verificarMetodo = false;
-        Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
-        this.verificadorRendered = params.get("acrescimo");
-        if (isVisualizar() || isEditar()) {
-            if (this.verificadorRendered != null && !this.verificadorRendered.isEmpty()) {
-                verificarMetodo = true;
-            }
-        }
-        if (isCadastrar()) {
-            verificarMetodo = true;
-        }
-        return verificarMetodo;
-    }
+//    public boolean verificarAcrescimo() {
+//        boolean verificarMetodo = false;
+//        Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+//        this.verificadorRendered = params.get("acrescimo");
+//        if (isVisualizar() || isEditar()) {
+//            if (this.verificadorRendered != null && !this.verificadorRendered.isEmpty()) {
+//                verificarMetodo = true;
+//            }
+//        }
+//        if (isCadastrar()) {
+//            verificarMetodo = true;
+//        }
+//        return verificarMetodo;
+//    }
 
     public AcrescimoServico getAcrescimoServico() {
         return acrescimoServico;

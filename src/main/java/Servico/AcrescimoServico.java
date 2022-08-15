@@ -9,6 +9,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.Query;
 import modelo.Acrescimo;
+import modelo.Contrato;
 import util.Utils;
 
 /**
@@ -38,6 +39,25 @@ public class AcrescimoServico extends ServicoGenerico<Acrescimo> implements Seri
         }
     }
     
+    public List<Acrescimo> pesquisarAcrescimoPorContrato(Contrato contrato,Acrescimo acrescimo){
+        String sql = "select c from Acrescimo c where c.contrato = :ct ";
+        if (Utils.isNotEmpty(acrescimo.getNumeroTermo())) {
+            sql += "and c.numeroTermo = :nt ";
+        }
+        if (Utils.isNotEmpty(acrescimo.getValor())) {
+            sql += "and c.valor = :valor ";
+        }
+        sql += "and c.ativo = true";
+        Query query = entityManager.createQuery(sql);
+        query.setParameter("ct", contrato);
+        if (Utils.isNotEmpty(acrescimo.getNumeroTermo())) {
+            query.setParameter("nt", acrescimo.getNumeroTermo());
+        }
+        if (Utils.isNotEmpty(acrescimo.getValor())) {
+            query.setParameter("valor", acrescimo.getValor());
+        }
+        return query.getResultList();
+    }
     
     public List<Acrescimo> findPesquisa(Acrescimo acrescimo) {
         String sql = "select c from Acrescimo c where ";
