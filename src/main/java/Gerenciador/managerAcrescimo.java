@@ -9,7 +9,9 @@ import Servico.ContratoServico;
 import Servico.UsuarioServico;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import javax.ejb.EJB;
@@ -118,7 +120,7 @@ public class managerAcrescimo extends managerPrincipal implements Serializable {
             } else {
                 valorFinal = acrescimoBD.getContrato().getValorRestante();
             }
-        } else{
+        } else {
             valorFinal = this.acrescimo.getContrato().getValorRestante().add(this.acrescimo.getValor());
         }
         contrato.setValor(this.acrescimo.getValor().add(contrato.getValor()));
@@ -152,6 +154,7 @@ public class managerAcrescimo extends managerPrincipal implements Serializable {
 
     }
 
+
 //    public String urlVisualizar(long id) {
 //        return "cadastrarAlteracoes.xhtml?visualizar=" + id + "&acrescimo=TRUE";
 //    }
@@ -159,7 +162,6 @@ public class managerAcrescimo extends managerPrincipal implements Serializable {
 //    public String urlEditar(long id) {
 //        return "cadastrarAlteracoes.xhtml?editar=" + id + "&acrescimo=TRUE";
 //    }
-
 //    public boolean verificarAcrescimo() {
 //        boolean verificarMetodo = false;
 //        Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
@@ -174,7 +176,6 @@ public class managerAcrescimo extends managerPrincipal implements Serializable {
 //        }
 //        return verificarMetodo;
 //    }
-
     public AcrescimoServico getAcrescimoServico() {
         return acrescimoServico;
     }

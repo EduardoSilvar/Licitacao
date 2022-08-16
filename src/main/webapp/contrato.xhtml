@@ -11,7 +11,7 @@
                       title="Pesquisar Bairro"
                       icon="pi pi-search"
                       href="pesquisarContrato.xhtml" style=" margin-right: 30px !important"/>
-            <p:splitButton value="Alterações"  style="margin: 0px -8px !important" rendered="#{not managerContrato.visualizar}" icon="pi pi-list">
+            <p:splitButton value="Alterações"  style="margin: 0px -8px !important" rendered="#{managerContrato.cadastrar}" icon="pi pi-list">
                 <p:menuitem value="Acréscimo" url="acrescimo.xhtml"/>
                 <p:menuitem value="Supressão" url="supressao.xhtml"/>
                 <p:menuitem value="Renovação" url="renovacao.xhtml"/>

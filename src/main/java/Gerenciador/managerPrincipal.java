@@ -6,6 +6,8 @@
 package Gerenciador;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.faces.context.FacesContext;
@@ -91,7 +93,23 @@ public abstract class managerPrincipal implements Serializable {
         }
 
     }
-
+    
+    public String dataFormatada(Date data) {
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy");
+        String stringDate = DateFor.format(data);
+        return stringDate;
+    }
+    
+    public String boString(Boolean valor){
+        String valorFormatado;
+        if (valor) {
+            valorFormatado = "Sim";
+        }else{
+            valorFormatado = "Não";
+        }
+        return valorFormatado;
+    }
+    
     public abstract String getUrlPesquisar();
 
     public abstract String getUrlVisualizar();

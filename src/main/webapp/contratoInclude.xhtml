@@ -435,6 +435,7 @@
             </h:panelGroup>
 
             <center>
+                <p:button value="Editar" icon="pi pi-pencil"  rendered="#{managerContrato.visualizar}" href="contrato.xhtml?editar=#{managerContrato.contrato.id}" />
                 <p:commandButton value="atualizar" icon="pi pi-refresh" rendered="#{managerContrato.editar}" process="@this contratoPanelGroup" update="corpoInteiro" actionListener="#{managerContrato.atualizar()}" style="margin: 0px 20px; background-color: #01415B; color: #fff; margin-bottom: 10px;"/>
                 <p:commandButton value="salvar" icon="pi pi-save" rendered="#{managerContrato.cadastrar}" process="@this contratoPanelGroup" update="corpoInteiro" actionListener="#{managerContrato.salvar()}" style="margin: 0px 20px; background-color: #01415B; color: #fff; margin-bottom: 10px;"/>
                 <p:commandButton value="cancelar" icon="pi pi-ban"  style="background-color: #01415B; color: #fff;margin-bottom: 10px"/>

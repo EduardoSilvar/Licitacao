@@ -129,7 +129,7 @@
                         <p:button  icon="pi pi-eye" title="visualizar" href="notaFiscal.xhtml?visualizar=#{nota.id}" />
                     </p:column>
                     <p:column headerText="Data">
-                        <h:outputText value="#{nota.dataPagamento}" />
+                        <h:outputText value="#{managerNotaFiscal.dataFormatada(nota.dataPagamento)}" />
                     </p:column>
 
                     <p:column headerText="Responsável">

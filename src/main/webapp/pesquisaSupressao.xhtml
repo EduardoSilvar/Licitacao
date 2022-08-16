@@ -67,7 +67,7 @@
                 <h:outputText value="#{supressao.fiscal.nome}" />
             </p:column>
             <p:column headerText="Data">
-                <h:outputText value="#{supressao.dataAssinatura}"  />
+                <h:outputText value="#{managerSupressao.dataFormatada(supressao.dataAssinatura)}"  />
             </p:column>
             <p:column headerText="Descrição">
                 <h:outputText value="#{supressao.descricao}"  />

@@ -9,7 +9,9 @@ import Servico.RepactuacaoServico;
 import Servico.UsuarioServico;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import javax.ejb.EJB;
@@ -192,7 +194,7 @@ public class managerRepactuacao extends managerPrincipal implements Serializable
         }
 
     }
-
+    
 //    public String urlVisualizar(long id){
 //        return "cadastrarAlteracoes.xhtml?visualizar="+id+"&repactuacao=TRUE";
 //    }

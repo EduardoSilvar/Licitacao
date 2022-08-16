@@ -62,7 +62,7 @@
                 <h:outputText value="#{renovacao.numeroTermo}" />
             </p:column>
             <p:column headerText="Valor foi alterado">
-                <h:outputText value="#{renovacao.valorMudou}"  />
+                <h:outputText value="#{managerRenovacao.boString(renovacao.valorMudou)}"  />
             </p:column>
             <p:column headerText="Valor" width="100px">
                 <h:outputText value="#{renovacao.valor}" />
@@ -71,13 +71,13 @@
                 <h:outputText value="#{renovacao.fiscal.nome}" />
             </p:column>
             <p:column headerText="Data de firmação">
-                <h:outputText value="#{renovacao.dataAssinatura}"  />
+                <h:outputText value="#{managerRenovacao.dataFormatada(renovacao.dataAssinatura)}"  />
             </p:column>
             <p:column headerText="Nova vigência">
-                <h:outputText value="#{renovacao.dataFinal}"  />
+                <h:outputText value="#{managerRenovacao.dataFormatada(renovacao.dataFinal)}"  />
             </p:column>
             <p:column headerText="Vigência anterior">
-                <h:outputText value="#{renovacao.vigenciaAnterior}"  />
+                <h:outputText value="#{managerRenovacao.dataFormatada(renovacao.vigenciaAnterior)}"  />
             </p:column>
             <p:column headerText="Próxima renovação">
                 <h:outputText value="#{renovacao.proximaRenovacao}"  />

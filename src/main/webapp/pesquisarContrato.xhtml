@@ -15,10 +15,10 @@
                            icon="pi pi-cog"
                            >
 
-                <p:menuitem value="Editar" 
-                            icon="pi pi-pencil"
-                            process="@this"
-                            />
+                <p:menuitem value="Cadastrar"
+                            icon="pi pi-save"
+                            url="contrato.xhtml"
+                            process="@this"/>
 
             </p:splitButton>
         </h:panelGroup>
@@ -193,7 +193,7 @@
                     <h:outputText value="#{contrato.valor}" />
                 </p:column>
                 <p:column headerText="Vigência">
-                    <h:outputText value="#{contrato.dataInicio}"  />
+                    <h:outputText value="#{managerContrato.dataFormatada(contrato.dataInicio)}"  />
                 </p:column>
                 <p:column headerText="Fiscal">
                     <h:outputText value="#{contrato.fiscalContrato.nome}"  />
