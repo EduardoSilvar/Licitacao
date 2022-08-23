@@ -36,19 +36,36 @@ public class managerChat extends managerPrincipal implements Serializable {
     private Mensagem mesagem;
     private List<Chat> chats;
     private Chat chat;
+    private Usuario userLogado;
     private boolean renderedChat = false;
     
     @Override
     public void carregar(String param) {
+        userLogado = userServico.getCurrentUser();
+        instanciarChats();
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
     @Override
     public void instanciar() {
+        userLogado = userServico.getCurrentUser();
         instanciarChat();
         instanciarMensagem();
         instanciarChats();
         mensagens();
+    }
+    
+    public String textoMensagen(Chat chat) {
+        if (chat.getEmissor().equals(userLogado) && chat.isLidoEmissor()) {
+            return "Você visualizou";
+        } else if (chat.getEmissor().equals(userLogado) && chat.isLidoReceptor()) {
+            return "Novas mensagens de " + chat.getReceptor().getNome();
+        } else if (chat.getReceptor().equals(userLogado) && chat.isLidoReceptor()) {
+            return "Você visualizou";
+        } else if (chat.getReceptor().equals(userLogado) && chat.isLidoEmissor()) {
+            return "Novas mensagens de " + chat.getEmissor().getNome();
+        }
+        return "";
     }
     
     @Override
@@ -62,9 +79,12 @@ public class managerChat extends managerPrincipal implements Serializable {
     }
     
     public void salvar() {
-        Usuario user = userServico.find(1l);
-        this.mesagem.setEscritor(user);
+        userLogado = userServico.getCurrentUser();
+        this.mesagem.setEscritor(userLogado);
+        this.chat.setLidoEmissor(true);
+        this.chat.setLidoReceptor(false);
         this.chat.getMensagens().add(mesagem);
+        this.chat.setEmissor(userLogado);
         chatServico.Save(this.chat);
         Msg.messagemInfo("Operação realizada com sucesso !");
     }
@@ -85,9 +105,9 @@ public class managerChat extends managerPrincipal implements Serializable {
     }
     
     public void instanciarChats() {
-        Usuario user = userServico.find(1l);
-        this.chats = chatServico.chatsAtivos(user);
-        System.err.println(this.chats.size());
+        userLogado = userServico.getCurrentUser();
+        this.chats = chatServico.todosChats(userLogado);
+        
     }
     
     public void mensagens() {

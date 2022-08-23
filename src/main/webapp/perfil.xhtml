@@ -16,6 +16,12 @@
                             process="@this"
                             actionListener="#{managerPerfil.alterarSenha()}"
                             />
+                <p:menuitem value="Sair"
+                            icon="pi pi-sign-out"
+                            update="@form"
+                            process="@this"
+                            actionListener="#{managerPerfil.logout()}"
+                            />
 
 
             </p:splitButton>

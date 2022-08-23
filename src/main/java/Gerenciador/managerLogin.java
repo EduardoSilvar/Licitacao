@@ -5,6 +5,7 @@
  */
 package Gerenciador;
 
+import Servico.ChatServico;
 import Servico.UsuarioServico;
 import java.io.Serializable;
 import java.security.Principal;
@@ -26,6 +27,8 @@ public class managerLogin implements Serializable {
 
     @EJB
     UsuarioServico usuarioServico;
+    @EJB
+    ChatServico chatServico;
     private Usuario usuarioLogado;
     private String user;
 
@@ -47,6 +50,10 @@ public class managerLogin implements Serializable {
             }
             iniciarPagina();
         }
+    }
+
+    public int totalChats() {
+        return chatServico.totalChatNaoLido(usuarioLogado);
     }
 
     public void iniciarPagina() {
@@ -71,7 +78,6 @@ public class managerLogin implements Serializable {
 //                Logger.getLogger("").log(Level.SEVERE, null, ex);
 //            }
 //        }
-
     }
 
 //    public boolean isRequerente(Usuario usuario) {
@@ -84,7 +90,6 @@ public class managerLogin implements Serializable {
 //        }
 //        return false;
 //    }
-
     public Usuario getUsuarioLogado() {
         return usuarioLogado;
     }

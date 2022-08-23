@@ -34,20 +34,40 @@ public class Chat implements Serializable {
     @OneToOne
     private Usuario emissor;
     private String cor;
-    private boolean ativo;
+    private boolean lidoReceptor;
+    private boolean lidoEmissor;
+    private boolean ativo = true;
 
     public Chat() {
     }
 
-    public Chat(Long id, List<Mensagem> mensagens, Usuario receptor, Usuario emissor, String cor, boolean ativo) {
+    public Chat(Long id, List<Mensagem> mensagens, Usuario receptor, Usuario emissor, String cor, boolean lidoReceptor, boolean lidoEmissor) {
         this.id = id;
         this.mensagens = mensagens;
         this.receptor = receptor;
         this.emissor = emissor;
         this.cor = cor;
-        this.ativo = ativo;
+        this.lidoReceptor = lidoReceptor;
+        this.lidoEmissor = lidoEmissor;
     }
 
+    public boolean isLidoReceptor() {
+        return lidoReceptor;
+    }
+
+    public void setLidoReceptor(boolean lidoReceptor) {
+        this.lidoReceptor = lidoReceptor;
+    }
+
+    public boolean isLidoEmissor() {
+        return lidoEmissor;
+    }
+
+    public void setLidoEmissor(boolean lidoEmissor) {
+        this.lidoEmissor = lidoEmissor;
+    }
+
+  
     public boolean isAtivo() {
         return ativo;
     }

@@ -52,6 +52,7 @@ public class Usuario implements Serializable {
     private UnidadeOrganizacional unidadeOrganizacional;
     @Enumerated(EnumType.STRING)
     private TipoUsuario tipoUsuario;
+    private boolean administrador;
 
     public Usuario() {
     }
@@ -101,6 +102,22 @@ public class Usuario implements Serializable {
 
     public Setor getSetor() {
         return setor;
+    }
+
+    public List<Grupo> getGrupos() {
+        return grupos;
+    }
+
+    public void setGrupos(List<Grupo> grupos) {
+        this.grupos = grupos;
+    }
+
+    public boolean isAdministrador() {
+        return administrador;
+    }
+
+    public void setAdministrador(boolean administrador) {
+        this.administrador = administrador;
     }
 
     public void setSetor(Setor setor) {

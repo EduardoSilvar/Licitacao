@@ -23,3 +23,6 @@ alter table Acrescimo ADD column ativo boolean;
 
 alter table notaFiscal add column unidadeOrganizacional_id bigint;
 ALTER TABLE notaFiscal ADD CONSTRAINT fk_unidadeOrganizacional_id FOREIGN KEY (unidadeOrganizacional_id) REFERENCES unidadeOrganizacional (id);
+
+alter table Chat ADD column lidoReceptor boolean;
+alter table Chat ADD column lidoEmissor boolean;

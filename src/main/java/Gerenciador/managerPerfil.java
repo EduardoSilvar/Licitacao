@@ -6,11 +6,14 @@
 package Gerenciador;
 
 import Servico.UsuarioServico;
+import java.io.IOException;
 import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
 import modelo.Usuario;
 import util.Msg;
 import util.Utils;
@@ -60,6 +63,13 @@ public class managerPerfil implements Serializable {
         } catch (Exception ex) {
             Msg.messagemError(ex.getMessage());
         }
+    }
+
+    public void logout() throws IOException, NullPointerException {
+        FacesContext fc = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+        session.invalidate();
+        fc.getExternalContext().redirect("login.xhtml");
     }
 
     public String getUrlAposCancelar() {

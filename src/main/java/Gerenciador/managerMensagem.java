@@ -15,6 +15,7 @@ import javax.persistence.Entity;
 import modelo.Chat;
 import modelo.Mensagem;
 import modelo.Usuario;
+import util.Utils;
 
 /**
  *
@@ -31,33 +32,53 @@ public class managerMensagem extends managerPrincipal implements Serializable {
     private MensagemServico mesnagemServico;
     @EJB
     private ChatServico chatServico;
+    private Usuario userLogado;
     private Chat chat;
 
     @Override
     public void carregar(String param) {
+        userLogado = userServico.getCurrentUser();
         this.chat = chatServico.find(Long.parseLong(param));
+        if (this.chat.getEmissor().equals(userLogado)) {
+            this.chat.setLidoEmissor(true);
+        } else {
+            this.chat.setLidoReceptor(true);
+        }
+        chatServico.Update(this.chat);
         instanciarMensagem();
     }
 
     public void enviarMensagem() {
-         Usuario user = userServico.find(558l);
-         this.mensagem.setEscritor(user);
+        userLogado = userServico.getCurrentUser();
+        this.mensagem.setEscritor(userLogado);
         this.chat.getMensagens().add(mensagem);
-        chatServico.Update(this.chat);
         this.mensagem = new Mensagem();
+        if (this.chat.getEmissor().equals(userLogado)) {
+            this.chat.setLidoEmissor(true);
+            this.chat.setLidoReceptor(false);
+        } else {
+            this.chat.setLidoReceptor(true);
+            this.chat.setLidoEmissor(false);
+        }
+        chatServico.Update(this.chat);
+
     }
 
     public String posicaoMensagem(Mensagem msg) {
-        Usuario user = userServico.find(1l);
-        if (msg.getEscritor().equals(user)) {
-            return "margin-left:600px !important";
+        if (Utils.isNotEmpty(msg.getEscritor())) {
+            if (msg.getEscritor().equals(userLogado)) {
+                return "margin-left:800px !important";
+            } else {
+                return "margin-right:100px !important";
+            }
         } else {
-            return "margin-right:100px !important";
+            return "";
         }
     }
 
     @Override
     public void instanciar() {
+        userLogado = userServico.getCurrentUser();
         instanciarMensagem();
     }
 

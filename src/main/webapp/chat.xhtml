@@ -1,151 +1,131 @@
-<ui:composition template="/WEB-INF/template/layout.xhtml"
-                xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:h="http://xmlns.jcp.org/jsf/html"
-                xmlns:p="http://primefaces.org/ui"
-                xmlns:f="http://xmlns.jcp.org/jsf/core"
-                xmlns="http://www.w3.org/1999/xhtml">
+<ui:composition 
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns="http://www.w3.org/1999/xhtml">
 
-    <ui:define name="acoes">
-        <h:panelGroup class="panelAcoes">
 
-            <p:splitButton value="Ações" style="margin: 0px -8px !important" 
-                           icon="pi pi-cog"
-                           >
-                <p:menuitem value="Editar" 
-                            icon="pi pi-pencil"
-                            process="@this"
-                            oncomplete="PF('criarChatDialog').show();" title="Novo chat" 
-                            />
-            </p:splitButton>
-
-        </h:panelGroup>
-    </ui:define>
-
-    <ui:define name="barra">
-        <div class="row" id="stylebarra">
-            <i class="pi pi-cog" id="icon"></i> <h5 style="color: #e1e6e5"> Configurações </h5>
-        </div>
-    </ui:define>
-    <ui:define name="corpo">
-        <h:panelGroup rendered="#{managerChat.renderedChat}">
-            <div id="row-chat" class="row row-chat" style="display: flex; flex-wrap: nowrap !important; overflow: hidden !important; overflow-x: scroll !important; margin-left: 10px !important">
+    <h:panelGroup rendered="#{managerChat.renderedChat}">
+        <div id="row-chat" class="row row-chat" style="display: flex; flex-wrap: nowrap !important; overflow: hidden !important; overflow-x: scroll !important; margin-left: 10px !important">
+            <div style="display: flex;flex-direction: column">
                 <ui:repeat value="#{managerChat.chats}"
                            var="chat">
                     <a href="mensagem.xhtml?visualizar=#{chat.id}" style="color: currentColor;text-decoration:none;background: none !important">
-                        <div class="chat" style="display: flex;flex-direction: row">
+                        <div class="chat" style="display: flex;flex-direction: row;margin-top: 15px">
                             <div class="ui-avatar ui-widget ui-avatar-circle ui-avatar-xl"
                                  style="background-color:#{'#'.concat(managerContrato.cores(contrato.status))}; font-size: 15px; color: #ffffff; width: 50px; height: 50px;">
                                 <span class="ui-avatar-text" ><i class="pi pi-user"></i></span>
                             </div>
-                            <p style="margin-top: auto; margin-left: 20px">#{chat.mensagens.get(0)}</p>
+                            <p style="margin-top: auto; margin-left: 20px">#{managerChat.textoMensagen(chat)}</p>
                         </div>
                     </a>
                 </ui:repeat>
             </div>
-        </h:panelGroup>
-        <h:panelGroup rendered="#{!managerChat.renderedChat}">
+        </div>
+    </h:panelGroup>
+    <h:panelGroup rendered="#{!managerChat.renderedChat}">
 
-            <p:commandButton  icon="pi pi-trash" 
-                              process="@this"
-                              update="@form:criarChatDialog"
-                              oncomplete="PF('criarChatDialog').show();" title="exluir" />
-        </h:panelGroup>
+        <p:commandButton  icon="pi pi-trash" 
+                          process="@this"
+                          update="criarChatDialog"
+                          oncomplete="PF('criarChatDialog').show();" title="exluir" />
+    </h:panelGroup>
 
-        <p:dialog id="criarChatDialog"
-                  widgetVar="criarChatDialog"
-                  header="Atenção!"
-                  closeOnEscape="true"
-                  draggable="false"
-                  maximizable="false"
-                  minimizable="false"
-                  modal="true"
-                  width="800"
-                  showEffect="fade"
-                  hideEffect="fade">
+    <p:dialog id="criarChatDialog"
+              widgetVar="criarChatDialog"
+              header="Atenção!"
+              closeOnEscape="true"
+              draggable="false"
+              maximizable="false"
+              minimizable="false"
+              modal="true"
+              width="800"
+              showEffect="fade"
+              hideEffect="fade">
 
 
-            <div class="col-md-12">
-                <div class="form-group" style="padding-left: 80px !important">
-                    <h4>
-                        <i class="pi pi-exclamation-triangle"></i>
-                        Escolha um Usuário para iniciar uma conversa  
-                    </h4>
+        <div class="col-md-12">
+            <div class="form-group" style="padding-left: 80px !important">
+                <h4>
+                    <i class="pi pi-exclamation-triangle"></i>
+                    Escolha um Usuário para iniciar uma conversa  
+                </h4>
+            </div>
+        </div>
+        <h:panelGroup>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <p:outputLabel value="Destinatário" styleClass="control-label" for="receptorAutoComplete" />
+                        <p:autoComplete id="receptorAutoComplete" dropdown="true" converter="usuarioconverter"
+                                        var="receptor" itemLabel="#{receptor.nome}"
+                                        itemValue="#{receptor}" value="#{managerChat.chat.receptor}"
+                                        scrollHeight="200" forceSelection="true"
+                                        inputStyleClass="form-control"
+                                        style="display: flex;"
+                                        emptyMessage="Usuario não encontrado" 
+                                        completeMethod="#{managerAutoComplete.autocompletaUsuario}"
+                                        required="true" disabled="#{managerChat.visualizar}">
+                            <p:ajax event="itemSelect" />
+                        </p:autoComplete>
+                    </div> 
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <p:outputLabel value="Cor" styleClass="control-label" for="enumCor" />
+                        <p:inputText value="#{managerChat.chat.cor}" placeholder="Cor" id="enumCor"
+                                     requiredMessage="Este campo é obrigatório."
+                                     styleClass="form-control"  rendered="true" />
+                        <p:message for="enumCor" />
+                    </div> 
                 </div>
             </div>
-            <h:panelGroup>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <p:outputLabel value="Destinatário" styleClass="control-label" for="receptorAutoComplete" />
-                            <p:autoComplete id="receptorAutoComplete" dropdown="true" converter="usuarioconverter"
-                                            var="receptor" itemLabel="#{receptor.nome}"
-                                            itemValue="#{receptor}" value="#{managerChat.chat.receptor}"
-                                            scrollHeight="200" forceSelection="true"
-                                            inputStyleClass="form-control"
-                                            style="display: flex;"
-                                            emptyMessage="Usuario não encontrado" 
-                                            completeMethod="#{managerAutoComplete.autocompletaUsuario}"
-                                            required="true" disabled="#{managerChat.visualizar}">
-                                <p:ajax event="itemSelect" />
-                            </p:autoComplete>
-                        </div> 
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <p:outputLabel value="Cor" styleClass="control-label" for="enumCor" />
-                            <p:inputText value="#{managerChat.chat.cor}" placeholder="Cor" id="enumCor"
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <p:outputLabel value="Mensagem"
+                                       for="mensagemInput" />
+                        <p:inputTextarea id="mensagemInput"
+                                         placeholder="Observação"
+                                         rendered="true"
+                                         value="#{managerChat.mesagem.mensagem}"
                                          requiredMessage="Este campo é obrigatório."
-                                         styleClass="form-control"  rendered="true" />
-                            <p:message for="enumCor" />
-                        </div> 
+                                         styleClass="form-control" 
+                                         />
+                        <p:message for="mensagemInput" />
                     </div>
                 </div>
-
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <p:outputLabel value="Mensagem"
-                                           for="mensagemInput" />
-                            <p:inputTextarea id="mensagemInput"
-                                             placeholder="Observação"
-                                             rendered="true"
-                                             value="#{managerChat.mesagem.mensagem}"
-                                             requiredMessage="Este campo é obrigatório."
-                                             styleClass="form-control" 
-                                             />
-                            <p:message for="mensagemInput" />
-                        </div>
-                    </div>
-                </div>
-            </h:panelGroup>
-
-            <div class="col-md-12">
-
-                <center>
-
-                    <p:commandButton value="Sim"
-                                     title="Confirmar Remoção"
-                                     icon="pi pi-check"
-                                     update="@this "
-                                     process="@this corpoInteiro:criarChatDialog"
-                                     actionListener="#{managerChat.salvar()}"
-                                     oncomplete="PF('criarChatDialog').hide();"
-                                     styleClass="mr-md-1"/>
-
-                    <p:commandButton value="Não"
-                                     title="Cancelar Remoção"
-                                     icon="pi pi-ban"
-                                     process="@this"
-                                     update="@form"
-                                     oncomplete="PF('criarChatDialog').hide();"
-                                     styleClass="ml-md-1"/>
-
-                </center>
-
             </div>
+        </h:panelGroup>
+
+        <div class="col-md-12">
+
+            <center>
+
+                <p:commandButton value="Sim"
+                                 title="Confirmar Remoção"
+                                 icon="pi pi-check"
+                                 update="@this "
+                                 process="@this corpoInteiro:criarChatDialog"
+                                 actionListener="#{managerChat.salvar()}"
+                                 oncomplete="PF('criarChatDialog').hide();"
+                                 styleClass="mr-md-1"/>
+
+                <p:commandButton value="Não"
+                                 title="Cancelar Remoção"
+                                 icon="pi pi-ban"
+                                 process="@this"
+                                 update="@form"
+                                 oncomplete="PF('criarChatDialog').hide();"
+                                 styleClass="ml-md-1"/>
+
+            </center>
+
+        </div>
 
 
 
-        </p:dialog>
-    </ui:define>
+    </p:dialog>
 </ui:composition>

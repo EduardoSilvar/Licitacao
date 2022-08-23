@@ -150,8 +150,8 @@ and open the template in the editor.
                             <div class="row" style="margin-left: 86%;margin-top: -60px">
                                 <p:button icon="pi pi-user" styleClass="rounded-button ui-button-info" href="perfil.xhtml"/>
                                 <p:button icon="pi pi-cog" styleClass="rounded-button ui-button-info" href="configuracao.xhtml"/>
-                                <p:button icon="pi pi-envelope" styleClass="rounded-button ui-button-info" href="mensagens.xhtml"  style="margin-left: 0px !important;" />
-                                <p style="border-radius: 140%; background: red;height: 18px; width: 18px; font-size: 12px;text-align: center;margin-left: 110px;position: absolute">10</p>
+                                <p:button icon="pi pi-envelope" styleClass="rounded-button ui-button-info" href="notificacao.xhtml"  style="margin-left: 0px !important;" />
+                                <p style="border-radius: 140%; background: red;height: 18px; width: 18px; font-size: 12px;text-align: center;margin-left: 110px;position: absolute">#{managerLogin.totalChats()}</p>
                                 <div style="width: 400px;margin-right: 10px;margin-left:-400px;margin-top: 40px;">
                                     <p:outputLabel style="float: right;margin-right: 0px">#{managerLogin.usuarioLogado.nome}</p:outputLabel>
                                 </div>
@@ -201,7 +201,7 @@ and open the template in the editor.
                                     <p:menuitem value="Cadastrar" url="usuario.xhtml" icon="pi pi-save"/>
                                     <p:menuitem value="Pesquisar"  icon="pi pi-search" url="pesquisarUsuario.xhtml"/>
                                 </p:submenu>
-                                <p:submenu label="Orgão" icon="pi pi-building">
+                                <p:submenu label="Orgão" icon="pi pi-building" rendered="#{managerLogin.usuarioLogado.administrador}">
                                     <p:menuitem value="Cadastrar" url="orgao.xhtml" icon="pi pi-save"/>
                                     <p:menuitem value="Pesquisar" icon="pi pi-search" url="pesquisarOrgao.xhtml"/>
                                 </p:submenu>
