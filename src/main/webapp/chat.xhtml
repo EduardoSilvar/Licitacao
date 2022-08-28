@@ -26,10 +26,10 @@
     </h:panelGroup>
     <h:panelGroup rendered="#{!managerChat.renderedChat}">
 
-        <p:commandButton  icon="pi pi-trash" 
+        <p:commandButton  icon="pi pi-plus" value="Iniciar"
                           process="@this"
                           update="criarChatDialog"
-                          oncomplete="PF('criarChatDialog').show();" title="exluir" />
+                          oncomplete="PF('criarChatDialog').show();" title="Inicicar Chat" />
     </h:panelGroup>
 
     <p:dialog id="criarChatDialog"

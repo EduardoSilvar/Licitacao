@@ -174,16 +174,11 @@
                 </p:column>
 
                 <p:column headerText="Status">
-                    <div id="row-atividades" class="row row-atividades" style="display: flex; flex-wrap: nowrap !important; overflow: hidden !important; overflow-x: scroll !important">
-                        <ui:repeat value="#{contrato.status}"
-                                   var="atividade">
-                            <div class="atividade">
-                                <div class="ui-avatar ui-widget ui-avatar-circle ui-avatar-xl"
-                                     style="background-color:#{'#'.concat(managerContrato.cores(contrato.status))}; font-size: 15px; color: #ffffff; width: 50px; height: 50px;">
-                                    <span class="ui-avatar-text">#{managerContrato.abreviacao(contrato.status)}</span>
-                                </div>
-                            </div>
-                        </ui:repeat>
+                    <div class="atividade">
+                        <div class="ui-avatar ui-widget ui-avatar-circle ui-avatar-xl"
+                             style="background-color:#{'#'.concat(managerContrato.cores(contrato.status))}; font-size: 15px; color: #ffffff; width: 50px; height: 50px;">
+                            <span class="ui-avatar-text">#{managerContrato.abreviacao(contrato.status)}</span>
+                        </div>
                     </div>
                 </p:column>
                 <p:column headerText="Empresa">

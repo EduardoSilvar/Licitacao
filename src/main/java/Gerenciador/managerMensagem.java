@@ -64,6 +64,33 @@ public class managerMensagem extends managerPrincipal implements Serializable {
 
     }
 
+    public String mensagemEscritos(Mensagem mensagem) {
+        Usuario usuarioLogado = userServico.getCurrentUser();
+        if (mensagem.getEscritor().equals(usuarioLogado)) {
+            return " justify-content-end";
+        } else {
+            return " justify-content-start";
+        }
+    }
+
+    public String inverterLinha(Mensagem mensagem) {
+        Usuario usuarioLogado = userServico.getCurrentUser();
+        if (mensagem.getEscritor().equals(usuarioLogado)) {
+            return " flex-direction: row-reverse; text-align: right";
+        } else {
+            return " ";
+        }
+    }
+
+    public String corIcone(Mensagem mensagem) {
+        Usuario usuarioLogado = userServico.getCurrentUser();
+        if (!mensagem.getEscritor().equals(usuarioLogado)) {
+            return " #151538";
+        } else {
+            return " #65658a";
+        }
+    }
+
     public String posicaoMensagem(Mensagem msg) {
         if (Utils.isNotEmpty(msg.getEscritor())) {
             if (msg.getEscritor().equals(userLogado)) {

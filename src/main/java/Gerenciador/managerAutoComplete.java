@@ -6,6 +6,7 @@ package Gerenciador;
 
 import Servico.ContratadoServico;
 import Servico.ContratoServico;
+import Servico.GrupoServico;
 import Servico.SetorServico;
 import Servico.UsuarioServico;
 import java.io.Serializable;
@@ -15,6 +16,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import modelo.Contratado;
 import modelo.Contrato;
+import modelo.Grupo;
 import modelo.Setor;
 import modelo.Usuario;
 
@@ -34,6 +36,8 @@ public class managerAutoComplete implements Serializable {
     ContratoServico contratoServico;
     @EJB
     SetorServico setorServico;
+    @EJB
+    GrupoServico grupoServico;
 
     public List<Usuario> autocompletaUsuario(String nome) {
         return usuarioServico.findUsuario(nome);
@@ -41,6 +45,10 @@ public class managerAutoComplete implements Serializable {
 
     public List<Contratado> autocompletaContratado(String nome) {
         return contratadoServico.findContratado(nome);
+    }
+
+    public List<Grupo> autocompletaGrupo(String nome) {
+        return grupoServico.findGrupos(nome);
     }
 
     public List<Contrato> autocompletaContrato(String nome) {

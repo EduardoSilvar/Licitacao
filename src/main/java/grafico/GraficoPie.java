@@ -8,6 +8,7 @@ package grafico;
 import Enum.StatusContrato;
 import Servico.ContratadoServico;
 import Servico.ContratoServico;
+import Servico.UsuarioServico;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ import modelo.Contratado;
 import modelo.Contrato;
 import modelo.ContratoVo;
 import modelo.Setor;
+import modelo.Usuario;
 import org.primefaces.model.charts.ChartData;
 import org.primefaces.model.charts.axes.cartesian.CartesianScales;
 import org.primefaces.model.charts.axes.cartesian.linear.CartesianLinearAxes;
@@ -53,6 +55,8 @@ public class GraficoPie implements Serializable {
 
     @EJB
     ContratoServico contratoServico;
+    @EJB
+    UsuarioServico userServico;
     private Setor setor;
     private StatusContrato status;
     private Contratado contratado;
@@ -62,12 +66,14 @@ public class GraficoPie implements Serializable {
     private PolarAreaChartModel polarAreaModel;
     private RadarChartModel radarModel;
     private BarChartModel barModel;
+    private Usuario user;
 
     @PostConstruct
     public void init() {
         this.setor = new Setor();
         this.contratoVos = new ArrayList<>();
         this.contratado = new Contratado();
+        this.user = userServico.getCurrentUser();
         createPieModel();
         createCartesianLinerModel();
         createPolarAreaModel();
@@ -86,41 +92,12 @@ public class GraficoPie implements Serializable {
             values.add(c.getValor());
             labels.add(c.getNome());
         }
-//        values.add(20);
-//        values.add(50);
-//        values.add(100);
-//        values.add(75);
-//        values.add(25);
-//        values.add(0);
         dataSet.setData(values);
         dataSet.setLabel("Left Dataset");
         dataSet.setYaxisID("left-y-axis");
         dataSet.setFill(true);
         dataSet.setTension(0.5);
-
-//        LineChartDataSet dataSet2 = new LineChartDataSet();
-//        List<Object> values2 = new ArrayList<>();
-//        values2.add(0.1);
-//        values2.add(0.5);
-//        values2.add(1.0);
-//        values2.add(2.0);
-//        values2.add(1.5);
-//        values2.add(0);
-//        dataSet2.setData(values2);
-//        dataSet2.setLabel("Right Dataset");
-//        dataSet2.setYaxisID("right-y-axis");
-//        dataSet2.setFill(true);
-//        dataSet2.setTension(0.5);
         data.addChartDataSet(dataSet);
-//        data.addChartDataSet(dataSet2);
-
-//        List<String> labels = new ArrayList<>();
-//        labels.add("Jan");
-//        labels.add("Feb");
-//        labels.add("Mar");
-//        labels.add("Apr");
-//        labels.add("May");
-//        labels.add("Jun");
         data.setLabels(labels);
         cartesianLinerModel.setData(data);
 
@@ -213,18 +190,18 @@ public class GraficoPie implements Serializable {
     }
 
     public List<ContratoVo> TiposContrato() {
-        return contratoServico.buscarTipoContrato();
+        return contratoServico.buscarTipoContrato(user);
     }
 
     public void buscarContratoSetor() {
-        this.contratoVos = contratoServico.buscarContratoSetor(this.setor, this.contratado);
+        this.contratoVos = contratoServico.buscarContratoSetor(this.setor, this.contratado, user);
         createCartesianLinerModel();
         createPolarAreaModel();
     }
 
     public List<ContratoVo> buscarValorContrato() {
         List<ContratoVo> contratoValor = new ArrayList<>();
-        List<Contrato> contratos = contratoServico.buscarValorContrato(this.setor);
+        List<Contrato> contratos = contratoServico.buscarValorContrato(this.setor, user);
         BigDecimal valor = new BigDecimal(0);
         for (ContratoVo cv : contratoVos) {
             for (Contrato c : contratos) {
@@ -247,7 +224,7 @@ public class GraficoPie implements Serializable {
         List<String> labels = new ArrayList<>();
         List<String> bgColors = new ArrayList<>();
 
-        for (ContratoVo contra : contratoServico.buscarContratos()) {
+        for (ContratoVo contra : contratoServico.buscarContratos(user)) {
             values.add(contra.getQuantidade());
             labels.add(contra.getNome());
             bgColors.add(cores(contra.getNome()));

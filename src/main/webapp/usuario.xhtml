@@ -138,23 +138,41 @@
                             <p:message for="whatsUserInput" />
                         </div>
                     </div>
-                    <div class="col-md-4">
+                     <div class="col-md-4">
+                    <div class="form-group">
+                        <p:outputLabel value="Tipo de acesso"
+                                       for="acessoAutoComplete"/>
+                        <p:autoComplete id="acessoAutoComplete"
+                                        value="#{managerUsuario.grupo}"
+                                        var="grupo"
+                                        itemLabel="#{grupo.nome}"
+                                        itemValue="#{grupo}"
+                                        converter="grupoconverter"
+                                        completeMethod="#{managerAutoComplete.autocompletaGrupo(nome)}"
+                                        dropdown="true"
+                                        scrollHeight="200"
+                                        inputStyleClass="form-control"
+                                        style="display: flex;"
+                                        emptyMessage="Grupo não encontrado."/>
+                    </div>
+                </div>
+<!--                    <div class="col-md-4">
                         <div class="form-group" >
                             <p:outputLabel value="Tipo de acesso" styleClass="control-label" for="acessoSelect" />
                             <p:selectOneMenu id="acessoSelect"
-                                             value="#{managerUsuario.user.tipoUsuario}"
+                                             value="{managerUsuario.user.tipoUsuario}"
                                              filter="true" 
                                              placeholder="Tipo"
                                              styleClass="form-control" 
                                              required="true"
-                                             disabled="#{managerUsuario.visualizar}"
+                                             disabled="{managerUsuario.visualizar}"
                                               >
                                 <f:selectItem  itemLabel="Selecione..." noSelectionOption="true" />
-                                <f:selectItems value="#{managerEnuns.users}" var="tipo" itemLabel="#{tipo.label}" itemValue="#{tipo}"/>
+                                <f:selectItems value="{managerAutoComplete.autocompletaGrupo}" var="tipo" itemLabel="#{tipo.label}" itemValue="#{tipo}"/>
                                 <p:ajax update="corpoInteiro:acessoSelect"/>
                             </p:selectOneMenu>
                         </div> 
-                    </div>
+                    </div>-->
                 </div>
                 <div class="row">
                     <div class="col-md-6">

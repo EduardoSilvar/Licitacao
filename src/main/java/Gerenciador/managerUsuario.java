@@ -5,6 +5,7 @@
  */
 package Gerenciador;
 
+import Servico.GrupoServico;
 import Servico.SetorServico;
 import Servico.UnidadeOrganizacionalServico;
 import Servico.UsuarioServico;
@@ -14,6 +15,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import modelo.Grupo;
 import modelo.Setor;
 import modelo.Usuario;
 import modelo.UnidadeOrganizacional;
@@ -34,8 +36,11 @@ public class managerUsuario extends managerPrincipal implements Serializable {
     private UnidadeOrganizacionalServico unidadeServico;
     @EJB
     private SetorServico setorServico;
+    @EJB
+    private GrupoServico grupoServico;
 
     private Usuario user;
+    private Grupo grupo;
     private List<Usuario> users;
     private String repetirSenha;
     private List<Setor> setores;
@@ -43,6 +48,7 @@ public class managerUsuario extends managerPrincipal implements Serializable {
 
     @Override
     public void carregar(String param) {
+        this.grupo = new Grupo();
         this.unidades = unidadeServico.FindAll();
         this.user = userServico.find(Long.parseLong(param));
     }
@@ -50,6 +56,7 @@ public class managerUsuario extends managerPrincipal implements Serializable {
     @Override
     public void instanciar() {
         this.unidades = unidadeServico.FindAll();
+        this.grupo = new Grupo();
         instanciarUsuario();
         instanciarListUser();
     }
@@ -59,6 +66,9 @@ public class managerUsuario extends managerPrincipal implements Serializable {
     }
 
     public void salvar() {
+        if (Utils.isNotEmpty(grupo)) {
+            user.getGrupos().add(grupo);
+        }
         if (userServico.existEmail(user)) {
             Msg.messagemError("O e-mail ja foi registrado !");
         } else {
@@ -130,6 +140,7 @@ public class managerUsuario extends managerPrincipal implements Serializable {
 
     public void instanciarUsuario() {
         this.user = new Usuario();
+        this.user.setGrupos(new ArrayList<Grupo>());
     }
 
     public void instanciarListUser() {
@@ -174,6 +185,14 @@ public class managerUsuario extends managerPrincipal implements Serializable {
 
     public void setUnidades(List<UnidadeOrganizacional> unidades) {
         this.unidades = unidades;
+    }
+
+    public Grupo getGrupo() {
+        return grupo;
+    }
+
+    public void setGrupo(Grupo grupo) {
+        this.grupo = grupo;
     }
 
 }

@@ -17,6 +17,7 @@ import modelo.Contrato;
 import modelo.ContratoVo;
 import modelo.Setor;
 import modelo.UnidadeOrganizacional;
+import modelo.Usuario;
 import util.Utils;
 
 /**
@@ -30,31 +31,41 @@ public class ContratoServico extends ServicoGenerico<Contrato> implements Serial
         super(Contrato.class);
     }
 
-    public List<ContratoVo> buscarContratos() {
+    public List<ContratoVo> buscarContratos(Usuario user) {
 
         String sql = "select new modelo.ContratoVo(c.status, count(c)) "
                 + "from Contrato c ";
         sql += "where c.ativo = true ";
+        if (Utils.isNotEmpty(user.getUnidadeOrganizacional())) {
+            sql += "and c.unidadeOrganizacional = :unidade ";
+        }
         sql += "group by c.status";
 
         Query query = getEntityManager().createQuery(sql);
-
+        if (Utils.isNotEmpty(user.getUnidadeOrganizacional())) {
+            query.setParameter("unidade", user.getUnidadeOrganizacional());
+        }
         return query.getResultList();
     }
-    
-    public List<ContratoVo> buscarTipoContrato() {
+
+    public List<ContratoVo> buscarTipoContrato(Usuario user) {
 
         String sql = "select new modelo.ContratoVo(c.tipoContrato, count(c)) "
                 + "from Contrato c ";
         sql += "where c.ativo = true ";
+        if (Utils.isNotEmpty(user.getUnidadeOrganizacional())) {
+            sql += "and c.unidadeOrganizacional = :unidade ";
+        }
         sql += "group by c.tipoContrato.id";
 
         Query query = getEntityManager().createQuery(sql);
-
+        if (Utils.isNotEmpty(user.getUnidadeOrganizacional())) {
+            query.setParameter("unidade", user.getUnidadeOrganizacional());
+        }
         return query.getResultList();
     }
 
-    public List<ContratoVo> buscarContratoSetor(Setor setor, Contratado contratado) {
+    public List<ContratoVo> buscarContratoSetor(Setor setor, Contratado contratado, Usuario user) {
 
         String sql = "select new modelo.ContratoVo(c.status, count(c)) "
                 + "from Contrato c ";
@@ -64,6 +75,9 @@ public class ContratoServico extends ServicoGenerico<Contrato> implements Serial
         }
         if (Utils.isNotEmpty(contratado)) {
             sql += "and c.contratado = :contratado ";
+        }
+        if (Utils.isNotEmpty(user.getUnidadeOrganizacional())) {
+            sql += "and c.unidadeOrganizacional = :unidade ";
         }
         sql += "group by c.status";
 
@@ -75,18 +89,27 @@ public class ContratoServico extends ServicoGenerico<Contrato> implements Serial
         if (Utils.isNotEmpty(contratado)) {
             query.setParameter("contratado", contratado);
         }
+        if (Utils.isNotEmpty(user.getUnidadeOrganizacional())) {
+            query.setParameter("unidade", user.getUnidadeOrganizacional());
+        }
         return query.getResultList();
     }
 
-    public List<Contrato> buscarValorContrato(Setor setor) {
+    public List<Contrato> buscarValorContrato(Setor setor, Usuario user) {
         String sql = "select c from Contrato c where c.ativo = true ";
         if (Utils.isNotEmpty(setor)) {
             sql += "and c.setor = :setor ";
+        }
+        if (Utils.isNotEmpty(user.getUnidadeOrganizacional())) {
+            sql += "and c.unidadeOrganizacional = :unidade ";
         }
         Query query = getEntityManager().createQuery(sql);
 
         if (Utils.isNotEmpty(setor)) {
             query.setParameter("setor", setor);
+        }
+        if (Utils.isNotEmpty(user.getUnidadeOrganizacional())) {
+            query.setParameter("unidade", user.getUnidadeOrganizacional());
         }
         return query.getResultList();
     }
@@ -181,9 +204,15 @@ public class ContratoServico extends ServicoGenerico<Contrato> implements Serial
         }
     }
 
-    public List<Contratado> contratados() {
+    public List<Contratado> contratados(Usuario user) {
         String sql = "select c Contratado c where c.ativo = true";
+        if (Utils.isNotEmpty(user.getUnidadeOrganizacional())) {
+            sql += " and c.unidadeOrganizacional = :unidade ";
+        }
         Query query = entityManager.createQuery(sql);
+        if (Utils.isNotEmpty(user.getUnidadeOrganizacional())) {
+            query.setParameter("unidade", user.getUnidadeOrganizacional());
+        }
         return query.getResultList();
 
     }

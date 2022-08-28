@@ -27,28 +27,53 @@
     <ui:define name="corpo">
         <h:panelGroup>
             <p:growl id="messages" showDetail="true" />
-            <h:panelGroup id="chatPanelGroup">
-                <div id="row-chat" class="row row-chat" style="display: flex; flex-wrap: nowrap !important; overflow: hidden !important; overflow-y: scroll !important; margin-left: 10px !important;height: 400px">
-                    <div style="display: flex; flex-direction: column;">
-                        <ui:repeat value="#{managerMensagem.chat.mensagens}"
-                                   var="mensagem">
-                            <div class="chat" style="display: flex;flex-direction: row;margin-top: 20px;#{managerMensagem.posicaoMensagem(mensagem)}">
-                                <div class="ui-avatar ui-widget ui-avatar-circle ui-avatar-xl"
-                                     style=" font-size: 15px; color: #ffffff; width: 50px; height: 50px;">
-                                    <span class="ui-avatar-text" ><i class="pi pi-user"></i></span>
-                                </div>
-                                <p style="margin-top: auto; margin-left: 20px">#{mensagem.mensagem}</p>
+            <h:panelGroup id="chatPanelGroup" style="padding: 20px !important">
+                <!--                <div id="row-chat" class="row row-chat" style="display: flex; flex-wrap: nowrap !important; overflow: hidden !important; overflow-y: scroll !important; margin-left: 10px !important;height: 400px">
+                                    <div style="display: flex; flex-direction: column;">
+                                        <ui:repeat value="{managerMensagem.chat.mensagens}"
+                                                   var="mensagem">
+                                            <div class="chat" style="display: flex;flex-direction: row;margin-top: 20px;{managerMensagem.posicaoMensagem(mensagem)}">
+                                                <div class="ui-avatar ui-widget ui-avatar-circle ui-avatar-xl"
+                                                     style=" font-size: 15px; color: #ffffff; width: 50px; height: 50px;">
+                                                    <span class="ui-avatar-text" ><i class="pi pi-user"></i></span>
+                                                </div>
+                                                <p style="margin-top: auto; margin-left: 20px">{mensagem.mensagem}</p>
+                                            </div>
+                                        </ui:repeat>
+                                    </div>
+                                </div>-->
+                <ui:repeat value="#{managerMensagem.chat.mensagens}"
+                           var="chat">
+                    <div class="row d-flex #{managerMensagem.mensagemEscritos(chat)}"
+                         style="margin-bottom: 15px; margin-top: 15px;margin: 20px">
+                        <div class="d-flex"
+                             style="#{managerMensagem.inverterLinha(chat)}">
+                            <div class="ui-avatar ui-widget ui-avatar-circle ui-avatar-xl"
+                                 style="background-color: #{managerMensagem.corIcone(chat)}; font-size: 15px; color: #ffffff; width: 50px; height: 50px; margin-left: 15px;">
+                                <span class="ui-avatar-text"><i class="pi pi-user"></i></span>
                             </div>
-                        </ui:repeat>
+                            <div class="chat-id"
+                                 style=" margin-left: 20px; margin-top: 12px; width: 400px">
+                                #{chat.mensagem}
+                            </div>
+                        </div>
                     </div>
-                </div>
+                </ui:repeat>
             </h:panelGroup>
             <h:panelGroup id="mensagemPanelGroup">
-                <center>
-                    <p:outputLabel value="Mensagem"/>
-                    <p:inputText value="#{managerMensagem.mensagem.mensagem}"/>
-                    <p:commandButton value="enviar" actionListener="#{managerMensagem.enviarMensagem()}" process="@this corpoInteiro:mensagemPanelGroup" update="chatPanelGroup @this mensagemPanelGroup" />
-                </center>
+                <div style="display: flex; flex-direction: row">
+                    <div class="col-md-10">
+                        <div class="form-group">
+                            <p:inputText id="nomeUserInput"
+                                         placeholder="Mensagem"
+                                         required="true"
+                                         value="#{managerMensagem.mensagem.mensagem}"
+                                         styleClass="form-control" 
+                                         />
+                        </div>
+                    </div>
+                    <p:commandButton value="enviar" style="height: 5%" actionListener="#{managerMensagem.enviarMensagem()}"  process="@this corpoInteiro:mensagemPanelGroup" update="chatPanelGroup @this mensagemPanelGroup" />
+                </div>
             </h:panelGroup>
         </h:panelGroup>
     </ui:define>
