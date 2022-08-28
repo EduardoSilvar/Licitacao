@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.faces.context.FacesContext;
+import util.Utils;
 
 /**
  *
@@ -93,23 +94,27 @@ public abstract class managerPrincipal implements Serializable {
         }
 
     }
-    
+
     public String dataFormatada(Date data) {
-        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy");
-        String stringDate = DateFor.format(data);
-        return stringDate;
+        if (Utils.isNotEmpty(data)) {
+            SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy");
+            String stringDate = DateFor.format(data);
+            return stringDate;
+        }
+        return "";
+
     }
-    
-    public String boString(Boolean valor){
+
+    public String boString(Boolean valor) {
         String valorFormatado;
         if (valor) {
             valorFormatado = "Sim";
-        }else{
+        } else {
             valorFormatado = "Não";
         }
         return valorFormatado;
     }
-    
+
     public abstract String getUrlPesquisar();
 
     public abstract String getUrlVisualizar();
@@ -117,7 +122,7 @@ public abstract class managerPrincipal implements Serializable {
     private void carregarParametros() {
         Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
         this.visualizar = params.get("visualizar");
-        this.editar = params.get("editar");   
+        this.editar = params.get("editar");
     }
 
     public boolean isVisualizar() {
