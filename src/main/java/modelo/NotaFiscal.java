@@ -4,6 +4,7 @@
  */
 package modelo;
 
+import Enum.TipoRecebimentoEnum;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -11,6 +12,8 @@ import java.util.List;
 import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -40,6 +43,8 @@ public class NotaFiscal implements Serializable {
     private Contrato contrato;
     @OneToMany(cascade = CascadeType.ALL)
     private List<Anexo> anexos;
+    @Enumerated(EnumType.STRING)
+    private TipoRecebimentoEnum tipoRecebimento;
     @OneToOne
     private UnidadeOrganizacional unidadeOrganizacional;
     private boolean ativo = true;
@@ -127,19 +132,28 @@ public class NotaFiscal implements Serializable {
         this.unidadeOrganizacional = unidadeOrganizacional;
     }
 
+    public TipoRecebimentoEnum getTipoRecebimento() {
+        return tipoRecebimento;
+    }
+
+    public void setTipoRecebimento(TipoRecebimentoEnum tipoRecebimento) {
+        this.tipoRecebimento = tipoRecebimento;
+    }
+
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 71 * hash + Objects.hashCode(this.id);
-        hash = 71 * hash + Objects.hashCode(this.descricao);
-        hash = 71 * hash + Objects.hashCode(this.contratado);
-        hash = 71 * hash + Objects.hashCode(this.valor);
-        hash = 71 * hash + Objects.hashCode(this.dataPagamento);
-        hash = 71 * hash + Objects.hashCode(this.responsavel);
-        hash = 71 * hash + Objects.hashCode(this.contrato);
-        hash = 71 * hash + Objects.hashCode(this.anexos);
-        hash = 71 * hash + Objects.hashCode(this.unidadeOrganizacional);
-        hash = 71 * hash + (this.ativo ? 1 : 0);
+        hash = 83 * hash + Objects.hashCode(this.id);
+        hash = 83 * hash + Objects.hashCode(this.descricao);
+        hash = 83 * hash + Objects.hashCode(this.contratado);
+        hash = 83 * hash + Objects.hashCode(this.valor);
+        hash = 83 * hash + Objects.hashCode(this.dataPagamento);
+        hash = 83 * hash + Objects.hashCode(this.responsavel);
+        hash = 83 * hash + Objects.hashCode(this.contrato);
+        hash = 83 * hash + Objects.hashCode(this.anexos);
+        hash = 83 * hash + Objects.hashCode(this.tipoRecebimento);
+        hash = 83 * hash + Objects.hashCode(this.unidadeOrganizacional);
+        hash = 83 * hash + (this.ativo ? 1 : 0);
         return hash;
     }
 
@@ -182,6 +196,9 @@ public class NotaFiscal implements Serializable {
         if (!Objects.equals(this.anexos, other.anexos)) {
             return false;
         }
+        if (this.tipoRecebimento != other.tipoRecebimento) {
+            return false;
+        }
         return Objects.equals(this.unidadeOrganizacional, other.unidadeOrganizacional);
     }
 
@@ -189,5 +206,6 @@ public class NotaFiscal implements Serializable {
     public String toString() {
         return "NotaFiscal{" + "id=" + id + ", descricao=" + descricao + ", contratado=" + contratado + ", valor=" + valor + ", dataPagamento=" + dataPagamento + ", responsavel=" + responsavel + ", contrato=" + contrato + ", anexos=" + anexos + ", unidadeOrganizacional=" + unidadeOrganizacional + ", ativo=" + ativo + '}';
     }
+    
 
 }

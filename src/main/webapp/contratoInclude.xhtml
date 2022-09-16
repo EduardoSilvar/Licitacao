@@ -31,7 +31,7 @@
                             <p:selectOneMenu id="contratadoSelect"
                                              value="#{managerContrato.contrato.contratado}"
                                              filter="true" 
-                                             placeholder="Tipo"
+                                             placeholder="Contratado"
                                              styleClass="form-control" 
                                              required="true"
                                              disabled="#{managerContrato.visualizar}"
@@ -104,10 +104,9 @@
                                              styleClass="form-control" 
                                              required="true"
                                              disabled="#{managerContrato.visualizar}"
-                                             value="#{managerContrato.contrato.tipoContrato}"
-                                             converter="tipocontratoconverter">
+                                             value="#{managerContrato.contrato.tipoContrato}">
                                 <f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
-                                <f:selectItems value="#{managerContrato.tiposContratos}" var="tipoContrato" itemLabel="#{tipoContrato.nome}" itemValue="#{tipoContrato}"/>
+                                <f:selectItems value="#{managerEnuns.tipoContrato}" var="tipoContrato" itemLabel="#{tipoContrato.label}" itemValue="#{tipoContrato}"/>
                             </p:selectOneMenu> 
                         </div>
                     </div>
@@ -124,7 +123,7 @@
                                              disabled="#{managerContrato.visualizar}"
                                              >
                                 <f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
-                                <f:selectItems value="#{managerContrato.tiposLicitacao}" var="tipoLicitacao" itemLabel="#{tipoLicitacao.tipo}" itemValue="#{tipoLicitacao}" />
+                                <f:selectItems value="#{managerEnuns.tipoLicitacao}" var="tipoLicitacao" itemLabel="#{tipoLicitacao.label}" itemValue="#{tipoLicitacao}" />
                             </p:selectOneMenu>
                         </div>
                     </div>
@@ -227,24 +226,69 @@
                         </div> 
                     </div>
                     <div class="col-md-4">
-                        <div class="form-group">
-                            <p:outputLabel value="Fiscal de contrato" styleClass="control-label" for="fiscalSelect" />
-                            <p:selectOneMenu id="fiscalSelect"
-                                             filter="true" 
-                                             placeholder="fiscal"
-                                             required="true"
-                                             styleClass="form-control"
-                                             disabled="#{managerContrato.visualizar}"
-                                             requiredMessage="Este campo é obrigatório."
-                                             converter="usuarioconverter"
-                                             value="#{managerContrato.contrato.fiscalContrato}"
-                                             >
-                                <f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
-                                <f:selectItems value="#{managerContrato.responsaveis}" var="user" itemLabel="#{user.nome}" itemValue="#{user}" />
-                            </p:selectOneMenu>
-                        </div>
+                        <p:outputLabel value="Tipo de fiscalização" styleClass="control-label" for="tipoFiscalizacaoSelect" />
+                        <p:selectOneMenu id="tipoFiscalizacaoSelect"
+                                         filter="true" 
+                                         placeholder="Tipo fiscalização"
+                                         required="true"
+                                         styleClass="form-control"
+                                         disabled="#{managerContrato.visualizar}"
+                                         requiredMessage="Este campo é obrigatório."
+                                         value="#{managerContrato.contrato.tipoFiscalizacao}"
+                                         >
+                            <f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
+                            <f:selectItems value="#{managerEnuns.tipoFiscalizacao}" var="tipo" itemLabel="#{tipo.label}" itemValue="#{tipo}" >
+                                <p:ajax update="tipoFiscalPanelGroup" process="tipoFiscalizacaoSelect" listener="#{managerContrato.verificarTipoFiscal()}"/>
+                            </f:selectItems>
+                        </p:selectOneMenu>
                     </div>
                 </div>
+                <h:panelGroup  id="tipoFiscalPanelGroup">
+                    <h:panelGroup rendered="#{managerContrato.renderedFiscalIndividual}" >
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <p:outputLabel value="Fiscal de contrato" styleClass="control-label" for="fiscalIndividualSelect" />
+                                    <p:selectOneMenu id="fiscalIndividualSelect"
+                                                     filter="true" 
+                                                     placeholder="fiscal"
+                                                     required="true"
+                                                     styleClass="form-control"
+                                                     disabled="#{managerContrato.visualizar}"
+                                                     requiredMessage="Este campo é obrigatório."
+                                                     converter="usuarioconverter"
+                                                     value="#{managerContrato.contrato.fiscalContrato}"
+                                                     >
+                                        <f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
+                                        <f:selectItems value="#{managerContrato.responsaveis}" var="user" itemLabel="#{user.nome}" itemValue="#{user}" />
+                                    </p:selectOneMenu>
+                                </div>
+                            </div>
+                        </div>
+                    </h:panelGroup>
+                    <h:panelGroup rendered="#{managerContrato.renderedFiscalComissao}" >
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p:outputLabel value="Fiscal de contrato" styleClass="control-label" for="fiscalComissaoSelect" />
+                                <p:selectManyMenu id="fiscalComissaoSelect"
+                                                  value="#{managerContrato.contrato.fiscalContrato}"
+                                                  filter="true"
+                                                  var="c"
+                                                  required="true"
+                                                  showCheckbox="true" 
+                                                  converter="usuarioconverter"
+                                                  styleClass="form-control">
+                                    <f:selectItems value="#{managerContrato.responsaveis}" var="user" itemLabel="#{user.name}"
+                                                   itemValue="#{user}"/>
+                                    
+                                    <p:column>
+                                        <h:outputText value="#{c.nome}"/>
+                                    </p:column>
+                                </p:selectManyMenu>
+                            </div>
+                        </div>
+                    </h:panelGroup>
+                </h:panelGroup>
                 <div class="row">
                     <div class="col-md-3">
                         <div class="form-group">

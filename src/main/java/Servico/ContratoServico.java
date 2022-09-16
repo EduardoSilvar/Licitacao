@@ -56,7 +56,7 @@ public class ContratoServico extends ServicoGenerico<Contrato> implements Serial
         if (Utils.isNotEmpty(user.getUnidadeOrganizacional())) {
             sql += "and c.unidadeOrganizacional = :unidade ";
         }
-        sql += "group by c.tipoContrato.id";
+        sql += "group by c.tipoContrato.nome";
 
         Query query = getEntityManager().createQuery(sql);
         if (Utils.isNotEmpty(user.getUnidadeOrganizacional())) {

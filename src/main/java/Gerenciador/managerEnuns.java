@@ -5,10 +5,7 @@
  */
 package Gerenciador;
 
-import Enum.GraficoEnum;
-import Enum.NaturezaEnum;
-import Enum.StatusContrato;
-import Enum.TipoUsuario;
+import Enum.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +33,38 @@ public class managerEnuns implements Serializable {
         List<SelectItem> items = new ArrayList<>();
         for (StatusContrato item : StatusContrato.values()) {
             items.add(new SelectItem(item, item.getStatus()));
+        }
+        return items;
+    }
+    
+    public List<SelectItem> getTipoContrato(){
+        List<SelectItem> items = new ArrayList<>();
+        for (TipoContratoEnum item : TipoContratoEnum.values()) {
+            items.add(new SelectItem(item, item.getNome()));
+        }
+        return items;
+    }
+    
+    public List<SelectItem> getTipoLicitacao(){
+        List<SelectItem> items = new ArrayList<>();
+        for (TipoLicitacaoEnum item : TipoLicitacaoEnum.values()) {
+            items.add(new SelectItem(item, item.getNome()));
+        }
+        return items;
+    }
+    
+    public List<SelectItem> getTipoRecebimento(){
+        List<SelectItem> items = new ArrayList<>();
+        for (TipoRecebimentoEnum item : TipoRecebimentoEnum.values()) {
+            items.add(new SelectItem(item, item.getNome()));
+        }
+        return items;
+    }
+    
+    public List<SelectItem> getTipoFiscalizacao(){
+        List<SelectItem> items = new ArrayList<>();
+        for (TipoFiscalizacaoEnum item : TipoFiscalizacaoEnum.values()) {
+            items.add(new SelectItem(item, item.getNome()));
         }
         return items;
     }

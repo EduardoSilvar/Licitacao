@@ -5,6 +5,7 @@
 package modelo;
 
 import Enum.StatusContrato;
+import Enum.TipoContratoEnum;
 import java.math.BigDecimal;
 
 /**
@@ -23,7 +24,7 @@ public class ContratoVo {
         this.valor = new BigDecimal(0);
     }
 
-    public ContratoVo(TipoContrato tipo, Long quantidade) {
+    public ContratoVo(TipoContratoEnum tipo, Long quantidade) {
         this.nome = tipo.getNome();
         this.quantidade = quantidade;
         this.valor = new BigDecimal(0);

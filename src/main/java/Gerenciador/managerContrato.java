@@ -5,14 +5,13 @@
  */
 package Gerenciador;
 
-import Enum.StatusContrato;
+import Enum.*;
 import Servico.AnexoServico;
 import Servico.ContratadoServico;
 import Servico.ContratoServico;
 import Servico.SetorServico;
 import Servico.TipoLicitacaoServico;
 import Servico.UsuarioServico;
-import Servico.tipoContratoServico;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
@@ -30,7 +29,6 @@ import modelo.Contratado;
 import modelo.Contrato;
 import modelo.Setor;
 import modelo.TipoAnexo;
-import modelo.TipoContrato;
 import modelo.TipoLicitacao;
 import modelo.Usuario;
 import org.primefaces.event.FileUploadEvent;
@@ -53,8 +51,7 @@ public class managerContrato extends managerPrincipal implements Serializable {
     private ContratadoServico contratadoServico;
     @EJB
     private UsuarioServico userServico;
-    @EJB
-    private tipoContratoServico tipocontratoServico;
+
     @EJB
     private TipoLicitacaoServico tipoLicitacaoServico;
     @EJB
@@ -70,9 +67,10 @@ public class managerContrato extends managerPrincipal implements Serializable {
     private List<TipoLicitacao> tiposLicitacao;
     private List<Contrato> contratos;
     private List<Contratado> contratados;
-    private List<TipoContrato> tiposContratos;
     private List<Setor> setores;
     private Usuario userLogado;
+    private boolean renderedFiscalIndividual;
+    private boolean renderedFiscalComissao;
 
     @Override
     public void carregar(String param) {
@@ -83,7 +81,6 @@ public class managerContrato extends managerPrincipal implements Serializable {
         this.anexo = new Anexo();
         this.contrato = contratoServico.find(Long.parseLong(param));
         this.contratos = new ArrayList<>();
-        this.tiposContratos = tipocontratoServico.FindAll();
         this.responsaveis = userServico.FindAll();
         this.setores = setorServico.FindAll();
 
@@ -96,15 +93,19 @@ public class managerContrato extends managerPrincipal implements Serializable {
         instanciarSelect();
         InstanciarContrato();
         InstanciarContratos();
-
+        instanciarVerificacaoRendered();
     }
 
     public void instanciarSelect() {
         this.setores = setorServico.FindAll();
-        this.tiposContratos = tipocontratoServico.FindAll();
         this.contratados = contratadoServico.FindAll();
         this.responsaveis = userServico.FindAll();
         this.tiposLicitacao = tipoLicitacaoServico.FindAll();
+    }
+
+    public void instanciarVerificacaoRendered() {
+        this.renderedFiscalIndividual = false;
+        this.renderedFiscalComissao = false;
     }
 
     @Override
@@ -126,6 +127,17 @@ public class managerContrato extends managerPrincipal implements Serializable {
         this.anexo.setTipoAnexo(TipoAnexo.CONTRATO);
 //        PrimeFaces.current().executeScript("PF('dlgAnexo').show();");
         adicionarAnexo();
+    }
+
+    public void verificarTipoFiscal() {
+        if (Utils.isNotEmpty(this.contrato.getTipoFiscalizacao())) {
+            if (this.contrato.getTipoFiscalizacao().equals(TipoFiscalizacaoEnum.INDIVIDUAL)) {
+                this.renderedFiscalIndividual = true;
+            }else{
+                this.renderedFiscalComissao = true;
+            }
+        }
+
     }
 
     public void adicionarAnexo() {
@@ -384,22 +396,6 @@ public class managerContrato extends managerPrincipal implements Serializable {
         this.userServico = userServico;
     }
 
-    public tipoContratoServico getTipocontratoServico() {
-        return tipocontratoServico;
-    }
-
-    public void setTipocontratoServico(tipoContratoServico tipocontratoServico) {
-        this.tipocontratoServico = tipocontratoServico;
-    }
-
-    public List<TipoContrato> getTiposContratos() {
-        return tiposContratos;
-    }
-
-    public void setTiposContratos(List<TipoContrato> tiposContratos) {
-        this.tiposContratos = tiposContratos;
-    }
-
     public TipoLicitacaoServico getTipoLicitacaoServico() {
         return tipoLicitacaoServico;
     }
@@ -422,6 +418,46 @@ public class managerContrato extends managerPrincipal implements Serializable {
 
     public void setSetores(List<Setor> setores) {
         this.setores = setores;
+    }
+
+    public Anexo getAnexo() {
+        return anexo;
+    }
+
+    public void setAnexo(Anexo anexo) {
+        this.anexo = anexo;
+    }
+
+    public TipoAnexo getTipoAnexo() {
+        return tipoAnexo;
+    }
+
+    public void setTipoAnexo(TipoAnexo tipoAnexo) {
+        this.tipoAnexo = tipoAnexo;
+    }
+
+    public Usuario getUserLogado() {
+        return userLogado;
+    }
+
+    public void setUserLogado(Usuario userLogado) {
+        this.userLogado = userLogado;
+    }
+
+    public boolean isRenderedFiscalIndividual() {
+        return renderedFiscalIndividual;
+    }
+
+    public void setRenderedFiscalIndividual(boolean renderedFiscalIndividual) {
+        this.renderedFiscalIndividual = renderedFiscalIndividual;
+    }
+
+    public boolean isRenderedFiscalComissao() {
+        return renderedFiscalComissao;
+    }
+
+    public void setRenderedFiscalComissao(boolean renderedFiscalComissao) {
+        this.renderedFiscalComissao = renderedFiscalComissao;
     }
 
 }

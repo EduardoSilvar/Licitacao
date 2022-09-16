@@ -6,6 +6,9 @@
 package modelo;
 
 import Enum.StatusContrato;
+import Enum.TipoContratoEnum;
+import Enum.TipoFiscalizacaoEnum;
+import Enum.TipoLicitacaoEnum;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -18,6 +21,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -45,11 +49,11 @@ public class Contrato implements Serializable {
     private Long NumeroLicitacao;
     private BigDecimal valorRestante;
     @OneToOne
-    private TipoContrato tipoContrato;
-    @OneToOne
     private Setor setor;
-    @OneToOne
-    private TipoLicitacao tipoLicitacao;
+    @Enumerated(EnumType.STRING)
+    private TipoLicitacaoEnum tipoLicitacao;
+    @Enumerated(EnumType.STRING)
+    private TipoContratoEnum tipoContrato;
     @OneToMany(cascade = CascadeType.ALL)
     private List<Anexo> anexos;
     private BigDecimal valor;
@@ -63,8 +67,10 @@ public class Contrato implements Serializable {
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date dataRenovacao;
     private Long objetoContrato;
-    @ManyToOne
-    private Usuario fiscalContrato;
+    @ManyToMany
+    private List<Usuario> fiscalContrato;
+    @Enumerated(EnumType.STRING)
+    private TipoFiscalizacaoEnum tipoFiscalizacao;
     private String descricao;
     @Enumerated(EnumType.STRING)
     private StatusContrato status;
@@ -178,14 +184,6 @@ public class Contrato implements Serializable {
         this.NumeroLicitacao = NumeroLicitacao;
     }
 
-    public TipoContrato getTipoContrato() {
-        return tipoContrato;
-    }
-
-    public void setTipoContrato(TipoContrato tipoContrato) {
-        this.tipoContrato = tipoContrato;
-    }
-
     public Setor getSetor() {
         return setor;
     }
@@ -200,14 +198,6 @@ public class Contrato implements Serializable {
 
     public void setAnexos(List<Anexo> anexos) {
         this.anexos = anexos;
-    }
-
-    public TipoLicitacao getTipoLicitacao() {
-        return tipoLicitacao;
-    }
-
-    public void setTipoLicitacao(TipoLicitacao tipoLicitacao) {
-        this.tipoLicitacao = tipoLicitacao;
     }
 
     public BigDecimal getValor() {
@@ -265,15 +255,7 @@ public class Contrato implements Serializable {
     public void setObjetoContrato(Long objetoContrato) {
         this.objetoContrato = objetoContrato;
     }
-
-    public Usuario getFiscalContrato() {
-        return fiscalContrato;
-    }
-
-    public void setFiscalContrato(Usuario fiscalContrato) {
-        this.fiscalContrato = fiscalContrato;
-    }
-
+    
     public String getDescricao() {
         return descricao;
     }
@@ -371,44 +353,77 @@ public class Contrato implements Serializable {
         this.valorRestante = valorRestante;
     }
 
+    public TipoLicitacaoEnum getTipoLicitacao() {
+        return tipoLicitacao;
+    }
+
+    public void setTipoLicitacao(TipoLicitacaoEnum tipoLicitacao) {
+        this.tipoLicitacao = tipoLicitacao;
+    }
+
+    public TipoContratoEnum getTipoContrato() {
+        return tipoContrato;
+    }
+
+    public void setTipoContrato(TipoContratoEnum tipoContrato) {
+        this.tipoContrato = tipoContrato;
+    }
+
+    public List<Usuario> getFiscalContrato() {
+        return fiscalContrato;
+    }
+
+    public void setFiscalContrato(List<Usuario> fiscalContrato) {
+        this.fiscalContrato = fiscalContrato;
+    }
+
+    public TipoFiscalizacaoEnum getTipoFiscalizacao() {
+        return tipoFiscalizacao;
+    }
+
+    public void setTipoFiscalizacao(TipoFiscalizacaoEnum tipoFiscalizacao) {
+        this.tipoFiscalizacao = tipoFiscalizacao;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 23 * hash + Objects.hashCode(this.id);
-        hash = 23 * hash + Objects.hashCode(this.unidadeOrganizacional);
-        hash = 23 * hash + Objects.hashCode(this.contratado);
-        hash = 23 * hash + Objects.hashCode(this.nome);
-        hash = 23 * hash + Objects.hashCode(this.NumeroContrato);
-        hash = 23 * hash + Objects.hashCode(this.NumeroProcesso);
-        hash = 23 * hash + Objects.hashCode(this.NumeroLicitacao);
-        hash = 23 * hash + Objects.hashCode(this.valorRestante);
-        hash = 23 * hash + Objects.hashCode(this.tipoContrato);
-        hash = 23 * hash + Objects.hashCode(this.setor);
-        hash = 23 * hash + Objects.hashCode(this.tipoLicitacao);
-        hash = 23 * hash + Objects.hashCode(this.anexos);
-        hash = 23 * hash + Objects.hashCode(this.valor);
-        hash = 23 * hash + (this.possuiTempoDeterminado ? 1 : 0);
-        hash = 23 * hash + Objects.hashCode(this.dataInicio);
-        hash = 23 * hash + Objects.hashCode(this.dataFinal);
-        hash = 23 * hash + Objects.hashCode(this.dataAssinatura);
-        hash = 23 * hash + Objects.hashCode(this.dataRenovacao);
-        hash = 23 * hash + Objects.hashCode(this.objetoContrato);
-        hash = 23 * hash + Objects.hashCode(this.fiscalContrato);
-        hash = 23 * hash + Objects.hashCode(this.descricao);
-        hash = 23 * hash + Objects.hashCode(this.status);
-        hash = 23 * hash + Objects.hashCode(this.banco);
-        hash = 23 * hash + Objects.hashCode(this.numeroConta);
-        hash = 23 * hash + Objects.hashCode(this.digito);
-        hash = 23 * hash + Objects.hashCode(this.agencia);
-        hash = 23 * hash + Objects.hashCode(this.operacao);
-        hash = 23 * hash + Objects.hashCode(this.saldoInicial);
-        hash = 23 * hash + (this.ativo ? 1 : 0);
-        hash = 23 * hash + Objects.hashCode(this.corStatus);
-        hash = 23 * hash + Objects.hashCode(this.acrescimos);
-        hash = 23 * hash + Objects.hashCode(this.supressoes);
-        hash = 23 * hash + Objects.hashCode(this.renovacoes);
-        hash = 23 * hash + Objects.hashCode(this.repactuacoes);
-        hash = 23 * hash + Objects.hashCode(this.notasFiscais);
+        int hash = 7;
+        hash = 59 * hash + Objects.hashCode(this.id);
+        hash = 59 * hash + Objects.hashCode(this.unidadeOrganizacional);
+        hash = 59 * hash + Objects.hashCode(this.contratado);
+        hash = 59 * hash + Objects.hashCode(this.nome);
+        hash = 59 * hash + Objects.hashCode(this.NumeroContrato);
+        hash = 59 * hash + Objects.hashCode(this.NumeroProcesso);
+        hash = 59 * hash + Objects.hashCode(this.NumeroLicitacao);
+        hash = 59 * hash + Objects.hashCode(this.valorRestante);
+        hash = 59 * hash + Objects.hashCode(this.setor);
+        hash = 59 * hash + Objects.hashCode(this.tipoLicitacao);
+        hash = 59 * hash + Objects.hashCode(this.tipoContrato);
+        hash = 59 * hash + Objects.hashCode(this.anexos);
+        hash = 59 * hash + Objects.hashCode(this.valor);
+        hash = 59 * hash + (this.possuiTempoDeterminado ? 1 : 0);
+        hash = 59 * hash + Objects.hashCode(this.dataInicio);
+        hash = 59 * hash + Objects.hashCode(this.dataFinal);
+        hash = 59 * hash + Objects.hashCode(this.dataAssinatura);
+        hash = 59 * hash + Objects.hashCode(this.dataRenovacao);
+        hash = 59 * hash + Objects.hashCode(this.objetoContrato);
+        hash = 59 * hash + Objects.hashCode(this.fiscalContrato);
+        hash = 59 * hash + Objects.hashCode(this.tipoFiscalizacao);
+        hash = 59 * hash + Objects.hashCode(this.descricao);
+        hash = 59 * hash + Objects.hashCode(this.status);
+        hash = 59 * hash + Objects.hashCode(this.banco);
+        hash = 59 * hash + Objects.hashCode(this.numeroConta);
+        hash = 59 * hash + Objects.hashCode(this.digito);
+        hash = 59 * hash + Objects.hashCode(this.agencia);
+        hash = 59 * hash + Objects.hashCode(this.operacao);
+        hash = 59 * hash + Objects.hashCode(this.saldoInicial);
+        hash = 59 * hash + (this.ativo ? 1 : 0);
+        hash = 59 * hash + Objects.hashCode(this.corStatus);
+        hash = 59 * hash + Objects.hashCode(this.acrescimos);
+        hash = 59 * hash + Objects.hashCode(this.supressoes);
+        hash = 59 * hash + Objects.hashCode(this.renovacoes);
+        hash = 59 * hash + Objects.hashCode(this.repactuacoes);
+        hash = 59 * hash + Objects.hashCode(this.notasFiscais);
         return hash;
     }
 
@@ -463,13 +478,13 @@ public class Contrato implements Serializable {
         if (!Objects.equals(this.valorRestante, other.valorRestante)) {
             return false;
         }
-        if (!Objects.equals(this.tipoContrato, other.tipoContrato)) {
-            return false;
-        }
         if (!Objects.equals(this.setor, other.setor)) {
             return false;
         }
-        if (!Objects.equals(this.tipoLicitacao, other.tipoLicitacao)) {
+        if (this.tipoLicitacao != other.tipoLicitacao) {
+            return false;
+        }
+        if (this.tipoContrato != other.tipoContrato) {
             return false;
         }
         if (!Objects.equals(this.anexos, other.anexos)) {
@@ -494,6 +509,9 @@ public class Contrato implements Serializable {
             return false;
         }
         if (!Objects.equals(this.fiscalContrato, other.fiscalContrato)) {
+            return false;
+        }
+        if (this.tipoFiscalizacao != other.tipoFiscalizacao) {
             return false;
         }
         if (this.status != other.status) {
@@ -528,6 +546,8 @@ public class Contrato implements Serializable {
         }
         return Objects.equals(this.notasFiscais, other.notasFiscais);
     }
+
+    
 
     
 
