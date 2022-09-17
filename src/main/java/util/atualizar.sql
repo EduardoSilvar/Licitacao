@@ -26,3 +26,10 @@ ALTER TABLE notaFiscal ADD CONSTRAINT fk_unidadeOrganizacional_id FOREIGN KEY (u
 
 alter table Chat ADD column lidoReceptor boolean;
 alter table Chat ADD column lidoEmissor boolean;
+
+alter table contrato add column tipoContrato varchar(250);
+
+alter table contrato add column tipoFiscalizacao varchar(250);
+
+
+alter table contrato add column tipoLicitacao varchar(250);
