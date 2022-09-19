@@ -132,15 +132,15 @@ public class ContratoServico extends ServicoGenerico<Contrato> implements Serial
         return query.getResultList();
     }
 
-    public List<Contrato> findPesquisa(Contrato contrato, UnidadeOrganizacional unidade) {
-        String sql = "select c from Contrato c where ";
+    public List<Contrato> findPesquisa(Contrato contrato, UnidadeOrganizacional unidade,Usuario fiscal) {
+        String sql = "select c from Contrato c join c.fiscalContrato u where ";
         if (Utils.isNotEmpty(contrato.getContratado())) {
             sql += "c.contratado = :contratado and ";
         }
         if (Utils.isNotEmpty(unidade)) {
             sql += "c.unidadeOrganizacional.id = :unidade and ";
         }
-        if (Utils.isNotEmpty(contrato.getFiscalContrato())) {
+        if (Utils.isNotEmpty(fiscal)) {
             sql += "c.fiscalContrato = :fiscal and ";
         }
         if (Utils.isNotEmpty(contrato.getNumeroContrato())) {
@@ -164,8 +164,8 @@ public class ContratoServico extends ServicoGenerico<Contrato> implements Serial
         if (Utils.isNotEmpty(contrato.getContratado())) {
             query.setParameter("contratado", contrato.getContratado());
         }
-        if (Utils.isNotEmpty(contrato.getFiscalContrato())) {
-            query.setParameter("fiscal", contrato.getFiscalContrato());
+        if (Utils.isNotEmpty(fiscal)) {
+            query.setParameter("fiscal", fiscal);
         }
         if (Utils.isNotEmpty(contrato.getStatus())) {
             query.setParameter("status", contrato.getStatus());

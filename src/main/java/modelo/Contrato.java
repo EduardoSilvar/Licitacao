@@ -67,7 +67,7 @@ public class Contrato implements Serializable {
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date dataRenovacao;
     private Long objetoContrato;
-    @ManyToMany
+    @OneToMany
     private List<Usuario> fiscalContrato;
     @Enumerated(EnumType.STRING)
     private TipoFiscalizacaoEnum tipoFiscalizacao;
@@ -369,7 +369,7 @@ public class Contrato implements Serializable {
         this.tipoContrato = tipoContrato;
     }
 
-    public List<Usuario> getFiscalContrato() {
+    public List<Usuario> getFiscaisContrato() {
         return fiscalContrato;
     }
 

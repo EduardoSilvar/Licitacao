@@ -90,7 +90,7 @@
                                              disabled="#{managerContrato.visualizar}"
                                              requiredMessage="Este campo é obrigatório."
                                              converter="usuarioconverter"
-                                             value="#{managerContrato.contrato.fiscalContrato}"
+                                             value="#{managerContrato.fiscal}"
                                              >
                                 <f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
                                 <f:selectItems value="#{managerContrato.responsaveis}" var="user" itemLabel="#{user.nome}" itemValue="#{user}" />
@@ -190,9 +190,9 @@
                 <p:column headerText="Vigência">
                     <h:outputText value="#{managerContrato.dataFormatada(contrato.dataInicio)}"  />
                 </p:column>
-                <p:column headerText="Fiscal">
-                    <h:outputText value="#{contrato.fiscalContrato.nome}"  />
-                </p:column>
+<!--                <p:column headerText="Fiscal">
+                    <h:outputText value="{contrato.fiscalContrato.}"  />
+                </p:column>-->
 
 
             </p:dataTable>

@@ -5,7 +5,7 @@
     xmlns:f="http://xmlns.jcp.org/jsf/core"
     xmlns="http://www.w3.org/1999/xhtml">
 
-    <p:tabView dynamic="true">
+    <p:tabView id="tabview" dynamic="true">
         <p:tab title="Dados gerais">
             <h:panelGroup id="contratoPanelGroup">
 
@@ -117,7 +117,6 @@
                                              filter="true" 
                                              placeholder="Tipo"
                                              styleClass="form-control"
-                                             converter="tipolicitacaoconverter"
                                              value="#{managerContrato.contrato.tipoLicitacao}"
                                              required="true"
                                              disabled="#{managerContrato.visualizar}"
@@ -147,72 +146,6 @@
                 <div class="row">
                     <div class="col-md-3">
                         <div class="form-group">
-                            <p:outputLabel value="Possui tempo determinado ?"/>
-                            <div class="ui-inputgroup">
-                                <p:selectBooleanButton id="tempoDeterminadoButton"   disabled="#{managerContrato.visualizar}" value="#{managerContrato.contrato.possuiTempoDeterminado}" onLabel="Sim" offLabel="Não" style="width:12rem; color: white !important;border-radius: 5px">
-                                    <p:ajax update="dataDefinida"/>
-                                </p:selectBooleanButton>
-                            </div>
-                        </div>
-                    </div>
-                    <h:panelGroup  id="dataDefinida">
-                        <h:panelGroup rendered="#{managerContrato.renderedTempoDeterminado()}" >
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <p:outputLabel value="Data inicial"
-                                                   for="dataInicialContrato" />
-                                    <p:calendar id="dataInicialContrato"
-                                                rendered="true"
-                                                disabled="#{managerContrato.visualizar}"
-                                                mask="true"
-                                                style="display: flex; flex-direction: row"
-                                                requiredMessage="Este campo é obrigatório."
-                                                inputStyleClass="form-control"
-                                                value="#{managerContrato.contrato.dataInicio}"
-                                                showOn="button"
-                                                />
-                                    <p:message for="dataInicialContrato" />
-                                </div>
-                                <div class="col-md-6">
-                                    <p:outputLabel value="Data final"
-                                                   for="dataFinalContrato" />
-                                    <p:calendar id="dataFinalContrato"
-                                                rendered="true"
-                                                mask="true"
-                                                disabled="#{managerContrato.visualizar}"
-                                                style="display: flex; flex-direction: row"
-                                                requiredMessage="Este campo é obrigatório."
-                                                inputStyleClass="form-control"
-                                                value="#{managerContrato.contrato.dataFinal}"
-                                                showOn="button"
-                                                />
-                                    <p:message for="dataFinalContrato" />
-                                </div>
-                            </div>
-                        </h:panelGroup>
-                    </h:panelGroup>
-                </div>
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <p:outputLabel value="Data de assinatura"
-                                           for="dataassinaturaContrato" />
-                            <p:calendar id="dataassinaturaContrato"
-                                        rendered="true"
-                                        mask="true"
-                                        style="display: flex; flex-direction: row"
-                                        required="true"
-                                        disabled="#{managerContrato.visualizar}"
-                                        requiredMessage="Este campo é obrigatório."
-                                        inputStyleClass="form-control"
-                                        value="#{managerContrato.contrato.dataAssinatura}"
-                                        showOn="button"
-                                        />
-                            <p:message for="dataassinaturaContrato" />
-                        </div> 
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
                             <p:outputLabel value="Objeto do contrato"
                                            for="objetoContrato" />
                             <p:inputMask id="objetoContrato"
@@ -225,10 +158,61 @@
                             <p:message for="objetoContrato" />
                         </div> 
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <p:outputLabel value="Possui tempo determinado ?"/>
+                            <div class="ui-inputgroup">
+                                <p:selectBooleanButton id="tempoDeterminadoButton"   disabled="#{managerContrato.visualizar}" value="#{managerContrato.contrato.possuiTempoDeterminado}" onLabel="Sim" offLabel="Não" style="width:12rem; color: white !important;border-radius: 5px">
+                                    <p:ajax update="dataDefinida"/>
+                                </p:selectBooleanButton>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <h:panelGroup  id="dataDefinida">
+                            <h:panelGroup rendered="#{managerContrato.renderedTempoDeterminado()}" >
+                                <div class="row">
+                                    <div  style="width: 45%;margin-right: 30px">
+                                        <p:outputLabel value="Data inicial"
+                                                       for="dataInicialContrato" />
+                                        <p:calendar id="dataInicialContrato"
+                                                    rendered="true"
+                                                    disabled="#{managerContrato.visualizar}"
+                                                    mask="true"
+                                                    style="display: flex; flex-direction: row"
+                                                    requiredMessage="Este campo é obrigatório."
+                                                    inputStyleClass="form-control"
+                                                    value="#{managerContrato.contrato.dataInicio}"
+                                                    showOn="button"
+                                                    />
+                                        <p:message for="dataInicialContrato" />
+                                    </div>
+                                    <div  style="width: 45%">
+                                        <p:outputLabel value="Data final"
+                                                       for="dataFinalContrato" />
+                                        <p:calendar id="dataFinalContrato"
+                                                    rendered="true"
+                                                    mask="true"
+                                                    disabled="#{managerContrato.visualizar}"
+                                                    style="display: flex; flex-direction: row"
+                                                    requiredMessage="Este campo é obrigatório."
+                                                    inputStyleClass="form-control"
+                                                    value="#{managerContrato.contrato.dataFinal}"
+                                                    showOn="button"
+                                                    />
+                                        <p:message for="dataFinalContrato" />
+                                    </div>
+                                </div>
+                            </h:panelGroup>
+                        </h:panelGroup>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
                         <p:outputLabel value="Tipo de fiscalização" styleClass="control-label" for="tipoFiscalizacaoSelect" />
                         <p:selectOneMenu id="tipoFiscalizacaoSelect"
                                          filter="true" 
+                                         style="margin-bottom: 10%"
                                          placeholder="Tipo fiscalização"
                                          required="true"
                                          styleClass="form-control"
@@ -238,15 +222,13 @@
                                          >
                             <f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
                             <f:selectItems value="#{managerEnuns.tipoFiscalizacao}" var="tipo" itemLabel="#{tipo.label}" itemValue="#{tipo}" >
-                                <p:ajax update="tipoFiscalPanelGroup" process="tipoFiscalizacaoSelect" listener="#{managerContrato.verificarTipoFiscal()}"/>
                             </f:selectItems>
+                            <p:ajax update="tipoFiscalPanelGroup tipoFiscalButton tipoFiscalDataTable" process="tipoFiscalizacaoSelect" listener="#{managerContrato.verificarTipoFiscal()}"/>
                         </p:selectOneMenu>
                     </div>
-                </div>
-                <h:panelGroup  id="tipoFiscalPanelGroup">
-                    <h:panelGroup rendered="#{managerContrato.renderedFiscalIndividual}" >
-                        <div class="row">
-                            <div class="col-md-6">
+                    <h:panelGroup  id="tipoFiscalPanelGroup">
+                        <h:panelGroup rendered="#{managerContrato.renderedFiscalIndividual}" >
+                            <div style="width: 160%;margin-left: 5%">
                                 <div class="form-group">
                                     <p:outputLabel value="Fiscal de contrato" styleClass="control-label" for="fiscalIndividualSelect" />
                                     <p:selectOneMenu id="fiscalIndividualSelect"
@@ -257,36 +239,84 @@
                                                      disabled="#{managerContrato.visualizar}"
                                                      requiredMessage="Este campo é obrigatório."
                                                      converter="usuarioconverter"
-                                                     value="#{managerContrato.contrato.fiscalContrato}"
+                                                     value="#{managerContrato.contrato.fiscaisContrato}"
                                                      >
                                         <f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
                                         <f:selectItems value="#{managerContrato.responsaveis}" var="user" itemLabel="#{user.nome}" itemValue="#{user}" />
                                     </p:selectOneMenu>
                                 </div>
                             </div>
-                        </div>
-                    </h:panelGroup>
-                    <h:panelGroup rendered="#{managerContrato.renderedFiscalComissao}" >
-                        <div class="row">
-                            <div class="col-md-6">
-                                <p:outputLabel value="Fiscal de contrato" styleClass="control-label" for="fiscalComissaoSelect" />
-                                <p:selectManyMenu id="fiscalComissaoSelect"
-                                                  value="#{managerContrato.contrato.fiscalContrato}"
-                                                  filter="true"
-                                                  var="c"
-                                                  required="true"
-                                                  showCheckbox="true" 
-                                                  converter="usuarioconverter"
-                                                  styleClass="form-control">
-                                    <f:selectItems value="#{managerContrato.responsaveis}" var="user" itemLabel="#{user.name}"
-                                                   itemValue="#{user}"/>
-                                    
-                                    <p:column>
-                                        <h:outputText value="#{c.nome}"/>
-                                    </p:column>
-                                </p:selectManyMenu>
+                        </h:panelGroup>
+
+                        <h:panelGroup id="tipoFiscalButton">
+                            <div style="width: 160%;margin-left: 5%;margin-top: 15%">
+                                <div class="form-group"> 
+                                    <p:commandButton  style="width: 200px"  disabled="#{managerContrato.visualizar}" oncomplete="PF('pesquisarFiscalDialog').show();" rendered="#{managerContrato.renderedFiscalComissao}"  value="Adicionar Fiscal"/>
+                                </div>
                             </div>
-                        </div>
+                        </h:panelGroup>
+                    </h:panelGroup>
+                </div>
+                <h:panelGroup  id="tipoFiscalDataTable">
+
+                    <h:panelGroup id="fiscalDatatable" rendered="#{managerContrato.renderedFiscalComissao}" >
+                        <p:dataTable id="contratoDatatable" var="fiscal" value="#{managerContrato.contrato.fiscaisContrato}"
+                                     resizeMode="5" rowsPerPageTemplate="5, 10, 20"  paginator="true" style="margin-bottom: 7%"
+                                     rows="5" paginatorPosition="bottom"
+                                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                     currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} registros"
+                                     emptyMessage="Nenhum fiscal adicionado...">
+                            <f:facet name="header">
+                                <center>
+                                    Fiscais
+                                </center>
+                            </f:facet>
+                            <p:column headerText="Ações" width="15%">
+                                <p:commandButton icon="pi pi-trash"
+                                                 title="Remover Relatório"
+                                                 process="@this"
+                                                 disabled="#{managerContrato.visualizar}"
+                                                 update="corpoInteiro:tabview:removerFiscalConfirmDialog"
+                                                 oncomplete="PF('removerFiscalConfirmDialog').show();"
+                                                 styleClass="ml-md-1">
+                                    <f:setPropertyActionListener value="#{fiscal}"
+                                                                 target="#{managerContrato.fiscal}"/>
+                                </p:commandButton>
+                            </p:column>
+                            <p:column headerText="Nome">
+                                <h:outputText value="#{fiscal.nome}" />
+                            </p:column>
+                            <p:column headerText="E-mail">
+                                <h:outputText value="#{fiscal.email}" />
+                            </p:column>
+                            <p:column headerText="Setor">
+                                <h:outputText value="#{fiscal.setor}" />
+                            </p:column>
+                            <p:column headerText="Vigência">
+                                <h:outputText value="#{fiscal.telefone}"  />
+                            </p:column>
+                        </p:dataTable>
+                        <!--                                                                <div class="row">
+                                                                                            <div class="col-md-6" >
+                                                                                                <p:outputLabel value="Fiscal de contrato" styleClass="control-label" for="fiscalComissaoSelect" />
+                                                                                                <p:selectManyMenu id="fiscalComissaoSelect"
+                                                                                                                  value="{managerContrato.contrato.fiscalContrato}"
+                                                                                                                  filter="true"
+                                                                                                                  var="c"
+                                                                                                                  required="true"
+                                                                                                                  showCheckbox="true" 
+                                                                                                                  converter="usuarioconverter"
+                                                                                                                  styleClass="manymenu-advanced">
+                                                                                                    <f:selectItems value="{managerContrato.responsaveis}" var="user" itemLabel="{user.nome}"
+                                                                                                                   itemValue="{user}"/>
+                                                                
+                                                                                                    <p:column>
+                                                                                                        <h:outputText value="{c.nome}"/>
+                                                                                                    </p:column>
+                                                                                                </p:selectManyMenu>
+                                                                                            </div>
+                                                                                        </div>
+                                                            </h:panelGroup>-->
                     </h:panelGroup>
                 </h:panelGroup>
                 <div class="row">
@@ -536,6 +566,114 @@
                 </div>
 
 
+            </p:dialog>
+
+
+            <p:dialog id="removerFiscalConfirmDialog"
+                      widgetVar="removerFiscalConfirmDialog"
+                      header="Atenção!"
+                      closeOnEscape="true"
+                      draggable="false"
+                      maximizable="false"
+                      minimizable="false"
+                      modal="true"
+                      showEffect="fade"
+                      hideEffect="fade">   
+                <div class="row">
+
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <h4>
+                                <i class="pi pi-exclamation-triangle"></i>
+                                Tem certeza de que deseja remover este Fiscal ?
+                            </h4>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+
+                        <center>
+
+                            <p:commandButton value="Sim"
+                                             title="Confirmar Remoção"
+                                             icon="pi pi-check"
+                                             actionListener="#{managerContrato.removerFiscal()}"
+                                             process="@this"
+                                             update="corpoInteiro:tabview:fiscalDatatable"
+                                             oncomplete="PF('removerFiscalConfirmDialog').hide();"
+                                             styleClass="mr-md-1"/>
+
+                            <p:commandButton value="Não"
+                                             title="Cancelar Remoção"
+                                             icon="pi pi-close"
+                                             process="@this"
+                                             update="corpoInteiro:tabview:fiscalDatatable"
+                                             oncomplete="PF('removerFiscalConfirmDialog').hide();"
+                                             styleClass="ml-md-1"/>
+
+                        </center>
+
+                    </div>
+
+                </div>
+
+            </p:dialog>
+
+            <p:dialog id="pesquisarFiscalDialog"
+                      widgetVar="pesquisarFiscalDialog"
+                      header="Pesquisar Fiscal"
+                      closeOnEscape="true"
+                      draggable="false"
+                      height="400"
+                      width="1000"
+                      maximizable="false"
+                      minimizable="false"
+                      modal="true"
+                      showEffect="fade"
+                      hideEffect="fade">   
+                <div class="row">
+
+                    <div class="col-md-12">
+                        <div class="form-group">
+
+                            <p:dataTable id="PesquisacontratoDatatable" var="fiscal" value="#{managerContrato.responsaveis}"
+                                         rowsPerPageTemplate="5, 10, 20"  paginator="true" style="margin-bottom: 7%"
+                                         rows="5" paginatorPosition="bottom"
+                                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                         currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} registros"
+                                         emptyMessage="Nenhum relatorio encontrado...">
+                                <f:facet name="header">
+                                    <center>
+                                        Fiscais
+                                    </center>
+                                </f:facet>
+                                <p:column headerText="Ações" width="15%">
+                                    <p:commandButton icon="pi pi-plus"
+                                                     title="Remover Relatório"
+                                                     process="@this"
+                                                     actionListener="#{managerContrato.adicionarFiscal(fiscal)}"
+                                                     update="@this corpoInteiro:messages corpoInteiro:tabview:fiscalDatatable"
+                                                     oncomplete="PF('pesquisarFiscalDialog').hide();"
+                                                     styleClass="ml-md-1">
+                                    </p:commandButton>
+                                </p:column>
+                                <p:column headerText="Nome">
+                                    <h:outputText value="#{fiscal.nome}" />
+                                </p:column>
+                                <p:column headerText="E-mail">
+                                    <h:outputText value="#{fiscal.email}" />
+                                </p:column>
+                                <p:column headerText="Setor">
+                                    <h:outputText value="#{fiscal.setor}" />
+                                </p:column>
+                                <p:column headerText="Vigência">
+                                    <h:outputText value="#{fiscal.telefone}"  />
+                                </p:column>
+                            </p:dataTable>
+
+                        </div>
+                    </div>
+                </div>
             </p:dialog>
         </p:tab>
         <p:tab title="Acréscimos" rendered="#{managerContrato.visualizar}">

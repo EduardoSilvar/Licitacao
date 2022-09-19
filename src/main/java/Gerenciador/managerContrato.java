@@ -27,6 +27,7 @@ import javax.faces.bean.ViewScoped;
 import modelo.Anexo;
 import modelo.Contratado;
 import modelo.Contrato;
+import modelo.FiscalVO;
 import modelo.Setor;
 import modelo.TipoAnexo;
 import modelo.TipoLicitacao;
@@ -68,6 +69,7 @@ public class managerContrato extends managerPrincipal implements Serializable {
     private List<Contrato> contratos;
     private List<Contratado> contratados;
     private List<Setor> setores;
+    private Usuario fiscal;
     private Usuario userLogado;
     private boolean renderedFiscalIndividual;
     private boolean renderedFiscalComissao;
@@ -83,7 +85,7 @@ public class managerContrato extends managerPrincipal implements Serializable {
         this.contratos = new ArrayList<>();
         this.responsaveis = userServico.FindAll();
         this.setores = setorServico.FindAll();
-
+        verificarTipoFiscal();
     }
 
     @Override
@@ -106,6 +108,21 @@ public class managerContrato extends managerPrincipal implements Serializable {
     public void instanciarVerificacaoRendered() {
         this.renderedFiscalIndividual = false;
         this.renderedFiscalComissao = false;
+    }
+
+    public void adicionarFiscal(Usuario fiscal) {
+        if (this.contrato.getFiscaisContrato().contains(fiscal)) {
+            Msg.messagemError("O fiscal já foi adicionado !");
+        } else {
+            this.contrato.getFiscaisContrato().add(fiscal);
+            Msg.messagemInfo("Operação realizada com sucesso !");
+
+        }
+    }
+
+    public void removerFiscal() {
+        this.contrato.getFiscaisContrato().remove(fiscal);
+        Msg.messagemInfo("Operação realizada com sucesso !");
     }
 
     @Override
@@ -133,11 +150,16 @@ public class managerContrato extends managerPrincipal implements Serializable {
         if (Utils.isNotEmpty(this.contrato.getTipoFiscalizacao())) {
             if (this.contrato.getTipoFiscalizacao().equals(TipoFiscalizacaoEnum.INDIVIDUAL)) {
                 this.renderedFiscalIndividual = true;
-            }else{
+                this.renderedFiscalComissao = false;
+            } else {
+                this.renderedFiscalIndividual = false;
                 this.renderedFiscalComissao = true;
             }
+        } else {
+            System.err.println("entrou aqui");
+            this.renderedFiscalComissao = false;
+            this.renderedFiscalIndividual = false;
         }
-
     }
 
     public void adicionarAnexo() {
@@ -167,8 +189,10 @@ public class managerContrato extends managerPrincipal implements Serializable {
             if (contratoServico.existNumero(this.contrato.getNumeroContrato())) {
                 Msg.messagemError("Número de contrato já registrado !");
             } else {
-                if (Utils.isNotEmpty(userLogado.getUnidadeOrganizacional())) {
-                    this.contrato.setUnidadeOrganizacional(userLogado.getUnidadeOrganizacional());
+                if (Utils.isNotEmpty(userLogado)) {
+                    if (Utils.isNotEmpty(userLogado.getUnidadeOrganizacional())) {
+                        this.contrato.setUnidadeOrganizacional(userLogado.getUnidadeOrganizacional());
+                    }
                 }
                 this.contrato.setCorStatus(cores(this.contrato.getStatus()));
                 this.contrato.setValorRestante(this.contrato.getValor());
@@ -180,14 +204,14 @@ public class managerContrato extends managerPrincipal implements Serializable {
 
     public void pesquisar() {
         if (Utils.isNotEmpty(userLogado.getUnidadeOrganizacional())) {
-            this.contratos = contratoServico.findPesquisa(this.contrato, userLogado.getUnidadeOrganizacional());
+            this.contratos = contratoServico.findPesquisa(this.contrato, userLogado.getUnidadeOrganizacional(), this.fiscal);
             if (this.contratos.size() > 0) {
                 Msg.messagemInfo("Operação realizada com sucesso !!");
             } else {
                 Msg.messagemError("Nenhum Contrato encontrato !");
             }
         } else {
-            this.contratos = contratoServico.findPesquisa(this.contrato, null);
+            this.contratos = contratoServico.findPesquisa(this.contrato, null, this.fiscal);
         }
     }
 
@@ -322,6 +346,7 @@ public class managerContrato extends managerPrincipal implements Serializable {
 
     public void InstanciarContrato() {
         contrato = new Contrato();
+        contrato.setFiscalContrato(new ArrayList<Usuario>());
         contrato.setAnexos(new ArrayList<Anexo>());
     }
 
@@ -458,6 +483,14 @@ public class managerContrato extends managerPrincipal implements Serializable {
 
     public void setRenderedFiscalComissao(boolean renderedFiscalComissao) {
         this.renderedFiscalComissao = renderedFiscalComissao;
+    }
+
+    public Usuario getFiscal() {
+        return fiscal;
+    }
+
+    public void setFiscal(Usuario fiscal) {
+        this.fiscal = fiscal;
     }
 
 }
