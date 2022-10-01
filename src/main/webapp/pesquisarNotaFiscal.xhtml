@@ -132,9 +132,6 @@
                         <h:outputText value="#{managerNotaFiscal.dataFormatada(nota.dataPagamento)}" />
                     </p:column>
 
-                    <p:column headerText="Responsável">
-                        <h:outputText value="#{nota.contrato.fiscalContrato.nome}" />
-                    </p:column>
                     <p:column headerText="Contratado">
                         <h:outputText value="#{nota.contrato.contratado}" />
                     </p:column>
@@ -150,7 +147,7 @@
                     <p:column headerText="Saldo contratual">
                         <h:outputText value="#{nota.contrato.valorRestante}" />
                     </p:column>
-                    
+
 
                 </p:dataTable>
             </h:panelGroup>

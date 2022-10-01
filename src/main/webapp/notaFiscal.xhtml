@@ -20,6 +20,11 @@
                             url="notaFiscal.xhtml?editar=#{managerNotaFiscal.notaFiscal.id}"
                             process="@this"
                             />
+                <p:menuitem  icon="pi pi-trash" 
+                             process="@this"
+                             value="Imprimir"
+                             oncomplete="PF('removerNotaFiscalConfirmDialog').show();" title="Imprimir" >
+                </p:menuitem>
 
             </p:splitButton>
         </h:panelGroup>
@@ -104,6 +109,164 @@
                     </div>
                 </div>
             </div>
+
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <p:outputLabel value="Lotação" styleClass="control-label" for="lotacaoNotaFiscal" />
+                        <p:inputText id="lotacaoNotaFiscal"
+                                     placeholder="Lotação"
+                                     rendered="true"
+                                     disabled="#{managerNotaFiscal.visualizar}"
+                                     value="#{managerNotaFiscal.notaFiscal.lotacao}"
+                                     requiredMessage="Este campo é obrigatório."
+                                     styleClass="form-control" 
+                                     />
+                        <p:message for="lotacaoNotaFiscal" />
+                    </div> 
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <p:outputLabel value="Ato de Designação"
+                                       for="atoNotaFiscal" />
+                        <p:inputText id="atoNotaFiscal"
+                                     placeholder="Ato de Designação"
+                                     rendered="true"
+                                     disabled="#{managerNotaFiscal.visualizar}"
+                                     value="#{managerNotaFiscal.notaFiscal.atoDesignacao}"
+                                     requiredMessage="Este campo é obrigatório."
+                                     styleClass="form-control" 
+                                     />
+                        <p:message for="atoNotaFiscal" />
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <p:outputLabel value="Apartir de "
+                                       for="apartirNotaFiscal"  />
+                        <p:calendar id="apartirNotaFiscal"
+                                    rendered="true"
+                                    locale="pt"
+                                    pattern="dd/MM/yyyy"
+                                    mask="true"
+                                    disabled="#{managerNotaFiscal.visualizar}"
+                                    style="display: flex; flex-direction: row"
+                                    requiredMessage="Este campo é obrigatório."
+                                    value="#{managerNotaFiscal.notaFiscal.apartir}"
+                                    inputStyleClass="form-control"
+                                    showOn="button"
+                                    />
+                        <p:message for="apartirNotaFiscal" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <p:outputLabel value="Data inicial da fiscalização "
+                                       for="inicioFiscalizacaoNotaFiscal"  />
+                        <p:calendar id="inicioFiscalizacaoNotaFiscal"
+                                    rendered="true"
+                                    locale="pt"
+                                    pattern="dd/MM/yyyy"
+                                    mask="true"
+                                    disabled="#{managerNotaFiscal.visualizar}"
+                                    style="display: flex; flex-direction: row"
+                                    requiredMessage="Este campo é obrigatório."
+                                    value="#{managerNotaFiscal.notaFiscal.inicioFiscalizado}"
+                                    inputStyleClass="form-control"
+                                    showOn="button"
+                                    />
+                        <p:message for="inicioFiscalizacaoNotaFiscal" />
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <p:outputLabel value="Data final da fiscalização "
+                                       for="finalFiscalizacaoNotaFiscal"  />
+                        <p:calendar id="finalFiscalizacaoNotaFiscal"
+                                    rendered="true"
+                                    locale="pt"
+                                    pattern="dd/MM/yyyy"
+                                    mask="true"
+                                    disabled="#{managerNotaFiscal.visualizar}"
+                                    style="display: flex; flex-direction: row"
+                                    requiredMessage="Este campo é obrigatório."
+                                    value="#{managerNotaFiscal.notaFiscal.finalFiscalizado}"
+                                    inputStyleClass="form-control"
+                                    showOn="button"
+                                    />
+                        <p:message for="finalFiscalizacaoNotaFiscal" />
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <p:outputLabel value="Compriu as obrigações mensais ?"/>
+                        <div class="ui-inputgroup">
+                            <p:selectBooleanButton id="obrigacaoDeterminadoButton"   disabled="#{managerNotaFiscal.visualizar}" value="#{managerNotaFiscal.notaFiscal.obrigacaoMensal}" onLabel="Sim" offLabel="Não" style="width:12rem; color: white !important;border-radius: 5px">
+                            </p:selectBooleanButton>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <p:outputLabel value="Obdeceu os prazos estabelecidos ?"/>
+                        <div class="ui-inputgroup">
+                            <p:selectBooleanButton id="prazosDeterminadoButton"   disabled="#{managerNotaFiscal.visualizar}" value="#{managerNotaFiscal.notaFiscal.prazoEstabelecido}" onLabel="Sim" offLabel="Não" style="width:12rem; color: white !important;border-radius: 5px">
+                            </p:selectBooleanButton>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <p:outputLabel value="Entregou os documentos obrigatórios ?"/>
+                        <div class="ui-inputgroup">
+                            <p:selectBooleanButton id="documentosDeterminadoButton"   disabled="#{managerNotaFiscal.visualizar}" value="#{managerNotaFiscal.notaFiscal.documentoObrigatorio}" onLabel="Sim" offLabel="Não" style="width:12rem; color: white !important;border-radius: 5px">
+                            </p:selectBooleanButton>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <p:outputLabel value="Elaborou e encaminhou relatorio mensal ?"/>
+                        <div class="ui-inputgroup">
+                            <p:selectBooleanButton id="relatorioDeterminadoButton"   disabled="#{managerNotaFiscal.visualizar}" value="#{managerNotaFiscal.notaFiscal.relatorio}" onLabel="Sim" offLabel="Não" style="width:12rem; color: white !important;border-radius: 5px">
+                            </p:selectBooleanButton>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <p:outputLabel value="Informou ou comunicou situações a que estava obrigado ?"/>
+                        <div class="ui-inputgroup">
+                            <p:selectBooleanButton id="comunicouDeterminadoButton"   disabled="#{managerNotaFiscal.visualizar}" value="#{managerNotaFiscal.notaFiscal.informouSituacao}" onLabel="Sim" offLabel="Não" style="width:12rem; color: white !important;border-radius: 5px">
+                            </p:selectBooleanButton>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <p:outputLabel value="Prestou serviço com qualidade esperada ?"/>
+                        <div class="ui-inputgroup">
+                            <p:selectBooleanButton id="qualidadeDeterminadoButton"   disabled="#{managerNotaFiscal.visualizar}" value="#{managerNotaFiscal.notaFiscal.qualidadeEsperada}" onLabel="Sim" offLabel="Não" style="width:12rem; color: white !important;border-radius: 5px">
+                            </p:selectBooleanButton>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <p:outputLabel value="Realizou diligências necessárias ?"/>
+                        <div class="ui-inputgroup">
+                            <p:selectBooleanButton id="diligenciaDeterminadoButton"   disabled="#{managerNotaFiscal.visualizar}" value="#{managerNotaFiscal.notaFiscal.diligenciaNecessarias}" onLabel="Sim" offLabel="Não" style="width:12rem; color: white !important;border-radius: 5px">
+                            </p:selectBooleanButton>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
             <div class="row">
                 <div class="col-md-12">
                     <div class="form-group">
@@ -167,6 +330,58 @@
             <p:button value="Cancelar" rendered="#{managerNotaFiscal.editar}" href="notaFiscal.xhtml?visualizar=#{managerNotaFiscal.notaFiscal.id}" icon="pi pi-ban"  style="background-color: #01415B; color: #fff;margin-bottom: 10px"/>
 
         </center>
+
+        <p:dialog id="removerNotaFiscalConfirmDialog"
+                  widgetVar="removerNotaFiscalConfirmDialog"
+                  header="Atenção!"
+                  closeOnEscape="true"
+                  draggable="false"
+                  maximizable="false"
+                  minimizable="false"
+                  modal="true"
+                  width="850"
+                  showEffect="fade"
+                  hideEffect="fade">
+
+            <div class="row">
+
+                <div class="col-md-12">
+                    <div class="form-group" style="padding-left: 80px !important">
+                        <h4>
+                            <i class="pi pi-exclamation-triangle"></i>
+                            Tem certeza de que deseja imprimir esta nota fiscal ?
+                        </h4>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+
+                    <center>
+                        <p:commandButton value="Sim"
+                                         title="Confirmar Remoção"
+                                         icon="pi pi-check"
+                                         update="@form"
+                                         ajax="false" onclick="target = '_blank'"
+                                         process="@this "
+                                         actionListener="#{managerNotaFiscal.gerarDocumentacaoNotaFiscal()}"
+                                         oncomplete="PF('removerNotaFiscalConfirmDialog').hide();"
+                                         styleClass="mr-md-1"/>
+
+                        <p:commandButton value="Não"
+                                         title="Cancelar Remoção"
+                                         icon="pi pi-ban"
+                                         process="@this"
+                                         update="@form"
+                                         oncomplete="PF('removerNotaFiscalConfirmDialog').hide();"
+                                         styleClass="ml-md-1"/>
+
+                    </center>
+
+                </div>
+
+            </div>
+
+        </p:dialog>
 
     </ui:define>
 </ui:composition>

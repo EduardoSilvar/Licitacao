@@ -6,15 +6,32 @@
 package Servico;
 
 import Enum.StatusContrato;
+import Gerenciador.RelatorioConfig;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.Stateless;
+import javax.faces.context.FacesContext;
 import javax.persistence.Query;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+import javax.xml.transform.TransformerException;
+import modelo.Anexo;
 import modelo.Contratado;
 import modelo.Contrato;
 import modelo.ContratoVo;
+import modelo.ModeloDocumento;
 import modelo.Setor;
 import modelo.UnidadeOrganizacional;
 import modelo.Usuario;
@@ -63,6 +80,39 @@ public class ContratoServico extends ServicoGenerico<Contrato> implements Serial
             query.setParameter("unidade", user.getUnidadeOrganizacional());
         }
         return query.getResultList();
+    }
+
+    public void abrirPDF() throws FileNotFoundException, DocumentException, IOException {
+
+//        HeaderFooterPageEvent event = new HeaderFooterPageEvent();
+//        event = configuracaoDocumento(modelo);
+        ModeloDocumento modelo = new ModeloDocumento();
+        modelo.setTexto("");
+        Document document = new Document();
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        HttpServletResponse response = (HttpServletResponse) facesContext.getExternalContext().getResponse();
+        ServletOutputStream ouputStream = response.getOutputStream();
+        PdfWriter pdfWriter = PdfWriter.getInstance(document, new FileOutputStream(new File("/opt/Licitacao/uploads/2509202201163507033_mapamemorial.png")));
+//        pdfWriter.setPageEvent(event);
+//        pdfWriter.getPageEvent();
+//        document.open();
+
+        try {
+            RelatorioConfig pdf = new RelatorioConfig(modelo.getTexto());
+            pdf.convert(new File("/opt/Licitacao/uploads/2509202201163507033_mapamemorial.png"));
+        } catch (TransformerException ex) {
+            Logger.getLogger(null).log(Level.SEVERE, null, ex);
+        }
+
+        response.setHeader(
+                "Content-Disposition", "inline; filename=\"relatorio.pdf\"");
+        response.setContentType(
+                "application/pdf");
+        facesContext.responseComplete();
+
+        ouputStream.flush();
+
+        ouputStream.close();
     }
 
     public List<ContratoVo> buscarContratoSetor(Setor setor, Contratado contratado, Usuario user) {
@@ -132,7 +182,7 @@ public class ContratoServico extends ServicoGenerico<Contrato> implements Serial
         return query.getResultList();
     }
 
-    public List<Contrato> findPesquisa(Contrato contrato, UnidadeOrganizacional unidade,Usuario fiscal) {
+    public List<Contrato> findPesquisa(Contrato contrato, UnidadeOrganizacional unidade, Usuario fiscal) {
         String sql = "select c from Contrato c join c.fiscalContrato u where ";
         if (Utils.isNotEmpty(contrato.getContratado())) {
             sql += "c.contratado = :contratado and ";

@@ -12,6 +12,7 @@ import Servico.ContratoServico;
 import Servico.SetorServico;
 import Servico.TipoLicitacaoServico;
 import Servico.UsuarioServico;
+import com.itextpdf.text.DocumentException;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
@@ -28,6 +29,7 @@ import modelo.Anexo;
 import modelo.Contratado;
 import modelo.Contrato;
 import modelo.FiscalVO;
+import modelo.ModeloDocumento;
 import modelo.Setor;
 import modelo.TipoAnexo;
 import modelo.TipoLicitacao;
@@ -366,7 +368,16 @@ public class managerContrato extends managerPrincipal implements Serializable {
         String conteudo_base64 = Base64j.encodeBytes(FileUtils.readFileToByteArray(new File(caminhoLogo)));
 
         conteudo_base64 = Base64j.encodeBytes(FileUtils.readFileToByteArray(new File(caminhoLogo)));
+
+        System.err.println("data:image/png;base64," + conteudo_base64);
         return "data:image/png;base64," + conteudo_base64;
+    }
+
+    public void gerarDocumentacaoNotaFiscal() throws IOException, DocumentException {
+        ModeloDocumento modelo = new ModeloDocumento();
+        modelo.setTexto("");
+        contratoServico.abrirPDF();
+
     }
 
     public void setContrato(Contrato contrato) {

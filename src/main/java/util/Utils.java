@@ -32,7 +32,8 @@ public class Utils {
     }
 
     /**
-     * <p> É considerado vazio todo e qualquer array cujo valor seja
+     * <p>
+     * É considerado vazio todo e qualquer array cujo valor seja
      * <b>null</b>, ou o tamanho seja <b>zero</b>, ou todos os elementos
      * contidos no array sejam <b>null</b>. </p>
      *
@@ -72,10 +73,16 @@ public class Utils {
         }
         return null;
     }
-    
+
     public static String convertDateToString(Date date, String mask) {
-		SimpleDateFormat format = new SimpleDateFormat(mask);
-		String result = format.format(date);
-		return result;
-	}
+        SimpleDateFormat format = new SimpleDateFormat(mask);
+        String result = format.format(date);
+        return result;
+    }
+
+    public static String colocarMascaraCep(String cep) {
+        cep = cep.substring(0, 2) + "." + cep.substring(2, 5) + "-" + cep.substring(5, 8);
+        return cep;
+    }
+
 }

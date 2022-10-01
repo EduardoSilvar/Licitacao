@@ -26,6 +26,7 @@ public class Contratado implements Serializable {
     private String nome;
     private String cpf;
     private String cnpj;
+    private String rg;
     @OneToOne
     private UnidadeOrganizacional unidadeOrganizacional;
     @OneToOne(cascade = CascadeType.ALL)
@@ -39,6 +40,7 @@ public class Contratado implements Serializable {
     private String telefone;
     private String whatsapp;
     private boolean ativo = true;
+    private String inscricaoEstadual;
 
     public Long getId() {
         return id;
@@ -46,6 +48,22 @@ public class Contratado implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getRg() {
+        return rg;
+    }
+
+    public void setRg(String rg) {
+        this.rg = rg;
+    }
+
+    public String getInscricaoEstadual() {
+        return inscricaoEstadual;
+    }
+
+    public void setInscricaoEstadual(String inscricaoEstadual) {
+        this.inscricaoEstadual = inscricaoEstadual;
     }
 
     public UnidadeOrganizacional getUnidadeOrganizacional() {

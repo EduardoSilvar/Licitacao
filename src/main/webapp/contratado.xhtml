@@ -54,7 +54,7 @@
             <h:panelGroup id="dadosGeraisPanelGroup" >
                 <h:panelGroup>
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <div class="form-group">
                                 <p:outputLabel value="Nome"
                                                for="nomePessoaJuriInput" />
@@ -71,7 +71,7 @@
                             </div>
                         </div>
                         <h:panelGroup rendered="#{managerContratado.renderedCnpjPEssoa()}">
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <div class="form-group">
                                     <p:outputLabel value="CNPJ"
                                                    for="cnpjPessoaJuriInput"  />
@@ -87,9 +87,24 @@
                                     <p:message for="cnpjPessoaJuriInput" />
                                 </div>
                             </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <p:outputLabel value="Insc. Estadual"
+                                                   for="inscEstadualPessoaJuriInput" />
+                                    <p:inputText id="inscEstadualPessoaJuriInput"
+                                                 placeholder="Insc. Estadual"
+                                                 required="true"
+                                                 value="#{managerContratado.contratado.inscricaoEstadual}"
+                                                 disabled="#{managerContratado.visualizar}"
+                                                 requiredMessage="Este campo é obrigatório."
+                                                 styleClass="form-control" 
+                                                 />
+                                    <p:message for="inscEstadualPessoaJuriInput" />
+                                </div>
+                            </div>
                         </h:panelGroup>
                         <h:panelGroup rendered="#{managerContratado.renderedCpfPEssoa()}">
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <div class="form-group">
                                     <p:outputLabel value="CPF"
                                                    for="cpfPessoaJuriInput" />
@@ -103,6 +118,21 @@
                                                  styleClass="form-control" 
                                                  />
                                     <p:message for="cpfPessoaJuriInput" />
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <p:outputLabel value="RG"
+                                                   for="rgPessoaJuriInput" />
+                                    <p:inputText id="rgPessoaJuriInput"
+                                                 placeholder="RG"
+                                                 required="true"
+                                                 value="#{managerContratado.contratado.rg}"
+                                                 disabled="#{managerContratado.visualizar}"
+                                                 requiredMessage="Este campo é obrigatório."
+                                                 styleClass="form-control" 
+                                                 />
+                                    <p:message for="rgPessoaJuriInput" />
                                 </div>
                             </div>
                         </h:panelGroup>

@@ -4,10 +4,26 @@
  */
 package Servico;
 
+import Gerenciador.RelatorioConfig;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.PageSize;
+import com.itextpdf.text.Rectangle;
+import com.itextpdf.text.pdf.PdfWriter;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.Stateless;
+import javax.faces.context.FacesContext;
 import javax.persistence.Query;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+import javax.xml.transform.TransformerException;
+import modelo.Contratado;
+import modelo.Contrato;
+import modelo.ModeloDocumento;
 import modelo.NotaFiscal;
 import modelo.Usuario;
 import util.Utils;
@@ -51,6 +67,46 @@ public class NotaFiscalServico extends ServicoGenerico<NotaFiscal> implements Se
             query.setParameter("unidade", user.getUnidadeOrganizacional());
         }
         return query.getResultList();
+    }
+
+    public void imprimirModeloNotaFiscal(ModeloDocumento modelo, Contratado contratado, Contrato contrato, NotaFiscal nota) throws IOException, IOException, DocumentException {
+        float esquerda = 10;
+
+        float direita = 10;
+
+        float cima = 10;
+
+        float baixo = 30;
+
+        Document document = new Document(PageSize.A4, esquerda, direita, cima, baixo);
+
+//        HeaderFooterPageEvent event = new HeaderFooterPageEvent();
+//        event = configuracaoDocumento(modelo);
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        HttpServletResponse response = (HttpServletResponse) facesContext.getExternalContext().getResponse();
+        ServletOutputStream ouputStream = response.getOutputStream();
+        PdfWriter pdfWriter = PdfWriter.getInstance(document, ouputStream);
+//        pdfWriter.setPageEvent(event);
+        pdfWriter.getPageEvent();
+        document.open();
+
+        try {
+            RelatorioConfig pdf = new RelatorioConfig(modelo.getTexto());
+            pdf.converts(ouputStream, document, contratado, contrato, nota);
+        } catch (TransformerException ex) {
+            Logger.getLogger(null).log(Level.SEVERE, null, ex);
+        }
+
+        response.setHeader(
+                "Content-Disposition", "inline; filename=\"relatorio.pdf\"");
+        response.setContentType(
+                "application/pdf");
+        facesContext.responseComplete();
+
+        ouputStream.flush();
+
+        ouputStream.close();
+
     }
 
 }

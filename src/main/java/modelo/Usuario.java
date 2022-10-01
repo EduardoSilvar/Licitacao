@@ -44,6 +44,7 @@ public class Usuario implements Serializable {
     private String urlArquivoToken;
     private String senhaToken;
     private boolean ativo = true;
+    private String cargo;
     @OneToOne
     private Setor setor;
     @ManyToMany
@@ -67,6 +68,14 @@ public class Usuario implements Serializable {
 
     public boolean possueToken() {
         return urlArquivoToken != null && !urlArquivoToken.isEmpty() && senhaToken != null && !senhaToken.isEmpty();
+    }
+
+    public String getCargo() {
+        return cargo;
+    }
+
+    public void setCargo(String cargo) {
+        this.cargo = cargo;
     }
 
     public static String encryptPassword(String senha) {

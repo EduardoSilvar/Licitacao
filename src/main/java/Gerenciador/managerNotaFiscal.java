@@ -8,6 +8,7 @@ import Servico.AnexoServico;
 import Servico.ContratoServico;
 import Servico.NotaFiscalServico;
 import Servico.UsuarioServico;
+import com.itextpdf.text.DocumentException;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -19,7 +20,9 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import modelo.Anexo;
+import modelo.Contratado;
 import modelo.Contrato;
+import modelo.ModeloDocumento;
 import modelo.NotaFiscal;
 import modelo.TipoAnexo;
 import modelo.Usuario;
@@ -142,6 +145,13 @@ public class managerNotaFiscal extends managerPrincipal {
         instanciarAnexo();
         instanciarSelect();
         instanciarListaNotaFiscal();
+
+    }
+
+    public void gerarDocumentacaoNotaFiscal() throws IOException, DocumentException {
+        ModeloDocumento modelo = new ModeloDocumento();
+        modelo.setTexto("");
+        notaFiscalServico.imprimirModeloNotaFiscal(modelo, this.notaFiscal.getContrato().getContratado(), this.notaFiscal.getContrato(), this.notaFiscal);
 
     }
 

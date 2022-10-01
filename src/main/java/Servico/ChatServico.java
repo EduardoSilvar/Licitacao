@@ -25,7 +25,7 @@ public class ChatServico extends ServicoGenerico<Chat> {
     public List<Chat> chatsRecebido(Usuario user) {
         String sql = "select c from Chat c where c.ativo = true ";
         if (Utils.isNotEmpty(user)) {
-            sql += "and c.receptor = :usuario ";
+            sql += "and c.receptor = :usuario and c.lidoReceptor = false ";
         }
         Query query = getEntityManager().createQuery(sql);
         if (Utils.isNotEmpty(user)) {
@@ -37,7 +37,7 @@ public class ChatServico extends ServicoGenerico<Chat> {
     public List<Chat> chatsEnviado(Usuario user) {
         String sql = "select c from Chat c where c.ativo = true ";
         if (Utils.isNotEmpty(user)) {
-            sql += "and c.emissor = :usuario ";
+            sql += "and c.emissor = :usuario and c.lidoEmissor = false";
         }
         Query query = getEntityManager().createQuery(sql);
         if (Utils.isNotEmpty(user)) {

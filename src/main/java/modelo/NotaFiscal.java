@@ -47,7 +47,21 @@ public class NotaFiscal implements Serializable {
     private TipoRecebimentoEnum tipoRecebimento;
     @OneToOne
     private UnidadeOrganizacional unidadeOrganizacional;
+    private String lotacao;
+    private String atoDesignacao;
+    private Date apartir;
     private boolean ativo = true;
+    private Date dataExtrato;
+    private Date periodoFiscalizado;
+    private Date inicioFiscalizado;
+    private Date finalFiscalizado;
+    private boolean obrigacaoMensal;
+    private boolean prazoEstabelecido;
+    private boolean documentoObrigatorio;
+    private boolean relatorio;
+    private boolean qualidadeEsperada;
+    private boolean informouSituacao;
+    private boolean diligenciaNecessarias;
 
     public boolean isAtivo() {
         return ativo;
@@ -58,6 +72,54 @@ public class NotaFiscal implements Serializable {
     }
 
     public NotaFiscal() {
+    }
+
+    public Date getInicioFiscalizado() {
+        return inicioFiscalizado;
+    }
+
+    public void setInicioFiscalizado(Date inicioFiscalizado) {
+        this.inicioFiscalizado = inicioFiscalizado;
+    }
+
+    public Date getFinalFiscalizado() {
+        return finalFiscalizado;
+    }
+
+    public void setFinalFiscalizado(Date finalFiscalizado) {
+        this.finalFiscalizado = finalFiscalizado;
+    }
+
+    public String getLotacao() {
+        return lotacao;
+    }
+
+    public void setLotacao(String lotacao) {
+        this.lotacao = lotacao;
+    }
+
+    public String getAtoDesignacao() {
+        return atoDesignacao;
+    }
+
+    public void setAtoDesignacao(String atoDesignacao) {
+        this.atoDesignacao = atoDesignacao;
+    }
+
+    public Date getApartir() {
+        return apartir;
+    }
+
+    public void setApartir(Date apartir) {
+        this.apartir = apartir;
+    }
+
+    public Date getDataExtrato() {
+        return dataExtrato;
+    }
+
+    public void setDataExtrato(Date dataExtrato) {
+        this.dataExtrato = dataExtrato;
     }
 
     public Long getId() {
@@ -140,6 +202,70 @@ public class NotaFiscal implements Serializable {
         this.tipoRecebimento = tipoRecebimento;
     }
 
+    public Date getPeriodoFiscalizado() {
+        return periodoFiscalizado;
+    }
+
+    public void setPeriodoFiscalizado(Date periodoFiscalizado) {
+        this.periodoFiscalizado = periodoFiscalizado;
+    }
+
+    public boolean isObrigacaoMensal() {
+        return obrigacaoMensal;
+    }
+
+    public void setObrigacaoMensal(boolean obrigacaoMensal) {
+        this.obrigacaoMensal = obrigacaoMensal;
+    }
+
+    public boolean isPrazoEstabelecido() {
+        return prazoEstabelecido;
+    }
+
+    public void setPrazoEstabelecido(boolean prazoEstabelecido) {
+        this.prazoEstabelecido = prazoEstabelecido;
+    }
+
+    public boolean isDocumentoObrigatorio() {
+        return documentoObrigatorio;
+    }
+
+    public void setDocumentoObrigatorio(boolean documentoObrigatorio) {
+        this.documentoObrigatorio = documentoObrigatorio;
+    }
+
+    public boolean isRelatorio() {
+        return relatorio;
+    }
+
+    public void setRelatorio(boolean relatorio) {
+        this.relatorio = relatorio;
+    }
+
+    public boolean isQualidadeEsperada() {
+        return qualidadeEsperada;
+    }
+
+    public void setQualidadeEsperada(boolean qualidadeEsperada) {
+        this.qualidadeEsperada = qualidadeEsperada;
+    }
+
+    public boolean isInformouSituacao() {
+        return informouSituacao;
+    }
+
+    public void setInformouSituacao(boolean informouSituacao) {
+        this.informouSituacao = informouSituacao;
+    }
+
+    public boolean isDiligenciaNecessarias() {
+        return diligenciaNecessarias;
+    }
+
+    public void setDiligenciaNecessarias(boolean diligenciaNecessarias) {
+        this.diligenciaNecessarias = diligenciaNecessarias;
+    }
+
     @Override
     public int hashCode() {
         int hash = 7;
@@ -206,6 +332,5 @@ public class NotaFiscal implements Serializable {
     public String toString() {
         return "NotaFiscal{" + "id=" + id + ", descricao=" + descricao + ", contratado=" + contratado + ", valor=" + valor + ", dataPagamento=" + dataPagamento + ", responsavel=" + responsavel + ", contrato=" + contrato + ", anexos=" + anexos + ", unidadeOrganizacional=" + unidadeOrganizacional + ", ativo=" + ativo + '}';
     }
-    
 
 }

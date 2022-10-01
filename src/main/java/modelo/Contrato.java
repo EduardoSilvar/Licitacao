@@ -75,6 +75,8 @@ public class Contrato implements Serializable {
     @Enumerated(EnumType.STRING)
     private StatusContrato status;
     private String banco;
+    @OneToOne
+    private Usuario fiscal;
     private Long numeroConta;
     private Long digito;
     private Long agencia;
@@ -255,7 +257,7 @@ public class Contrato implements Serializable {
     public void setObjetoContrato(Long objetoContrato) {
         this.objetoContrato = objetoContrato;
     }
-    
+
     public String getDescricao() {
         return descricao;
     }
@@ -336,7 +338,6 @@ public class Contrato implements Serializable {
         this.corStatus = corStatus;
     }
 
-    
     public List<NotaFiscal> getNotasFiscais() {
         return notasFiscais;
     }
@@ -547,8 +548,12 @@ public class Contrato implements Serializable {
         return Objects.equals(this.notasFiscais, other.notasFiscais);
     }
 
-    
+    public Usuario getFiscal() {
+        return fiscal;
+    }
 
-    
+    public void setFiscal(Usuario fiscal) {
+        this.fiscal = fiscal;
+    }
 
 }
