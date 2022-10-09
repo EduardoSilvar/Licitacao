@@ -488,8 +488,6 @@
                         update="@this, anexoProtocoloPanelGroup anexosPanelGroup" 
                         rendered="#{not managerContrato.visualizar}"/>
                 </h:panelGroup>
-                <p:commandButton value="Emitir CRF" icon="fa fa-file-pdf-o" ajax="false" onclick="target = '_blank'"
-                                 actionListener="#{managerContrato.gerarDocumentacaoNotaFiscal()}"/> 
                 <h:panelGroup id="anexosPanelGroup">
                     <div style="display: flex; flex-direction: row">
                         <ui:repeat value="#{managerContrato.contrato.anexos}" var="anexo" >

@@ -373,13 +373,6 @@ public class managerContrato extends managerPrincipal implements Serializable {
         return "data:image/png;base64," + conteudo_base64;
     }
 
-    public void gerarDocumentacaoNotaFiscal() throws IOException, DocumentException {
-        ModeloDocumento modelo = new ModeloDocumento();
-        modelo.setTexto("");
-        contratoServico.abrirPDF();
-
-    }
-
     public void setContrato(Contrato contrato) {
         this.contrato = contrato;
     }

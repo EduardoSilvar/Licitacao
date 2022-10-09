@@ -16,119 +16,84 @@
             <p:growl id="messages" showDetail="true" />
             <h:panelGroup id="dadosGeraisPanelGroup" >
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <p:outputLabel value="Quantos dias para expirar "
                                            for="diasInput" />
-                            <p:inputNumber id="diasInput"
-                                           placeholder="Dias"
-                                           required="true"
-                                           inputStyleClass="form-control"
-                                           value="#{managerConfiguracao.configuracao.diasPraExpirar}"
-                                           rendered="true"
-                                           requiredMessage="Este campo é obrigatório."
-                                           />
+                            <p:inputMask id="diasInput"
+                                         placeholder="Dias"
+                                         required="true"
+                                         styleClass="form-control" 
+                                         value="#{managerConfiguracao.configuracao.diasPraExpirar}"
+                                         rendered="true"
+                                         requiredMessage="Este campo é obrigatório."
+                                         />
                             <p:message for="diasInput" />
                         </div>
                     </div>
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <p:outputLabel value="Primeiro status" styleClass="control-label" for="statusContratoSelect" />
-                            <p:selectOneMenu id="statusContratoSelect"
-                                             filter="true" 
-                                             placeholder="status"
-                                             required="true"
-                                             styleClass="form-control" 
-                                             value="#{managerConfiguracao.configuracao.primeiroStatus}">
-                                <f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
-                                <f:selectItems value="#{managerEnuns.statusContrato}" var="status" itemLabel="#{status.label}" itemValue="#{status}" />
-                            </p:selectOneMenu>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <p:outputLabel value="Segundo status" styleClass="control-label" for="segundostatusContratoSelect" />
-                            <p:selectOneMenu id="segundostatusContratoSelect"
-                                             filter="true" 
-                                             placeholder="status"
-                                             required="true"
-                                             disabled="#{managerContrato.visualizar}"
-                                             styleClass="form-control" 
-                                             value="#{managerConfiguracao.configuracao.segundoStatus}">
-                                <f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
-                                <f:selectItems value="#{managerEnuns.statusContrato}" var="status" itemLabel="#{status.label}" itemValue="#{status}" />
-                            </p:selectOneMenu>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <p:outputLabel value="Terceiro status" styleClass="control-label" for="terceirostatusContratoSelect" />
-                            <p:selectOneMenu id="terceirostatusContratoSelect"
-                                             filter="true" 
-                                             placeholder="status"
-                                             required="true"
-                                             styleClass="form-control" 
-                                             value="#{managerConfiguracao.configuracao.terceiroStatus}">
-                                <f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
-                                <f:selectItems value="#{managerEnuns.statusContrato}" var="status" itemLabel="#{status.label}" itemValue="#{status}" />
-                            </p:selectOneMenu>
-                        </div>
-                    </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <p:outputLabel value="Primeiro Gráfico" styleClass="control-label" for="primeirorograficoContratoSelect" />
-                            <p:selectOneMenu id="primeirorograficoContratoSelect"
-                                             filter="true" 
-                                             placeholder="status"
-                                             required="true"
-                                             styleClass="form-control" 
-                                             value="#{managerConfiguracao.configuracao.primeiroGrafico}">
-                                <f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
-                                <f:selectItems value="#{managerEnuns.graficos}" var="grafico" itemLabel="#{grafico.label}" itemValue="#{grafico}" />
-                            </p:selectOneMenu>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <p:outputLabel value="Segundo Gráfico" styleClass="control-label" for="segundoGraficoContratoSelect" />
-                            <p:selectOneMenu id="segundoGraficoContratoSelect"
-                                             filter="grafico" 
-                                             placeholder="status"
-                                             required="true"
-                                             styleClass="form-control" 
-                                             value="#{managerConfiguracao.configuracao.segundoGrafico}">
-                                <f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
-                                <f:selectItems value="#{managerEnuns.graficos}" var="grafico" itemLabel="#{grafico.label}" itemValue="#{grafico}" />
-                            </p:selectOneMenu>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <p:outputLabel value="Terceiro Gráfico" styleClass="control-label" for="terceiroGraficoContratoSelect" />
-                            <p:selectOneMenu id="terceiroGraficoContratoSelect"
-                                             filter="true" 
-                                             placeholder="grafico"
-                                             required="true"
-                                             styleClass="form-control" 
-                                             value="#{managerConfiguracao.configuracao.terceiroGrafico}">
-                                <f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
-                                <f:selectItems value="#{managerEnuns.graficos}" var="grafico" itemLabel="#{grafico.label}" itemValue="#{grafico}" />
-                            </p:selectOneMenu>
-                        </div>
-                    </div>
-                </div>
+                <center>
+                    <p:commandButton value="Pesquisar" icon="pi pi-search" process="@this corpoInteiro:dadosGeraisPanelGroup" 
+                                     update="corpoInteiro:dataTablePanelGroup messages" actionListener="#{managerConfiguracao.pesquisar()}" />
+                    <p:commandButton value="Limpar" icon="pi pi-ban" update="corpoInteiro:dadosGeraisPanelGroup corpoInteiro:dataTablePanelGroup" 
+                                     process="@this corpoInteiro:dadosGeraisPanelGroup" actionListener="#{managerConfiguracao.init()}"/>
+                </center>
+                <br/>
+
 
             </h:panelGroup>
-            <center>
-                <p:commandButton value="Salvar" icon="pi pi-save" process="contratadoPanelGroup" update="corpoInteiro:messages" actionListener="#{managerContratado.salvar()}" rendered="#{managerContratado.cadastrar}" />
-                <p:button value="Editar" icon="pi pi-pencil"  rendered="#{managerContratado.visualizar}" href="contratado.xhtml?editar=#{managerContratado.contratado.id}" />
-                <p:commandButton value="Atualizar" icon="pi pi-sync" process="contratadoPanelGroup"  actionListener="#{managerContratado.atualizar()}" rendered="#{managerContratado.editar}"  />
-                <p:button value="Cancelar" icon="pi pi-ban"  href="contratado.xhtml" rendered="#{managerContratado.visualizar}" />
-                <p:button value="Cancelar" icon="pi pi-ban"  href="contratado.xhtml?visualizar=#{managerContratado.contratado.id}" rendered="#{managerContratado.editar}" />
-                <p:button value="Cancelar" icon="pi pi-ban"  href="index.xhtml" rendered="#{managerContratado.cadastrar}" />
-            </center>
+            <h:panelGroup id="dataTablePanelGroup" >
+                <p:accordionPanel  multiple="true" widgetVar="multiple">
+                    <p:tab title="Contratos com o Vencimento Próximo">
+                        <p:dataTable id="tipoContratadoDatatable" var="contrato" value="#{managerConfiguracao.contratosPertodeExpirar}"
+                                     resizeMode="5">
+                            <f:facet name="header">
+                                <center>
+                                    Contratatos
+                                </center>
+                            </f:facet>
+                            <p:column headerText="Ações" width="200">
+                                <p:button  icon="pi pi-eye" title="visualizar" href="contrato.xhtml?visualizar=#{contrato.id}" />
+                            </p:column>
+                            <p:column headerText="Status">
+                                <div id="row-atividades" class="row row-atividades" style="display: flex; flex-wrap: nowrap !important; overflow: hidden !important; overflow-x: scroll !important">
+                                    <ui:repeat value="#{contrato.status}"
+                                               var="atividade">
+                                        <div class="atividade">
+                                            <div class="ui-avatar ui-widget ui-avatar-circle ui-avatar-xl"
+                                                 style="background-color:#{'#'.concat(managerContrato.cores(contrato.status))}; font-size: 15px; color: #ffffff; width: 50px; height: 50px;">
+                                                <span class="ui-avatar-text">#{managerContrato.abreviacao(contrato.status)}</span>
+                                            </div>
+                                        </div>
+                                    </ui:repeat>
+                                </div>
+                            </p:column>
+                            <p:column headerText="Número do processo">
+                                <h:outputText value="#{contrato.numeroProcesso}" />
+                            </p:column>
+                            <p:column headerText="Contratado">
+                                <h:outputText value="#{contrato.contratado}" />
+                            </p:column>
+                            <p:column headerText="Especialidade">
+                                <h:outputText value="#{contrato.contratado.especialidade}" />
+                            </p:column>
+                            <p:column headerText="Termino da vigência">
+                                <h:outputText value="#{contrato.dataFinal}" />
+                            </p:column>
+                        </p:dataTable>
+
+
+                    </p:tab>
+                </p:accordionPanel>
+            </h:panelGroup>
+            <!--            <center>
+                            <p:commandButton value="Salvar" icon="pi pi-save" process="contratadoPanelGroup" update="corpoInteiro:messages" actionListener="{managerContratado.salvar()}" rendered="{managerContratado.cadastrar}" />
+                            <p:button value="Editar" icon="pi pi-pencil"  rendered="{managerContratado.visualizar}" href="contratado.xhtml?editar={managerContratado.contratado.id}" />
+                            <p:commandButton value="Atualizar" icon="pi pi-sync" process="contratadoPanelGroup"  actionListener="{managerContratado.atualizar()}" rendered="{managerContratado.editar}"  />
+                            <p:button value="Cancelar" icon="pi pi-ban"  href="contratado.xhtml" rendered="{managerContratado.visualizar}" />
+                            <p:button value="Cancelar" icon="pi pi-ban"  href="contratado.xhtml?visualizar={managerContratado.contratado.id}" rendered="{managerContratado.editar}" />
+                            <p:button value="Cancelar" icon="pi pi-ban"  href="index.xhtml" rendered="{managerContratado.cadastrar}" />
+                        </center>-->
         </h:panelGroup>
 
     </ui:define>

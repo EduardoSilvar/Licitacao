@@ -36,61 +36,6 @@
 
 
             </p:tabView>
-            <!--            <p:accordionPanel  multiple="true" widgetVar="multiple">
-                            <p:tab title="Contratos com o Vencimento Próximo">
-                                <p:dataTable id="tipoContratadoDatatable" var="contrato" value="{managerNotificacao.contratosPertodeExpirar}"
-                                             resizeMode="5">
-                                    <f:facet name="header">
-                                        <center>
-                                            Contratatos
-                                        </center>
-                                    </f:facet>
-                                    <p:column headerText="Ações" width="200">
-                                        <p:button  icon="pi pi-eye" title="visualizar" href="contrato.xhtml?visualizar=#{contrato.id}" />
-                                    </p:column>
-                                    <p:column headerText="Status">
-                                        <div id="row-atividades" class="row row-atividades" style="display: flex; flex-wrap: nowrap !important; overflow: hidden !important; overflow-x: scroll !important">
-                                            <ui:repeat value="{contrato.status}"
-                                                       var="atividade">
-                                                <div class="atividade">
-                                                    <div class="ui-avatar ui-widget ui-avatar-circle ui-avatar-xl"
-                                                         style="background-color:{'#'.concat(managerContrato.cores(contrato.status))}; font-size: 15px; color: #ffffff; width: 50px; height: 50px;">
-                                                        <span class="ui-avatar-text">{managerContrato.abreviacao(contrato.status)}</span>
-                                                    </div>
-                                                </div>
-                                            </ui:repeat>
-                                        </div>
-                                    </p:column>
-                                    <p:column headerText="Número do processo">
-                                        <h:outputText value="{contrato.numeroProcesso}" />
-                                    </p:column>
-                                    <p:column headerText="Contratado">
-                                        <h:outputText value="{contrato.contratado}" />
-                                    </p:column>
-                                    <p:column headerText="Especialidade">
-                                        <h:outputText value="{contrato.contratado.especialidade}" />
-                                    </p:column>
-                                    <p:column headerText="termino da vigência">
-                                        <h:outputText value="{contrato.dataFinal}" />
-                                    </p:column>
-                                </p:dataTable>
-                                
-                                
-                            </p:tab>
-                            <p:tab title="Header II">
-                                <p class="p-m-0">
-                                    Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab
-                                    illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut
-                                    odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Consectetur, adipisci velit, sed quia non numquam eius modi.
-                                </p>
-                            </p:tab>
-                            <p:tab title="Header III">
-                                <p class="p-m-0">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores
-                                    et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga.
-                                    Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus.
-                                </p>
-                            </p:tab>
-                        </p:accordionPanel>-->
         </h:panelGroup>
     </ui:define>
 </ui:composition>
