@@ -13,7 +13,9 @@ import Servico.SetorServico;
 import Servico.TipoLicitacaoServico;
 import Servico.UsuarioServico;
 import com.itextpdf.text.DocumentException;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -25,6 +27,9 @@ import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
 import modelo.Anexo;
 import modelo.Contratado;
 import modelo.Contrato;
@@ -361,15 +366,62 @@ public class managerContrato extends managerPrincipal implements Serializable {
         Msg.messagemInfo("Anexo removido com sucesso !");
     }
 
+    public void visualizarAnexo(Anexo anexo) throws IOException, IOException, Exception {
+        try {
+            String caminhoLogo = "";
+            String conteudo_base64 = "";
+            caminhoLogo = anexo.getUrl() + "/" + anexo.getNome();
+            byte[] arquivo = null;
+
+            File file = new File(caminhoLogo);
+            arquivo = fileToByte(file);
+            FacesContext facesContext = FacesContext.getCurrentInstance();
+            HttpServletResponse response = (HttpServletResponse) facesContext.getExternalContext().getResponse();
+            ServletOutputStream ouputStream = response.getOutputStream();
+            Integer totalPaginas = 0;
+
+//            if (modeloDocumento.getTexto() != null) {
+//                export(modeloDocumento.getTexto(), ouputStream, totalPaginas);
+//            } else if (modeloDocumento.getAnexos() != null) {
+//                export(modeloDocumento.getAnexos(), ouputStream, config, totalPaginas, startPage, false);
+//            }
+            response.setContentType("application/pdf");
+            response.setContentLength(arquivo.length);
+            ouputStream.write(arquivo, 0, arquivo.length);
+            ouputStream.flush();
+            ouputStream.close();
+
+        } catch (DocumentException ex) {
+            Logger.getLogger(managerNotaFiscal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public boolean isPDF(Anexo anexo) {
+        return anexo.getNome().contains(".pdf");
+
+    }
+
+    public byte[] fileToByte(File imagem) throws Exception {
+        FileInputStream fis = new FileInputStream(imagem);
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        byte[] buffer = new byte[8192];
+        int bytesRead = 0;
+        while ((bytesRead = fis.read(buffer, 0, 8192)) != -1) {
+            baos.write(buffer, 0, bytesRead);
+        }
+        return baos.toByteArray();
+    }
+
     public String anexoUrl(Anexo anexo) throws IOException {
         String caminhoLogo = "";
 
         caminhoLogo = anexo.getUrl() + "/" + anexo.getNome();
-        String conteudo_base64 = Base64j.encodeBytes(FileUtils.readFileToByteArray(new File(caminhoLogo)));
-
-        conteudo_base64 = Base64j.encodeBytes(FileUtils.readFileToByteArray(new File(caminhoLogo)));
-
-        System.err.println("data:image/png;base64," + conteudo_base64);
+        String conteudo_base64 = "";
+        if (anexo.getNome().contains(".pdf")) {
+            conteudo_base64 = Base64j.encodeBytes(FileUtils.readFileToByteArray(new File("/opt/Licitacao/logoPDF.png")));
+        } else {
+            conteudo_base64 = Base64j.encodeBytes(FileUtils.readFileToByteArray(new File(caminhoLogo)));
+        }
         return "data:image/png;base64," + conteudo_base64;
     }
 

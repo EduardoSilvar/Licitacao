@@ -166,9 +166,9 @@ public class RelatorioConfig {
     }
 
     public void converts(OutputStream file, Document document, Contratado contratado, Contrato contrato, NotaFiscal nota) throws DocumentException, IOException {
-
+//document = new Document();
         // step 2
-        PdfWriter writer = PdfWriter.getInstance(document, file);
+        PdfWriter writer = PdfWriter.getInstance(document,new FileOutputStream("/opt/Licitacao/uploads/2509202211291805571_memorial.pdf"));
         // step 3
         document.open();
         // step 4        

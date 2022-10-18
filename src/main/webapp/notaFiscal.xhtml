@@ -20,7 +20,7 @@
                             url="notaFiscal.xhtml?editar=#{managerNotaFiscal.notaFiscal.id}"
                             process="@this"
                             />
-                <p:menuitem  icon="pi pi-trash" 
+                <p:menuitem  icon="pi pi-print" 
                              process="@this"
                              value="Imprimir"
                              oncomplete="PF('removerNotaFiscalConfirmDialog').show();" title="Imprimir" >
@@ -310,13 +310,18 @@
                         <div style="display: flex; flex-direction: row">
                             <div style="display: flex; flex-direction: column;background: #e1e6e5;width: 200px; padding: 5px 10px; margin: 10px 30px ">
                                 <div style="display: flex; flex-direction: row;width: 200px">
+                                    <p:commandButton style="width: 25px; height: 30px;" icon="pi pi-eye" rendered="#{managerNotaFiscal.isPDF(anexo)}" onclick="target = '_blank'" ajax="false"  actionListener="#{managerNotaFiscal.visualizarAnexo(anexo)}"/>
+
+                                    <h:panelGroup rendered="#{!managerNotaFiscal.isPDF(anexo)}">
+                                        <a href="#{managerNotaFiscal.anexoUrl(anexo)}" target="_blank">
+                                            <i  style="border-radius: 3px;border: 1px solid #08c1cf ; width: 25px;justify-content: center;padding-top: 7px;color: #ffffff;text-align: center; height: 30px;background: #01415B !important" class="pi pi-eye"></i>
+                                        </a> 
+                                    </h:panelGroup> 
                                     <p:commandButton actionListener="#{managerNotaFiscal.deletarAnexo(anexo)}" 
-                                                     update="corpoInteiro:messages corpoInteiro" disabled="#{managerNotaFiscal.visualizar}" icon="pi pi-trash" style="width: 25px; height: 30px;" />
+                                                     update="corpoInteiro:messages corpoInteiro" rendered="#{!managerNotaFiscal.visualizar}" icon="pi pi-trash" style="width: 25px; height: 30px;" />
                                     <p:outputLabel value="Contrato" style="font-weight: bold;margin-left: 10px;"/>
                                 </div>
-                                <a href="#{managerNotaFiscal.anexoUrl(anexo)}" target="_blank" title="anexo">
-                                    <img  src="#{managerNotaFiscal.anexoUrl(anexo)}" style="width: 180px;" />
-                                </a>
+                                <img  src="#{managerNotaFiscal.anexoUrl(anexo)}" style="width: 180px;height: 180px" />
                             </div>
                         </div>
                     </ui:repeat>
