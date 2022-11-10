@@ -54,7 +54,7 @@
             <h:panelGroup id="dadosGeraisPanelGroup" >
                 <h:panelGroup>
                     <div class="row">
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <p:outputLabel value="Nome"
                                                for="nomePessoaJuriInput" />
@@ -71,7 +71,7 @@
                             </div>
                         </div>
                         <h:panelGroup rendered="#{managerContratado.renderedCnpjPEssoa()}">
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <p:outputLabel value="CNPJ"
                                                    for="cnpjPessoaJuriInput"  />
@@ -87,9 +87,9 @@
                                     <p:message for="cnpjPessoaJuriInput" />
                                 </div>
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-4">
                                 <div class="form-group">
-                                    <p:outputLabel value="Insc. Estadual"
+                                    <p:outputLabel value="Insc. Estadual ou Municipal"
                                                    for="inscEstadualPessoaJuriInput" />
                                     <p:inputText id="inscEstadualPessoaJuriInput"
                                                  placeholder="Insc. Estadual"
@@ -104,7 +104,7 @@
                             </div>
                         </h:panelGroup>
                         <h:panelGroup rendered="#{managerContratado.renderedCpfPEssoa()}">
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <p:outputLabel value="CPF"
                                                    for="cpfPessoaJuriInput" />
@@ -120,7 +120,7 @@
                                     <p:message for="cpfPessoaJuriInput" />
                                 </div>
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <p:outputLabel value="RG"
                                                    for="rgPessoaJuriInput" />
@@ -136,24 +136,9 @@
                                 </div>
                             </div>
                         </h:panelGroup>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <p:outputLabel value="Especialidade"
-                                               for="especPessoaJuriInput" />
-                                <p:inputText id="especPessoaJuriInput"
-                                             placeholder="Especialidade"
-                                             required="true"
-                                             value="#{managerContratado.contratado.especialidade}"
-                                             disabled="#{managerContratado.visualizar}"
-                                             requiredMessage="Este campo é obrigatório."
-                                             styleClass="form-control" 
-                                             />
-                                <p:message for="especPessoaJuriInput" />
-                            </div>
-                        </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <div class="form-group">
                                 <p:outputLabel value="E-mail"
                                                for="emailPessoaJuriInput" />
@@ -168,7 +153,7 @@
                                 <p:message for="emailPessoaJuriInput" />
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <div class="form-group">
                                 <p:outputLabel value="Telefone"
                                                for="telefonePessoaJuriInput" />
@@ -184,7 +169,7 @@
                                 <p:message for="telefonePessoaJuriInput" />
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <div class="form-group">
                                 <p:outputLabel value="Whatsapp"
                                                for="whatsPessoaJuriInput" />
@@ -200,6 +185,22 @@
                                 <p:message for="whatsPessoaJuriInput" />
                             </div>
                         </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <p:outputLabel value="Cep"
+                                               for="cepPessoaJuriInput" />
+                                <p:inputMask id="cepPessoaJuriInput"
+                                             mask="99999-999"
+                                             required="true"
+                                             value="#{managerContratado.contratado.endereco.cep}"
+                                             disabled="#{managerContratado.visualizar}"
+                                             placeholder="Cep"
+                                             requiredMessage="Este campo é obrigatório."
+                                             styleClass="form-control" 
+                                             />
+                                <p:message for="cepPessoaJuriInput" />
+                            </div>
+                        </div>
                     </div>
                 </h:panelGroup>
             </h:panelGroup>
@@ -208,18 +209,17 @@
                 <div class="row">
                     <div class="col-md-3">
                         <div class="form-group">
-                            <p:outputLabel value="Cep"
-                                           for="cepPessoaJuriInput" />
-                            <p:inputMask id="cepPessoaJuriInput"
-                                         mask="99999-999"
-                                         required="true"
-                                         value="#{managerContratado.contratado.endereco.cep}"
+                            <p:outputLabel value="Logradouro"
+                                           for="logradouroPessoaJuriInput" />
+                            <p:inputText id="logradouroPessoaJuriInput"
+                                         value="#{managerContratado.contratado.endereco.logradouro}"
                                          disabled="#{managerContratado.visualizar}"
-                                         placeholder="Cep"
+                                         placeholder="Logradouro"
+                                         required="true"
                                          requiredMessage="Este campo é obrigatório."
                                          styleClass="form-control" 
                                          />
-                            <p:message for="cepPessoaJuriInput" />
+                            <p:message for="numeroPessoaJuriInput" />
                         </div>
                     </div>
                     <div class="col-md-3">

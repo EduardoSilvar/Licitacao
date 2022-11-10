@@ -60,4 +60,4 @@ alter table notaFiscal add column finalFiscalizado varchar(250);
 
 alter table usuario add column cargo varchar(250);
 
-
+alter table endereco add column logradouro varchar(250);
