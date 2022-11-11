@@ -120,14 +120,18 @@
                         <div class="col-md-6">
                             <p:outputLabel value="Valor"
                                            for="novoValorRepactuacao" />
-                            <p:inputMask id="novoValorRepactuacao"
-                                         disabled="#{managerRepactuacao.visualizar}"
-                                         style="display: flex; flex-direction: row"
-                                         value="#{managerRepactuacao.repactuacao.valor}"
-                                         styleClass="form-control" 
-                                         placeholder="Valor"
-                                         requiredMessage="Este campo é obrigatório." />
+                            <p:inputNumber id="novoValorRepactuacao" required="true"  value="#{managerRepactuacao.repactuacao.valor}" symbol="R$"
+                                           symbolPosition="p" emptyValue="always" requiredMessage="Este campo é obrigatório."
+                                           disabled="#{managerRepactuacao.visualizar}" />
                             <p:message for="novoValorRepactuacao" />
+                            <!--                            <p:inputMask id="novoValorRepactuacao"
+                                                                     disabled="{managerRepactuacao.visualizar}"
+                                                                     style="display: flex; flex-direction: row"
+                                                                     value="{managerRepactuacao.repactuacao.valor}"
+                                                                     styleClass="form-control" 
+                                                                     placeholder="Valor"
+                                                                     requiredMessage="Este campo é obrigatório." />
+                                                        <p:message for="novoValorRepactuacao" />-->
                         </div>
                     </div>
                 </h:panelGroup>

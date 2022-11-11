@@ -64,15 +64,20 @@
                     <div class="form-group">
                         <p:outputLabel value="Valor"
                                        for="valorNotaFiscal" />
-                        <p:inputText id="valorNotaFiscal"
+                        
+                        <p:inputNumber id="valorNotaFiscal"   value="#{managerNotaFiscal.notaFiscal.valor}" symbol="R$"
+                                           symbolPosition="p" emptyValue="always" requiredMessage="Este campo é obrigatório."
+                                          disabled="#{managerNotaFiscal.visualizar}" />
+                            <p:message for="valorNotaFiscal" />
+<!--                        <p:inputText id="valorNotaFiscal"
                                      placeholder="Valor"
                                      rendered="true"
-                                     disabled="#{managerNotaFiscal.visualizar}"
-                                     value="#{managerNotaFiscal.notaFiscal.valor}"
+                                     disabled="{managerNotaFiscal.visualizar}"
+                                     value="{managerNotaFiscal.notaFiscal.valor}"
                                      requiredMessage="Este campo é obrigatório."
                                      styleClass="form-control" 
-                                     />
-                        <p:message for="valorNotaFiscal" />
+                                     />-->
+                        <!--<p:message for="valorNotaFiscal" />-->
                     </div>
                 </div>
                 <div class="col-md-3">

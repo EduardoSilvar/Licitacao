@@ -90,14 +90,18 @@
                     <div class="col-md-6">
                         <p:outputLabel value="Valor*"
                                        for="acrescimoValor" />
-                        <p:inputMask id="acrescimoValor"
-                                     value="#{managerAcrescimo.acrescimo.valor}"
-                                     disabled="#{managerAcrescimo.visualizar}"
+                        <p:inputNumber id="acrescimoValor"  required="true" value="#{managerAcrescimo.acrescimo.valor}" symbol="R$"
+                                           symbolPosition="p" emptyValue="always" requiredMessage="Este campo é obrigatório."
+                                          disabled="#{managerAcrescimo.visualizar}" />
+                            <p:message for="acrescimoValor" />
+<!--                        <p:inputMask id="acrescimoValor"
+                                     value="{managerAcrescimo.acrescimo.valor}"
+                                     disabled="{managerAcrescimo.visualizar}"
                                      style="display: flex; flex-direction: row"
                                      styleClass="form-control" 
                                      placeholder="Valor"
                                      requiredMessage="Este campo é obrigatório." />
-                        <p:message for="acrescimoValor" />
+                        <p:message for="acrescimoValor" />-->
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">

@@ -90,16 +90,20 @@
             <h:panelGroup>
                 <div class="row">
                     <div class="col-md-6">
-                        <p:outputLabel value="Valor*"
+                        <p:outputLabel value="Valor"
                                        for="supressaoValor" />
-                        <p:inputMask id="supressaoValor"
+                        <p:inputNumber id="supressaoValor" required="true"  value="#{managerSupressao.supressao.valor}" symbol="R$"
+                                           symbolPosition="p" emptyValue="always" requiredMessage="Este campo é obrigatório."
+                                          disabled="#{managerSupressao.visualizar}" />
+                            <p:message for="supressaoValor" />
+<!--                        <p:inputMask id="supressaoValor"
                                      style="display: flex; flex-direction: row"
-                                     disabled="#{managerSupressao.visualizar}"
+                                     disabled="{managerSupressao.visualizar}"
                                      styleClass="form-control" 
-                                     value="#{managerSupressao.supressao.valor}"
+                                     value="{managerSupressao.supressao.valor}"
                                      placeholder="Valor"
                                      requiredMessage="Este campo é obrigatório." />
-                        <p:message for="supressaoValor" />
+                        <p:message for="supressaoValor" />-->
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">

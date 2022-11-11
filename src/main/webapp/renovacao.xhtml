@@ -55,7 +55,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <p:outputLabel value="Contrato*" styleClass="control-label" for="contratoRenovacao" />
+                            <p:outputLabel value="Contrato" styleClass="control-label" for="contratoRenovacao" />
                             <p:selectOneMenu id="contratoRenovacao"
                                              value="#{managerRenovacao.renovacao.contrato}"
                                              filter="true" 
@@ -70,7 +70,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <p:outputLabel value="Número do termo aditivo*"
+                            <p:outputLabel value="Número do termo aditivo"
                                            for="numeroTermoAditivoRenovacao" />
                             <p:inputText id="numeroTermoAditivoRenovacao"
                                          value="#{managerRenovacao.renovacao.numeroTermo}"
@@ -156,14 +156,18 @@
                         <div class="col-md-6">
                             <p:outputLabel value="Valor"
                                            for="novoValorRenovacao" />
-                            <p:inputMask id="novoValorRenovacao"
-                                         value="#{managerRenovacao.renovacao.valor}"
+                                     <p:inputNumber id="novoValorRenovacao" required="true"  value="#{managerRenovacao.renovacao.valor}" symbol="R$"
+                                           symbolPosition="p" emptyValue="always" requiredMessage="Este campo é obrigatório."
+                                          disabled="#{managerRenovacao.visualizar}" />
+                            <p:message for="novoValorRenovacao" />
+<!--                            <p:inputMask id="novoValorRenovacao"
+                                         value="{managerRenovacao.renovacao.valor}"
                                          style="display: flex; flex-direction: row"
                                          styleClass="form-control" 
-                                         disabled="#{managerRenovacao.visualizar}"
+                                         disabled="{managerRenovacao.visualizar}"
                                          placeholder="Valor"
                                          requiredMessage="Este campo é obrigatório." />
-                            <p:message for="novoValorRenovacao" />
+                            <p:message for="novoValorRenovacao" />-->
                         </div>
                     </div>
                 </h:panelGroup>
