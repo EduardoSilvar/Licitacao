@@ -28,6 +28,7 @@ public class Endereco implements Serializable {
     private String bairro;
     private String cidade;
     private String numero;
+    private String logradouro;
     private String complemento;
     private boolean ativo = true;
 
@@ -87,16 +88,25 @@ public class Endereco implements Serializable {
         this.cidade = cidade;
     }
 
+    public String getLogradouro() {
+        return logradouro;
+    }
+
+    public void setLogradouro(String logradouro) {
+        this.logradouro = logradouro;
+    }
+
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 79 * hash + Objects.hashCode(this.id);
-        hash = 79 * hash + Objects.hashCode(this.cep);
-        hash = 79 * hash + Objects.hashCode(this.bairro);
-        hash = 79 * hash + Objects.hashCode(this.cidade);
-        hash = 79 * hash + Objects.hashCode(this.numero);
-        hash = 79 * hash + Objects.hashCode(this.complemento);
-        hash = 79 * hash + (this.ativo ? 1 : 0);
+        hash = 29 * hash + Objects.hashCode(this.id);
+        hash = 29 * hash + Objects.hashCode(this.cep);
+        hash = 29 * hash + Objects.hashCode(this.bairro);
+        hash = 29 * hash + Objects.hashCode(this.cidade);
+        hash = 29 * hash + Objects.hashCode(this.numero);
+        hash = 29 * hash + Objects.hashCode(this.logradouro);
+        hash = 29 * hash + Objects.hashCode(this.complemento);
+        hash = 29 * hash + (this.ativo ? 1 : 0);
         return hash;
     }
 
@@ -127,18 +137,20 @@ public class Endereco implements Serializable {
         if (!Objects.equals(this.numero, other.numero)) {
             return false;
         }
+        if (!Objects.equals(this.logradouro, other.logradouro)) {
+            return false;
+        }
         if (!Objects.equals(this.complemento, other.complemento)) {
             return false;
         }
-        if (!Objects.equals(this.id, other.id)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.id, other.id);
     }
 
     @Override
     public String toString() {
-        return "Endereco{" + "id=" + id + ", cep=" + cep + ", bairro=" + bairro + ", cidade=" + cidade + ", numero=" + numero + ", complemento=" + complemento + ", ativo=" + ativo + '}';
+        return "Endereco{" + "id=" + id + ", cep=" + cep + ", bairro=" + bairro + ", cidade=" + cidade + ", numero=" + numero + ", logradouro=" + logradouro + ", complemento=" + complemento + ", ativo=" + ativo + '}';
     }
+    
+    
 
 }
