@@ -218,7 +218,12 @@ public class managerContrato extends managerPrincipal implements Serializable {
                 Msg.messagemError("Nenhum Contrato encontrato !");
             }
         } else {
-            this.contratos = contratoServico.findPesquisa(this.contrato, null, this.fiscal);
+            this.contratos = contratoServico.findPesquisa();
+            if (this.contratos.size() > 0) {
+                Msg.messagemInfo("Operação realizada com sucesso !!");
+            } else {
+                Msg.messagemError("Nenhum Contrato encontrato !");
+            }
         }
     }
 

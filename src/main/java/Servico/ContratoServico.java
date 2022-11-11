@@ -182,6 +182,12 @@ public class ContratoServico extends ServicoGenerico<Contrato> implements Serial
         return query.getResultList();
     }
 
+    public List<Contrato> findPesquisa() {
+        String sql = "select c from Contrato c where c.ativo = true";
+        Query query = entityManager.createQuery(sql);
+        return query.getResultList();
+    }
+
     public List<Contrato> findPesquisa(Contrato contrato, UnidadeOrganizacional unidade, Usuario fiscal) {
         String sql = "select c from Contrato c join c.fiscalContrato u where ";
         if (Utils.isNotEmpty(contrato.getContratado())) {
