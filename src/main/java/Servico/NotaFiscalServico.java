@@ -91,12 +91,12 @@ public class NotaFiscalServico extends ServicoGenerico<NotaFiscal> implements Se
         pdfWriter.getPageEvent();
         document.open();
 
-//        try {
-//            RelatorioConfig pdf = new RelatorioConfig(modelo.getTexto());
-//            pdf.converts(ouputStream, document, contratado, contrato, nota);
-//        } catch (TransformerException ex) {
-//            Logger.getLogger(null).log(Level.SEVERE, null, ex);
-//        }
+        try {
+            RelatorioConfig pdf = new RelatorioConfig(modelo.getTexto());
+            pdf.converts(ouputStream, document, contratado, contrato, nota);
+        } catch (TransformerException ex) {
+            Logger.getLogger(null).log(Level.SEVERE, null, ex);
+        }
 //        
         response.setHeader(
                 "Content-Disposition", "inline; filename=\"relatorio.pdf\"");
