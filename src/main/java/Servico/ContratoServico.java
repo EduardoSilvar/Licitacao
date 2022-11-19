@@ -47,7 +47,21 @@ public class ContratoServico extends ServicoGenerico<Contrato> implements Serial
     public ContratoServico() {
         super(Contrato.class);
     }
+    
+    public List<Contrato> buscarContratosPagos(Usuario user) {
 
+        String sql = "select c from Contrato c where c.ativo = true and c.status = :status ";
+        if (Utils.isNotEmpty(user.getUnidadeOrganizacional())) {
+            sql += "and c.unidadeOrganizacional = :unidade ";
+        }
+        Query query = getEntityManager().createQuery(sql);
+        query.setParameter("status", StatusContrato.PAGO);
+        if (Utils.isNotEmpty(user.getUnidadeOrganizacional())) {
+            query.setParameter("unidade", user.getUnidadeOrganizacional());
+        }
+        return query.getResultList();
+    }
+    
     public List<ContratoVo> buscarContratos(Usuario user) {
 
         String sql = "select new modelo.ContratoVo(c.status, count(c)) "
@@ -188,6 +202,22 @@ public class ContratoServico extends ServicoGenerico<Contrato> implements Serial
         return query.getResultList();
     }
 
+    public List<Contrato> findAllUnidade(UnidadeOrganizacional unidade) {
+        String sql = "select c from Contrato c where ";
+        
+        if (Utils.isNotEmpty(unidade)) {
+            sql += "c.unidadeOrganizacional.id = :unidade and ";
+        }
+        sql += "c.ativo = true";
+
+        Query query = entityManager.createQuery(sql);
+        
+        if (Utils.isNotEmpty(unidade)) {
+            query.setParameter("unidade", unidade.getId());
+        }
+        return query.getResultList();
+    }
+    
     public List<Contrato> findPesquisa(Contrato contrato, UnidadeOrganizacional unidade, Usuario fiscal) {
         String sql = "select c from Contrato c join c.fiscalContrato u where ";
         if (Utils.isNotEmpty(contrato.getContratado())) {

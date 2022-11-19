@@ -9,6 +9,7 @@ import Servico.ConfiguracaoServico;
 import Servico.ContratoServico;
 import Servico.UsuarioServico;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -53,7 +54,7 @@ public class managerConfiguracao implements Serializable {
         userLogado = userServico.getCurrentUser();
         this.contratosPertodeExpirar = new ArrayList<>();
         this.contrato = new Contrato();
-        this.fiscal = new Usuario();
+        this.fiscal = userServico.getCurrentUser();
     }
 
     public void salvar() {
@@ -66,22 +67,38 @@ public class managerConfiguracao implements Serializable {
         }
 
     }
+    
+    public String dataFormatada(Date data) {
+        if (Utils.isNotEmpty(data)) {
+            SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy");
+            String stringDate = DateFor.format(data);
+            return stringDate;
+        }
+        return "";
 
+    }
+    
     public void pesquisar() {
         if (this.configuracao.getDiasPraExpirar() != null && this.configuracao.getDiasPraExpirar() > 0) {
             List<Contrato> todosContratos = new ArrayList<>();
-            todosContratos = contratoServico.findPesquisa(this.contrato, userLogado.getUnidadeOrganizacional(), this.fiscal);
+            todosContratos = contratoServico.findAllUnidade(userLogado.getUnidadeOrganizacional());
             Calendar cal = GregorianCalendar.getInstance();
             final Date dataEvento = cal.getTime();
             Long agora = dataEvento.getTime() / (3600000 * 24);
 //            Long dataContrato = new Date().getTime() / (3600000 * 24);
-            
+            System.out.println(agora+" "+todosContratos.size());
             for (Contrato c : todosContratos) {
                 Long dataContrato = c.getDataFinal().getTime() / (3600000 * 24);
-                Long output = (agora - dataContrato);
+                Long output = (dataContrato - agora );
                 if (output < this.configuracao.getDiasPraExpirar()) {
-                    this.contratosPertodeExpirar.add(c);
+                    if(this.contratosPertodeExpirar.contains(c)){
+                        
+                    }else{
+                        this.contratosPertodeExpirar.add(c);
+                    }
+                    
                 }
+                System.out.println(output);
             }
             if (!this.contratosPertodeExpirar.isEmpty()) {
                 Msg.messagemInfo("Operação realizada com sucesso !");
