@@ -117,7 +117,7 @@
 
 
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <div class="form-group">
                         <p:outputLabel value="Lotação" styleClass="control-label" for="lotacaoNotaFiscal" />
                         <p:inputText id="lotacaoNotaFiscal"
@@ -131,7 +131,7 @@
                         <p:message for="lotacaoNotaFiscal" />
                     </div> 
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <div class="form-group">
                         <p:outputLabel value="Ato de Designação"
                                        for="atoNotaFiscal" />
@@ -146,7 +146,22 @@
                         <p:message for="atoNotaFiscal" />
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <p:outputLabel value="Numero da Nota fiscal"
+                                       for="numeroNotaFiscal" />
+                        <p:inputNumber id="numeroNotaFiscal"
+                                     placeholder="Numero"
+                                     rendered="true"
+                                     minValue="0"
+                                     disabled="#{managerNotaFiscal.visualizar}"
+                                     value="#{managerNotaFiscal.notaFiscal.numero}"
+                                     requiredMessage="Este campo é obrigatório."
+                                     />
+                        <p:message for="numeroNotaFiscal" />
+                    </div>
+                </div>
+                <div class="col-md-3">
                     <div class="form-group">
                         <p:outputLabel value="Apartir de "
                                        for="apartirNotaFiscal"  />

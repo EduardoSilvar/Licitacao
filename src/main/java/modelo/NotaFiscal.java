@@ -32,6 +32,7 @@ public class NotaFiscal implements Serializable {
     @SequenceGenerator(sequenceName = "seq_nota_fiscal", name = "seq_nota_fiscal", allocationSize = 1)
     @GeneratedValue(generator = "seq_nota_fiscal", strategy = GenerationType.AUTO)
     private Long id;
+    private Long numero;
     private String descricao;
     @OneToOne
     private Contratado contratado;
@@ -264,6 +265,14 @@ public class NotaFiscal implements Serializable {
 
     public void setDiligenciaNecessarias(boolean diligenciaNecessarias) {
         this.diligenciaNecessarias = diligenciaNecessarias;
+    }
+
+    public Long getNumero() {
+        return numero;
+    }
+
+    public void setNumero(Long numero) {
+        this.numero = numero;
     }
 
     @Override
