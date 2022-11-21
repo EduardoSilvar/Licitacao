@@ -1,0 +1,64 @@
+<ui:composition template="/WEB-INF/template/layout.xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns="http://www.w3.org/1999/xhtml">
+    <ui:define name="acoes">
+        <h:panelGroup class="panelAcoes">
+            <h4 style="color: #ffffff">Valor total : #{managerRecebimentos.valorTotal}</h4>
+        </h:panelGroup>
+        
+    </ui:define>
+    <ui:define name="barra">
+        <div class="row" id="stylebarra">
+            <i class="pi pi-file-o" id="icon"></i> <h5 style="color: #e1e6e5"> Resumo recebimentos</h5>
+        </div>
+    </ui:define>
+    <ui:define name="titulo">
+        <h4>Resumo recebimentos</h4>
+    </ui:define>
+
+    <ui:define name="corpo">
+        <h:panelGroup>
+            <p:growl id="messages" showDetail="true" />
+            
+            <p:dataTable id="contratosPagosDataTable" var="contrato" value="#{managerRecebimentos.contratos}"
+                         resizeMode="5">
+                <f:facet name="header">
+                    <center>
+                        Contratos Pagos
+                    </center>
+                </f:facet>
+                <p:column headerText="Ações" width="200">
+                    <p:button  icon="pi pi-eye" title="visualizar" href="contrato.xhtml?visualizar=#{contrato.id}" />
+                </p:column>
+                <p:column headerText="Status">
+                    <div id="row-atividades" class="row row-atividades" style="display: flex; flex-wrap: nowrap !important; overflow: hidden !important; overflow-x: scroll !important">
+                        <ui:repeat value="#{contrato.status}"
+                                   var="atividade">
+                            <div class="atividade">
+                                <div class="ui-avatar ui-widget ui-avatar-circle ui-avatar-xl"
+                                     style="background-color:#{'#'.concat(managerContrato.cores(contrato.status))}; font-size: 15px; color: #ffffff; width: 50px; height: 50px;">
+                                    <span class="ui-avatar-text">#{managerContrato.abreviacao(contrato.status)}</span>
+                                </div>
+                            </div>
+                        </ui:repeat>
+                    </div>
+                </p:column>
+                <p:column headerText="Número do processo">
+                    <h:outputText value="#{contrato.numeroProcesso}" />
+                </p:column>
+                <p:column headerText="Contratado">
+                    <h:outputText value="#{contrato.contratado}" />
+                </p:column>
+                <p:column headerText="Valor">
+                    <h:outputText value="#{contrato.valor}" />
+                </p:column>
+                <p:column headerText="Termino da vigência">
+                    <h:outputText value="#{managerConfiguracao.dataFormatada(contrato.dataFinal) }" />
+                </p:column>
+            </p:dataTable>
+        </h:panelGroup>
+    </ui:define>
+</ui:composition>
