@@ -157,7 +157,7 @@ public class MacroNotaFiscal {
         }
         document.add(tableMaePai);
 
-        header = new PdfPCell(new Phrase("DADOS DO FISCAL DISIGNADO", fonteTexto));
+        header = new PdfPCell(new Phrase("DADOS DO FISCAL DESIGNADO", fonteTexto));
         table = new PdfPTable(1);
         table.setPaddingTop(50);
         table.getDefaultCell().setPadding(3);
