@@ -22,12 +22,21 @@ import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import modelo.Anexo;
@@ -66,7 +75,13 @@ public class managerContrato extends managerPrincipal implements Serializable {
     private SetorServico setorServico;
     @EJB
     private AnexoServico anexoServico;
+    @EJB
+    UsuarioServico usuarioServico;
 
+    String senha;
+    private String email;
+    private String assunto;
+    private String textoMensagem;
     private Anexo anexo;
     private TipoAnexo tipoAnexo;
 
@@ -163,7 +178,6 @@ public class managerContrato extends managerPrincipal implements Serializable {
                 this.renderedFiscalComissao = true;
             }
         } else {
-            System.err.println("entrou aqui");
             this.renderedFiscalComissao = false;
             this.renderedFiscalIndividual = false;
         }
@@ -339,6 +353,69 @@ public class managerContrato extends managerPrincipal implements Serializable {
 
     }
 
+    public void enviarEmail() {
+        if (Utils.isNotEmpty(this.contrato)) {
+            if (Utils.isNotEmpty(this.contrato.getContratado())) {
+                if (Utils.isNotEmpty(this.contrato.getContratado().getEmail())) {
+                    if (verificaEmail(this.contrato.getContratado().getNome(), "cveduardo73@gmail.com", assunto)) {
+                        Msg.messagemInfo("Mensagem enviada com sucesso. ");
+                    } else {
+                        Msg.messagemError("Ocorreu um erro, verifique o email do contratado !");
+                    }
+                } else {
+                    Msg.messagemInfo("O contratado não possui email !");
+                }
+            }
+        }
+    }
+
+    public boolean verificaEmail(String nome, String email, String assunto) {
+        Properties props = new Properties();
+        props.put("mail.smtp.host", "smtp.hostinger.com");
+        props.put("mail.smtp.socketFactory.port", "587");
+        props.put("mail.smtp.socketFactory.class",
+                "javax.net.ssl.SSLSocketFactory");
+        props.put("mail.smtp.debug", "true");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.port", "587");
+        Session session = Session.getInstance(props,
+                new javax.mail.Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication("notificacao@planejacontratos.com.br", "@Adminplaneja1@");
+            }
+        });
+
+        session.setDebug(false);
+        int valor = 0;
+        try {
+            for (int i = 0; i <= 3; i++) {
+                Random aleatorio = new Random();
+                valor = valor + aleatorio.nextInt(100) + 1;
+            }
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress("notificacao@planejacontratos.com.br"));
+            message.setRecipients(Message.RecipientType.TO,
+                    InternetAddress.parse(email));
+            message.setSubject(assunto);
+//            message.setText("A sua nova senha é : \n\n" +senha);
+            message.setContent("<html><head></head><body> " + this.textoMensagem + "</b></body></html>", "text/html");
+            Transport.send(message);
+
+            return true;
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+
+        }
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public boolean renderedTempoDeterminado() {
         return contrato.isPossuiTempoDeterminado();
     }
@@ -452,6 +529,22 @@ public class managerContrato extends managerPrincipal implements Serializable {
 
     public List<Usuario> getResponsaveis() {
         return responsaveis;
+    }
+
+    public String getTextoMensagem() {
+        return textoMensagem;
+    }
+
+    public void setTextoMensagem(String textoMensagem) {
+        this.textoMensagem = textoMensagem;
+    }
+
+    public String getAssunto() {
+        return assunto;
+    }
+
+    public void setAssunto(String assunto) {
+        this.assunto = assunto;
     }
 
     public void setResponsaveis(List<Usuario> responsaveis) {

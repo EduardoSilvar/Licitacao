@@ -34,7 +34,7 @@
                                            required="true"
                                            minValue="1" decimalPlaces="0"
                                            disabled="#{managerContrato.visualizar}"
-                                           value="#{managerContrato.contrato.objetoContrato}"
+                                           value="#{managerEmail.email}"
                                            requiredMessage="Este campo é obrigatório." />
                             <p:message for="objetoContrato" />
                         </div> 
@@ -540,7 +540,7 @@
 
                             <p:commandButton value="Sim"
                                              title="Confirmar Remoção"
-                                             icon="fa fa-check"
+                                             icon="pi pi-check"
                                              update="corpoInteiro "
                                              process="@this"
                                              actionListener="#{managerContrato.deletar()}"
@@ -549,10 +549,82 @@
 
                             <p:commandButton value="Não"
                                              title="Cancelar Remoção"
-                                             icon="fa fa-close"
+                                             icon="pi pi-ban"
                                              process="@this"
                                              update="@form"
                                              oncomplete="PF('removeraContratadoConfirmDialog').hide();"
+                                             styleClass="ml-md-1"/>
+
+                        </center>
+
+                    </div>
+
+                </div>
+
+
+            </p:dialog>
+
+            <p:dialog id="mensagemcontratadoDialog"
+                      widgetVar="mensagemcontratadoDialog"
+                      header="Atenção!"
+                      closeOnEscape="true"
+                      draggable="false"
+                      maximizable="false"
+                      minimizable="false"
+                      modal="true"
+                      width="850"
+                      showEffect="fade"
+                      hideEffect="fade">
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <p:outputLabel value="Assunto"
+                                           for="Assunto" />
+                            <p:inputText id="Assunto"
+                                         placeholder="Texto"
+                                         rendered="true"
+                                         value="#{managerContrato.assunto}"
+                                         requiredMessage="Este campo é obrigatório."
+                                         styleClass="form-control" 
+                                         />
+                            <p:message for="Assunto" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <p:outputLabel value="Mensagem"
+                                           for="Mensagem" />
+                            <p:inputTextarea id="Mensagem"
+                                             placeholder="Texto"
+                                             rendered="true"
+                                             value="#{managerContrato.textoMensagem}"
+                                             requiredMessage="Este campo é obrigatório."
+                                             styleClass="form-control" 
+                                             />
+                            <p:message for="Mensagem" />
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+
+                        <center>
+
+                            <p:commandButton value="Enviar"
+                                             title="Enviar"
+                                             icon="pi pi-upload"
+                                             update="corpoInteiro "
+                                             process="@this Mensagem Assunto"
+                                             actionListener="#{managerContrato.enviarEmail()}"
+                                             oncomplete="PF('mensagemcontratadoDialog').hide();"
+                                             styleClass="mr-md-1"/>
+
+                            <p:commandButton value="Cancelar"
+                                             title="Cancelar Mensagem"
+                                             icon="pi pi-ban"
+                                             process="@this"
+                                             update="@form"
+                                             oncomplete="PF('mensagemcontratadoDialog').hide();"
                                              styleClass="ml-md-1"/>
 
                         </center>

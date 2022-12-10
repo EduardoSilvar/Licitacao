@@ -35,10 +35,17 @@
                             process="@this corpoInteiro"
                             update="corpoInteiro:messages"
                             >
+
                     <f:setPropertyActionListener value="#{managerContrato.contrato}"
                                                  target="#{managerContrato.contrato}"/>
                 </p:menuitem>
-
+                <p:menuitem value="Enviar Mensagem" 
+                            icon="pi pi-envelope"
+                            title="Enviar mensagem para o contratado"
+                            oncomplete="PF('mensagemcontratadoDialog').show();"
+                            process="@this corpoInteiro"
+                            update="corpoInteiro:messages"
+                            />
             </p:splitButton>
 
         </h:panelGroup>

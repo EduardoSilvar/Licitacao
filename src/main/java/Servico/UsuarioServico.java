@@ -11,6 +11,8 @@ import java.security.Principal;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.faces.context.FacesContext;
+import javax.persistence.NoResultException;
+import javax.persistence.NonUniqueResultException;
 import javax.persistence.Query;
 import modelo.Usuario;
 import util.Msg;
@@ -43,6 +45,42 @@ public class UsuarioServico extends ServicoGenerico<Usuario> implements Serializ
         }
 
         return query.getResultList();
+    }
+
+    public void recuperarSenha(Usuario usuario, String senha) {
+        Usuario novo = find(usuario.getId());
+        System.err.println(novo.getSenha());
+        novo.setSenha(Usuario.encryptPassword(senha));
+        System.err.println(novo.getEmail() + "e a senha é " + novo.getSenha());
+        Update(novo);
+    }
+
+    public Usuario existEmail(String email) {
+        Usuario usuario;
+        String sql = "Select u from Usuario u "
+                + "where lower(u.email) like lower(:email) AND u.ativo = true";
+        Query query = getEntityManager().createQuery(sql);
+        query.setParameter("email", email);
+        List result = query.getResultList();
+        try {
+            if (result != null && !result.isEmpty()) {
+                usuario = (Usuario) result.get(0);
+            } else {
+                usuario = null;
+            }
+
+        } catch (NoResultException e) {
+            System.err.println(e);
+            return null;
+        } catch (NonUniqueResultException e) {
+            System.err.println(e);
+            return null;
+        } catch (Exception e) {
+            System.err.println(e);
+            return null;
+        }
+
+        return usuario;
     }
 
     public void alterarSenha(Usuario usuario, String senhaAntiga, String novaSenha, String repetirSenha) throws Exception {
