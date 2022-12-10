@@ -90,7 +90,7 @@ public class managerConfiguracao implements Serializable {
             for (Contrato c : todosContratos) {
                 Long dataContrato = c.getDataFinal().getTime() / (3600000 * 24);
                 Long output = (dataContrato - agora );
-                if (output < this.configuracao.getDiasPraExpirar()) {
+                if (output < this.configuracao.getDiasPraExpirar() && output > 0) {
                     if(this.contratosPertodeExpirar.contains(c)){
                         
                     }else{
@@ -98,7 +98,7 @@ public class managerConfiguracao implements Serializable {
                     }
                     
                 }
-                System.out.println(output);
+                System.out.println("ncd "+output);
             }
             if (!this.contratosPertodeExpirar.isEmpty()) {
                 Msg.messagemInfo("Operação realizada com sucesso !");
