@@ -191,7 +191,6 @@
                                                for="cepPessoaJuriInput" />
                                 <p:inputMask id="cepPessoaJuriInput"
                                              mask="99999-999"
-                                             required="true"
                                              value="#{managerContratado.contratado.endereco.cep}"
                                              disabled="#{managerContratado.visualizar}"
                                              placeholder="Cep"
@@ -215,7 +214,6 @@
                                          value="#{managerContratado.contratado.endereco.logradouro}"
                                          disabled="#{managerContratado.visualizar}"
                                          placeholder="Logradouro"
-                                         required="true"
                                          requiredMessage="Este campo é obrigatório."
                                          styleClass="form-control" 
                                          />
@@ -230,7 +228,6 @@
                                          value="#{managerContratado.contratado.endereco.numero}"
                                          disabled="#{managerContratado.visualizar}"
                                          placeholder="Número"
-                                         required="true"
                                          requiredMessage="Este campo é obrigatório."
                                          styleClass="form-control" 
                                          />
@@ -245,7 +242,6 @@
                                          placeholder="Cidade"
                                          value="#{managerContratado.contratado.endereco.cidade}"
                                          disabled="#{managerContratado.visualizar}"
-                                         required="true"
                                          requiredMessage="Este campo é obrigatório."
                                          styleClass="form-control" 
                                          />
@@ -258,7 +254,6 @@
                                            for="bairroPessoaJuriInput" />
                             <p:inputText id="bairroPessoaJuriInput"
                                          placeholder="Bairro"
-                                         required="true"
                                          value="#{managerContratado.contratado.endereco.bairro}"
                                          disabled="#{managerContratado.visualizar}"
                                          requiredMessage="Este campo é obrigatório."
@@ -272,7 +267,7 @@
             <center>
                 <p:commandButton value="Salvar" icon="pi pi-save" process="contratadoPanelGroup" update="corpoInteiro:messages" actionListener="#{managerContratado.salvar()}" rendered="#{managerContratado.cadastrar}" />
                 <p:button value="Editar" icon="pi pi-pencil"  rendered="#{managerContratado.visualizar}" href="contratado.xhtml?editar=#{managerContratado.contratado.id}" />
-                <p:commandButton value="Atualizar" icon="pi pi-sync" process="contratadoPanelGroup"  actionListener="#{managerContratado.atualizar()}" rendered="#{managerContratado.editar}"  />
+                <p:commandButton value="Atualizar" icon="pi pi-sync" process="corpoInteiro:contratadoPanelGroup" update="@this corpoInteiro:messages" actionListener="#{managerContratado.atualizar()}" rendered="#{managerContratado.editar}"  />
                 <p:button value="Cancelar" icon="pi pi-ban"  href="contratado.xhtml" rendered="#{managerContratado.visualizar}" />
                 <p:button value="Cancelar" icon="pi pi-ban"  href="contratado.xhtml?visualizar=#{managerContratado.contratado.id}" rendered="#{managerContratado.editar}" />
                 <p:button value="Cancelar" icon="pi pi-ban"  href="index.xhtml" rendered="#{managerContratado.cadastrar}" />
