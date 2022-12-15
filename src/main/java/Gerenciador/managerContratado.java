@@ -128,7 +128,12 @@ public class managerContratado extends managerPrincipal implements Serializable 
     }
 
     public List<Contratado> getAll() {
-        return contratadoServico.FindAll();
+        if (Utils.isNotEmpty(userLogado.getUnidadeOrganizacional())) {
+            return contratadoServico.FindAll(userLogado.getUnidadeOrganizacional());
+        } else {
+            return contratadoServico.FindAll();
+
+        }
     }
 
     public boolean renderedCpfPEssoa() {

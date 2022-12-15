@@ -296,7 +296,9 @@ public class Usuario implements Serializable {
 
     @Override
     public String toString() {
-        return "Usuario{" + "id=" + id + ", cpf=" + cpf + ", telefone=" + telefone + ", nome=" + nome + ", login=" + login + ", email=" + email + ", senha=" + senha + ", whatsapp=" + whatsapp + ", ativo=" + ativo + ", TiposUsuario=" + tipoUsuario + '}';
+        return "Usuario{" + "id=" + id + ", cpf=" + cpf + ", telefone=" + telefone + ", nome=" + nome + ", login=" + login + ", email=" + email + ", senha=" + senha + ", whatsapp=" + whatsapp + ", urlArquivoToken=" + urlArquivoToken + ", senhaToken=" + senhaToken + ", ativo=" + ativo + ", cargo=" + cargo + ", setor=" + setor + ", grupos=" + grupos + ", unidadeOrganizacional=" + unidadeOrganizacional + ", tipoUsuario=" + tipoUsuario + ", administrador=" + administrador + '}';
     }
+
+    
 
 }

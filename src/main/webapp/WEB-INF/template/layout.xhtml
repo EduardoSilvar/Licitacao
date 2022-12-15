@@ -212,7 +212,7 @@ and open the template in the editor.
                                     <p:menuitem value="Cadastrar" url="orgao.xhtml" icon="pi pi-save"/>
                                     <p:menuitem value="Pesquisar" icon="pi pi-search" url="pesquisarOrgao.xhtml"/>
                                 </p:submenu>
-                                <p:submenu label="Setor" icon="pi pi-building">
+                                <p:submenu label="Setor" icon="pi pi-building" rendered="#{!managerLogin.usuarioLogado.administrador}">
                                     <p:menuitem value="Cadastrar" url="setor.xhtml" icon="pi pi-save"/>
                                     <p:menuitem value="Pesquisar" url="pesquisarSetor.xhtml" icon="pi pi-search"/>
                                 </p:submenu>

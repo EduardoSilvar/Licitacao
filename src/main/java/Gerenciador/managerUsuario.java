@@ -40,6 +40,7 @@ public class managerUsuario extends managerPrincipal implements Serializable {
     private GrupoServico grupoServico;
 
     private Usuario user;
+    private Usuario userlogado;
     private Grupo grupo;
     private List<Usuario> users;
     private String repetirSenha;
@@ -48,21 +49,38 @@ public class managerUsuario extends managerPrincipal implements Serializable {
 
     @Override
     public void carregar(String param) {
+        userlogado = userServico.getCurrentUser();
         this.grupo = new Grupo();
-        this.unidades = unidadeServico.FindAll();
+        if (Utils.isNotEmpty(userlogado.getUnidadeOrganizacional())) {
+            this.unidades = unidadeServico.FindUnidades(userlogado.getUnidadeOrganizacional());
+        } else {
+            this.unidades = unidadeServico.FindAll();
+
+        }
+
         this.user = userServico.find(Long.parseLong(param));
     }
 
     @Override
     public void instanciar() {
-        this.unidades = unidadeServico.FindAll();
+        userlogado = userServico.getCurrentUser();
+        if (Utils.isNotEmpty(userlogado.getUnidadeOrganizacional())) {
+            this.unidades = unidadeServico.FindUnidades(userlogado.getUnidadeOrganizacional());
+        } else {
+            this.unidades = unidadeServico.FindAll();
+
+        }
         this.grupo = new Grupo();
         instanciarUsuario();
         instanciarListUser();
     }
 
     public List<Setor> getSetores() {
-        return setorServico.FindAll();
+        if (Utils.isNotEmpty(userlogado.getUnidadeOrganizacional())) {
+            return setorServico.FindAll(userlogado.getUnidadeOrganizacional());
+        } else {
+            return setorServico.FindAll();
+        }
     }
 
     public void salvar() {
@@ -81,9 +99,17 @@ public class managerUsuario extends managerPrincipal implements Serializable {
                     if (userServico.valida(user.getCpf())) {
                         if (Utils.isNotEmpty(this.repetirSenha)) {
                             if (user.getSenha().equals(repetirSenha)) {
-                                this.user.setSenha(Usuario.encryptPassword(repetirSenha));
-                                userServico.Save(this.user);
-                                Msg.messagemInfoRedirect("Operação realizada com sucesso !", "usuario.xhtml?visualizar=" + this.user.getId());
+                                if (Utils.isNotEmpty(user.getUnidadeOrganizacional())) {
+                                    this.user.setSenha(Usuario.encryptPassword(repetirSenha));
+                                    userServico.Save(this.user);
+                                    Msg.messagemInfoRedirect("Operação realizada com sucesso !", "usuario.xhtml?visualizar=" + this.user.getId());
+                                } else {
+                                    this.user.setUnidadeOrganizacional(userlogado.getUnidadeOrganizacional());
+                                    this.user.setSenha(Usuario.encryptPassword(repetirSenha));
+                                    userServico.Save(this.user);
+                                    Msg.messagemInfoRedirect("Operação realizada com sucesso !", "usuario.xhtml?visualizar=" + this.user.getId());
+                                }
+
                             } else {
                                 Msg.messagemError("As senhas não conferem !");
                             }
@@ -101,7 +127,11 @@ public class managerUsuario extends managerPrincipal implements Serializable {
     }
 
     public List<Usuario> getAll() {
-        return userServico.FindAll();
+        if (Utils.isNotEmpty(userlogado.getUnidadeOrganizacional())) {
+            return userServico.FindAll(userlogado.getUnidadeOrganizacional());
+        } else {
+            return userServico.FindAll();
+        }
     }
 
     public void atualizar() {
@@ -114,13 +144,13 @@ public class managerUsuario extends managerPrincipal implements Serializable {
         novoUser.setAtivo(false);
         userServico.Update(novoUser);
         if (Utils.isNotEmpty(user)) {
-            this.users = userServico.pesquisar(this.user);
+            this.users = userServico.pesquisar(this.user, userlogado.getUnidadeOrganizacional());
         }
         Msg.messagemInfo("Operação realizada com sucesso !");
     }
 
     public void pesquisar() {
-        this.users = userServico.pesquisar(this.user);
+        this.users = userServico.pesquisar(this.user, userlogado.getUnidadeOrganizacional());
         if (users.size() > 0) {
             Msg.messagemInfo("Operação realizada com sucesso !");
         } else {

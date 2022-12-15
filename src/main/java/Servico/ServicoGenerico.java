@@ -10,13 +10,14 @@ import java.io.Serializable;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import modelo.UnidadeOrganizacional;
 
 /**
  *
  * @author eduardo
  * @param <T>
  */
-public class ServicoGenerico<T> implements Serializable{
+public class ServicoGenerico<T> implements Serializable {
 
     @PersistenceContext
     EntityManager entityManager;
@@ -42,6 +43,12 @@ public class ServicoGenerico<T> implements Serializable{
         return NovoObjeto;
     }
 
+    public List<T> FindAll(UnidadeOrganizacional unidade) {
+        return entityManager
+                .createQuery("select e from " + entity.getSimpleName() + " e where e.ativo = true and e.unidadeOrganizacional = :unidade")
+                .setParameter("unidade", unidade).getResultList();
+
+    }
     public List<T> FindAll() {
         return entityManager
                 .createQuery("select e from " + entity.getSimpleName() + " e where e.ativo = true")

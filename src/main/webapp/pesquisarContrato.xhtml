@@ -84,24 +84,8 @@
 
                 </div>
                 <div class="row">
+                 
                     <div class="col-md-4">
-                        <div class="form-group">
-                            <p:outputLabel value="Fiscal de contrato" styleClass="control-label" for="fiscalSelect" />
-                            <p:selectOneMenu id="fiscalSelect"
-                                             filter="true" 
-                                             placeholder="fiscal"
-                                             styleClass="form-control"
-                                             disabled="#{managerContrato.visualizar}"
-                                             requiredMessage="Este campo é obrigatório."
-                                             converter="usuarioconverter"
-                                             value="#{managerContrato.fiscal}"
-                                             >
-                                <f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
-                                <f:selectItems value="#{managerContrato.responsaveis}" var="user" itemLabel="#{user.nome}" itemValue="#{user}" />
-                            </p:selectOneMenu>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
                         <div class="form-group">
                             <p:outputLabel value="Setor reponsável" styleClass="control-label" for="setorSelect" />
                             <p:selectOneMenu id="setorSelect"
@@ -117,7 +101,7 @@
                             </p:selectOneMenu>
                         </div>
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-4">
                         <p:outputLabel value="Data inicial"
                                        for="dataInicialContrato" />
                         <p:calendar id="dataInicialContrato"
@@ -131,7 +115,7 @@
                                     />
                         <p:message for="dataInicialContrato" />
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-4">
                         <p:outputLabel value="Data final"
                                        for="dataFinalContrato" />
                         <p:calendar id="dataFinalContrato"
@@ -145,7 +129,6 @@
                                     />
                         <p:message for="dataFinalContrato" />
                     </div>
-                    <div class="col-md-2"></div>
                 </div>
 
             </h:panelGroup>

@@ -47,7 +47,7 @@ public class ContratoServico extends ServicoGenerico<Contrato> implements Serial
     public ContratoServico() {
         super(Contrato.class);
     }
-    
+
     public List<Contrato> buscarContratosPagos(Usuario user) {
 
         String sql = "select c from Contrato c where c.ativo = true and c.status = :status ";
@@ -61,7 +61,7 @@ public class ContratoServico extends ServicoGenerico<Contrato> implements Serial
         }
         return query.getResultList();
     }
-    
+
     public List<ContratoVo> buscarContratos(Usuario user) {
 
         String sql = "select new modelo.ContratoVo(c.status, count(c)) "
@@ -204,30 +204,27 @@ public class ContratoServico extends ServicoGenerico<Contrato> implements Serial
 
     public List<Contrato> findAllUnidade(UnidadeOrganizacional unidade) {
         String sql = "select c from Contrato c where ";
-        
+
         if (Utils.isNotEmpty(unidade)) {
             sql += "c.unidadeOrganizacional.id = :unidade and ";
         }
         sql += "c.ativo = true";
 
         Query query = entityManager.createQuery(sql);
-        
+
         if (Utils.isNotEmpty(unidade)) {
             query.setParameter("unidade", unidade.getId());
         }
         return query.getResultList();
     }
-    
-    public List<Contrato> findPesquisa(Contrato contrato, UnidadeOrganizacional unidade, Usuario fiscal) {
-        String sql = "select c from Contrato c join c.fiscalContrato u where ";
+
+    public List<Contrato> findPesquisa(Contrato contrato, UnidadeOrganizacional unidade) {
+        String sql = "select c from Contrato c where ";
         if (Utils.isNotEmpty(contrato.getContratado())) {
             sql += "c.contratado = :contratado and ";
         }
         if (Utils.isNotEmpty(unidade)) {
-            sql += "c.unidadeOrganizacional.id = :unidade and ";
-        }
-        if (Utils.isNotEmpty(fiscal)) {
-            sql += "c.fiscalContrato = :fiscal and ";
+            sql += "c.unidadeOrganizacional = :unidade and ";
         }
         if (Utils.isNotEmpty(contrato.getNumeroContrato())) {
             sql += "c.numeroContrato = :numero and ";
@@ -250,9 +247,6 @@ public class ContratoServico extends ServicoGenerico<Contrato> implements Serial
         if (Utils.isNotEmpty(contrato.getContratado())) {
             query.setParameter("contratado", contrato.getContratado());
         }
-        if (Utils.isNotEmpty(fiscal)) {
-            query.setParameter("fiscal", fiscal);
-        }
         if (Utils.isNotEmpty(contrato.getStatus())) {
             query.setParameter("status", contrato.getStatus());
         }
@@ -260,7 +254,7 @@ public class ContratoServico extends ServicoGenerico<Contrato> implements Serial
             query.setParameter("dataf", contrato.getDataFinal());
         }
         if (Utils.isNotEmpty(unidade)) {
-            query.setParameter("unidade", unidade.getId());
+            query.setParameter("unidade", unidade);
         }
         if (Utils.isNotEmpty(contrato.getDataInicio())) {
             query.setParameter("datai", contrato.getDataInicio());

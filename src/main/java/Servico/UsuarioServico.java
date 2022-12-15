@@ -14,6 +14,7 @@ import javax.faces.context.FacesContext;
 import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
 import javax.persistence.Query;
+import modelo.UnidadeOrganizacional;
 import modelo.Usuario;
 import util.Msg;
 import util.Utils;
@@ -100,10 +101,13 @@ public class UsuarioServico extends ServicoGenerico<Usuario> implements Serializ
 
     }
 
-    public List<Usuario> pesquisar(Usuario user) {
+    public List<Usuario> pesquisar(Usuario user,UnidadeOrganizacional unidade) {
         String sql = "select u from Usuario u where u.ativo = true";
         if (Utils.isNotEmpty(user.getEmail())) {
             sql += " and u.email = :email";
+        }
+          if (Utils.isNotEmpty(unidade)) {
+            sql += " and u.unidadeOrganizacional = :unidade";
         }
         if (Utils.isNotEmpty(user.getNome())) {
             sql += " and u.nome = :nome";
@@ -115,6 +119,9 @@ public class UsuarioServico extends ServicoGenerico<Usuario> implements Serializ
         }
         if (Utils.isNotEmpty(user.getNome())) {
             query.setParameter("nome", user.getNome());
+        }
+           if (Utils.isNotEmpty(unidade)) {
+           query.setParameter("unidade", unidade);
         }
         return query.getResultList();
     }

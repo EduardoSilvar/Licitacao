@@ -99,20 +99,23 @@ public class managerContrato extends managerPrincipal implements Serializable {
     @Override
     public void carregar(String param) {
         userLogado = userServico.getCurrentUser();
+        System.err.println(userLogado);
         instanciarSelect();
         InstanciarContrato();
         InstanciarContratos();
         this.anexo = new Anexo();
         this.contrato = contratoServico.find(Long.parseLong(param));
         this.contratos = new ArrayList<>();
-        this.responsaveis = userServico.FindAll();
-        this.setores = setorServico.FindAll();
+        this.responsaveis = userServico.FindAll(userLogado.getUnidadeOrganizacional());
+        this.setores = setorServico.FindAll(userLogado.getUnidadeOrganizacional());
         verificarTipoFiscal();
     }
 
     @Override
     public void instanciar() {
         userLogado = userServico.getCurrentUser();
+        System.err.println(userLogado);
+
         this.anexo = new Anexo();
         instanciarSelect();
         InstanciarContrato();
@@ -121,10 +124,10 @@ public class managerContrato extends managerPrincipal implements Serializable {
     }
 
     public void instanciarSelect() {
-        this.setores = setorServico.FindAll();
-        this.contratados = contratadoServico.FindAll();
-        this.responsaveis = userServico.FindAll();
-        this.tiposLicitacao = tipoLicitacaoServico.FindAll();
+        this.setores = setorServico.FindAll(userLogado.getUnidadeOrganizacional());
+        this.contratados = contratadoServico.FindAll(userLogado.getUnidadeOrganizacional());
+        this.responsaveis = userServico.FindAll(userLogado.getUnidadeOrganizacional());
+        this.tiposLicitacao = tipoLicitacaoServico.FindAll(userLogado.getUnidadeOrganizacional());
     }
 
     public void instanciarVerificacaoRendered() {
@@ -206,6 +209,8 @@ public class managerContrato extends managerPrincipal implements Serializable {
     }
 
     public void salvar() {
+        userLogado = userServico.getCurrentUser();
+
         if (Utils.isNotEmpty(this.contrato.getNumeroContrato())) {
             if (contratoServico.existNumero(this.contrato.getNumeroContrato())) {
                 Msg.messagemError("Número de contrato já registrado !");
@@ -224,8 +229,10 @@ public class managerContrato extends managerPrincipal implements Serializable {
     }
 
     public void pesquisar() {
+        userLogado = userServico.getCurrentUser();
+
         if (Utils.isNotEmpty(userLogado.getUnidadeOrganizacional())) {
-            this.contratos = contratoServico.findPesquisa(this.contrato, userLogado.getUnidadeOrganizacional(), this.fiscal);
+            this.contratos = contratoServico.findPesquisa(this.contrato, userLogado.getUnidadeOrganizacional());
             if (this.contratos.size() > 0) {
                 Msg.messagemInfo("Operação realizada com sucesso !!");
             } else {
@@ -425,7 +432,7 @@ public class managerContrato extends managerPrincipal implements Serializable {
     }
 
     public List<Contrato> PegarTodos() {
-        contratos = contratoServico.FindAll();
+        contratos = contratoServico.FindAll(userLogado.getUnidadeOrganizacional());
         return contratos;
     }
 

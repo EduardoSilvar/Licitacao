@@ -92,7 +92,7 @@ public class MacroNotaFiscal {
         document.add(table);
         if (Utils.isNotEmpty(contrato.getDataAssinatura())) {
             paragraphGlobal = new Paragraph("Ordem de serviço : ", fonte);
-            paragraphGlobal.add(new Chunk(DateUtils.format(DateUtils.SIMPLE_DATE, contrato.getDataAssinatura()), regular));
+            paragraphGlobal.add(new Chunk(DateUtils.format(DateUtils.SIMPLE_DATE, contrato.getDataInicio()), regular));
             tableMaePai.addCell(paragraphGlobal);
         } else {
             paragraphGlobal = new Paragraph("Ordem de serviço : ", fonte);
@@ -192,17 +192,17 @@ public class MacroNotaFiscal {
             String nomeFiscais = "";
             if (Utils.isNotEmpty(contrato.getFiscaisContrato())) {
 //                if (Utils.isNotEmpty(contrato.getFiscal().getNome())) {
-                    paragraphGlobal = new Paragraph("Nome : ", fonte);
-                    List<Usuario> fiscais = new ArrayList<>();
-                    for (Usuario user : contrato.getFiscaisContrato()) {
-                        fiscais.add(user);
-                    }
-                    nomeFiscais = fiscais.get(0).getNome();
-                    fiscais.remove(0);
-                    for (Usuario user : fiscais) {
-                        nomeFiscais += ", " + user.getNome();
-                    }
-                    nomeFiscais += ".";
+                paragraphGlobal = new Paragraph("Nome : ", fonte);
+                List<Usuario> fiscais = new ArrayList<>();
+                for (Usuario user : contrato.getFiscaisContrato()) {
+                    fiscais.add(user);
+                }
+                nomeFiscais = fiscais.get(0).getNome();
+                fiscais.remove(0);
+                for (Usuario user : fiscais) {
+                    nomeFiscais += ", " + user.getNome();
+                }
+                nomeFiscais += ".";
 //                }
                 paragraphGlobal.add(new Chunk(nomeFiscais, regular));
                 tableMaePai.addCell(paragraphGlobal);
@@ -246,9 +246,15 @@ public class MacroNotaFiscal {
         tableMaePai.setPaddingTop(50);
         tableMaePai.getDefaultCell().setPadding(3);
         tableMaePai.setWidthPercentage(95);
-        paragraphGlobal = new Paragraph("Periodo Fiscalizado: de ___/___/2022 a ___/___/2022 : ", fonte);
-        tableMaePai.addCell(paragraphGlobal);
-        document.add(tableMaePai);
+        if (Utils.isNotEmpty(nota.getInicioFiscalizado()) && Utils.isNotEmpty(nota.getFinalFiscalizado())) {
+            paragraphGlobal = new Paragraph("Periodo Fiscalizado: de " + DateUtils.format(DateUtils.DD_MM_YYYY, nota.getInicioFiscalizado()) + " a " + DateUtils.format(DateUtils.DD_MM_YYYY, nota.getFinalFiscalizado()) + " : ", fonte);
+            tableMaePai.addCell(paragraphGlobal);
+            document.add(tableMaePai);
+        } else {
+            paragraphGlobal = new Paragraph("Periodo Fiscalizado: de ___/___/2022 a ___/___/2022 : ", fonte);
+            tableMaePai.addCell(paragraphGlobal);
+            document.add(tableMaePai);
+        }
 
         header = new PdfPCell(new Phrase("LISTA DE VERIFICAÇÕES ", fonteTexto));
         table = new PdfPTable(1);

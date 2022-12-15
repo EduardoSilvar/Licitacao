@@ -60,4 +60,11 @@ public class UnidadeOrganizacionalServico extends ServicoGenerico<UnidadeOrganiz
 
         return query.getResultList();
     }
+    
+     public List<UnidadeOrganizacional> FindUnidades(UnidadeOrganizacional unidade) {
+        return getEntityManager()
+                .createQuery("select e from UnidadeOrganizacional e where e.ativo = true and e.id = :unidade")
+                .setParameter("unidade", unidade.getId()).getResultList();
+
+    }
 }

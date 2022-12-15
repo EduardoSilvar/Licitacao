@@ -171,10 +171,9 @@
                     <div class="form-group" style="display: flex;flex-direction: column" >
                         <p:outputLabel value="Numero da Nota fiscal"
                                        for="numeroNotaFiscal" />
-                        <p:inputNumber id="numeroNotaFiscal"
+                        <p:inputText id="numeroNotaFiscal"
                                        placeholder="Numero"
                                        rendered="true"
-                                       minValue="0"
                                        disabled="#{managerNotaFiscal.visualizar}"
                                        value="#{managerNotaFiscal.notaFiscal.numero}"
                                        requiredMessage="Este campo é obrigatório."

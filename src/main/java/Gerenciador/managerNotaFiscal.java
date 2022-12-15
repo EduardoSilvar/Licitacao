@@ -13,6 +13,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -73,7 +74,7 @@ public class managerNotaFiscal extends managerPrincipal {
             this.notaFiscal.setUnidadeOrganizacional(userLogado.getUnidadeOrganizacional());
         }
         Contrato contrato = this.notaFiscal.getContrato();
-        contrato.setValorRestante(contrato.getValorRestante().subtract(this.notaFiscal.getValor()));
+        contrato.setValorRestante(contrato.getValorRestante().subtract(new BigDecimal(this.notaFiscal.getValor().toString())));
         contratoServico.Update(contrato);
         notaFiscalServico.Save(this.notaFiscal);
         Msg.messagemInfoRedirect("Operação realizada com sucesso !", "notaFiscal.xhtml?visualizar=" + this.notaFiscal.getId());
@@ -211,8 +212,8 @@ public class managerNotaFiscal extends managerPrincipal {
     }
 
     public void instanciarSelect() {
-        this.contratos = contratoServico.FindAll();
-        this.responsaveis = userServico.FindAll();
+        this.contratos = contratoServico.FindAll(userLogado.getUnidadeOrganizacional());
+        this.responsaveis = userServico.FindAll(userLogado.getUnidadeOrganizacional());
     }
 
     @Override
