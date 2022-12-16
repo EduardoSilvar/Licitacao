@@ -79,6 +79,7 @@ public class managerConfiguracao implements Serializable {
     }
     
     public void pesquisar() {
+        this.contratosPertodeExpirar = new ArrayList<>();
         if (this.configuracao.getDiasPraExpirar() != null && this.configuracao.getDiasPraExpirar() > 0) {
             List<Contrato> todosContratos = new ArrayList<>();
             todosContratos = contratoServico.findAllUnidade(userLogado.getUnidadeOrganizacional());
@@ -90,6 +91,7 @@ public class managerConfiguracao implements Serializable {
             for (Contrato c : todosContratos) {
                 Long dataContrato = c.getDataFinal().getTime() / (3600000 * 24);
                 Long output = (dataContrato - agora );
+                System.out.println(this.configuracao.getDiasPraExpirar());
                 if (output < this.configuracao.getDiasPraExpirar() && output > 0) {
                     if(this.contratosPertodeExpirar.contains(c)){
                         

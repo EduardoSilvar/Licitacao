@@ -220,7 +220,7 @@
                             <p:message for="numeroPessoaJuriInput" />
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-1">
                         <div class="form-group">
                             <p:outputLabel value="Número"
                                            for="numeroPessoaJuriInput" />
@@ -232,6 +232,24 @@
                                          styleClass="form-control" 
                                          />
                             <p:message for="numeroPessoaJuriInput" />
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <p:outputLabel value="Estado"
+                                           for="estadoSelectOneMenu" />
+                            <p:selectOneMenu id="estadoSelectOneMenu"
+                                             filter="true" 
+                                             placeholder="Estado"
+                                             styleClass="form-control"
+                                             value="#{managerContratado.contratado.endereco.estado}"
+                                             required="true"
+                                             disabled="#{managerContratado.visualizar}"
+                                             >
+                                <f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
+                                <f:selectItems value="#{managerEnuns.estados}" var="estado" itemLabel="#{estado.label}" itemValue="#{estado}" />
+                            </p:selectOneMenu>
+                            <p:message for="estadoSelectOneMenu" />
                         </div>
                     </div>
                     <div class="col-md-3">

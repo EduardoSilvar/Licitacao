@@ -5,6 +5,7 @@
  */
 package modelo;
 
+import Enum.Estado;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.Entity;
@@ -26,6 +27,7 @@ public class Endereco implements Serializable {
     private Long id;
     private String cep;
     private String bairro;
+    private Estado estado;
     private String cidade;
     private String numero;
     private String logradouro;
@@ -55,6 +57,16 @@ public class Endereco implements Serializable {
     public void setBairro(String rua) {
         this.bairro = rua;
     }
+
+    public Estado getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Estado estado) {
+        this.estado = estado;
+    }
+    
+    
 
     public String getNumero() {
         return numero;

@@ -37,6 +37,14 @@ public class managerEnuns implements Serializable {
         return items;
     }
     
+    public List<SelectItem> getEstados() {
+        List<SelectItem> items = new ArrayList<>();
+        for (Estado item : Estado.values()) {
+            items.add(new SelectItem(item, item.getNome()));
+        }
+        return items;
+    }
+    
     public List<SelectItem> getTipoContrato(){
         List<SelectItem> items = new ArrayList<>();
         for (TipoContratoEnum item : TipoContratoEnum.values()) {
