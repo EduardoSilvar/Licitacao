@@ -90,43 +90,6 @@
             <h:panelGroup>
                 <div class="row">
                     <div class="col-md-6">
-                        <p:outputLabel value="Valor"
-                                       for="supressaoValor" />
-                        <p:inputNumber id="supressaoValor" required="true"  value="#{managerSupressao.supressao.valor}" symbol="R$"
-                                           symbolPosition="p" emptyValue="always" requiredMessage="Este campo é obrigatório."
-                                          disabled="#{managerSupressao.visualizar}" />
-                            <p:message for="supressaoValor" />
-<!--                        <p:inputMask id="supressaoValor"
-                                     style="display: flex; flex-direction: row"
-                                     disabled="{managerSupressao.visualizar}"
-                                     styleClass="form-control" 
-                                     value="{managerSupressao.supressao.valor}"
-                                     placeholder="Valor"
-                                     requiredMessage="Este campo é obrigatório." />
-                        <p:message for="supressaoValor" />-->
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <p:outputLabel value="Fiscal responsável" styleClass="control-label" for="fiscalSelectSupressao" />
-                            <p:selectOneMenu id="fiscalSelectSupressao"
-                                             filter="true" 
-                                             disabled="#{managerSupressao.visualizar}"
-                                             placeholder="fiscal"
-                                             required="true"
-                                             styleClass="form-control"
-                                             requiredMessage="Este campo é obrigatório."
-                                             converter="usuarioconverter"
-                                             value="#{managerSupressao.supressao.fiscal}"
-                                             >
-                                <f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
-                                <f:selectItems value="#{managerSupressao.fiscais}" var="user" itemLabel="#{user.nome}" itemValue="#{user}" />
-                            </p:selectOneMenu>
-                            <p:message for="fiscalSelectSupressao" />
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
                         <p:outputLabel value="Data de assinatura"
                                        for="dataassinaturaSupressao" />
                         <p:calendar id="dataassinaturaSupressao"
@@ -153,6 +116,38 @@
                                          styleClass="form-control" 
                                          />
                             <p:message for="descricaoSupressao" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <p:outputLabel value="Fiscal responsável" styleClass="control-label" for="fiscalSelectSupressao" />
+                            <p:selectOneMenu id="fiscalSelectSupressao"
+                                             filter="true" 
+                                             disabled="#{managerSupressao.visualizar}"
+                                             placeholder="fiscal"
+                                             required="true"
+                                             styleClass="form-control"
+                                             requiredMessage="Este campo é obrigatório."
+                                             converter="usuarioconverter"
+                                             value="#{managerSupressao.supressao.fiscal}"
+                                             >
+                                <f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
+                                <f:selectItems value="#{managerSupressao.fiscais}" var="user" itemLabel="#{user.nome}" itemValue="#{user}" />
+                            </p:selectOneMenu>
+                            <p:message for="fiscalSelectSupressao" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group" style="display: flex;flex-direction: column">
+                            <p:outputLabel value="Valor"
+                                           for="supressaoValor" />
+                            <p:inputNumber id="supressaoValor" required="true"  value="#{managerSupressao.supressao.valor}" symbol="R$"
+                                           symbolPosition="p" emptyValue="always" requiredMessage="Este campo é obrigatório."
+                                           disabled="#{managerSupressao.visualizar}" />
+                            <p:message for="supressaoValor" />
                         </div>
                     </div>
                 </div>

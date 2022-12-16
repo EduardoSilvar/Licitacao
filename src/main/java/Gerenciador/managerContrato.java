@@ -106,8 +106,13 @@ public class managerContrato extends managerPrincipal implements Serializable {
         this.anexo = new Anexo();
         this.contrato = contratoServico.find(Long.parseLong(param));
         this.contratos = new ArrayList<>();
-        this.responsaveis = userServico.FindAll(userLogado.getUnidadeOrganizacional());
-        this.setores = setorServico.FindAll(userLogado.getUnidadeOrganizacional());
+        if (Utils.isNotEmpty(userLogado.getUnidadeOrganizacional())) {
+            this.responsaveis = userServico.FindAll(userLogado.getUnidadeOrganizacional());
+            this.setores = setorServico.FindAll(userLogado.getUnidadeOrganizacional());
+        } else {
+            this.responsaveis = userServico.FindAll();
+            this.setores = setorServico.FindAll();
+        }
         verificarTipoFiscal();
     }
 
@@ -124,10 +129,17 @@ public class managerContrato extends managerPrincipal implements Serializable {
     }
 
     public void instanciarSelect() {
-        this.setores = setorServico.FindAll(userLogado.getUnidadeOrganizacional());
-        this.contratados = contratadoServico.FindAll(userLogado.getUnidadeOrganizacional());
-        this.responsaveis = userServico.FindAll(userLogado.getUnidadeOrganizacional());
-        this.tiposLicitacao = tipoLicitacaoServico.FindAll(userLogado.getUnidadeOrganizacional());
+        if (Utils.isNotEmpty(userLogado.getUnidadeOrganizacional())) {
+            this.setores = setorServico.FindAll(userLogado.getUnidadeOrganizacional());
+            this.contratados = contratadoServico.FindAll(userLogado.getUnidadeOrganizacional());
+            this.responsaveis = userServico.FindAll(userLogado.getUnidadeOrganizacional());
+            this.tiposLicitacao = tipoLicitacaoServico.FindAll(userLogado.getUnidadeOrganizacional());
+        } else {
+            this.setores = setorServico.FindAll();
+            this.contratados = contratadoServico.FindAll();
+            this.responsaveis = userServico.FindAll();
+            this.tiposLicitacao = tipoLicitacaoServico.FindAll();
+        }
     }
 
     public void instanciarVerificacaoRendered() {
@@ -172,17 +184,19 @@ public class managerContrato extends managerPrincipal implements Serializable {
     }
 
     public void verificarTipoFiscal() {
-        if (Utils.isNotEmpty(this.contrato.getTipoFiscalizacao())) {
-            if (this.contrato.getTipoFiscalizacao().equals(TipoFiscalizacaoEnum.INDIVIDUAL)) {
-                this.renderedFiscalIndividual = true;
-                this.renderedFiscalComissao = false;
+        if (Utils.isNotEmpty(this.contrato)) {
+            if (Utils.isNotEmpty(this.contrato.getTipoFiscalizacao())) {
+                if (this.contrato.getTipoFiscalizacao().equals(TipoFiscalizacaoEnum.INDIVIDUAL)) {
+                    this.renderedFiscalIndividual = true;
+                    this.renderedFiscalComissao = false;
+                } else {
+                    this.renderedFiscalIndividual = false;
+                    this.renderedFiscalComissao = true;
+                }
             } else {
+                this.renderedFiscalComissao = false;
                 this.renderedFiscalIndividual = false;
-                this.renderedFiscalComissao = true;
             }
-        } else {
-            this.renderedFiscalComissao = false;
-            this.renderedFiscalIndividual = false;
         }
     }
 
@@ -432,8 +446,13 @@ public class managerContrato extends managerPrincipal implements Serializable {
     }
 
     public List<Contrato> PegarTodos() {
-        contratos = contratoServico.FindAll(userLogado.getUnidadeOrganizacional());
-        return contratos;
+        if (Utils.isNotEmpty(userLogado.getUnidadeOrganizacional())) {
+            contratos = contratoServico.FindAll(userLogado.getUnidadeOrganizacional());
+            return contratos;
+        } else {
+            contratos = contratoServico.FindAll();
+            return contratos;
+        }
     }
 
     public void InstanciarContratos() {

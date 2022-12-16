@@ -30,14 +30,15 @@ import util.Utils;
  */
 @ManagedBean
 @ViewScoped
-public class managerSupressao extends managerPrincipal implements Serializable{
+public class managerSupressao extends managerPrincipal implements Serializable {
+
     @EJB
     private SupressaoServico supressaoServico;
     @EJB
     private ContratoServico contratoServico;
     @EJB
     private UsuarioServico userServico;
-    
+
     private Supressao supressao;
     private String verificadorRendered;
     private List<Supressao> supressoes;
@@ -45,18 +46,25 @@ public class managerSupressao extends managerPrincipal implements Serializable{
     private List<Contrato> contratos;
     private Usuario user;
     private Long id;
-    
+
     @Override
     public void carregar(String param) {
+        this.user = userServico.getCurrentUser();
         this.id = Long.parseLong(param);
         this.supressao = supressaoServico.find(Long.parseLong(param));
         this.supressoes = new ArrayList<>();
-        this.fiscais = userServico.FindAll();
-        this.contratos = contratoServico.FindAll();
+        if (Utils.isNotEmpty(this.user.getUnidadeOrganizacional())) {
+            this.fiscais = userServico.FindAll(this.user.getUnidadeOrganizacional());
+            this.contratos = contratoServico.FindAll(this.user.getUnidadeOrganizacional());
+        } else {
+            this.fiscais = userServico.FindAll();
+            this.contratos = contratoServico.FindAll();
+        }
     }
 
     @Override
     public void instanciar() {
+         this.user = userServico.getCurrentUser();
         instanciarSelect();
         instanciarAcrescimo();
         instanciarAcrescimos();
@@ -81,10 +89,16 @@ public class managerSupressao extends managerPrincipal implements Serializable{
     }
 
     private void instanciarSelect() {
-        this.fiscais = userServico.FindAll();
-        this.contratos = contratoServico.FindAll();
+        if (Utils.isNotEmpty(this.user.getUnidadeOrganizacional())) {
+            this.fiscais = userServico.FindAll(this.user.getUnidadeOrganizacional());
+            this.contratos = contratoServico.FindAll(this.user.getUnidadeOrganizacional());
+        } else {
+            this.fiscais = userServico.FindAll();
+            this.contratos = contratoServico.FindAll();
+        }
+
     }
-    
+
     public void salvar() {
         if (Utils.isNotEmpty(this.supressao.getNumeroTermo())) {
             if (supressaoServico.existNumero(this.supressao.getNumeroTermo())) {
@@ -99,7 +113,7 @@ public class managerSupressao extends managerPrincipal implements Serializable{
             }
         }
     }
-    
+
     public void atualizar() {
         Contrato contrato = this.supressao.getContrato();
         Supressao supressaoBD = supressaoServico.find(this.supressao.getId());
@@ -119,7 +133,7 @@ public class managerSupressao extends managerPrincipal implements Serializable{
             } else {
                 valorFinal = supressaoBD.getContrato().getValorRestante();
             }
-        } else{
+        } else {
             valorFinal = this.supressao.getContrato().getValorRestante().subtract(this.supressao.getValor());
         }
         contrato.setValor(this.supressao.getContrato().getValor().subtract(this.supressao.getValor()));
@@ -128,11 +142,11 @@ public class managerSupressao extends managerPrincipal implements Serializable{
         supressaoServico.Update(this.supressao);
         Msg.messagemInfoRedirect("Operação realizada com sucesso !", "supressao.xhtml?visualizar=" + this.supressao.getId() + "&supressao=TRUE");
     }
-    
+
     public void pesquisar(Contrato contrato) {
         this.supressoes = supressaoServico.pesquisarSupressaoPorContrato(contrato, this.supressao);
     }
-    
+
     public void deletar() {
         try {
             Supressao NovaSupressao = supressaoServico.find(this.supressao.getId());
@@ -175,7 +189,6 @@ public class managerSupressao extends managerPrincipal implements Serializable{
 //        } 
 //        return verificarMetodo;
 //    }
-
     public SupressaoServico getSupressaoServico() {
         return supressaoServico;
     }
@@ -256,9 +269,4 @@ public class managerSupressao extends managerPrincipal implements Serializable{
         this.verificadorRendered = verificadorRendered;
     }
 
-    
-    
-
-    
-    
 }

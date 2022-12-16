@@ -41,7 +41,7 @@
                 </h:panelGroup>
                 <h:panelGroup id="dadosGeraisPanelGroup" >
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <p:outputLabel value="Nome"
                                                for="nomePessoaJuriInput" />
@@ -57,7 +57,7 @@
                             </div>
                         </div>
                         <h:panelGroup rendered="#{managerContratado.renderedCnpjPEssoa()}">
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <p:outputLabel value="CNPJ"
                                                    for="cnpjPessoaJuriInput"  />
@@ -73,7 +73,7 @@
                             </div>
                         </h:panelGroup>
                         <h:panelGroup rendered="#{managerContratado.renderedCpfPEssoa()}">
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <p:outputLabel value="CPF"
                                                    for="cpfPessoaJuriInput" />
@@ -89,20 +89,7 @@
                                 </div>
                             </div>
                         </h:panelGroup>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <p:outputLabel value="Especialidade"
-                                               for="especPessoaJuriInput" />
-                                <p:inputText id="especPessoaJuriInput"
-                                             placeholder="Especialidade"
-                                             value="#{managerContratado.contratado.especialidade}"
-                                             disabled="#{managerContratado.visualizar}"
-                                             requiredMessage="Este campo é obrigatório."
-                                             styleClass="form-control" 
-                                             />
-                                <p:message for="especPessoaJuriInput" />
-                            </div>
-                        </div>
+                        
                     </div>
                 </h:panelGroup>
 
@@ -135,8 +122,8 @@
                     <h:outputText value="#{contratado.nome}" />
                 </p:column>
 
-                <p:column headerText="Especialidade">
-                    <h:outputText value="#{contratado.especialidade}" />
+                <p:column headerText="Email">
+                    <h:outputText value="#{contratado.email}" />
                 </p:column>
                 <p:column headerText="Whatsapp">
                     <h:outputText value="#{contratado.whatsapp}" />

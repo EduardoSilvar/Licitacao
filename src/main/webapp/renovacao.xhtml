@@ -121,57 +121,49 @@
 
                 </div>
             </h:panelGroup>
-            <h:panelGroup>
-                <div class="row">
-
-                    <div class="col-md-6">
-                        <p:outputLabel value="Início da próxima renovação"
-                                       for="proximaRenovacao" />
-                        <p:inputText id="proximaRenovacao"
-                                     value="#{managerRenovacao.renovacao.proximaRenovacao}"
-                                     style="display: flex; flex-direction: row"
-                                     styleClass="form-control"
-                                     disabled="#{managerRenovacao.visualizar}"
-                                     placeholder="Número de dias"
-                                     requiredMessage="Este campo é obrigatório." />
+            <div class="row" style="display: flex;flex-direction: row">
 
 
-                        <p:message for="proximaRenovacao" />
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <p:outputLabel value="O valor do contrato mudou?" />
-                            <div class="ui-inputgroup">
-                                <p:selectBooleanButton onLabel="Sim" offLabel="Não" value="#{managerRenovacao.renovacao.valorMudou}" disabled="#{managerRenovacao.visualizar}" style="width:12rem; color: white !important;border-radius: 5px">
-                                    <p:ajax update="atualizacaoValorRenovacao"/>
-                                </p:selectBooleanButton>
-                            </div>
+                <div class="col-md-6">
+                    <p:outputLabel value="Início da próxima renovação"
+                                   for="proximaRenovacao" />
+                    <p:inputText id="proximaRenovacao"
+                                 value="#{managerRenovacao.renovacao.proximaRenovacao}"
+                                 style="display: flex; flex-direction: row"
+                                 styleClass="form-control"
+                                 disabled="#{managerRenovacao.visualizar}"
+                                 placeholder="Número de dias"
+                                 requiredMessage="Este campo é obrigatório." />
+
+
+                    <p:message for="proximaRenovacao" />
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <p:outputLabel value="O valor do contrato mudou?" />
+                        <div class="ui-inputgroup">
+                            <p:selectBooleanButton onLabel="Sim" offLabel="Não" value="#{managerRenovacao.renovacao.valorMudou}" disabled="#{managerRenovacao.visualizar}" style="width:12rem; color: white !important;border-radius: 5px">
+                                <p:ajax update="atualizacaoValorRenovacao"/>
+                            </p:selectBooleanButton>
                         </div>
                     </div>
                 </div>
-            </h:panelGroup>
-            <h:panelGroup id="atualizacaoValorRenovacao" >
-                <h:panelGroup rendered="#{managerRenovacao.renderedValorMudou()}">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <p:outputLabel value="Valor"
-                                           for="novoValorRenovacao" />
-                                     <p:inputNumber id="novoValorRenovacao" required="true"  value="#{managerRenovacao.renovacao.valor}" symbol="R$"
-                                           symbolPosition="p" emptyValue="always" requiredMessage="Este campo é obrigatório."
-                                          disabled="#{managerRenovacao.visualizar}" />
-                            <p:message for="novoValorRenovacao" />
-<!--                            <p:inputMask id="novoValorRenovacao"
-                                         value="{managerRenovacao.renovacao.valor}"
-                                         style="display: flex; flex-direction: row"
-                                         styleClass="form-control" 
-                                         disabled="{managerRenovacao.visualizar}"
-                                         placeholder="Valor"
-                                         requiredMessage="Este campo é obrigatório." />
-                            <p:message for="novoValorRenovacao" />-->
-                        </div>
-                    </div>
+                <h:panelGroup id="atualizacaoValorRenovacao" >
+                    <h:panelGroup rendered="#{managerRenovacao.renderedValorMudou()}">
+                            <div class="col-md-3">
+                                <div class="form-group" style="display: flex;flex-direction: column">
+                                    <p:outputLabel value="Valor"
+                                                   for="novoValorRenovacao" />
+                                    <p:inputNumber id="novoValorRenovacao" required="true"  value="#{managerRenovacao.renovacao.valor}" symbol="R$"
+                                                   symbolPosition="p" emptyValue="always" requiredMessage="Este campo é obrigatório."
+                                                   disabled="#{managerRenovacao.visualizar}" />
+                                    <p:message for="novoValorRenovacao" />
+                                </div>
+                            </div>
+                    </h:panelGroup>
                 </h:panelGroup>
-            </h:panelGroup>
+            </div>
+
             <div class="row">
                 <div class="col-md-4">
                     <div class="form-group">

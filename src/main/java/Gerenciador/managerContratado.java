@@ -81,18 +81,26 @@ public class managerContratado extends managerPrincipal implements Serializable 
                     Msg.messagemError("CPF ja esta sendo usado !");
                 } else {
                     if (Utils.isNotEmpty(userLogado)) {
+                        System.err.println(userLogado.getUnidadeOrganizacional());
                         contratado.setUnidadeOrganizacional(userLogado.getUnidadeOrganizacional());
+                        contratadoServico.Save(contratado);
+                        Msg.messagemInfoRedirect("Operação realizada com sucesso !", "contratado.xhtml?visualizar=" + this.contratado.getId());
                     }
-                    contratadoServico.Save(contratado);
-                    Msg.messagemInfoRedirect("Operação realizada com sucesso !", "contratado.xhtml?visualizar=" + this.contratado.getId());
+
                 }
             } else {
                 Msg.messagemError("CPF invalido !");
             }
         } else {
-            contratadoServico.Save(contratado);
-            Msg.messagemInfoRedirect("Operação realizada com sucesso !", "contratado.xhtml?visualizar=" + this.contratado.getId());
-
+            if (Utils.isNotEmpty(userLogado)) {
+                System.err.println(userLogado.getUnidadeOrganizacional());
+                contratado.setUnidadeOrganizacional(userLogado.getUnidadeOrganizacional());
+                contratadoServico.Save(contratado);
+                Msg.messagemInfoRedirect("Operação realizada com sucesso !", "contratado.xhtml?visualizar=" + this.contratado.getId());
+            } else {
+                contratadoServico.Save(contratado);
+                Msg.messagemInfoRedirect("Operação realizada com sucesso !", "contratado.xhtml?visualizar=" + this.contratado.getId());
+            }
         }
 
     }

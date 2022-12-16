@@ -49,15 +49,23 @@ public class managerRepactuacao extends managerPrincipal implements Serializable
 
     @Override
     public void carregar(String param) {
+        this.user = userServico.getCurrentUser();
         this.id = Long.parseLong(param);
         this.repactuacao = repactuacaoServico.find(Long.parseLong(param));
         this.repactuacoes = new ArrayList<>();
-        this.fiscais = userServico.FindAll();
-        this.contratos = contratoServico.FindAll();
+        if (Utils.isNotEmpty(this.user.getUnidadeOrganizacional())) {
+            this.fiscais = userServico.FindAll(this.user.getUnidadeOrganizacional());
+            this.contratos = contratoServico.FindAll(this.user.getUnidadeOrganizacional());
+        } else {
+            this.fiscais = userServico.FindAll();
+            this.contratos = contratoServico.FindAll();
+        }
     }
 
     @Override
     public void instanciar() {
+        this.user = userServico.getCurrentUser();
+
         instanciarSelect();
         instanciarRepactuacao();
         intanciarRepactuacoes();
@@ -74,8 +82,13 @@ public class managerRepactuacao extends managerPrincipal implements Serializable
     }
 
     private void instanciarSelect() {
-        this.fiscais = userServico.FindAll();
-        this.contratos = contratoServico.FindAll();
+        if (Utils.isNotEmpty(this.user.getUnidadeOrganizacional())) {
+            this.fiscais = userServico.FindAll(this.user.getUnidadeOrganizacional());
+            this.contratos = contratoServico.FindAll(this.user.getUnidadeOrganizacional());
+        } else {
+            this.fiscais = userServico.FindAll();
+            this.contratos = contratoServico.FindAll();
+        }
     }
 
     private void instanciarRepactuacao() {
@@ -142,7 +155,7 @@ public class managerRepactuacao extends managerPrincipal implements Serializable
                 } else {
                     valorFinal = repactuacaoBD.getContrato().getValorRestante();
                 }
-            }else {
+            } else {
                 valorFinal = repactuacaoBD.getContrato().getValorRestante();
             }
 
@@ -194,7 +207,7 @@ public class managerRepactuacao extends managerPrincipal implements Serializable
         }
 
     }
-    
+
 //    public String urlVisualizar(long id){
 //        return "cadastrarAlteracoes.xhtml?visualizar="+id+"&repactuacao=TRUE";
 //    }

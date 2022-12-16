@@ -86,43 +86,7 @@
             </h:panelGroup>
 
             <h:panelGroup>
-                <div class="row">
-                    <div class="col-md-6">
-                        <p:outputLabel value="Valor*"
-                                       for="acrescimoValor" />
-                        <p:inputNumber id="acrescimoValor"  required="true" value="#{managerAcrescimo.acrescimo.valor}" symbol="R$"
-                                           symbolPosition="p" emptyValue="always" requiredMessage="Este campo é obrigatório."
-                                          disabled="#{managerAcrescimo.visualizar}" />
-                            <p:message for="acrescimoValor" />
-<!--                        <p:inputMask id="acrescimoValor"
-                                     value="{managerAcrescimo.acrescimo.valor}"
-                                     disabled="{managerAcrescimo.visualizar}"
-                                     style="display: flex; flex-direction: row"
-                                     styleClass="form-control" 
-                                     placeholder="Valor"
-                                     requiredMessage="Este campo é obrigatório." />
-                        <p:message for="acrescimoValor" />-->
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <p:outputLabel value="Fiscal responsável" styleClass="control-label" for="fiscalSelectAcrescimo" />
-                            <p:selectOneMenu id="fiscalSelectAcrescimo"
-                                             filter="true" 
-                                             placeholder="fiscal"
-                                             required="true"
-                                             styleClass="form-control"
-                                             disabled="#{managerAcrescimo.visualizar}"
-                                             requiredMessage="Este campo é obrigatório."
-                                             converter="usuarioconverter"
-                                             value="#{managerAcrescimo.acrescimo.fiscal}"
-                                             >
-                                <f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
-                                <f:selectItems value="#{managerAcrescimo.fiscais}" var="user" itemLabel="#{user.nome}" itemValue="#{user}" />
-                            </p:selectOneMenu>
-                            <p:message for="fiscalSelectAcrescimo" />
-                        </div>
-                    </div>
-                </div>
+               
                 <div class="row">
                     <div class="col-md-6">
                         <p:outputLabel value="Data de assinatura"
@@ -152,6 +116,38 @@
                                          />
                             <p:message for="descricaoAcrescimo" />
                         </div>
+                    </div>
+                </div>
+                 <div class="row">
+                    
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <p:outputLabel value="Fiscal responsável" styleClass="control-label" for="fiscalSelectAcrescimo" />
+                            <p:selectOneMenu id="fiscalSelectAcrescimo"
+                                             filter="true" 
+                                             placeholder="fiscal"
+                                             required="true"
+                                             styleClass="form-control"
+                                             disabled="#{managerAcrescimo.visualizar}"
+                                             requiredMessage="Este campo é obrigatório."
+                                             converter="usuarioconverter"
+                                             value="#{managerAcrescimo.acrescimo.fiscal}"
+                                             >
+                                <f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
+                                <f:selectItems value="#{managerAcrescimo.fiscais}" var="user" itemLabel="#{user.nome}" itemValue="#{user}" />
+                            </p:selectOneMenu>
+                            <p:message for="fiscalSelectAcrescimo" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group" style="display: flex;flex-direction: column">
+                        <p:outputLabel value="Valor"
+                                       for="acrescimoValor" />
+                        <p:inputNumber id="acrescimoValor"  required="true" value="#{managerAcrescimo.acrescimo.valor}" symbol="R$"
+                                           symbolPosition="p" emptyValue="always" requiredMessage="Este campo é obrigatório."
+                                          disabled="#{managerAcrescimo.visualizar}" />
+                            <p:message for="acrescimoValor" />
+                    </div>
                     </div>
                 </div>
                 <p:fileUpload mode="advanced"

@@ -52,15 +52,22 @@ public class managerRenovacao extends managerPrincipal implements Serializable {
 
     @Override
     public void carregar(String param) {
+        this.user = userServico.getCurrentUser();
         this.id = Long.parseLong(param);
         this.renovacao = renovacaoServico.find(Long.parseLong(param));
         this.renovacoes = new ArrayList<>();
-        this.fiscais = userServico.FindAll();
-        this.contratos = contratoServico.FindAll();
+        if (Utils.isNotEmpty(this.user.getUnidadeOrganizacional())) {
+            this.fiscais = userServico.FindAll(this.user.getUnidadeOrganizacional());
+            this.contratos = contratoServico.FindAll(this.user.getUnidadeOrganizacional());
+        } else {
+            this.fiscais = userServico.FindAll();
+            this.contratos = contratoServico.FindAll();
+        }
     }
 
     @Override
     public void instanciar() {
+        this.user = userServico.getCurrentUser();
         instanciarSelect();
         instanciarRenovacao();
         intanciarRenovacoes();
@@ -89,8 +96,13 @@ public class managerRenovacao extends managerPrincipal implements Serializable {
     }
 
     private void instanciarSelect() {
-        this.fiscais = userServico.FindAll();
-        this.contratos = contratoServico.FindAll();
+        if (Utils.isNotEmpty(this.user.getUnidadeOrganizacional())) {
+            this.fiscais = userServico.FindAll(this.user.getUnidadeOrganizacional());
+            this.contratos = contratoServico.FindAll(this.user.getUnidadeOrganizacional());
+        } else {
+            this.fiscais = userServico.FindAll();
+            this.contratos = contratoServico.FindAll();
+        }
     }
 
     public void salvar() {
@@ -197,7 +209,7 @@ public class managerRenovacao extends managerPrincipal implements Serializable {
         }
 
     }
-    
+
 //    public String urlVisualizar(long id) {
 //        return "cadastrarAlteracoes.xhtml?visualizar=" + id + "&renovacao=TRUE";
 //    }
