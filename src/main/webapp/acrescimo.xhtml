@@ -86,7 +86,7 @@
             </h:panelGroup>
 
             <h:panelGroup>
-               
+
                 <div class="row">
                     <div class="col-md-6">
                         <p:outputLabel value="Data de assinatura"
@@ -118,8 +118,8 @@
                         </div>
                     </div>
                 </div>
-                 <div class="row">
-                    
+                <div class="row">
+
                     <div class="col-md-6">
                         <div class="form-group">
                             <p:outputLabel value="Fiscal responsável" styleClass="control-label" for="fiscalSelectAcrescimo" />
@@ -141,24 +141,58 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group" style="display: flex;flex-direction: column">
-                        <p:outputLabel value="Valor"
-                                       for="acrescimoValor" />
-                        <p:inputNumber id="acrescimoValor"  required="true" value="#{managerAcrescimo.acrescimo.valor}" symbol="R$"
+                            <p:outputLabel value="Valor"
+                                           for="acrescimoValor" />
+                            <p:inputNumber id="acrescimoValor"  required="true" value="#{managerAcrescimo.acrescimo.valor}" symbol="R$"
                                            symbolPosition="p" emptyValue="always" requiredMessage="Este campo é obrigatório."
-                                          disabled="#{managerAcrescimo.visualizar}" />
+                                           disabled="#{managerAcrescimo.visualizar}" />
                             <p:message for="acrescimoValor" />
-                    </div>
+                        </div>
                     </div>
                 </div>
-                <p:fileUpload mode="advanced"
-                              label="PDF Termo"
-                              required="true"
-                              multiple="false"
-                              sizeLimit="900000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
-                              invalidSizeMessage="Maximum file size allowed is 10000 KB"
-                              invalidFileMessage="only gif | jpg | jpeg | png is allowed"
-                              style="margin-bottom: 20px"
-                              />
+
+                <h:panelGroup id="anexoAcrescimoPanelGroup">
+                    <p:fileUpload
+                        required="true"
+                        requiredMessage="Os Documentos de Anexo devem ser enviados"
+                        auto="true"
+                        mode="advanced"
+                        label="Anexar"
+                        listener="#{ managerAcrescimo.selecionarAnexo }"
+                        uploadLabel="Enviar"
+                        cancelLabel="Cancelar"
+                        multiple="true"
+                        allowTypes="/(\.|\/)(jpe?g|png|doc|docx|pdf|odt|tiff|tif)$/"
+                        dragDropSupport="true"
+                        invalidFileMessage="Tipo de arquivo não suportado."
+                        invalidSizeMessage="Tamanho do arquivo não é suportado"
+                        process="@this @form"
+                        update="@this, corpoInteiro:anexosPanelGroup anexosPanelGroup" 
+                        rendered="#{not managerAcrescimo.visualizar}"/>
+                </h:panelGroup>
+                <h:panelGroup id="anexosPanelGroup">
+                    <div style="display: flex; flex-direction: row">
+                        <ui:repeat value="#{managerAcrescimo.acrescimo.anexos}" var="anexo" >
+                            <div style="display: flex; flex-direction: row">
+                                <div style="display: flex; flex-direction: column;background: #e1e6e5;width: 200px; padding: 5px 10px; margin: 10px 30px ">
+                                    <div style="display: flex; flex-direction: row;width: 200px">
+                                        <p:commandButton style="width: 25px; height: 30px;" icon="pi pi-eye" rendered="#{managerAcrescimo.isPDF(anexo)}" onclick="target = '_blank'" ajax="false"  actionListener="#{managerAcrescimo.visualizarAnexo(anexo)}"/>
+
+                                        <h:panelGroup rendered="#{!managerAcrescimo.isPDF(anexo)}">
+                                            <a href="#{managerAcrescimo.anexoUrl(anexo)}" target="_blank">
+                                                <i  style="border-radius: 3px;border: 1px solid #08c1cf ; width: 25px;justify-content: center;padding-top: 7px;color: #ffffff;text-align: center; height: 30px;background: #01415B !important" class="pi pi-eye"></i>
+                                            </a> 
+                                        </h:panelGroup> 
+                                        <p:commandButton actionListener="#{managerAcrescimo.deletarAnexo(anexo)}" 
+                                                         update="corpoInteiro:messages corpoInteiro" rendered="#{!managerAcrescimo.visualizar}" icon="pi pi-trash" style="width: 25px; height: 30px;" />
+                                        <p:outputLabel value="Contrato" style="font-weight: bold;margin-left: 10px;"/>
+                                    </div>
+                                    <img  src="#{managerAcrescimo.anexoUrl(anexo)}" style="width: 180px;height: 180px" />
+                                </div>
+                            </div>
+                        </ui:repeat>
+                    </div>
+                </h:panelGroup>
             </h:panelGroup>
             <hr/>
         </h:panelGroup>

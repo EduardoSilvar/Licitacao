@@ -17,7 +17,7 @@
                 <p:menuitem value="Renovação" url="renovacao.xhtml"/>
                 <p:menuitem value="Reajuste" url="repactuacao.xhtml"/>
             </p:splitButton>
-            <p:splitButton value="Ações" style="margin: 0px -8px !important" rendered="#{not managerContrato.cadastrar}"
+            <p:splitButton value="Ações" style="margin: 0px -8px !important" rendered="#{managerContrato.renderedEditar() and !managerContrato.cadastrar}"
                            icon="pi pi-cog"
                            >
                 <p:menuitem value="Cadastrar"
@@ -25,6 +25,7 @@
                             url="contrato.xhtml"
                             process="@this"/>
                 <p:menuitem value="Editar" 
+                            
                             icon="pi pi-pencil"
                             url="contrato.xhtml?editar=#{managerContrato.contrato.id}"
                             process="@this"

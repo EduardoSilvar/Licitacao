@@ -9,6 +9,7 @@ import Enum.*;
 import Servico.AnexoServico;
 import Servico.ContratadoServico;
 import Servico.ContratoServico;
+import Servico.MensagemEmailServico;
 import Servico.SetorServico;
 import Servico.TipoLicitacaoServico;
 import Servico.UsuarioServico;
@@ -21,6 +22,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 import java.util.Random;
@@ -42,8 +44,7 @@ import javax.servlet.http.HttpServletResponse;
 import modelo.Anexo;
 import modelo.Contratado;
 import modelo.Contrato;
-import modelo.FiscalVO;
-import modelo.ModeloDocumento;
+import modelo.MensagemEmail;
 import modelo.Setor;
 import modelo.TipoAnexo;
 import modelo.TipoLicitacao;
@@ -77,6 +78,8 @@ public class managerContrato extends managerPrincipal implements Serializable {
     private AnexoServico anexoServico;
     @EJB
     UsuarioServico usuarioServico;
+    @EJB
+    MensagemEmailServico mensagemEmailServico;
 
     String senha;
     private String email;
@@ -91,15 +94,16 @@ public class managerContrato extends managerPrincipal implements Serializable {
     private List<Contrato> contratos;
     private List<Contratado> contratados;
     private List<Setor> setores;
+    private List<MensagemEmail> mensagensEmail;
     private Usuario fiscal;
     private Usuario userLogado;
+    private MensagemEmail mensagemEmail;
     private boolean renderedFiscalIndividual;
     private boolean renderedFiscalComissao;
 
     @Override
     public void carregar(String param) {
         userLogado = userServico.getCurrentUser();
-        System.err.println(userLogado);
         instanciarSelect();
         InstanciarContrato();
         InstanciarContratos();
@@ -113,15 +117,18 @@ public class managerContrato extends managerPrincipal implements Serializable {
             this.responsaveis = userServico.FindAll();
             this.setores = setorServico.FindAll();
         }
+        this.mensagemEmail = new MensagemEmail();
+        this.mensagensEmail = new ArrayList<>();
+        this.mensagensEmail = mensagemEmailServico.findMensagens(this.contrato.getContratado());
         verificarTipoFiscal();
     }
 
     @Override
     public void instanciar() {
         userLogado = userServico.getCurrentUser();
-        System.err.println(userLogado);
-
+        this.mensagemEmail = new MensagemEmail();
         this.anexo = new Anexo();
+        this.mensagensEmail = new ArrayList<>();
         instanciarSelect();
         InstanciarContrato();
         InstanciarContratos();
@@ -145,6 +152,23 @@ public class managerContrato extends managerPrincipal implements Serializable {
     public void instanciarVerificacaoRendered() {
         this.renderedFiscalIndividual = false;
         this.renderedFiscalComissao = false;
+    }
+
+    public boolean renderedEditar() {
+        if (Utils.isNotEmpty(userLogado)) {
+            if (Utils.isNotEmpty(this.contrato.getFiscal())) {
+                if (this.contrato.getFiscal().equals(userLogado)) {
+                    return true;
+                } else if (Utils.isNotEmpty(this.contrato.getFiscaisContrato())) {
+                    for (Usuario user : this.contrato.getFiscaisContrato()) {
+                        if (user.equals(userLogado)) {
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+        return false;
     }
 
     public void adicionarFiscal(Usuario fiscal) {
@@ -179,7 +203,6 @@ public class managerContrato extends managerPrincipal implements Serializable {
             }
         }
         this.anexo.setTipoAnexo(TipoAnexo.CONTRATO);
-//        PrimeFaces.current().executeScript("PF('dlgAnexo').show();");
         adicionarAnexo();
     }
 
@@ -378,7 +401,7 @@ public class managerContrato extends managerPrincipal implements Serializable {
         if (Utils.isNotEmpty(this.contrato)) {
             if (Utils.isNotEmpty(this.contrato.getContratado())) {
                 if (Utils.isNotEmpty(this.contrato.getContratado().getEmail())) {
-                    if (verificaEmail(this.contrato.getContratado().getNome(), "cveduardo73@gmail.com", assunto)) {
+                    if (verificaEmail(this.contrato.getContratado().getNome(), this.contrato.getContratado().getEmail(), assunto)) {
                         Msg.messagemInfo("Mensagem enviada com sucesso. ");
                     } else {
                         Msg.messagemError("Ocorreu um erro, verifique o email do contratado !");
@@ -386,6 +409,8 @@ public class managerContrato extends managerPrincipal implements Serializable {
                 } else {
                     Msg.messagemInfo("O contratado não possui email !");
                 }
+            } else {
+                Msg.messagemInfo("O contrato não possui contratado !");
             }
         }
     }
@@ -418,15 +443,25 @@ public class managerContrato extends managerPrincipal implements Serializable {
             message.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse(email));
             message.setSubject(assunto);
-//            message.setText("A sua nova senha é : \n\n" +senha);
             message.setContent("<html><head></head><body> " + this.textoMensagem + "</b></body></html>", "text/html");
             Transport.send(message);
-
+            salvarMensagem(assunto);
             return true;
         } catch (MessagingException e) {
             throw new RuntimeException(e);
 
         }
+    }
+
+    public void salvarMensagem(String assunto) {
+        this.mensagemEmail.setAssunto(assunto);
+        this.mensagemEmail.setMensagem(this.textoMensagem);
+        this.mensagemEmail.setData(new Date());
+        this.mensagemEmail.setDestinatario(this.contrato.getContratado());
+        this.mensagemEmail.setEmailDestinatario(this.contrato.getContratado().getEmail());
+        this.mensagemEmail.setEscritor(userLogado);
+        this.mensagemEmail.setContrato(this.contrato);
+        mensagemEmailServico.Save(mensagemEmail);
     }
 
     public String getEmail() {
@@ -671,6 +706,14 @@ public class managerContrato extends managerPrincipal implements Serializable {
 
     public void setFiscal(Usuario fiscal) {
         this.fiscal = fiscal;
+    }
+
+    public List<MensagemEmail> getMensagensEmail() {
+        return mensagensEmail;
+    }
+
+    public void setMensagensEmail(List<MensagemEmail> mensagensEmail) {
+        this.mensagensEmail = mensagensEmail;
     }
 
 }

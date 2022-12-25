@@ -4,23 +4,36 @@
  */
 package Gerenciador;
 
+import Servico.AnexoServico;
 import Servico.ContratoServico;
 import Servico.RepactuacaoServico;
 import Servico.UsuarioServico;
+import com.itextpdf.text.DocumentException;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.text.SimpleDateFormat;
+import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+import modelo.Anexo;
 import modelo.Contrato;
 import modelo.Repactuacao;
+import modelo.TipoAnexo;
 import modelo.Usuario;
+import org.apache.commons.io.FileUtils;
+import org.primefaces.event.FileUploadEvent;
+import util.Base64j;
 import util.Msg;
 import util.Utils;
 
@@ -38,17 +51,21 @@ public class managerRepactuacao extends managerPrincipal implements Serializable
     private ContratoServico contratoServico;
     @EJB
     private UsuarioServico userServico;
+    @EJB
+    private AnexoServico anexoServico;
 
     private Repactuacao repactuacao;
     private String verificadorRendered;
     private List<Repactuacao> repactuacoes;
     private List<Usuario> fiscais;
     private List<Contrato> contratos;
+    private Anexo anexo;
     private Usuario user;
     private Long id;
 
     @Override
     public void carregar(String param) {
+        this.anexo = new Anexo();
         this.user = userServico.getCurrentUser();
         this.id = Long.parseLong(param);
         this.repactuacao = repactuacaoServico.find(Long.parseLong(param));
@@ -65,7 +82,7 @@ public class managerRepactuacao extends managerPrincipal implements Serializable
     @Override
     public void instanciar() {
         this.user = userServico.getCurrentUser();
-
+        this.anexo = new Anexo();
         instanciarSelect();
         instanciarRepactuacao();
         intanciarRepactuacoes();
@@ -208,28 +225,98 @@ public class managerRepactuacao extends managerPrincipal implements Serializable
 
     }
 
-//    public String urlVisualizar(long id){
-//        return "cadastrarAlteracoes.xhtml?visualizar="+id+"&repactuacao=TRUE";
-//    }
-//    
-//    public String urlEditar(long id){
-//        return "cadastrarAlteracoes.xhtml?editar="+id+"&repactuacao=TRUE";
-//    }
-//    
-//    public boolean verificarRepactuacao(){
-//        boolean verificarMetodo = false;
-//        Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
-//        this.verificadorRendered = params.get("repactuacao");
-//        if(isVisualizar() || isEditar()){
-//            if(this.verificadorRendered != null && !this.verificadorRendered.isEmpty()){
-//                verificarMetodo = true;
-//            }
-//        }
-//        if(isCadastrar()) {
-//            verificarMetodo = true;
-//        } 
-//        return verificarMetodo;
-//    }
+    public void selecionarAnexo(FileUploadEvent event) {
+        if (Utils.isNotEmpty(event)) {
+            if (Utils.isNotEmpty(event.getFile())) {
+                this.anexo.setArquivo(event.getFile());
+            }
+        }
+        this.anexo.setTipoAnexo(TipoAnexo.REPACTUACAO);
+        adicionarAnexo();
+    }
+
+    public void adicionarAnexo() {
+
+        try {
+            if (Utils.isEmpty(this.repactuacao.getAnexos())) {
+                this.repactuacao.setAnexos(new ArrayList<Anexo>());
+            }
+            this.repactuacao.getAnexos().add(anexoServico.adicionarAnexo(this.anexo.getArquivo()));
+            int posicao = repactuacao.getAnexos().size();
+            this.repactuacao.getAnexos().get(posicao - 1).setArquivo(anexo.getArquivo());
+            this.repactuacao.getAnexos().get(posicao - 1).setCaminho(TipoAnexo.REPACTUACAO);
+            this.repactuacao.getAnexos().get(posicao - 1).setTipoAnexo(this.anexo.getTipoAnexo());
+        } catch (SQLException | IOException ex) {
+            Logger.getLogger(managerContrato.class
+                    .getName()).log(Level.SEVERE, null, ex);
+        }
+        instanciarAnexo();
+        Msg.messagemInfo(Msg.SuccessFull);
+
+    }
+
+    public void instanciarAnexo() {
+        this.anexo = new Anexo();
+    }
+
+    public boolean isPDF(Anexo anexo) {
+        return anexo.getNome().contains(".pdf");
+
+    }
+
+    public byte[] fileToByte(File imagem) throws Exception {
+        FileInputStream fis = new FileInputStream(imagem);
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        byte[] buffer = new byte[8192];
+        int bytesRead = 0;
+        while ((bytesRead = fis.read(buffer, 0, 8192)) != -1) {
+            baos.write(buffer, 0, bytesRead);
+        }
+        return baos.toByteArray();
+    }
+
+    public void deletarAnexo(Anexo a) {
+        this.repactuacao.getAnexos().remove(a);
+        Msg.messagemInfo("Anexo removido com sucesso !");
+    }
+
+    public String anexoUrl(Anexo anexo) throws IOException {
+        String caminhoLogo = "";
+        String conteudo_base64 = "";
+        caminhoLogo = anexo.getUrl() + "/" + anexo.getNome();
+        if (anexo.getNome().contains(".pdf")) {
+            conteudo_base64 = Base64j.encodeBytes(FileUtils.readFileToByteArray(new File("/opt/Licitacao/logoPDF.png")));
+        } else {
+            conteudo_base64 = Base64j.encodeBytes(FileUtils.readFileToByteArray(new File(caminhoLogo)));
+        }
+        return "data:image/png;base64," + conteudo_base64;
+    }
+
+    public void visualizarAnexo(Anexo anexo) throws IOException, IOException, Exception {
+        try {
+            String caminhoLogo = "";
+            String conteudo_base64 = "";
+            caminhoLogo = anexo.getUrl() + "/" + anexo.getNome();
+            byte[] arquivo = null;
+
+            File file = new File(caminhoLogo);
+            arquivo = fileToByte(file);
+            FacesContext facesContext = FacesContext.getCurrentInstance();
+            HttpServletResponse response = (HttpServletResponse) facesContext.getExternalContext().getResponse();
+            ServletOutputStream ouputStream = response.getOutputStream();
+            Integer totalPaginas = 0;
+
+            response.setContentType("application/pdf");
+            response.setContentLength(arquivo.length);
+            ouputStream.write(arquivo, 0, arquivo.length);
+            ouputStream.flush();
+            ouputStream.close();
+
+        } catch (DocumentException ex) {
+            Logger.getLogger(managerNotaFiscal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     public RepactuacaoServico getRepactuacaoServico() {
         return repactuacaoServico;
     }

@@ -43,7 +43,7 @@ public class Acrescimo implements Serializable{
     private Usuario fiscal;
     private String descricao;
     @OneToMany
-    private List<Anexo> imagem;
+    private List<Anexo> anexos;
     private boolean ativo = true;
 
     public Acrescimo() {
@@ -105,13 +105,15 @@ public class Acrescimo implements Serializable{
         this.descricao = descricao;
     }
 
-    public List<Anexo> getImagem() {
-        return imagem;
+    public List<Anexo> getAnexos() {
+        return anexos;
     }
 
-    public void setImagem(List<Anexo> imagem) {
-        this.imagem = imagem;
+    public void setAnexos(List<Anexo> anexo) {
+        this.anexos = anexo;
     }
+
+ 
 
     public boolean isAtivo() {
         return ativo;
@@ -123,16 +125,16 @@ public class Acrescimo implements Serializable{
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 71 * hash + Objects.hashCode(this.id);
-        hash = 71 * hash + Objects.hashCode(this.contrato);
-        hash = 71 * hash + Objects.hashCode(this.numeroTermo);
-        hash = 71 * hash + Objects.hashCode(this.valor);
-        hash = 71 * hash + Objects.hashCode(this.dataAssinatura);
-        hash = 71 * hash + Objects.hashCode(this.fiscal);
-        hash = 71 * hash + Objects.hashCode(this.descricao);
-        hash = 71 * hash + Objects.hashCode(this.imagem);
-        hash = 71 * hash + (this.ativo ? 1 : 0);
+        int hash = 3;
+        hash = 31 * hash + Objects.hashCode(this.id);
+        hash = 31 * hash + Objects.hashCode(this.contrato);
+        hash = 31 * hash + Objects.hashCode(this.numeroTermo);
+        hash = 31 * hash + Objects.hashCode(this.valor);
+        hash = 31 * hash + Objects.hashCode(this.dataAssinatura);
+        hash = 31 * hash + Objects.hashCode(this.fiscal);
+        hash = 31 * hash + Objects.hashCode(this.descricao);
+        hash = 31 * hash + Objects.hashCode(this.anexos);
+        hash = 31 * hash + (this.ativo ? 1 : 0);
         return hash;
     }
 
@@ -172,9 +174,13 @@ public class Acrescimo implements Serializable{
         if (!Objects.equals(this.fiscal, other.fiscal)) {
             return false;
         }
-        return Objects.equals(this.imagem, other.imagem);
+        return Objects.equals(this.anexos, other.anexos);
     }
 
-    
+    @Override
+    public String toString() {
+        return "Acrescimo{" + "id=" + id + ", contrato=" + contrato + ", numeroTermo=" + numeroTermo + ", valor=" + valor + ", dataAssinatura=" + dataAssinatura + ", fiscal=" + fiscal + ", descricao=" + descricao + ", anexo=" + anexos + ", ativo=" + ativo + '}';
+    }
+
 
 }

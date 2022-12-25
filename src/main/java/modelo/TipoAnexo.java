@@ -9,9 +9,12 @@ package modelo;
  * @author eduardo
  */
 public enum TipoAnexo {
-    CONTRATO("Contrato", "contrato/"),
-    NOTAFISCAL("Nota fiscal", "nota_fiscal/");
-   
+    CONTRATO("Contrato", "Contrato/"),
+    NOTAFISCAL("Nota fiscal", "Nota_fiscal/"),
+    ACRESCIMO("Acrescimo", "Acrescimo/"),
+    RENOVACAO("Renovacao", "Renovacao/"),
+    REPACTUACAO("Repactuacao", "repactuacao/"),
+    SUPRESSAO("Supressao", "Supressao/");
 
     private String nome;
     private String url;

@@ -151,15 +151,48 @@
                         </div>
                     </div>
                 </div>
-                <p:fileUpload mode="advanced"
-                              label="PDF Termo"
-                              required="true"
-                              multiple="false"
-                              sizeLimit="900000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
-                              invalidSizeMessage="Maximum file size allowed is 10000 KB"
-                              invalidFileMessage="only gif | jpg | jpeg | png is allowed"
-                              style="margin-bottom: 20px"
-                              />
+                <h:panelGroup id="anexoSupressaoPanelGroup">
+                    <p:fileUpload
+                        required="true"
+                        requiredMessage="Os Documentos de Anexo devem ser enviados"
+                        auto="true"
+                        mode="advanced"
+                        label="Anexar"
+                        listener="#{ managerSupressao.selecionarAnexo }"
+                        uploadLabel="Enviar"
+                        cancelLabel="Cancelar"
+                        multiple="true"
+                        allowTypes="/(\.|\/)(jpe?g|png|doc|docx|pdf|odt|tiff|tif)$/"
+                        dragDropSupport="true"
+                        invalidFileMessage="Tipo de arquivo não suportado."
+                        invalidSizeMessage="Tamanho do arquivo não é suportado"
+                        process="@this @form"
+                        update="@this, anexoSupressaoPanelGroup anexosPanelGroup" 
+                        rendered="#{not managerSupressao.visualizar}"/>
+                </h:panelGroup>
+                <h:panelGroup id="anexosPanelGroup">
+                    <div style="display: flex; flex-direction: row">
+                        <ui:repeat value="#{managerSupressao.supressao.anexos}" var="anexo" >
+                            <div style="display: flex; flex-direction: row">
+                                <div style="display: flex; flex-direction: column;background: #e1e6e5;width: 200px; padding: 5px 10px; margin: 10px 30px ">
+                                    <div style="display: flex; flex-direction: row;width: 200px">
+                                        <p:commandButton style="width: 25px; height: 30px;" icon="pi pi-eye" rendered="#{managerSupressao.isPDF(anexo)}" onclick="target = '_blank'" ajax="false"  actionListener="#{managerSupressao.visualizarAnexo(anexo)}"/>
+
+                                        <h:panelGroup rendered="#{!managerSupressao.isPDF(anexo)}">
+                                            <a href="#{managerSupressao.anexoUrl(anexo)}" target="_blank">
+                                                <i  style="border-radius: 3px;border: 1px solid #08c1cf ; width: 25px;justify-content: center;padding-top: 7px;color: #ffffff;text-align: center; height: 30px;background: #01415B !important" class="pi pi-eye"></i>
+                                            </a> 
+                                        </h:panelGroup> 
+                                        <p:commandButton actionListener="#{managerSupressao.deletarAnexo(anexo)}" 
+                                                         update="corpoInteiro:messages corpoInteiro" rendered="#{!managerSupressao.visualizar}" icon="pi pi-trash" style="width: 25px; height: 30px;" />
+                                        <p:outputLabel value="Contrato" style="font-weight: bold;margin-left: 10px;"/>
+                                    </div>
+                                    <img  src="#{managerSupressao.anexoUrl(anexo)}" style="width: 180px;height: 180px" />
+                                </div>
+                            </div>
+                        </ui:repeat>
+                    </div>
+                </h:panelGroup>
             </h:panelGroup>
         </h:panelGroup>
 

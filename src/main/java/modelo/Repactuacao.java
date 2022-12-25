@@ -39,10 +39,29 @@ public class Repactuacao implements Serializable{
     private Usuario fiscal;
     private String descricao;
     @OneToMany
-    private List<Anexo> imagem;
+    private List<Anexo> anexos;
     private boolean ativo = true;
 
     public Repactuacao() {
+    }
+
+    public Repactuacao(Long id, Contrato contrato, Long numeroTermo, Date dataAssinatura, BigDecimal valor, Usuario fiscal, String descricao, List<Anexo> anexos) {
+        this.id = id;
+        this.contrato = contrato;
+        this.numeroTermo = numeroTermo;
+        this.dataAssinatura = dataAssinatura;
+        this.valor = valor;
+        this.fiscal = fiscal;
+        this.descricao = descricao;
+        this.anexos = anexos;
+    }
+
+    public List<Anexo> getAnexos() {
+        return anexos;
+    }
+
+    public void setAnexos(List<Anexo> anexos) {
+        this.anexos = anexos;
     }
 
     public Long getId() {
@@ -109,13 +128,7 @@ public class Repactuacao implements Serializable{
         this.descricao = descricao;
     }
 
-    public List<Anexo> getImagem() {
-        return imagem;
-    }
-
-    public void setImagem(List<Anexo> imagem) {
-        this.imagem = imagem;
-    }
+   
 
     public boolean isAtivo() {
         return ativo;
@@ -127,17 +140,17 @@ public class Repactuacao implements Serializable{
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 89 * hash + Objects.hashCode(this.id);
-        hash = 89 * hash + Objects.hashCode(this.contrato);
-        hash = 89 * hash + Objects.hashCode(this.numeroTermo);
-        hash = 89 * hash + Objects.hashCode(this.dataAssinatura);
-        hash = 89 * hash + Objects.hashCode(this.valorMudou);
-        hash = 89 * hash + Objects.hashCode(this.valor);
-        hash = 89 * hash + Objects.hashCode(this.fiscal);
-        hash = 89 * hash + Objects.hashCode(this.descricao);
-        hash = 89 * hash + Objects.hashCode(this.imagem);
-        hash = 89 * hash + (this.ativo ? 1 : 0);
+        int hash = 3;
+        hash = 19 * hash + Objects.hashCode(this.id);
+        hash = 19 * hash + Objects.hashCode(this.contrato);
+        hash = 19 * hash + Objects.hashCode(this.numeroTermo);
+        hash = 19 * hash + Objects.hashCode(this.dataAssinatura);
+        hash = 19 * hash + Objects.hashCode(this.valorMudou);
+        hash = 19 * hash + Objects.hashCode(this.valor);
+        hash = 19 * hash + Objects.hashCode(this.fiscal);
+        hash = 19 * hash + Objects.hashCode(this.descricao);
+        hash = 19 * hash + Objects.hashCode(this.anexos);
+        hash = 19 * hash + (this.ativo ? 1 : 0);
         return hash;
     }
 
@@ -180,10 +193,13 @@ public class Repactuacao implements Serializable{
         if (!Objects.equals(this.fiscal, other.fiscal)) {
             return false;
         }
-        return Objects.equals(this.imagem, other.imagem);
+        return Objects.equals(this.anexos, other.anexos);
     }
 
-    
-    
+    @Override
+    public String toString() {
+        return "Repactuacao{" + "id=" + id + ", contrato=" + contrato + ", numeroTermo=" + numeroTermo + ", dataAssinatura=" + dataAssinatura + ", valorMudou=" + valorMudou + ", valor=" + valor + ", fiscal=" + fiscal + ", descricao=" + descricao + ", anexos=" + anexos + ", ativo=" + ativo + '}';
+    }
+
     
 }

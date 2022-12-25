@@ -4,23 +4,39 @@
  */
 package Gerenciador;
 
+import Servico.AnexoServico;
 import Servico.ContratoServico;
 import Servico.SupressaoServico;
 import Servico.UsuarioServico;
+import com.itextpdf.text.DocumentException;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+import modelo.Anexo;
 import modelo.Supressao;
 import modelo.Contrato;
+import modelo.TipoAnexo;
 import modelo.Usuario;
+import org.apache.commons.io.FileUtils;
+import org.primefaces.event.FileUploadEvent;
+import util.Base64j;
 import util.Msg;
 import util.Utils;
 
@@ -39,6 +55,10 @@ public class managerSupressao extends managerPrincipal implements Serializable {
     @EJB
     private UsuarioServico userServico;
 
+    @EJB
+    private AnexoServico anexoServico;
+
+    private Anexo anexo;
     private Supressao supressao;
     private String verificadorRendered;
     private List<Supressao> supressoes;
@@ -51,6 +71,7 @@ public class managerSupressao extends managerPrincipal implements Serializable {
     public void carregar(String param) {
         this.user = userServico.getCurrentUser();
         this.id = Long.parseLong(param);
+        this.anexo = new Anexo();
         this.supressao = supressaoServico.find(Long.parseLong(param));
         this.supressoes = new ArrayList<>();
         if (Utils.isNotEmpty(this.user.getUnidadeOrganizacional())) {
@@ -64,7 +85,8 @@ public class managerSupressao extends managerPrincipal implements Serializable {
 
     @Override
     public void instanciar() {
-         this.user = userServico.getCurrentUser();
+        this.anexo = new Anexo();
+        this.user = userServico.getCurrentUser();
         instanciarSelect();
         instanciarAcrescimo();
         instanciarAcrescimos();
@@ -145,6 +167,98 @@ public class managerSupressao extends managerPrincipal implements Serializable {
 
     public void pesquisar(Contrato contrato) {
         this.supressoes = supressaoServico.pesquisarSupressaoPorContrato(contrato, this.supressao);
+    }
+
+    public void selecionarAnexo(FileUploadEvent event) {
+        if (Utils.isNotEmpty(event)) {
+            if (Utils.isNotEmpty(event.getFile())) {
+                this.anexo.setArquivo(event.getFile());
+            }
+        }
+        this.anexo.setTipoAnexo(TipoAnexo.SUPRESSAO);
+        adicionarAnexo();
+    }
+
+    public void adicionarAnexo() {
+
+        try {
+            if (Utils.isEmpty(this.supressao.getAnexos())) {
+                this.supressao.setAnexos(new ArrayList<Anexo>());
+            }
+            this.supressao.getAnexos().add(anexoServico.adicionarAnexo(this.anexo.getArquivo()));
+            int posicao = supressao.getAnexos().size();
+            this.supressao.getAnexos().get(posicao - 1).setArquivo(anexo.getArquivo());
+            this.supressao.getAnexos().get(posicao - 1).setCaminho(TipoAnexo.SUPRESSAO);
+            this.supressao.getAnexos().get(posicao - 1).setTipoAnexo(this.anexo.getTipoAnexo());
+        } catch (SQLException | IOException ex) {
+            Logger.getLogger(managerContrato.class
+                    .getName()).log(Level.SEVERE, null, ex);
+        }
+        instanciarAnexo();
+        Msg.messagemInfo(Msg.SuccessFull);
+
+    }
+
+    public void instanciarAnexo() {
+        this.anexo = new Anexo();
+    }
+
+    public boolean isPDF(Anexo anexo) {
+        return anexo.getNome().contains(".pdf");
+
+    }
+
+    public byte[] fileToByte(File imagem) throws Exception {
+        FileInputStream fis = new FileInputStream(imagem);
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        byte[] buffer = new byte[8192];
+        int bytesRead = 0;
+        while ((bytesRead = fis.read(buffer, 0, 8192)) != -1) {
+            baos.write(buffer, 0, bytesRead);
+        }
+        return baos.toByteArray();
+    }
+
+    public void deletarAnexo(Anexo a) {
+        this.supressao.getAnexos().remove(a);
+        Msg.messagemInfo("Anexo removido com sucesso !");
+    }
+
+    public String anexoUrl(Anexo anexo) throws IOException {
+        String caminhoLogo = "";
+        String conteudo_base64 = "";
+        caminhoLogo = anexo.getUrl() + "/" + anexo.getNome();
+        if (anexo.getNome().contains(".pdf")) {
+            conteudo_base64 = Base64j.encodeBytes(FileUtils.readFileToByteArray(new File("/opt/Licitacao/logoPDF.png")));
+        } else {
+            conteudo_base64 = Base64j.encodeBytes(FileUtils.readFileToByteArray(new File(caminhoLogo)));
+        }
+        return "data:image/png;base64," + conteudo_base64;
+    }
+
+    public void visualizarAnexo(Anexo anexo) throws IOException, IOException, Exception {
+        try {
+            String caminhoLogo = "";
+            String conteudo_base64 = "";
+            caminhoLogo = anexo.getUrl() + "/" + anexo.getNome();
+            byte[] arquivo = null;
+
+            File file = new File(caminhoLogo);
+            arquivo = fileToByte(file);
+            FacesContext facesContext = FacesContext.getCurrentInstance();
+            HttpServletResponse response = (HttpServletResponse) facesContext.getExternalContext().getResponse();
+            ServletOutputStream ouputStream = response.getOutputStream();
+            Integer totalPaginas = 0;
+
+            response.setContentType("application/pdf");
+            response.setContentLength(arquivo.length);
+            ouputStream.write(arquivo, 0, arquivo.length);
+            ouputStream.flush();
+            ouputStream.close();
+
+        } catch (DocumentException ex) {
+            Logger.getLogger(managerNotaFiscal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public void deletar() {

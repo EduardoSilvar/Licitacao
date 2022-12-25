@@ -81,7 +81,7 @@ public class Contrato implements Serializable {
     private Long digito;
     private Long agencia;
     private Long operacao;
-    private Long saldoInicial;
+    private BigDecimal saldoInicial;
     private boolean ativo = true;
     private String corStatus;
     @OneToMany(cascade = CascadeType.ALL)
@@ -314,13 +314,15 @@ public class Contrato implements Serializable {
         this.operacao = operacao;
     }
 
-    public Long getSaldoInicial() {
+    public BigDecimal getSaldoInicial() {
         return saldoInicial;
     }
 
-    public void setSaldoInicial(Long saldoInicial) {
+    public void setSaldoInicial(BigDecimal saldoInicial) {
         this.saldoInicial = saldoInicial;
     }
+
+  
 
     public boolean isAtivo() {
         return ativo;

@@ -42,10 +42,21 @@ public class Supressao implements Serializable{
     private Usuario fiscal;
     private String descricao;
     @OneToMany
-    private List<Anexo> imagem;
+    private List<Anexo> anexos;
     private boolean ativo = true;
 
     public Supressao() {
+    }
+
+    public Supressao(Long id, Contrato contrato, Long numeroTermo, BigDecimal valor, Date dataAssinatura, Usuario fiscal, String descricao, List<Anexo> anexos) {
+        this.id = id;
+        this.contrato = contrato;
+        this.numeroTermo = numeroTermo;
+        this.valor = valor;
+        this.dataAssinatura = dataAssinatura;
+        this.fiscal = fiscal;
+        this.descricao = descricao;
+        this.anexos = anexos;
     }
 
     public Long getId() {
@@ -104,13 +115,15 @@ public class Supressao implements Serializable{
         this.descricao = descricao;
     }
 
-    public List<Anexo> getImagem() {
-        return imagem;
+    public List<Anexo> getAnexos() {
+        return anexos;
     }
 
-    public void setImagem(List<Anexo> imagem) {
-        this.imagem = imagem;
+    public void setAnexos(List<Anexo> anexos) {
+        this.anexos = anexos;
     }
+
+  
 
     public boolean isAtivo() {
         return ativo;
@@ -122,16 +135,16 @@ public class Supressao implements Serializable{
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 59 * hash + Objects.hashCode(this.id);
-        hash = 59 * hash + Objects.hashCode(this.contrato);
-        hash = 59 * hash + Objects.hashCode(this.numeroTermo);
-        hash = 59 * hash + Objects.hashCode(this.valor);
-        hash = 59 * hash + Objects.hashCode(this.dataAssinatura);
-        hash = 59 * hash + Objects.hashCode(this.fiscal);
-        hash = 59 * hash + Objects.hashCode(this.descricao);
-        hash = 59 * hash + Objects.hashCode(this.imagem);
-        hash = 59 * hash + (this.ativo ? 1 : 0);
+        int hash = 5;
+        hash = 71 * hash + Objects.hashCode(this.id);
+        hash = 71 * hash + Objects.hashCode(this.contrato);
+        hash = 71 * hash + Objects.hashCode(this.numeroTermo);
+        hash = 71 * hash + Objects.hashCode(this.valor);
+        hash = 71 * hash + Objects.hashCode(this.dataAssinatura);
+        hash = 71 * hash + Objects.hashCode(this.fiscal);
+        hash = 71 * hash + Objects.hashCode(this.descricao);
+        hash = 71 * hash + Objects.hashCode(this.anexos);
+        hash = 71 * hash + (this.ativo ? 1 : 0);
         return hash;
     }
 
@@ -171,7 +184,12 @@ public class Supressao implements Serializable{
         if (!Objects.equals(this.fiscal, other.fiscal)) {
             return false;
         }
-        return Objects.equals(this.imagem, other.imagem);
+        return Objects.equals(this.anexos, other.anexos);
+    }
+
+    @Override
+    public String toString() {
+        return "Supressao{" + "id=" + id + ", contrato=" + contrato + ", numeroTermo=" + numeroTermo + ", valor=" + valor + ", dataAssinatura=" + dataAssinatura + ", fiscal=" + fiscal + ", descricao=" + descricao + ", anexos=" + anexos + ", ativo=" + ativo + '}';
     }
 
     

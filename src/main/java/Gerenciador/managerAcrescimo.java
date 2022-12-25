@@ -5,22 +5,38 @@
 package Gerenciador;
 
 import Servico.AcrescimoServico;
+import Servico.AnexoServico;
 import Servico.ContratoServico;
 import Servico.UsuarioServico;
+import com.itextpdf.text.DocumentException;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
 import modelo.Acrescimo;
+import modelo.Anexo;
 import modelo.Contrato;
+import modelo.TipoAnexo;
 import modelo.Usuario;
+import org.apache.commons.io.FileUtils;
+import org.primefaces.event.FileUploadEvent;
+import util.Base64j;
 import util.Msg;
 import util.Utils;
 
@@ -38,17 +54,21 @@ public class managerAcrescimo extends managerPrincipal implements Serializable {
     private ContratoServico contratoServico;
     @EJB
     private UsuarioServico userServico;
+    @EJB
+    private AnexoServico anexoServico;
 
     private Acrescimo acrescimo;
     private String verificadorRendered;
     private List<Acrescimo> acrescimos;
     private List<Usuario> fiscais;
+    private Anexo anexo;
     private List<Contrato> contratos;
     private Usuario user;
     private Long id;
 
     @Override
     public void carregar(String param) {
+        this.anexo = new Anexo();
         this.user = userServico.getCurrentUser();
         this.id = Long.parseLong(param);
         this.acrescimo = acrescimoServico.find(Long.parseLong(param));
@@ -65,6 +85,7 @@ public class managerAcrescimo extends managerPrincipal implements Serializable {
 
     @Override
     public void instanciar() {
+        this.anexo = new Anexo();
         this.user = userServico.getCurrentUser();
         instanciarSelect();
         instanciarAcrescimo();
@@ -98,6 +119,98 @@ public class managerAcrescimo extends managerPrincipal implements Serializable {
             this.contratos = contratoServico.FindAll();
         }
 
+    }
+
+    public void selecionarAnexo(FileUploadEvent event) {
+        if (Utils.isNotEmpty(event)) {
+            if (Utils.isNotEmpty(event.getFile())) {
+                this.anexo.setArquivo(event.getFile());
+            }
+        }
+        this.anexo.setTipoAnexo(TipoAnexo.ACRESCIMO);
+        adicionarAnexo();
+    }
+
+    public void adicionarAnexo() {
+
+        try {
+            if(Utils.isEmpty(this.acrescimo.getAnexos())){
+            this.acrescimo.setAnexos(new ArrayList<Anexo>());
+            }
+            this.acrescimo.getAnexos().add(anexoServico.adicionarAnexo(this.anexo.getArquivo()));
+            int posicao = acrescimo.getAnexos().size();
+            this.acrescimo.getAnexos().get(posicao - 1).setArquivo(anexo.getArquivo());
+            this.acrescimo.getAnexos().get(posicao - 1).setCaminho(TipoAnexo.ACRESCIMO);
+            this.acrescimo.getAnexos().get(posicao - 1).setTipoAnexo(this.anexo.getTipoAnexo());
+        } catch (SQLException | IOException ex) {
+            Logger.getLogger(managerContrato.class
+                    .getName()).log(Level.SEVERE, null, ex);
+        }
+        instanciarAnexo();
+        Msg.messagemInfo(Msg.SuccessFull);
+
+    }
+
+    public void instanciarAnexo() {
+        this.anexo = new Anexo();
+    }
+
+    public boolean isPDF(Anexo anexo) {
+        return anexo.getNome().contains(".pdf");
+
+    }
+
+    public byte[] fileToByte(File imagem) throws Exception {
+        FileInputStream fis = new FileInputStream(imagem);
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        byte[] buffer = new byte[8192];
+        int bytesRead = 0;
+        while ((bytesRead = fis.read(buffer, 0, 8192)) != -1) {
+            baos.write(buffer, 0, bytesRead);
+        }
+        return baos.toByteArray();
+    }
+
+    public void deletarAnexo(Anexo a) {
+        this.acrescimo.getAnexos().remove(a);
+        Msg.messagemInfo("Anexo removido com sucesso !");
+    }
+
+    public String anexoUrl(Anexo anexo) throws IOException {
+        String caminhoLogo = "";
+        String conteudo_base64 = "";
+        caminhoLogo = anexo.getUrl() + "/" + anexo.getNome();
+        if (anexo.getNome().contains(".pdf")) {
+            conteudo_base64 = Base64j.encodeBytes(FileUtils.readFileToByteArray(new File("/opt/Licitacao/logoPDF.png")));
+        } else {
+            conteudo_base64 = Base64j.encodeBytes(FileUtils.readFileToByteArray(new File(caminhoLogo)));
+        }
+        return "data:image/png;base64," + conteudo_base64;
+    }
+
+    public void visualizarAnexo(Anexo anexo) throws IOException, IOException, Exception {
+        try {
+            String caminhoLogo = "";
+            String conteudo_base64 = "";
+            caminhoLogo = anexo.getUrl() + "/" + anexo.getNome();
+            byte[] arquivo = null;
+
+            File file = new File(caminhoLogo);
+            arquivo = fileToByte(file);
+            FacesContext facesContext = FacesContext.getCurrentInstance();
+            HttpServletResponse response = (HttpServletResponse) facesContext.getExternalContext().getResponse();
+            ServletOutputStream ouputStream = response.getOutputStream();
+            Integer totalPaginas = 0;
+
+            response.setContentType("application/pdf");
+            response.setContentLength(arquivo.length);
+            ouputStream.write(arquivo, 0, arquivo.length);
+            ouputStream.flush();
+            ouputStream.close();
+
+        } catch (DocumentException ex) {
+            Logger.getLogger(managerNotaFiscal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public void salvar() {

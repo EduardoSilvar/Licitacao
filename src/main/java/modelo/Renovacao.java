@@ -45,10 +45,24 @@ public class Renovacao implements Serializable{
     @ManyToOne
     private Usuario fiscal;
     @OneToMany
-    private List<Anexo> imagem;
+    private List<Anexo> anexos;
     private boolean ativo = true;
 
     public Renovacao() {
+    }
+
+    public Renovacao(Long id, Contrato contrato, Long numeroTermo, Date dataInicial, Date dataFinal, Date dataAssinatura, Long proximaRenovacao, BigDecimal valor, Date vigenciaAnterior, Usuario fiscal, List<Anexo> anexo) {
+        this.id = id;
+        this.contrato = contrato;
+        this.numeroTermo = numeroTermo;
+        this.dataInicial = dataInicial;
+        this.dataFinal = dataFinal;
+        this.dataAssinatura = dataAssinatura;
+        this.proximaRenovacao = proximaRenovacao;
+        this.valor = valor;
+        this.vigenciaAnterior = vigenciaAnterior;
+        this.fiscal = fiscal;
+        this.anexos = anexo;
     }
 
     public Long getId() {
@@ -139,13 +153,14 @@ public class Renovacao implements Serializable{
         this.fiscal = fiscal;
     }
 
-    public List<Anexo> getImagem() {
-        return imagem;
+    public List<Anexo> getAnexos() {
+        return anexos;
     }
 
-    public void setImagem(List<Anexo> imagem) {
-        this.imagem = imagem;
+    public void setAnexos(List<Anexo> anexo) {
+        this.anexos = anexo;
     }
+
 
     public boolean isAtivo() {
         return ativo;
@@ -157,20 +172,20 @@ public class Renovacao implements Serializable{
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 59 * hash + Objects.hashCode(this.id);
-        hash = 59 * hash + Objects.hashCode(this.contrato);
-        hash = 59 * hash + Objects.hashCode(this.numeroTermo);
-        hash = 59 * hash + Objects.hashCode(this.dataInicial);
-        hash = 59 * hash + Objects.hashCode(this.dataFinal);
-        hash = 59 * hash + Objects.hashCode(this.dataAssinatura);
-        hash = 59 * hash + Objects.hashCode(this.proximaRenovacao);
-        hash = 59 * hash + Objects.hashCode(this.valorMudou);
-        hash = 59 * hash + Objects.hashCode(this.valor);
-        hash = 59 * hash + Objects.hashCode(this.vigenciaAnterior);
-        hash = 59 * hash + Objects.hashCode(this.fiscal);
-        hash = 59 * hash + Objects.hashCode(this.imagem);
-        hash = 59 * hash + (this.ativo ? 1 : 0);
+        int hash = 3;
+        hash = 43 * hash + Objects.hashCode(this.id);
+        hash = 43 * hash + Objects.hashCode(this.contrato);
+        hash = 43 * hash + Objects.hashCode(this.numeroTermo);
+        hash = 43 * hash + Objects.hashCode(this.dataInicial);
+        hash = 43 * hash + Objects.hashCode(this.dataFinal);
+        hash = 43 * hash + Objects.hashCode(this.dataAssinatura);
+        hash = 43 * hash + Objects.hashCode(this.proximaRenovacao);
+        hash = 43 * hash + Objects.hashCode(this.valorMudou);
+        hash = 43 * hash + Objects.hashCode(this.valor);
+        hash = 43 * hash + Objects.hashCode(this.vigenciaAnterior);
+        hash = 43 * hash + Objects.hashCode(this.fiscal);
+        hash = 43 * hash + Objects.hashCode(this.anexos);
+        hash = 43 * hash + (this.ativo ? 1 : 0);
         return hash;
     }
 
@@ -222,10 +237,12 @@ public class Renovacao implements Serializable{
         if (!Objects.equals(this.fiscal, other.fiscal)) {
             return false;
         }
-        return Objects.equals(this.imagem, other.imagem);
+        return Objects.equals(this.anexos, other.anexos);
     }
 
-    
-
+    @Override
+    public String toString() {
+        return "Renovacao{" + "id=" + id + ", contrato=" + contrato + ", numeroTermo=" + numeroTermo + ", dataInicial=" + dataInicial + ", dataFinal=" + dataFinal + ", dataAssinatura=" + dataAssinatura + ", proximaRenovacao=" + proximaRenovacao + ", valorMudou=" + valorMudou + ", valor=" + valor + ", vigenciaAnterior=" + vigenciaAnterior + ", fiscal=" + fiscal + ", anexo=" + anexos + ", ativo=" + ativo + '}';
+    }
     
 }

@@ -613,7 +613,7 @@
                             <p:commandButton value="Enviar"
                                              title="Enviar"
                                              icon="pi pi-upload"
-                                             update="corpoInteiro "
+                                             update="corpoInteiro @form"
                                              process="@this Mensagem Assunto"
                                              actionListener="#{managerContrato.enviarEmail()}"
                                              oncomplete="PF('mensagemcontratadoDialog').hide();"
@@ -755,6 +755,9 @@
         </p:tab>
         <p:tab title="Repactuações" rendered="#{managerContrato.visualizar}">
             <ui:include src="pesquisaRepactuacao.xhtml"/>
+        </p:tab>
+        <p:tab title="Mensagens" rendered="#{managerContrato.mensagensEmail.size() > 0}" >
+            <ui:include src="mensagemForm.xhtml"/>
         </p:tab>
     </p:tabView>
     <script src="WEB-INF/template/autoNumeric.js" type="text/javascript"></script>
