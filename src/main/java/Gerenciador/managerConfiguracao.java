@@ -5,6 +5,7 @@
  */
 package Gerenciador;
 
+import Enum.StatusContrato;
 import Servico.ConfiguracaoServico;
 import Servico.ContratoServico;
 import Servico.UsuarioServico;
@@ -22,6 +23,7 @@ import javax.faces.bean.ViewScoped;
 import modelo.Configuracao;
 import modelo.Contrato;
 import modelo.Usuario;
+import org.primefaces.PrimeFaces;
 import util.Msg;
 import util.Utils;
 
@@ -57,6 +59,44 @@ public class managerConfiguracao implements Serializable {
         this.fiscal = userServico.getCurrentUser();
     }
 
+    public void mostrarContratosExpirados() {
+        this.contratosPertodeExpirar = new ArrayList<>();
+        List<Contrato> todosContratos = new ArrayList<>();
+        todosContratos = contratoServico.findAllUnidade(userLogado.getUnidadeOrganizacional());
+        Calendar cal = GregorianCalendar.getInstance();
+        final Date dataEvento = cal.getTime();
+        Long agora = dataEvento.getTime() / (3600000 * 24);
+//            Long dataContrato = new Date().getTime() / (3600000 * 24);
+        System.out.println(agora + " " + todosContratos.size());
+        for (Contrato c : todosContratos) {
+            Long dataContrato = c.getDataFinal().getTime() / (3600000 * 24);
+            Long output = (dataContrato - agora);
+            if (output <= 0) {
+                if (c.getStatus().equals(StatusContrato.CANCELADO) || c.getStatus().equals(StatusContrato.FINALIZADO)) {
+
+                } else {
+                    if (this.contratosPertodeExpirar.contains(c)) {
+
+                    } else {
+                        this.contratosPertodeExpirar.add(c);
+                    }
+                    if (!c.getStatus().equals(StatusContrato.EXPIRADO)) {
+                        c.setStatus(StatusContrato.EXPIRADO);
+                        contratoServico.Update(c);
+                    }
+                }
+
+            }
+
+        }
+        if (!this.contratosPertodeExpirar.isEmpty()) {
+            Msg.messagemInfo("Operação realizada com sucesso !");
+        } else {
+            Msg.messagemError("Nenhum Contrato encontrato !");
+        }
+        PrimeFaces.current().executeScript("PF('statusContratosDialog').show();");
+    }
+
     public void salvar() {
         if (Utils.isEmpty(this.configuracao.getId())) {
             configuracaoServico.Save(this.configuracao);
@@ -67,7 +107,7 @@ public class managerConfiguracao implements Serializable {
         }
 
     }
-    
+
     public String dataFormatada(Date data) {
         if (Utils.isNotEmpty(data)) {
             SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy");
@@ -77,9 +117,13 @@ public class managerConfiguracao implements Serializable {
         return "";
 
     }
-    
+
     public void pesquisar() {
         this.contratosPertodeExpirar = new ArrayList<>();
+        if(Utils.isEmpty(this.configuracao.getDiasPraExpirar())){
+            Msg.messagemError("Preencha o campo para realizar a busca !");
+            return;
+        }
         if (this.configuracao.getDiasPraExpirar() != null && this.configuracao.getDiasPraExpirar() > 0) {
             List<Contrato> todosContratos = new ArrayList<>();
             todosContratos = contratoServico.findAllUnidade(userLogado.getUnidadeOrganizacional());
@@ -87,20 +131,28 @@ public class managerConfiguracao implements Serializable {
             final Date dataEvento = cal.getTime();
             Long agora = dataEvento.getTime() / (3600000 * 24);
 //            Long dataContrato = new Date().getTime() / (3600000 * 24);
-            System.out.println(agora+" "+todosContratos.size());
+            System.out.println(agora + " " + todosContratos.size());
             for (Contrato c : todosContratos) {
                 Long dataContrato = c.getDataFinal().getTime() / (3600000 * 24);
-                Long output = (dataContrato - agora );
+                Long output = (dataContrato - agora);
                 System.out.println(this.configuracao.getDiasPraExpirar());
-                if (output < this.configuracao.getDiasPraExpirar() && output > 0) {
-                    if(this.contratosPertodeExpirar.contains(c)){
-                        
-                    }else{
-                        this.contratosPertodeExpirar.add(c);
+                if (output <= 7 && output > 0) {
+                    if (c.getStatus().equals(StatusContrato.CANCELADO) || c.getStatus().equals(StatusContrato.FINALIZADO)) {
+
+                    } else {
+
+                        if (this.contratosPertodeExpirar.contains(c)) {
+
+                        } else {
+                            this.contratosPertodeExpirar.add(c);
+                        }
+                        if (!c.getStatus().equals(StatusContrato.PROXIMO_EXPIRAR)) {
+                            c.setStatus(StatusContrato.PROXIMO_EXPIRAR);
+                            contratoServico.Update(c);
+                        }
                     }
-                    
                 }
-                System.out.println("ncd "+output);
+
             }
             if (!this.contratosPertodeExpirar.isEmpty()) {
                 Msg.messagemInfo("Operação realizada com sucesso !");
