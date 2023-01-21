@@ -69,7 +69,66 @@
                 </div>
             </div>
         </h:panelGroup>
-       
+
+        <p:dialog id="statusContratosDialog"
+                  widgetVar="statusContratosDialog"
+                  header="Atenção!"
+                  closeOnEscape="true"
+                  draggable="false"
+                  maximizable="false"
+                  minimizable="false"
+                  modal="true"
+                  showEffect="fade"
+                  hideEffect="fade">   
+            <div class="row" style="text-align: center">
+
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <h3>
+                            <i class="pi pi-exclamation-triangle"></i>
+                            Status dos contratos 
+                        </h3>
+                    </div>
+                </div>
+
+            </div>
+            <hr/>
+            <div class="row" style="text-align: center">
+
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <h5>
+                            Existe #{managerIndex.contratosPertodeExpirar.size()} contratos vencendo nos próximos 7 dias
+                        </h5>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row" style="text-align: center">
+
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <h5>
+                            Existe #{managerIndex.contratosExpirados.size()} contratos vencidos
+                        </h5>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row" style="text-align: center">
+
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <p>
+                            Para uma busca detalhada clique no botão abaixo
+                        </p>
+                        <p:button value="Buscar" icon="pi pi-search" href="configuracao.xhtml"/>
+                    </div>
+                </div>
+
+            </div>
+
+        </p:dialog>
     </ui:define>
     <script type="text/javascript">
         function skinRadarChart() {

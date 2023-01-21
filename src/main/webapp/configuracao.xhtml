@@ -22,13 +22,18 @@
                                            for="diasInput" />
                             <p:inputMask id="diasInput"
                                          placeholder="Dias"
-                                         required="true"
                                          styleClass="form-control" 
                                          value="#{managerConfiguracao.configuracao.diasPraExpirar}"
                                          rendered="true"
                                          requiredMessage="Este campo é obrigatório."
                                          />
                             <p:message for="diasInput" />
+                            <p:tooltip for="diasInput" value="Serão exibidos apenas contratos que não estejam com o status de cancelado ou finalizado" position="bottom"/>
+                        </div>
+                    </div>
+                    <div class="col-md-8" style="display: flex;justify-content: end;width: 350px !important">
+                        <div class="form-group">
+                            <p:commandButton value="Carregar expirados" icon="pi pi-exclamation-triangle" update="corpoInteiro:dataTablePanelGroup messages" actionListener="#{managerConfiguracao.mostrarContratosExpirados()}"/>
                         </div>
                     </div>
                 </div>
@@ -44,7 +49,7 @@
             </h:panelGroup>
             <h:panelGroup id="dataTablePanelGroup" >
                 <p:accordionPanel  multiple="true" widgetVar="multiple">
-                    <p:tab title="Contratos com o Vencimento Próximo">
+                    <p:tab title="Resultado da pesquisa">
                         <p:dataTable id="tipoContratadoDatatable" var="contrato" value="#{managerConfiguracao.contratosPertodeExpirar}"
                                      resizeMode="5">
                             <f:facet name="header">
