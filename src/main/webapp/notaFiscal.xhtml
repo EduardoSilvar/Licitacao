@@ -48,7 +48,7 @@
                     <div class="form-group">
                         <p:outputLabel value="Contrato" styleClass="control-label" for="contratoNotaFiscal" />
                         <p:autoComplete id="contratoNotaFiscal" dropdown="true" converter="contratoconverter"
-                                        var="contrato" itemLabel="#{contrato.nome}"
+                                        var="contrato" itemLabel="#{contrato.numeroContrato}"
                                         itemValue="#{contrato}" value="#{managerNotaFiscal.notaFiscal.contrato}"
                                         scrollHeight="200" forceSelection="true"
                                         inputStyleClass="form-control"

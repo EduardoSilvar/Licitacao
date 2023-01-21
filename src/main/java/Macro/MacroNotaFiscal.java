@@ -90,14 +90,14 @@ public class MacroNotaFiscal {
             table.addCell(paragraphGlobal);
         }
         document.add(table);
-        if (Utils.isNotEmpty(contrato.getDataAssinatura())) {
-            paragraphGlobal = new Paragraph("Ordem de serviço : ", fonte);
-            paragraphGlobal.add(new Chunk(DateUtils.format(DateUtils.SIMPLE_DATE, contrato.getDataInicio()), regular));
-            tableMaePai.addCell(paragraphGlobal);
-        } else {
-            paragraphGlobal = new Paragraph("Ordem de serviço : ", fonte);
-            tableMaePai.addCell(paragraphGlobal);
-        }
+//        if (Utils.isNotEmpty(contrato.getDataAssinatura())) {
+//            paragraphGlobal = new Paragraph("Ordem de serviço : ", fonte);
+//            paragraphGlobal.add(new Chunk(DateUtils.format(DateUtils.SIMPLE_DATE, contrato.getDataInicio()), regular));
+//            tableMaePai.addCell(paragraphGlobal);
+//        } else {
+//            paragraphGlobal = new Paragraph("Ordem de serviço : ", fonte);
+//            tableMaePai.addCell(paragraphGlobal);
+//        }
 
         if (Utils.isNotEmpty(contrato.getDataInicio())) {
             paragraphGlobal = new Paragraph("Início da execução : ", fonte);
@@ -107,14 +107,14 @@ public class MacroNotaFiscal {
             paragraphGlobal = new Paragraph("Início da execução : ", fonte);
             tableMaePai.addCell(paragraphGlobal);
         }
-        if (Utils.isNotEmpty(nota.getDataPagamento())) {
-            paragraphGlobal = new Paragraph("Data da publicação do extrato : ", fonte);
-            paragraphGlobal.add(new Chunk(DateUtils.format(DateUtils.SIMPLE_DATE, nota.getDataPagamento()), regular));
-            tableMaePai.addCell(paragraphGlobal);
-        } else {
-            paragraphGlobal = new Paragraph("Data da publicação do extrato : ", fonte);
-            tableMaePai.addCell(paragraphGlobal);
-        }
+//        if (Utils.isNotEmpty(nota.getDataPagamento())) {
+//            paragraphGlobal = new Paragraph("Data da publicação do extrato : ", fonte);
+//            paragraphGlobal.add(new Chunk(DateUtils.format(DateUtils.SIMPLE_DATE, nota.getDataPagamento()), regular));
+//            tableMaePai.addCell(paragraphGlobal);
+//        } else {
+//            paragraphGlobal = new Paragraph("Data da publicação do extrato : ", fonte);
+//            tableMaePai.addCell(paragraphGlobal);
+//        }
         if (Utils.isNotEmpty(contratado.getNome())) {
             paragraphGlobal = new Paragraph("Contratado(a) : ", fonte);
             paragraphGlobal.add(new Chunk(contratado.getNome(), regular));
@@ -247,7 +247,7 @@ public class MacroNotaFiscal {
         tableMaePai.getDefaultCell().setPadding(3);
         tableMaePai.setWidthPercentage(95);
         if (Utils.isNotEmpty(nota.getInicioFiscalizado()) && Utils.isNotEmpty(nota.getFinalFiscalizado())) {
-            paragraphGlobal = new Paragraph("Periodo Fiscalizado: de " + DateUtils.format(DateUtils.DD_MM_YYYY, nota.getInicioFiscalizado()) + " a " + DateUtils.format(DateUtils.DD_MM_YYYY, nota.getFinalFiscalizado()) + " : ", fonte);
+            paragraphGlobal = new Paragraph("Período Fiscalizado: de " + DateUtils.format(DateUtils.DD_MM_YYYY, nota.getInicioFiscalizado()) + " a " + DateUtils.format(DateUtils.DD_MM_YYYY, nota.getFinalFiscalizado()) + " : ", fonte);
             tableMaePai.addCell(paragraphGlobal);
             document.add(tableMaePai);
         } else {
@@ -276,7 +276,7 @@ public class MacroNotaFiscal {
         header.setHorizontalAlignment(Element.ALIGN_CENTER);
         header.setVerticalAlignment(Element.ALIGN_CENTER);
         table.addCell(header);
-        header = new PdfPCell(new Phrase("COMPRIU", fonteTexto));
+        header = new PdfPCell(new Phrase("CUMPRIU", fonteTexto));
         header.setHorizontalAlignment(Element.ALIGN_CENTER);
         header.setVerticalAlignment(Element.ALIGN_CENTER);
         table.addCell(header);
@@ -289,7 +289,7 @@ public class MacroNotaFiscal {
         tableMaePai.setPaddingTop(50);
         tableMaePai.getDefaultCell().setPadding(3);
         tableMaePai.setWidthPercentage(95);
-        paragraphGlobal = new Paragraph("1- Compriu as obrigações contratuais mensais  ", fonte);
+        paragraphGlobal = new Paragraph("1. Cumpriu as obrigações contratuais mensais ", fonte);
         tableMaePai.addCell(paragraphGlobal);
 
         if (nota.isObrigacaoMensal()) {
@@ -298,7 +298,7 @@ public class MacroNotaFiscal {
             paragraphGlobal = new Paragraph("Não", regular);
         }
         tableMaePai.addCell(paragraphGlobal);
-        paragraphGlobal = new Paragraph("2- Obedeceu os prazos estabelecidos  ", fonte);
+        paragraphGlobal = new Paragraph("2. Obedeceu aos prazos estabelecidos ", fonte);
         tableMaePai.addCell(paragraphGlobal);
 
         if (nota.isPrazoEstabelecido()) {
@@ -308,7 +308,7 @@ public class MacroNotaFiscal {
         }
 
         tableMaePai.addCell(paragraphGlobal);
-        paragraphGlobal = new Paragraph("3- Entregou documentos a que estava obrigado  ", fonte);
+        paragraphGlobal = new Paragraph("3. Entregou documentos a que estava obrigado ", fonte);
         tableMaePai.addCell(paragraphGlobal);
 
         if (nota.isDocumentoObrigatorio()) {
@@ -317,7 +317,7 @@ public class MacroNotaFiscal {
             paragraphGlobal = new Paragraph("Não", regular);
         }
         tableMaePai.addCell(paragraphGlobal);
-        paragraphGlobal = new Paragraph("4- Elaborou e encaminhou relatório mensal de atividades  ", fonte);
+        paragraphGlobal = new Paragraph("4. Elaborou e encaminhou relatório mensal de atividades ", fonte);
         tableMaePai.addCell(paragraphGlobal);
 
         if (nota.isObrigacaoMensal()) {
@@ -326,7 +326,7 @@ public class MacroNotaFiscal {
             paragraphGlobal = new Paragraph("Não", regular);
         }
         tableMaePai.addCell(paragraphGlobal);
-        paragraphGlobal = new Paragraph("5- Prestou serviço com a qualidade esperada  ", fonte);
+        paragraphGlobal = new Paragraph("5. Prestou serviço com a qualidade esperada ", fonte);
         tableMaePai.addCell(paragraphGlobal);
 
         if (nota.isQualidadeEsperada()) {
@@ -335,7 +335,7 @@ public class MacroNotaFiscal {
             paragraphGlobal = new Paragraph("Não", regular);
         }
         tableMaePai.addCell(paragraphGlobal);
-        paragraphGlobal = new Paragraph("6- Informou ou comunicou situações que estava obrigado  ", fonte);
+        paragraphGlobal = new Paragraph("6. Informou ou comunicou situações a que estava  obrigado ", fonte);
         tableMaePai.addCell(paragraphGlobal);
 
         if (nota.isInformouSituacao()) {
@@ -344,7 +344,7 @@ public class MacroNotaFiscal {
             paragraphGlobal = new Paragraph("Não", regular);
         }
         tableMaePai.addCell(paragraphGlobal);
-        paragraphGlobal = new Paragraph("7- Realizou diligências necessárias ", fonte);
+        paragraphGlobal = new Paragraph("7. Realizou diligências necessárias ", fonte);
         tableMaePai.addCell(paragraphGlobal);
 
         if (nota.isDiligenciaNecessarias()) {
@@ -355,6 +355,72 @@ public class MacroNotaFiscal {
         tableMaePai.addCell(paragraphGlobal);
 
         document.add(tableMaePai);
+        tableMaePai = new PdfPTable(1);
+        tableMaePai.setPaddingTop(50);
+        tableMaePai.getDefaultCell().setPadding(3);
+        tableMaePai.setWidthPercentage(95);
+        paragraphGlobal = new Paragraph("Observações sobre as ocorrências :", fonte);
+        tableMaePai.addCell(paragraphGlobal);
+        document.add(tableMaePai);
+
+        header = new PdfPCell(new Phrase("LISTA DE VERIFICAÇÕES ", fonteTexto));
+        table = new PdfPTable(1);
+        table.setPaddingTop(50);
+        table.getDefaultCell().setPadding(3);
+        table.setWidthPercentage(95);
+
+        table.getDefaultCell().setPaddingBottom(6);
+        header.setColspan(3);
+        header.setPaddingBottom(6);
+        header.setBackgroundColor(new BaseColor(204, 203, 200));
+        header.setHorizontalAlignment(1);
+
+        table.addCell(header);
+        document.add(table);
+
+        tableMaePai = new PdfPTable(1);
+        tableMaePai.setPaddingTop(50);
+        tableMaePai.getDefaultCell().setPadding(3);
+        tableMaePai.setWidthPercentage(95);
+        paragraphGlobal = new Paragraph("Considerações : ", fonte);
+        tableMaePai.addCell(paragraphGlobal);
+        document.add(tableMaePai);
+
+        tableMaePai = new PdfPTable(1);
+        tableMaePai.setPaddingTop(50);
+        tableMaePai.getDefaultCell().setPadding(3);
+        tableMaePai.setWidthPercentage(95);
+        paragraphGlobal = new Paragraph("Parnaíba - PI., de janeiro de 2023  ", fonte);
+        tableMaePai.addCell(paragraphGlobal);
+        document.add(tableMaePai);
+
+        tableMaePai = new PdfPTable(new float[]{10, 10});
+        tableMaePai.setPaddingTop(50);
+        tableMaePai.getDefaultCell().setPaddingTop(10);
+        tableMaePai.getDefaultCell().setPaddingBottom(10);
+
+        tableMaePai.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
+        tableMaePai.getDefaultCell().setVerticalAlignment(Element.ALIGN_CENTER);
+
+        tableMaePai.setWidthPercentage(95);
+
+        paragraphGlobal = new Paragraph("\n\n\n\n________________________________________\n Assinatura do fiscal ", fonte);
+        tableMaePai.addCell(paragraphGlobal);
+        table = new PdfPTable(1);
+        table.setPaddingTop(50);
+        table.getDefaultCell().setBorderWidth(0);
+        table.getDefaultCell().setPadding(3);
+        table.setWidthPercentage(95);
+
+        paragraphGlobal = new Paragraph("Cliente contratado(a) em ____/____/2013\n\n\n", fonte);
+        table.addCell(paragraphGlobal);
+
+        paragraphGlobal = new Paragraph("            ________________________________________\n                                            Assinatura", fonte);
+        paragraphGlobal.setAlignment(Element.ALIGN_CENTER);
+        table.addCell(paragraphGlobal);
+        tableMaePai.addCell(table);
+        document.add(tableMaePai);
+
         return document;
     }
 }
