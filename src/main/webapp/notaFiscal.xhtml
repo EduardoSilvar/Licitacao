@@ -54,7 +54,7 @@
                                         inputStyleClass="form-control"
                                         style="display: flex;"
                                         emptyMessage="Contrato não encontrado" 
-                                        completeMethod="#{managerAutoComplete.autocompletaContrato}"
+                                        completeMethod="#{managerNotaFiscal.autocompletaContrato}"
                                         required="true" disabled="#{managerNotaFiscal.visualizar}">
                             <p:ajax event="itemSelect" />
                         </p:autoComplete>
@@ -289,11 +289,11 @@
 
 
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-6">
                     <div class="form-group">
-                        <p:outputLabel value="Observação"
-                                       for="observacaoNotaFiscal" />
-                        <p:inputTextarea id="observacaoNotaFiscal"
+                        <p:outputLabel value="Observação sobre o resultado das atividades"
+                                       for="observacaoResultadoAtividadesNotaFiscal" />
+                        <p:inputTextarea id="observacaoResultadoAtividadesNotaFiscal"
                                          placeholder="Observação"
                                          rendered="true"
                                          disabled="#{managerNotaFiscal.visualizar}"
@@ -301,7 +301,22 @@
                                          requiredMessage="Este campo é obrigatório."
                                          styleClass="form-control" 
                                          />
-                        <p:message for="observacaoNotaFiscal" />
+                        <p:message for="observacaoResultadoAtividadesNotaFiscal" />
+                    </div>
+                </div>
+                 <div class="col-md-6">
+                    <div class="form-group">
+                        <p:outputLabel value="Garantia Contratual"
+                                       for="garantiaContratualNotaFiscal" />
+                        <p:inputTextarea id="garantiaContratualNotaFiscal"
+                                         placeholder="Observação"
+                                         rendered="true"
+                                         disabled="#{managerNotaFiscal.visualizar}"
+                                         value="#{managerNotaFiscal.notaFiscal.garantiaContratual}"
+                                         requiredMessage="Este campo é obrigatório."
+                                         styleClass="form-control" 
+                                         />
+                        <p:message for="garantiaContratualNotaFiscal" />
                     </div>
                 </div>
             </div>

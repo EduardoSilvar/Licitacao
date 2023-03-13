@@ -142,7 +142,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <p:outputLabel value="Bairro"
                                            for="bairroInput" />
@@ -158,7 +158,7 @@
                             <p:message for="bairroInput" />
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <p:outputLabel value="Cidade"
                                            for="cidadeInput" />
@@ -174,7 +174,25 @@
                             <p:message for="cidadeInput" />
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <p:outputLabel value="Estado"
+                                           for="estadoSelectOneMenu" />
+                            <p:selectOneMenu id="estadoSelectOneMenu"
+                                             filter="true" 
+                                             placeholder="Estado"
+                                             styleClass="form-control"
+                                             value="#{managerUnidadeOrganizacional.unidade.endereco.estado}"
+                                             required="true"
+                                             disabled="#{managerUnidadeOrganizacional.visualizar}"
+                                             >
+                                <f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
+                                <f:selectItems value="#{managerEnuns.estados}" var="estado" itemLabel="#{estado.label}" itemValue="#{estado}" />
+                            </p:selectOneMenu>
+                            <p:message for="estadoSelectOneMenu" />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
                         <div class="form-group">
                             <p:outputLabel value="Cep"
                                            for="cepInput" />
@@ -191,7 +209,21 @@
                             <p:message for="cepInput" />
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <p:outputLabel value="Logradouro"
+                                           for="logradouroPessoaJuriInput" />
+                            <p:inputText id="logradouroPessoaJuriInput"
+                                         value="#{managerUnidadeOrganizacional.unidade.endereco.logradouro}"
+                                         disabled="#{managerUnidadeOrganizacional.visualizar}"
+                                         placeholder="Logradouro"
+                                         requiredMessage="Este campo é obrigatório."
+                                         styleClass="form-control" 
+                                         />
+                            <p:message for="logradouroPessoaJuriInput" />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
                         <div class="form-group">
                             <p:outputLabel value="Número"
                                            for="numeroInput" />

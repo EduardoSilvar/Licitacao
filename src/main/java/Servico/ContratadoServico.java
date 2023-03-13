@@ -11,6 +11,7 @@ import javax.ejb.Stateless;
 import javax.persistence.Query;
 import modelo.Contratado;
 import modelo.ContratoVo;
+import modelo.UnidadeOrganizacional;
 import modelo.Usuario;
 import util.Utils;
 
@@ -40,6 +41,33 @@ public class ContratadoServico extends ServicoGenerico<Contratado> implements Se
             query.setParameter("nome", "%" + nome + "%");
         }
 
+        return query.getResultList();
+    }
+
+    public List<Contratado> findContratado(String nome, UnidadeOrganizacional unidade) {
+        String jpql = "select c from Contratado c where ";
+
+        if (nome != null && !nome.isEmpty()) {
+            jpql += "lower(c.nome) like lower(:nome) and ";
+        }
+        if (Utils.isNotEmpty(unidade)) {
+            if (Utils.isNotEmpty(unidade.getId())) {
+                jpql += "c.unidadeOrganizacional.id = :id and ";
+            }
+        }
+
+        jpql += "c.ativo = true";
+
+        Query query = entityManager.createQuery(jpql);
+
+        if (nome != null && !nome.isEmpty()) {
+            query.setParameter("nome", "%" + nome + "%");
+        }
+        if (Utils.isNotEmpty(unidade)) {
+            if (Utils.isNotEmpty(unidade.getId())) {
+                query.setParameter("id", unidade.getId());
+            }
+        }
         return query.getResultList();
     }
 

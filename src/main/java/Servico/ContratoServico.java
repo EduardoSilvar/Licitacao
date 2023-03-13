@@ -67,14 +67,19 @@ public class ContratoServico extends ServicoGenerico<Contrato> implements Serial
         String sql = "select new modelo.ContratoVo(c.status, count(c)) "
                 + "from Contrato c ";
         sql += "where c.ativo = true ";
-        if (Utils.isNotEmpty(user.getUnidadeOrganizacional())) {
-            sql += "and c.unidadeOrganizacional = :unidade ";
+        if (Utils.isNotEmpty(user)) {
+            if (Utils.isNotEmpty(user.getUnidadeOrganizacional())) {
+                sql += "and c.unidadeOrganizacional = :unidade ";
+            }
         }
         sql += "group by c.status";
 
         Query query = getEntityManager().createQuery(sql);
-        if (Utils.isNotEmpty(user.getUnidadeOrganizacional())) {
-            query.setParameter("unidade", user.getUnidadeOrganizacional());
+        if (Utils.isNotEmpty(user)) {
+
+            if (Utils.isNotEmpty(user.getUnidadeOrganizacional())) {
+                query.setParameter("unidade", user.getUnidadeOrganizacional());
+            }
         }
         return query.getResultList();
     }
@@ -84,14 +89,18 @@ public class ContratoServico extends ServicoGenerico<Contrato> implements Serial
         String sql = "select new modelo.ContratoVo(c.tipoContrato, count(c)) "
                 + "from Contrato c ";
         sql += "where c.ativo = true ";
-        if (Utils.isNotEmpty(user.getUnidadeOrganizacional())) {
-            sql += "and c.unidadeOrganizacional = :unidade ";
+        if (Utils.isNotEmpty(user)) {
+            if (Utils.isNotEmpty(user.getUnidadeOrganizacional())) {
+                sql += "and c.unidadeOrganizacional = :unidade ";
+            }
         }
         sql += "group by c.tipoContrato";
 
         Query query = getEntityManager().createQuery(sql);
-        if (Utils.isNotEmpty(user.getUnidadeOrganizacional())) {
-            query.setParameter("unidade", user.getUnidadeOrganizacional());
+        if (Utils.isNotEmpty(user)) {
+            if (Utils.isNotEmpty(user.getUnidadeOrganizacional())) {
+                query.setParameter("unidade", user.getUnidadeOrganizacional());
+            }
         }
         return query.getResultList();
     }
@@ -193,6 +202,28 @@ public class ContratoServico extends ServicoGenerico<Contrato> implements Serial
             query.setParameter("nome", "%" + nome + "%");
         }
 
+        return query.getResultList();
+    }
+
+    public List<Contrato> findContrato(String nome, UnidadeOrganizacional unidade) {
+        String jpql = "select c from Contrato c where ";
+
+        if (nome != null && !nome.isEmpty()) {
+            jpql += "lower(c.nome) like lower(:nome) and ";
+        }
+        if (Utils.isNotEmpty(unidade)) {
+            jpql += "c.unidadeOrganizacional.id = :unidade and ";
+        }
+        jpql += "c.ativo = true";
+
+        Query query = entityManager.createQuery(jpql);
+
+        if (nome != null && !nome.isEmpty()) {
+            query.setParameter("nome", "%" + nome + "%");
+        }
+        if (Utils.isNotEmpty(unidade)) {
+            query.setParameter("unidade", unidade.getId());
+        }
         return query.getResultList();
     }
 

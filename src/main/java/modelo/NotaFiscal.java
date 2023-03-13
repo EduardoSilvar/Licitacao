@@ -63,6 +63,7 @@ public class NotaFiscal implements Serializable {
     private boolean qualidadeEsperada;
     private boolean informouSituacao;
     private boolean diligenciaNecessarias;
+    private String garantiaContratual;
 
     public boolean isAtivo() {
         return ativo;
@@ -273,6 +274,14 @@ public class NotaFiscal implements Serializable {
 
     public void setNumero(Long numero) {
         this.numero = numero;
+    }
+
+    public String getGarantiaContratual() {
+        return garantiaContratual;
+    }
+
+    public void setGarantiaContratual(String garantiaContratual) {
+        this.garantiaContratual = garantiaContratual;
     }
 
     @Override

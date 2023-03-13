@@ -1,6 +1,8 @@
 
 INSERT INTO grupo (id, descricao, nome) VALUES 
 (1, 'usuario', 'usuario' );
+INSERT INTO grupo (id, descricao, nome) VALUES 
+(1, 'gestor', 'gestor' );
 
 INSERT INTO usuario (id, login, nome, senha,  ativo) VALUES
 (1, 'admin', 'admin','fc7e8f6341fe27209b8e111bc7408fbc',true);
@@ -63,3 +65,6 @@ alter table usuario add column cargo varchar(250);
 alter table endereco add column logradouro varchar(250);
 
 alter table notaFiscal add column numero numeric(10,2);
+
+alter table notaFiscal add column garantiaContratual varchar(250);
+

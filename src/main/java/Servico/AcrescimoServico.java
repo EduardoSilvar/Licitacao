@@ -17,12 +17,12 @@ import util.Utils;
  * @author dylan
  */
 @Stateless
-public class AcrescimoServico extends ServicoGenerico<Acrescimo> implements Serializable{
+public class AcrescimoServico extends ServicoGenerico<Acrescimo> implements Serializable {
 
     public AcrescimoServico() {
         super(Acrescimo.class);
     }
-    
+
     public boolean existNumero(Long numero) {
         String sql = "select c from Acrescimo c where c.ativo = true ";
         if (Utils.isNotEmpty(numero)) {
@@ -38,8 +38,8 @@ public class AcrescimoServico extends ServicoGenerico<Acrescimo> implements Seri
             return false;
         }
     }
-    
-    public List<Acrescimo> pesquisarAcrescimoPorContrato(Contrato contrato,Acrescimo acrescimo){
+
+    public List<Acrescimo> pesquisarAcrescimoPorContrato(Contrato contrato, Acrescimo acrescimo) {
         String sql = "select c from Acrescimo c where c.contrato = :ct ";
         if (Utils.isNotEmpty(acrescimo.getNumeroTermo())) {
             sql += "and c.numeroTermo = :nt ";
@@ -58,7 +58,23 @@ public class AcrescimoServico extends ServicoGenerico<Acrescimo> implements Seri
         }
         return query.getResultList();
     }
-    
+
+    public List<Acrescimo> pesquisarAcrescimoPorContrato(Contrato contrato) {
+        String sql = "select c from Acrescimo c where c.ativo = true ";
+        if (Utils.isNotEmpty(contrato)) {
+            if (Utils.isNotEmpty(contrato.getId())) {
+                sql += "and c.contrato.id = :id ";
+            }
+        }
+        Query query = entityManager.createQuery(sql);
+        if (Utils.isNotEmpty(contrato)) {
+            if (Utils.isNotEmpty(contrato.getId())) {
+                query.setParameter("id", contrato.getId());
+            }
+        }
+        return query.getResultList();
+    }
+
     public List<Acrescimo> findPesquisa(Acrescimo acrescimo) {
         String sql = "select c from Acrescimo c where ";
         if (Utils.isNotEmpty(acrescimo.getContrato())) {

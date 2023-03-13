@@ -6,6 +6,11 @@
     <principal-name>usuario</principal-name>
     <group-name>usuario</group-name>
   </security-role-mapping>
+  <security-role-mapping>
+    <role-name>gestor</role-name>
+    <principal-name>gestor</principal-name>
+    <group-name>gestor</group-name>
+  </security-role-mapping>
   <class-loader delegate="true"/>
   <parameter-encoding default-charset="UTF-8"/>
   <jsp-config>

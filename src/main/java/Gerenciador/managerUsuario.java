@@ -55,10 +55,11 @@ public class managerUsuario extends managerPrincipal implements Serializable {
             this.unidades = unidadeServico.FindUnidades(userlogado.getUnidadeOrganizacional());
         } else {
             this.unidades = unidadeServico.FindAll();
-
         }
-
         this.user = userServico.find(Long.parseLong(param));
+        if (Utils.isNotEmpty(this.user.getGrupos())) {
+            this.grupo = this.user.getGrupos().get(0);
+        }
     }
 
     @Override
@@ -85,6 +86,7 @@ public class managerUsuario extends managerPrincipal implements Serializable {
 
     public void salvar() {
         if (Utils.isNotEmpty(grupo)) {
+            user.getGrupos().removeAll(user.getGrupos());
             user.getGrupos().add(grupo);
         }
         if (userServico.existEmail(user)) {
@@ -135,6 +137,10 @@ public class managerUsuario extends managerPrincipal implements Serializable {
     }
 
     public void atualizar() {
+        if (Utils.isNotEmpty(grupo)) {
+            user.setGrupos(new ArrayList<Grupo>());
+            user.getGrupos().add(grupo);
+        }
         userServico.Update(this.user);
         Msg.messagemInfoRedirect("Operação realizada com sucesso !", "usuario.xhtml?visualizar=" + this.user.getId());
     }

@@ -15,7 +15,7 @@
     </servlet-mapping>
     <session-config>
         <session-timeout>
-          4600
+            4600
         </session-timeout>
     </session-config>
     <welcome-file-list>
@@ -65,6 +65,50 @@
             <role-name>usuario</role-name>
         </auth-constraint>
     </security-constraint>
+    <security-constraint>
+        <display-name>gestor</display-name>
+        <web-resource-collection>
+            <web-resource-name>restricao</web-resource-name>
+            <description/>
+            <url-pattern>/index.xhtml</url-pattern>
+            <url-pattern>/acrescimo.xhtml</url-pattern>
+            <url-pattern>/cadastrarAlteracoes</url-pattern>
+            <url-pattern>/chat.xhtml</url-pattern>
+            <url-pattern>/configuracao.xhtml</url-pattern>
+            <url-pattern>/contratado.xhtml</url-pattern>
+            <url-pattern>/contrato.xhtml/contratoForm.xhtml</url-pattern>
+            <url-pattern>/contratoInclude.xhtml</url-pattern>
+            <url-pattern>/graficos.xhtml</url-pattern>
+            <url-pattern>/mensagem.xhtml</url-pattern>
+            <url-pattern>/notafiscal.xhtml</url-pattern>
+            <url-pattern>/notificacao.xhtml</url-pattern>
+            <url-pattern>/orgao.xhtml</url-pattern>
+            <url-pattern>/perfil.xhtml</url-pattern>
+            <url-pattern>/pesquisarAcrescimo.xhtml</url-pattern>
+            <url-pattern>/pesquisarRenvacao.xhtml</url-pattern>
+            <url-pattern>/pesquisarRepactuacao.xhtml</url-pattern>
+            <url-pattern>/pesquisarSupressao.xhtml</url-pattern>
+            <url-pattern>/pesquisarAlteracoes.xhtml</url-pattern>
+            <url-pattern>/pesquisarContratado.xhtml</url-pattern>
+            <url-pattern>/pesquisarNotaFiscal.xhtml</url-pattern>
+            <url-pattern>/pesquisarOrgao.xhtml</url-pattern>
+            <url-pattern>/pesquisarSetor.xhtml</url-pattern>
+            <url-pattern>/pesquisarTipoContrato.xhtml</url-pattern>
+            <url-pattern>/pesquisarTipoLicitacao.xhtml</url-pattern>
+            <url-pattern>/renovacao.xhtml</url-pattern>
+            <url-pattern>/repactuacao.xhtml</url-pattern>
+            <url-pattern>/setor.xhtml</url-pattern>
+            <url-pattern>/statusContrato.xhtml</url-pattern>
+            <url-pattern>/supressao.xhtml</url-pattern>
+            <url-pattern>/tipoContrato.xhtml</url-pattern>
+            <url-pattern>/tipoLicitacao.xhtml</url-pattern>
+            <url-pattern>/usuario.xhtml</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>gestor</role-name>
+        </auth-constraint>
+    </security-constraint>
     <login-config>
         <auth-method>FORM</auth-method>
         <realm-name>licitacaoRealm</realm-name>
@@ -76,5 +120,9 @@
     <security-role>
         <description/>
         <role-name>usuario</role-name>
+    </security-role>
+    <security-role>
+        <description/>
+        <role-name>gestor</role-name>
     </security-role>
 </web-app>

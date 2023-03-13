@@ -8,6 +8,7 @@ package grafico;
 import Enum.StatusContrato;
 import Servico.ContratadoServico;
 import Servico.ContratoServico;
+import Servico.SetorServico;
 import Servico.UsuarioServico;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -56,7 +57,12 @@ public class GraficoPie implements Serializable {
     @EJB
     ContratoServico contratoServico;
     @EJB
+    ContratadoServico contratadoServico;
+    @EJB
     UsuarioServico userServico;
+    @EJB
+    SetorServico setorServico;
+
     private Setor setor;
     private StatusContrato status;
     private Contratado contratado;
@@ -93,8 +99,7 @@ public class GraficoPie implements Serializable {
             labels.add(c.getNome());
         }
         dataSet.setData(values);
-        dataSet.setLabel("Left Dataset");
-        dataSet.setYaxisID("left-y-axis");
+        dataSet.setLabel("Valor");
         dataSet.setFill(true);
         dataSet.setTension(0.5);
         data.addChartDataSet(dataSet);
@@ -117,7 +122,7 @@ public class GraficoPie implements Serializable {
 
         Title title = new Title();
         title.setDisplay(true);
-        title.setText("Cartesian Linear Chart");
+        title.setText("Valores");
         options.setTitle(title);
 
         cartesianLinerModel.setOptions(options);
@@ -191,6 +196,14 @@ public class GraficoPie implements Serializable {
 
     public List<ContratoVo> TiposContrato() {
         return contratoServico.buscarTipoContrato(user);
+    }
+
+    public List<Setor> autocompletaSetor(String nome) {
+        return setorServico.findSetor(nome, user.getUnidadeOrganizacional());
+    }
+
+    public List<Contratado> autocompletaContratado(String nome) {
+        return contratadoServico.findContratado(nome, user.getUnidadeOrganizacional());
     }
 
     public void buscarContratoSetor() {

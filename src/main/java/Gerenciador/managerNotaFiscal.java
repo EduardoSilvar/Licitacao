@@ -4,9 +4,11 @@
  */
 package Gerenciador;
 
+import Servico.AcrescimoServico;
 import Servico.AnexoServico;
 import Servico.ContratoServico;
 import Servico.NotaFiscalServico;
+import Servico.RepactuacaoServico;
 import Servico.UsuarioServico;
 import com.itextpdf.text.DocumentException;
 import java.io.ByteArrayOutputStream;
@@ -26,11 +28,13 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
+import modelo.Acrescimo;
 import modelo.Anexo;
 import modelo.Contratado;
 import modelo.Contrato;
 import modelo.ModeloDocumento;
 import modelo.NotaFiscal;
+import modelo.Repactuacao;
 import modelo.TipoAnexo;
 import modelo.Usuario;
 import org.apache.commons.io.FileUtils;
@@ -55,6 +59,11 @@ public class managerNotaFiscal extends managerPrincipal {
     private ContratoServico contratoServico;
     @EJB
     private UsuarioServico userServico;
+    @EJB
+    private AcrescimoServico acrescimoServico;
+    @EJB
+    private RepactuacaoServico repactuacaoServico;
+
     private NotaFiscal notaFiscal;
     private List<Contrato> contratos;
     private List<Usuario> responsaveis;
@@ -103,6 +112,10 @@ public class managerNotaFiscal extends managerPrincipal {
         adicionarAnexo();
     }
 
+    public List<Contrato> autocompletaContrato(String nome) {
+        return contratoServico.findContrato(nome, userLogado.getUnidadeOrganizacional());
+    }
+
     public void pesquisar() {
         this.notasFiscais = notaFiscalServico.pesquisar(notaFiscal, userLogado);
         if (this.notasFiscais.size() > 0) {
@@ -128,6 +141,18 @@ public class managerNotaFiscal extends managerPrincipal {
         instanciarAnexo();
         Msg.messagemInfo(Msg.SuccessFull);
 
+    }
+
+    public List<Acrescimo> listAcrescimo(Contrato contrato) {
+        return acrescimoServico.pesquisarAcrescimoPorContrato(contrato);
+    }
+
+    public List<Repactuacao> listRepactuacao(Contrato contrato) {
+        return repactuacaoServico.pesquisarRepactuacaoPorContrato(contrato);
+    }
+
+    public List<NotaFiscal> listNotasFiscais(Contrato contrato) {
+        return notaFiscalServico.listNotaFiscalContrato(contrato);
     }
 
     public void visualizarAnexo(Anexo anexo) throws IOException, IOException, Exception {
@@ -207,8 +232,17 @@ public class managerNotaFiscal extends managerPrincipal {
     public void gerarDocumentacaoNotaFiscal() throws IOException, DocumentException {
         ModeloDocumento modelo = new ModeloDocumento();
         modelo.setTexto("");
-        notaFiscalServico.imprimirModeloNotaFiscal(modelo, this.notaFiscal.getContrato().getContratado(), this.notaFiscal.getContrato(), this.notaFiscal);
+        if (Utils.isNotEmpty(userLogado)) {
+            if (Utils.isNotEmpty(userLogado.getGrupos())) {
+                if (userLogado.getGrupos().get(0).getNome().equals("gestor")) {
+                    notaFiscalServico.imprimirModeloNotaFiscal(modelo, this.notaFiscal.getContrato().getContratado(), this.notaFiscal.getContrato(), this.notaFiscal, this.userLogado.getUnidadeOrganizacional(), listAcrescimo(this.notaFiscal.getContrato()), listRepactuacao(this.notaFiscal.getContrato()), userLogado, listNotasFiscais(this.notaFiscal.getContrato()));
+                } else {
+                    notaFiscalServico.imprimirModeloNotaFiscal(modelo, this.notaFiscal.getContrato().getContratado(), this.notaFiscal.getContrato(), this.notaFiscal, this.userLogado.getUnidadeOrganizacional());
+                }
+                                    System.err.println(userLogado.getGrupos().get(0).getNome());
 
+            }
+        }
     }
 
     public void instanciarSelect() {

@@ -119,7 +119,9 @@ public class managerContrato extends managerPrincipal implements Serializable {
         }
         this.mensagemEmail = new MensagemEmail();
         this.mensagensEmail = new ArrayList<>();
-        this.mensagensEmail = mensagemEmailServico.findMensagens(this.contrato.getContratado());
+        if (Utils.isNotEmpty(this.contrato)) {
+            this.mensagensEmail = mensagemEmailServico.findMensagens(this.contrato.getContratado());
+        }
         verificarTipoFiscal();
     }
 

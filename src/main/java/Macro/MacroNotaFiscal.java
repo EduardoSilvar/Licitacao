@@ -18,10 +18,12 @@ import com.itextpdf.text.pdf.PdfName;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import modelo.Contratado;
 import modelo.Contrato;
 import modelo.NotaFiscal;
+import modelo.UnidadeOrganizacional;
 import modelo.Usuario;
 import util.DateUtils;
 import util.Utils;
@@ -32,9 +34,9 @@ import util.Utils;
  */
 public class MacroNotaFiscal {
 
-    public static Document MacroNotaFiscal(Document document, Contratado contratado, Contrato contrato, NotaFiscal nota) throws DocumentException {
+    public static Document MacroNotaFiscal(Document document, Contratado contratado, Contrato contrato, NotaFiscal nota, UnidadeOrganizacional orgao) throws DocumentException {
         document.open();
-        document.setRole(new PdfName("doido.pdf"));
+        document.setRole(new PdfName("RecebimentoProvisorio.pdf"));
         PdfPTable table1 = new PdfPTable(1);
         table1.getDefaultCell().setBorder(0);
         Font fonter = FontFactory.getFont(FontFactory.HELVETICA, 9, Font.BOLD, new BaseColor(255, 255, 255));
@@ -363,7 +365,7 @@ public class MacroNotaFiscal {
         tableMaePai.addCell(paragraphGlobal);
         document.add(tableMaePai);
 
-        header = new PdfPCell(new Phrase("LISTA DE VERIFICAÇÕES ", fonteTexto));
+        header = new PdfPCell(new Phrase("CUMPRIMENTO DO CONTRATO E RECEBIMENTO DO OBJETO", fonteTexto));
         table = new PdfPTable(1);
         table.setPaddingTop(50);
         table.getDefaultCell().setPadding(3);
@@ -390,7 +392,19 @@ public class MacroNotaFiscal {
         tableMaePai.setPaddingTop(50);
         tableMaePai.getDefaultCell().setPadding(3);
         tableMaePai.setWidthPercentage(95);
-        paragraphGlobal = new Paragraph("Parnaíba - PI., de janeiro de 2023  ", fonte);
+        String textoLocal = "";
+        if (Utils.isNotEmpty(orgao)) {
+            if (Utils.isNotEmpty(orgao.getEndereco())) {
+                if (Utils.isNotEmpty(orgao.getEndereco().getCidade())) {
+                    textoLocal += orgao.getEndereco().getCidade();
+                }
+                if (Utils.isNotEmpty(orgao.getEndereco().getEstado())) {
+                    textoLocal += " - " + orgao.getEndereco().getEstado();
+                }
+                textoLocal += "., de " + DateUtils.format(DateUtils.DD_MM_YYYY, new Date());
+            }
+        }
+        paragraphGlobal = new Paragraph(textoLocal, fonte);
         tableMaePai.addCell(paragraphGlobal);
         document.add(tableMaePai);
 
@@ -412,7 +426,7 @@ public class MacroNotaFiscal {
         table.getDefaultCell().setPadding(3);
         table.setWidthPercentage(95);
 
-        paragraphGlobal = new Paragraph("Cliente contratado(a) em ____/____/2013\n\n\n", fonte);
+        paragraphGlobal = new Paragraph("Cliente contratado(a) em " + DateUtils.format(DateUtils.DD_MM_YYYY, contrato.getDataInicio()) + "\n\n\n", fonte);
         table.addCell(paragraphGlobal);
 
         paragraphGlobal = new Paragraph("            ________________________________________\n                                            Assinatura", fonte);

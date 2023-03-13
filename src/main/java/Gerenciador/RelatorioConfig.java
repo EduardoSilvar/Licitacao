@@ -6,6 +6,7 @@ package Gerenciador;
 
 import Macro.MacroNotaFiscal;
 import static Macro.MacroNotaFiscal.MacroNotaFiscal;
+import Macro.MacroNotaFiscalGestor;
 import com.itextpdf.text.BadElementException;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -36,15 +37,20 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.StringReader;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.context.FacesContext;
 import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
+import modelo.Acrescimo;
 import modelo.Contratado;
 import modelo.Contrato;
 import modelo.NotaFiscal;
+import modelo.Repactuacao;
+import modelo.UnidadeOrganizacional;
+import modelo.Usuario;
 
 /**
  *
@@ -121,7 +127,7 @@ public class RelatorioConfig {
     public void convert(OutputStream file, Document document) throws DocumentException, IOException {
 
         // step 2
-        PdfWriter writer = PdfWriter.getInstance(document,file);
+        PdfWriter writer = PdfWriter.getInstance(document, file);
         // step 3
         document.open();
         document.newPage();
@@ -165,10 +171,10 @@ public class RelatorioConfig {
         document.close();
     }
 
-    public void converts(OutputStream file, Document document, Contratado contratado, Contrato contrato, NotaFiscal nota) throws DocumentException, IOException {
+    public void converts(OutputStream file, Document document, Contratado contratado, Contrato contrato, NotaFiscal nota, UnidadeOrganizacional orgao, List<Acrescimo> acrescimos, List<Repactuacao> apostilamentos, Usuario usuario, List<NotaFiscal> notasFiscais) throws DocumentException, IOException {
 //document = new Document();
         // step 2
-        PdfWriter writer = PdfWriter.getInstance(document,new FileOutputStream("/opt/Licitacao/uploads/2509202211291805571_memorial.pdf"));
+        PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream("/opt/Licitacao/uploads/2509202211291805571_memorial.pdf"));
         // step 3
         document.open();
         // step 4        
@@ -190,7 +196,38 @@ public class RelatorioConfig {
         XMLWorker worker = new XMLWorker(css, true);
         XMLParser p = new XMLParser(worker);
         p.parse(is);
-        document = MacroNotaFiscal.MacroNotaFiscal(document, contratado, contrato, nota);
+        document = MacroNotaFiscalGestor.MacroNotaFiscal(document, contratado, contrato, nota, orgao, acrescimos, apostilamentos, usuario, notasFiscais);
+
+        // step 5
+        document.close();
+    }
+
+    public void converts(OutputStream file,Document document, Contratado contratado, Contrato contrato, NotaFiscal nota, UnidadeOrganizacional orgao) throws DocumentException, IOException {
+//document = new Document();
+        // step 2
+        PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream("/opt/Licitacao/uploads/2509202211291805571_memorial.pdf"));
+        // step 3
+        document.open();
+        // step 4        
+
+        // HTML
+        HtmlPipelineContext htmlContext = new HtmlPipelineContext(null);
+        htmlContext.setTagFactory(Tags.getHtmlTagProcessorFactory());
+        if (imProvider != null) {
+            htmlContext.setImageProvider(imProvider);
+
+        }
+
+        // Pipelines
+        PdfWriterPipeline pdf = new PdfWriterPipeline(document, writer);
+        HtmlPipeline html = new HtmlPipeline(htmlContext, pdf);
+        CssResolverPipeline css = new CssResolverPipeline(cssResolver, html);
+
+        // XML Worker
+        XMLWorker worker = new XMLWorker(css, true);
+        XMLParser p = new XMLParser(worker);
+        p.parse(is);
+        document = MacroNotaFiscal.MacroNotaFiscal(document, contratado, contrato, nota, orgao);
 
         // step 5
         document.close();

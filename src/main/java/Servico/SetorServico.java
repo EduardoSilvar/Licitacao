@@ -10,6 +10,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.Query;
 import modelo.Setor;
+import modelo.UnidadeOrganizacional;
 import modelo.Usuario;
 import util.Utils;
 
@@ -35,6 +36,32 @@ public class SetorServico extends ServicoGenerico<Setor> implements Serializable
 
         Query query = entityManager.createQuery(jpql);
 
+        if (nome != null && !nome.isEmpty()) {
+            query.setParameter("nome", "%" + nome + "%");
+        }
+
+        return query.getResultList();
+    }
+
+    public List<Setor> findSetor(String nome, UnidadeOrganizacional unidade) {
+        String jpql = "select c from Setor c where ";
+
+        if (nome != null && !nome.isEmpty()) {
+            jpql += "lower(c.nome) like lower(:nome) and ";
+        }
+        if (Utils.isNotEmpty(unidade)) {
+            if (Utils.isNotEmpty(unidade.getId())) {
+                jpql += "c.unidadeOrganizacional.id = :id and ";
+            }
+        }
+        jpql += "c.ativo = true";
+
+        Query query = entityManager.createQuery(jpql);
+        if (Utils.isNotEmpty(unidade)) {
+            if (Utils.isNotEmpty(unidade.getId())) {
+                query.setParameter("id", unidade.getId());
+            }
+        }
         if (nome != null && !nome.isEmpty()) {
             query.setParameter("nome", "%" + nome + "%");
         }
