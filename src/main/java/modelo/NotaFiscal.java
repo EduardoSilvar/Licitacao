@@ -57,12 +57,19 @@ public class NotaFiscal implements Serializable {
     private Date inicioFiscalizado;
     private Date finalFiscalizado;
     private boolean obrigacaoMensal;
+    private boolean obrigacaoMensalSeAplica;
     private boolean prazoEstabelecido;
+    private boolean prazoEstabelecidoSeAplica;
     private boolean documentoObrigatorio;
+    private boolean documentoObrigatorioSeAplica;
     private boolean relatorio;
+    private boolean relatorioSeAplica;
     private boolean qualidadeEsperada;
+    private boolean qualidadeEsperadaSeAplica;
     private boolean informouSituacao;
+    private boolean informouSituacaoSeAplica;
     private boolean diligenciaNecessarias;
+    private boolean diligenciaNecessariasSeAplica;
     private String garantiaContratual;
 
     public boolean isAtivo() {
@@ -284,20 +291,99 @@ public class NotaFiscal implements Serializable {
         this.garantiaContratual = garantiaContratual;
     }
 
+    public boolean isObrigacaoMensalSeAplica() {
+        return obrigacaoMensalSeAplica;
+    }
+
+    public void setObrigacaoMensalSeAplica(boolean obrigacaoMensalSeAplica) {
+        this.obrigacaoMensalSeAplica = obrigacaoMensalSeAplica;
+    }
+
+    public boolean isPrazoEstabelecidoSeAplica() {
+        return prazoEstabelecidoSeAplica;
+    }
+
+    public void setPrazoEstabelecidoSeAplica(boolean prazoEstabelecidoSeAplica) {
+        this.prazoEstabelecidoSeAplica = prazoEstabelecidoSeAplica;
+    }
+
+    public boolean isDocumentoObrigatorioSeAplica() {
+        return documentoObrigatorioSeAplica;
+    }
+
+    public void setDocumentoObrigatorioSeAplica(boolean documentoObrigatorioSeAplica) {
+        this.documentoObrigatorioSeAplica = documentoObrigatorioSeAplica;
+    }
+
+    public boolean isRelatorioSeAplica() {
+        return relatorioSeAplica;
+    }
+
+    public void setRelatorioSeAplica(boolean relatorioSeAplica) {
+        this.relatorioSeAplica = relatorioSeAplica;
+    }
+
+    public boolean isQualidadeEsperadaSeAplica() {
+        return qualidadeEsperadaSeAplica;
+    }
+
+    public void setQualidadeEsperadaSeAplica(boolean qualidadeEsperadaSeAplica) {
+        this.qualidadeEsperadaSeAplica = qualidadeEsperadaSeAplica;
+    }
+
+    public boolean isInformouSituacaoSeAplica() {
+        return informouSituacaoSeAplica;
+    }
+
+    public void setInformouSituacaoSeAplica(boolean informouSituacaoSeAplica) {
+        this.informouSituacaoSeAplica = informouSituacaoSeAplica;
+    }
+
+    public boolean isDiligenciaNecessariasSeAplica() {
+        return diligenciaNecessariasSeAplica;
+    }
+
+    public void setDiligenciaNecessariasSeAplica(boolean diligenciaNecessariasSeAplica) {
+        this.diligenciaNecessariasSeAplica = diligenciaNecessariasSeAplica;
+    }
+
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 83 * hash + Objects.hashCode(this.id);
-        hash = 83 * hash + Objects.hashCode(this.descricao);
-        hash = 83 * hash + Objects.hashCode(this.contratado);
-        hash = 83 * hash + Objects.hashCode(this.valor);
-        hash = 83 * hash + Objects.hashCode(this.dataPagamento);
-        hash = 83 * hash + Objects.hashCode(this.responsavel);
-        hash = 83 * hash + Objects.hashCode(this.contrato);
-        hash = 83 * hash + Objects.hashCode(this.anexos);
-        hash = 83 * hash + Objects.hashCode(this.tipoRecebimento);
-        hash = 83 * hash + Objects.hashCode(this.unidadeOrganizacional);
-        hash = 83 * hash + (this.ativo ? 1 : 0);
+        hash = 79 * hash + Objects.hashCode(this.id);
+        hash = 79 * hash + Objects.hashCode(this.numero);
+        hash = 79 * hash + Objects.hashCode(this.descricao);
+        hash = 79 * hash + Objects.hashCode(this.contratado);
+        hash = 79 * hash + Objects.hashCode(this.valor);
+        hash = 79 * hash + Objects.hashCode(this.dataPagamento);
+        hash = 79 * hash + Objects.hashCode(this.responsavel);
+        hash = 79 * hash + Objects.hashCode(this.contrato);
+        hash = 79 * hash + Objects.hashCode(this.anexos);
+        hash = 79 * hash + Objects.hashCode(this.tipoRecebimento);
+        hash = 79 * hash + Objects.hashCode(this.unidadeOrganizacional);
+        hash = 79 * hash + Objects.hashCode(this.lotacao);
+        hash = 79 * hash + Objects.hashCode(this.atoDesignacao);
+        hash = 79 * hash + Objects.hashCode(this.apartir);
+        hash = 79 * hash + (this.ativo ? 1 : 0);
+        hash = 79 * hash + Objects.hashCode(this.dataExtrato);
+        hash = 79 * hash + Objects.hashCode(this.periodoFiscalizado);
+        hash = 79 * hash + Objects.hashCode(this.inicioFiscalizado);
+        hash = 79 * hash + Objects.hashCode(this.finalFiscalizado);
+        hash = 79 * hash + (this.obrigacaoMensal ? 1 : 0);
+        hash = 79 * hash + (this.obrigacaoMensalSeAplica ? 1 : 0);
+        hash = 79 * hash + (this.prazoEstabelecido ? 1 : 0);
+        hash = 79 * hash + (this.prazoEstabelecidoSeAplica ? 1 : 0);
+        hash = 79 * hash + (this.documentoObrigatorio ? 1 : 0);
+        hash = 79 * hash + (this.documentoObrigatorioSeAplica ? 1 : 0);
+        hash = 79 * hash + (this.relatorio ? 1 : 0);
+        hash = 79 * hash + (this.relatorioSeAplica ? 1 : 0);
+        hash = 79 * hash + (this.qualidadeEsperada ? 1 : 0);
+        hash = 79 * hash + (this.qualidadeEsperadaSeAplica ? 1 : 0);
+        hash = 79 * hash + (this.informouSituacao ? 1 : 0);
+        hash = 79 * hash + (this.informouSituacaoSeAplica ? 1 : 0);
+        hash = 79 * hash + (this.diligenciaNecessarias ? 1 : 0);
+        hash = 79 * hash + (this.diligenciaNecessariasSeAplica ? 1 : 0);
+        hash = 79 * hash + Objects.hashCode(this.garantiaContratual);
         return hash;
     }
 
@@ -316,10 +402,64 @@ public class NotaFiscal implements Serializable {
         if (this.ativo != other.ativo) {
             return false;
         }
+        if (this.obrigacaoMensal != other.obrigacaoMensal) {
+            return false;
+        }
+        if (this.obrigacaoMensalSeAplica != other.obrigacaoMensalSeAplica) {
+            return false;
+        }
+        if (this.prazoEstabelecido != other.prazoEstabelecido) {
+            return false;
+        }
+        if (this.prazoEstabelecidoSeAplica != other.prazoEstabelecidoSeAplica) {
+            return false;
+        }
+        if (this.documentoObrigatorio != other.documentoObrigatorio) {
+            return false;
+        }
+        if (this.documentoObrigatorioSeAplica != other.documentoObrigatorioSeAplica) {
+            return false;
+        }
+        if (this.relatorio != other.relatorio) {
+            return false;
+        }
+        if (this.relatorioSeAplica != other.relatorioSeAplica) {
+            return false;
+        }
+        if (this.qualidadeEsperada != other.qualidadeEsperada) {
+            return false;
+        }
+        if (this.qualidadeEsperadaSeAplica != other.qualidadeEsperadaSeAplica) {
+            return false;
+        }
+        if (this.informouSituacao != other.informouSituacao) {
+            return false;
+        }
+        if (this.informouSituacaoSeAplica != other.informouSituacaoSeAplica) {
+            return false;
+        }
+        if (this.diligenciaNecessarias != other.diligenciaNecessarias) {
+            return false;
+        }
+        if (this.diligenciaNecessariasSeAplica != other.diligenciaNecessariasSeAplica) {
+            return false;
+        }
         if (!Objects.equals(this.descricao, other.descricao)) {
             return false;
         }
+        if (!Objects.equals(this.lotacao, other.lotacao)) {
+            return false;
+        }
+        if (!Objects.equals(this.atoDesignacao, other.atoDesignacao)) {
+            return false;
+        }
+        if (!Objects.equals(this.garantiaContratual, other.garantiaContratual)) {
+            return false;
+        }
         if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        if (!Objects.equals(this.numero, other.numero)) {
             return false;
         }
         if (!Objects.equals(this.contratado, other.contratado)) {
@@ -343,12 +483,29 @@ public class NotaFiscal implements Serializable {
         if (this.tipoRecebimento != other.tipoRecebimento) {
             return false;
         }
-        return Objects.equals(this.unidadeOrganizacional, other.unidadeOrganizacional);
+        if (!Objects.equals(this.unidadeOrganizacional, other.unidadeOrganizacional)) {
+            return false;
+        }
+        if (!Objects.equals(this.apartir, other.apartir)) {
+            return false;
+        }
+        if (!Objects.equals(this.dataExtrato, other.dataExtrato)) {
+            return false;
+        }
+        if (!Objects.equals(this.periodoFiscalizado, other.periodoFiscalizado)) {
+            return false;
+        }
+        if (!Objects.equals(this.inicioFiscalizado, other.inicioFiscalizado)) {
+            return false;
+        }
+        return Objects.equals(this.finalFiscalizado, other.finalFiscalizado);
     }
 
     @Override
     public String toString() {
-        return "NotaFiscal{" + "id=" + id + ", descricao=" + descricao + ", contratado=" + contratado + ", valor=" + valor + ", dataPagamento=" + dataPagamento + ", responsavel=" + responsavel + ", contrato=" + contrato + ", anexos=" + anexos + ", unidadeOrganizacional=" + unidadeOrganizacional + ", ativo=" + ativo + '}';
+        return "NotaFiscal{" + "id=" + id + ", numero=" + numero + ", descricao=" + descricao + ", contratado=" + contratado + ", valor=" + valor + ", dataPagamento=" + dataPagamento + ", responsavel=" + responsavel + ", contrato=" + contrato + ", anexos=" + anexos + ", tipoRecebimento=" + tipoRecebimento + ", unidadeOrganizacional=" + unidadeOrganizacional + ", lotacao=" + lotacao + ", atoDesignacao=" + atoDesignacao + ", apartir=" + apartir + ", ativo=" + ativo + ", dataExtrato=" + dataExtrato + ", periodoFiscalizado=" + periodoFiscalizado + ", inicioFiscalizado=" + inicioFiscalizado + ", finalFiscalizado=" + finalFiscalizado + ", obrigacaoMensal=" + obrigacaoMensal + ", obrigacaoMensalSeAplica=" + obrigacaoMensalSeAplica + ", prazoEstabelecido=" + prazoEstabelecido + ", prazoEstabelecidoSeAplica=" + prazoEstabelecidoSeAplica + ", documentoObrigatorio=" + documentoObrigatorio + ", documentoObrigatorioSeAplica=" + documentoObrigatorioSeAplica + ", relatorio=" + relatorio + ", relatorioSeAplica=" + relatorioSeAplica + ", qualidadeEsperada=" + qualidadeEsperada + ", qualidadeEsperadaSeAplica=" + qualidadeEsperadaSeAplica + ", informouSituacao=" + informouSituacao + ", informouSituacaoSeAplica=" + informouSituacaoSeAplica + ", diligenciaNecessarias=" + diligenciaNecessarias + ", diligenciaNecessariasSeAplica=" + diligenciaNecessariasSeAplica + ", garantiaContratual=" + garantiaContratual + '}';
     }
+
+    
 
 }

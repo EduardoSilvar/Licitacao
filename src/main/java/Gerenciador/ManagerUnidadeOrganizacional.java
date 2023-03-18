@@ -60,7 +60,7 @@ public class ManagerUnidadeOrganizacional extends managerPrincipal implements Se
         if (this.unidades.size() > 0) {
             Msg.messagemInfo("Operação realizada com sucesso !!");
         } else {
-            Msg.messagemError("Nenhum orgão encontrado");
+            Msg.messagemError("Nenhuma entidade encontrado");
         }
     }
 

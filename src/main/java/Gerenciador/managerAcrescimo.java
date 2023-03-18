@@ -4,6 +4,7 @@
  */
 package Gerenciador;
 
+import Enum.TipoFiscalizacaoEnum;
 import Servico.AcrescimoServico;
 import Servico.AnexoServico;
 import Servico.ContratoServico;
@@ -129,6 +130,13 @@ public class managerAcrescimo extends managerPrincipal implements Serializable {
         }
         this.anexo.setTipoAnexo(TipoAnexo.ACRESCIMO);
         adicionarAnexo();
+    }
+    
+    public void selecionarContrato(){
+        if(this.acrescimo.getContrato().getTipoFiscalizacao().equals(TipoFiscalizacaoEnum.INDIVIDUAL)){
+            this.acrescimo.setFiscal(new Usuario());
+            this.acrescimo.setFiscal(this.acrescimo.getContrato().getFiscal());
+        }
     }
 
     public void adicionarAnexo() {

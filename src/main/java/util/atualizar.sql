@@ -68,3 +68,17 @@ alter table notaFiscal add column numero numeric(10,2);
 
 alter table notaFiscal add column garantiaContratual varchar(250);
 
+alter table notaFiscal add column obrigacaoMensalSeAplica boolean default true;
+
+alter table notaFiscal add column prazoEstabelecidoSeAplica boolean default true;
+
+alter table notaFiscal add column documentoObrigatorioSeAplica boolean default true;
+
+alter table notaFiscal add column relatorioSeAplica boolean default true;
+
+alter table notaFiscal add column qualidadeEsperadaSeAplica boolean default true;
+
+alter table notaFiscal add column informouSituacaoSeAplica boolean default true;
+
+alter table notaFiscal add column diligenciaNecessariasSeAplica boolean default true;
+

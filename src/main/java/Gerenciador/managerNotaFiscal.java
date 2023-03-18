@@ -226,7 +226,7 @@ public class managerNotaFiscal extends managerPrincipal {
         instanciarAnexo();
         instanciarSelect();
         instanciarListaNotaFiscal();
-
+        instanciarSelectBooleans();
     }
 
     public void gerarDocumentacaoNotaFiscal() throws IOException, DocumentException {
@@ -239,10 +239,20 @@ public class managerNotaFiscal extends managerPrincipal {
                 } else {
                     notaFiscalServico.imprimirModeloNotaFiscal(modelo, this.notaFiscal.getContrato().getContratado(), this.notaFiscal.getContrato(), this.notaFiscal, this.userLogado.getUnidadeOrganizacional());
                 }
-                                    System.err.println(userLogado.getGrupos().get(0).getNome());
+                System.err.println(userLogado.getGrupos().get(0).getNome());
 
             }
         }
+    }
+
+    public void instanciarSelectBooleans() {
+        this.notaFiscal.setObrigacaoMensalSeAplica(true);
+        this.notaFiscal.setPrazoEstabelecidoSeAplica(true);
+        this.notaFiscal.setDocumentoObrigatorioSeAplica(true);
+        this.notaFiscal.setRelatorioSeAplica(true);
+        this.notaFiscal.setQualidadeEsperadaSeAplica(true);
+        this.notaFiscal.setInformouSituacaoSeAplica(true);
+        this.notaFiscal.setDiligenciaNecessariasSeAplica(true);
     }
 
     public void instanciarSelect() {

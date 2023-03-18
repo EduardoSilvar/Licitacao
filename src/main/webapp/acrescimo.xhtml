@@ -64,6 +64,7 @@
                                              converter="contratoconverter">
                                 <f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
                                 <f:selectItems value="#{managerAcrescimo.contratos}" var="contrato" itemLabel="#{contrato.numeroContrato}" itemValue="#{contrato}" />
+                                <p:ajax update="fiscalSelectAcrescimo" listener="#{managerAcrescimo.selecionarContrato()}"/>
                             </p:selectOneMenu>
                         </div>
                     </div>
@@ -106,11 +107,11 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <p:outputLabel value="Descrição*" for="descricaoAcrescimo" />
+                            <p:outputLabel value="Justificativa" for="descricaoAcrescimo" />
                             <p:inputText id="descricaoAcrescimo"
                                          value="#{managerAcrescimo.acrescimo.descricao}"
                                          disabled="#{managerAcrescimo.visualizar}"
-                                         placeholder="Descrição"
+                                         placeholder="Justificativa"
                                          requiredMessage="Este campo é obrigatório."
                                          styleClass="form-control" 
                                          />
@@ -208,6 +209,58 @@
         </center>
         <p:dialog id="removeraAcrescimoConfirmDialog"
                   widgetVar="removeraAcrescimoConfirmDialog"
+                  header="Atenção!"
+                  closeOnEscape="true"
+                  draggable="false"
+                  maximizable="false"
+                  minimizable="false"
+                  modal="true"
+                  width="850"
+                  showEffect="fade"
+                  hideEffect="fade">
+
+            <div class="row">
+
+                <div class="col-md-12">
+                    <div class="form-group" style="padding-left: 80px !important">
+                        <h4>
+                            <i class="pi pi-exclamation-triangle"></i>
+                            Tem certeza de que deseja remover este Acrescimo ?
+                        </h4>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+
+                    <center>
+
+                        <p:commandButton value="Sim"
+                                         title="Confirmar Remoção"
+                                         icon="pi pi-check"
+                                         update="corpoInteiro corpoInteiro:messages"
+                                         process="@this"
+                                         actionListener="#{managerAcrescimo.deletar()}"
+                                         oncomplete="PF('removeraAcrescimoConfirmDialog').hide();"
+                                         styleClass="mr-md-1"/>
+
+                        <p:commandButton value="Não"
+                                         title="Cancelar Remoção"
+                                         icon="pi pi-ban"
+                                         process="@this"
+                                         update="@form"
+                                         oncomplete="PF('removeraAcrescimoConfirmDialog').hide();"
+                                         styleClass="ml-md-1"/>
+
+                    </center>
+
+                </div>
+
+            </div>
+
+
+        </p:dialog>
+        <p:dialog id="selecionarFiscalDialog"
+                  widgetVar="selecionarFiscalDialog"
                   header="Atenção!"
                   closeOnEscape="true"
                   draggable="false"

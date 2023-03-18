@@ -4,6 +4,7 @@
  */
 package Gerenciador;
 
+import Enum.TipoFiscalizacaoEnum;
 import Servico.AnexoServico;
 import Servico.ContratoServico;
 import Servico.RepactuacaoServico;
@@ -120,6 +121,13 @@ public class managerRepactuacao extends managerPrincipal implements Serializable
         return repactuacao.getValorMudou();
     }
 
+    public void selecionarContrato(){
+        if(this.repactuacao.getContrato().getTipoFiscalizacao().equals(TipoFiscalizacaoEnum.INDIVIDUAL)){
+            this.repactuacao.setFiscal(new Usuario());
+            this.repactuacao.setFiscal(this.repactuacao.getContrato().getFiscal());
+        }
+    }
+    
     public void salvar() {
         if (Utils.isNotEmpty(this.repactuacao.getNumeroTermo())) {
             if (repactuacaoServico.existNumero(this.repactuacao.getNumeroTermo())) {

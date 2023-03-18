@@ -66,6 +66,7 @@
                                              converter="contratoconverter">
                                 <f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
                                 <f:selectItems value="#{managerSupressao.contratos}" var="contrato" itemLabel="#{contrato.numeroContrato}" itemValue="#{contrato}" />
+                                <p:ajax update="fiscalSelectSupressao" listener="#{managerSupressao.selecionarContrato()}"/>
                             </p:selectOneMenu>
                         </div>
                     </div>
@@ -107,11 +108,11 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <p:outputLabel value="Descrição*" for="descricaoSupressao" />
+                            <p:outputLabel value="Justificativa*" for="descricaoSupressao" />
                             <p:inputText id="descricaoSupressao"
                                          disabled="#{managerSupressao.visualizar}"
                                          value="#{managerSupressao.supressao.descricao}"
-                                         placeholder="Descrição"
+                                         placeholder="Justificativa"
                                          requiredMessage="Este campo é obrigatório."
                                          styleClass="form-control" 
                                          />

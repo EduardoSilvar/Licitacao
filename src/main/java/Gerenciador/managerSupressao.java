@@ -4,6 +4,7 @@
  */
 package Gerenciador;
 
+import Enum.TipoFiscalizacaoEnum;
 import Servico.AnexoServico;
 import Servico.ContratoServico;
 import Servico.SupressaoServico;
@@ -133,6 +134,13 @@ public class managerSupressao extends managerPrincipal implements Serializable {
                 supressaoServico.Save(this.supressao);
                 Msg.messagemInfoRedirect("Operação realizada com sucesso !", "supressao.xhtml?visualizar=" + this.supressao.getId() + "&supressao=TRUE");
             }
+        }
+    }
+    
+    public void selecionarContrato(){
+        if(this.supressao.getContrato().getTipoFiscalizacao().equals(TipoFiscalizacaoEnum.INDIVIDUAL)){
+            this.supressao.setFiscal(new Usuario());
+            this.supressao.setFiscal(this.supressao.getContrato().getFiscal());
         }
     }
 

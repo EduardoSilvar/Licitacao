@@ -65,6 +65,7 @@
                                              converter="contratoconverter">
                                 <f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
                                 <f:selectItems value="#{managerRenovacao.contratos}" var="contrato" itemLabel="#{contrato.numeroContrato}" itemValue="#{contrato}" />
+                                <p:ajax update="fiscalSelectRenovacao" listener="#{managerRenovacao.selecionarContrato()}"/>
                             </p:selectOneMenu>
                         </div>
                     </div>
