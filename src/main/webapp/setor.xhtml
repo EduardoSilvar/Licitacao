@@ -44,7 +44,40 @@
             <p:growl id="messages" showDetail="true" />
             <h:panelGroup>
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
+                        <div class="form-group" >
+                            <p:outputLabel value="Responsável" styleClass="control-label" for="setorSelect" />
+                            <p:selectOneMenu id="setorSelect"
+                                             value="#{managerSetor.setor.usuarioResponsavel}"
+                                             filter="true" 
+                                             placeholder="Tipo"
+                                             styleClass="form-control" 
+                                             disabled="#{managerSetor.visualizar}"
+                                             converter="usuarioconverter" >
+                                <f:selectItem  itemLabel="Selecione..." noSelectionOption="true" />
+                                <f:selectItems value="#{managerSetor.users}" var="user" itemLabel="#{user.nome}" itemValue="#{user}"/>
+                                <p:ajax update="contratadoPanelGroup " process="@this setorSelect"/>
+
+                            </p:selectOneMenu>
+                        </div> 
+                    </div>
+                    <!--                    <div class="col-md-3">
+                                            <div class="form-group">
+                                                <p:outputLabel value="Nome do Responsável"
+                                                               for="nomResponInput" />
+                                                <p:inputText id="nomResponInput"
+                                                             placeholder="Nome"
+                                                             required="true"
+                                                             value="{managerSetor.setor.nomeResponsavel}"
+                                                             disabled="{managerSetor.visualizar}"
+                                                             rendered="true"
+                                                             requiredMessage="Este campo é obrigatório."
+                                                             styleClass="form-control" 
+                                                             />
+                                                <p:message for="nomResponInput" />
+                                            </div>
+                                        </div>-->
+                    <div class="col-md-4">
                         <div class="form-group">
                             <p:outputLabel value="CPF do Responsável"
                                            for="cpfResponInput" />
@@ -57,24 +90,26 @@
                                          rendered="true"
                                          requiredMessage="Este campo é obrigatório."
                                          styleClass="form-control" 
-                                         />
+                                         >
+                                <p:ajax event="blur" listener="#{managerSetor.verificarCpf()}" process="@this"  update="@this corpoInteiro:messages" />
+                            </p:inputMask>
                             <p:message for="cpfResponInput" />
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <div class="form-group">
-                            <p:outputLabel value="Nome do Responsável"
-                                           for="nomResponInput" />
-                            <p:inputText id="nomResponInput"
-                                         placeholder="Nome"
+                            <p:outputLabel value="Telefone"
+                                           for="telefoneResponsavel" />
+                            <p:inputMask id="telefoneResponsavel"
+                                         placeholder="Telefone"
                                          required="true"
-                                         value="#{managerSetor.setor.nomeResponsavel}"
+                                         value="#{managerSetor.setor.telefone}"
                                          disabled="#{managerSetor.visualizar}"
-                                         rendered="true"
+                                         mask="(99)9999-9999"
                                          requiredMessage="Este campo é obrigatório."
                                          styleClass="form-control" 
                                          />
-                            <p:message for="nomResponInput" />
+                            <p:message for="telefoneResponsavel" />
                         </div>
                     </div>
                 </div>

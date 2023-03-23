@@ -111,13 +111,16 @@ public class UnidadeOrganizacional implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 97 * hash + Objects.hashCode(this.nome);
-        hash = 97 * hash + Objects.hashCode(this.NomeRepresentante);
-        hash = 97 * hash + Objects.hashCode(this.telefone);
-        hash = 97 * hash + Objects.hashCode(this.email);
-        hash = 97 * hash + Objects.hashCode(this.endereco);
-        hash = 97 * hash + (this.ativo ? 1 : 0);
+        int hash = 3;
+        hash = 19 * hash + Objects.hashCode(this.id);
+        hash = 19 * hash + Objects.hashCode(this.nome);
+        hash = 19 * hash + Objects.hashCode(this.NomeRepresentante);
+        hash = 19 * hash + Objects.hashCode(this.telefone);
+        hash = 19 * hash + Objects.hashCode(this.email);
+        hash = 19 * hash + Objects.hashCode(this.endereco);
+        hash = 19 * hash + Objects.hashCode(this.whatsapp);
+        hash = 19 * hash + (this.ativo ? 1 : 0);
+        hash = 19 * hash + Objects.hashCode(this.cnpj);
         return hash;
     }
 
@@ -148,11 +151,19 @@ public class UnidadeOrganizacional implements Serializable {
         if (!Objects.equals(this.email, other.email)) {
             return false;
         }
-        if (!Objects.equals(this.endereco, other.endereco)) {
+        if (!Objects.equals(this.whatsapp, other.whatsapp)) {
             return false;
         }
-        return true;
+        if (!Objects.equals(this.cnpj, other.cnpj)) {
+            return false;
+        }
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        return Objects.equals(this.endereco, other.endereco);
     }
+
+    
 
     @Override
     public String toString() {

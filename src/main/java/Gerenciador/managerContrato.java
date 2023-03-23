@@ -89,6 +89,7 @@ public class managerContrato extends managerPrincipal implements Serializable {
     private TipoAnexo tipoAnexo;
 
     private Contrato contrato;
+    private Contratado contratado;
     private List<Usuario> responsaveis;
     private List<TipoLicitacao> tiposLicitacao;
     private List<Contrato> contratos;
@@ -104,6 +105,7 @@ public class managerContrato extends managerPrincipal implements Serializable {
     @Override
     public void carregar(String param) {
         userLogado = userServico.getCurrentUser();
+        instanciarPesquisaContratados();
         instanciarSelect();
         InstanciarContrato();
         InstanciarContratos();
@@ -135,6 +137,8 @@ public class managerContrato extends managerPrincipal implements Serializable {
         InstanciarContrato();
         InstanciarContratos();
         instanciarVerificacaoRendered();
+        instanciarPesquisaContratados();
+
     }
 
     public void instanciarSelect() {
@@ -156,6 +160,16 @@ public class managerContrato extends managerPrincipal implements Serializable {
         this.renderedFiscalComissao = false;
     }
 
+    public void instanciarPesquisaContratados() {
+        this.contratado = new Contratado();
+        this.contratados = new ArrayList<>();
+    }
+
+    public void pesquisarContratados() {
+        this.contratados = contratadoServico.findPesquisa(this.contratado, fiscal);
+
+    }
+
     public boolean renderedEditar() {
         if (Utils.isNotEmpty(userLogado)) {
             if (Utils.isNotEmpty(this.contrato.getFiscal())) {
@@ -171,6 +185,31 @@ public class managerContrato extends managerPrincipal implements Serializable {
             }
         }
         return false;
+    }
+
+    public void adicionarContratado(Contratado contratado) {
+        this.contrato.setContratado(contratado);
+        if (Utils.isNotEmpty(contratado)) {
+            if (Utils.isNotEmpty(contratado.getAgencia())) {
+                this.contrato.setAgencia(contratado.getAgencia());
+            }
+            if (Utils.isNotEmpty(contratado.getBanco())) {
+                this.contrato.setBanco(contratado.getBanco());
+            }
+            if (Utils.isNotEmpty(contratado.getSaldoInicial())) {
+                this.contrato.setSaldoInicial(contratado.getSaldoInicial());
+            }
+            if (Utils.isNotEmpty(contratado.getDigito())) {
+                this.contrato.setDigito(contratado.getDigito());
+            }
+            if (Utils.isNotEmpty(contratado.getNumeroConta())) {
+                this.contrato.setNumeroConta(contratado.getNumeroConta());
+            }
+            if (Utils.isNotEmpty(contratado.getOperacao())) {
+                this.contrato.setOperacao(contratado.getOperacao());
+            }
+        }
+        Msg.messagemInfo("Operação realizada com sucesso !");
     }
 
     public void adicionarFiscal(Usuario fiscal) {
@@ -716,6 +755,14 @@ public class managerContrato extends managerPrincipal implements Serializable {
 
     public void setMensagensEmail(List<MensagemEmail> mensagensEmail) {
         this.mensagensEmail = mensagensEmail;
+    }
+
+    public Contratado getContratado() {
+        return contratado;
+    }
+
+    public void setContratado(Contratado contratado) {
+        this.contratado = contratado;
     }
 
 }

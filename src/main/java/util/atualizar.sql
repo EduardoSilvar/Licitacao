@@ -82,3 +82,37 @@ alter table notaFiscal add column informouSituacaoSeAplica boolean default true;
 
 alter table notaFiscal add column diligenciaNecessariasSeAplica boolean default true;
 
+alter table contrato drop column objetoContrato ;
+
+alter table contrato add column objetoContrato varchar(250);
+
+alter table contrato drop column NumeroProcesso ;
+
+alter table contrato add column NumeroProcesso varchar(250);
+
+
+alter table contrato drop column NumeroLicitacao ;
+
+alter table contrato add column NumeroLicitacao varchar(250);
+
+alter table setor add column usuarioResponsavel_id bigint;
+ALTER TABLE setor ADD CONSTRAINT fk_usuarioResponsavel_id FOREIGN KEY (usuarioResponsavel_id) REFERENCES usuario (id);
+
+alter table contrato drop column NumeroContrato ;
+
+alter table contrato add column NumeroContrato varchar(250);
+
+alter table contratado add column numeroConta bigint;
+
+alter table contratado add column digito bigint;
+
+alter table contratado add column operacao bigint;
+
+alter table contratado add column agencia bigint;
+
+alter table contratado add column banco varchar(250);
+
+alter table contratado add column saldoInicial numeric(10,2);
+
+
+

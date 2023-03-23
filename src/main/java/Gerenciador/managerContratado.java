@@ -17,6 +17,7 @@ import javax.faces.bean.ViewScoped;
 import modelo.Contratado;
 import modelo.Endereco;
 import modelo.Usuario;
+import util.Caracteres;
 import util.Msg;
 import util.Utils;
 
@@ -81,8 +82,9 @@ public class managerContratado extends managerPrincipal implements Serializable 
                     Msg.messagemError("CPF ja esta sendo usado !");
                 } else {
                     if (Utils.isNotEmpty(userLogado)) {
-                        System.err.println(userLogado.getUnidadeOrganizacional());
-                        contratado.setUnidadeOrganizacional(userLogado.getUnidadeOrganizacional());
+                        if (Utils.isNotEmpty(userLogado.getUnidadeOrganizacional())) {
+                            contratado.setUnidadeOrganizacional(userLogado.getUnidadeOrganizacional());
+                        }
                         contratadoServico.Save(contratado);
                         Msg.messagemInfoRedirect("Operação realizada com sucesso !", "contratado.xhtml?visualizar=" + this.contratado.getId());
                     }
@@ -92,17 +94,40 @@ public class managerContratado extends managerPrincipal implements Serializable 
                 Msg.messagemError("CPF invalido !");
             }
         } else {
-            if (Utils.isNotEmpty(userLogado)) {
-                System.err.println(userLogado.getUnidadeOrganizacional());
-                contratado.setUnidadeOrganizacional(userLogado.getUnidadeOrganizacional());
-                contratadoServico.Save(contratado);
-                Msg.messagemInfoRedirect("Operação realizada com sucesso !", "contratado.xhtml?visualizar=" + this.contratado.getId());
+            if (Utils.validarCNPJ(Caracteres.removecaracter(this.contratado.getCnpj()))) {
+                if (contratadoServico.existCpf(contratado.getCpf())) {
+                    Msg.messagemError("CNPJ ja esta sendo usado !");
+                } else {
+                    if (Utils.isNotEmpty(userLogado)) {
+                        if (Utils.isNotEmpty(userLogado.getUnidadeOrganizacional())) {
+                            contratado.setUnidadeOrganizacional(userLogado.getUnidadeOrganizacional());
+                        }
+                        contratadoServico.Save(contratado);
+                        Msg.messagemInfoRedirect("Operação realizada com sucesso !", "contratado.xhtml?visualizar=" + this.contratado.getId());
+                    } else {
+                        contratadoServico.Save(contratado);
+                        Msg.messagemInfoRedirect("Operação realizada com sucesso !", "contratado.xhtml?visualizar=" + this.contratado.getId());
+                    }
+                }
             } else {
-                contratadoServico.Save(contratado);
-                Msg.messagemInfoRedirect("Operação realizada com sucesso !", "contratado.xhtml?visualizar=" + this.contratado.getId());
+                Msg.messagemError("CNPJ invalido !");
+
             }
         }
 
+    }
+
+    public void verificarCpf() {
+        if (!Utils.validarCPF(Caracteres.removecaracter(this.contratado.getCpf()))) {
+            Msg.messagemError("CPF invalido !");
+        }
+    }
+
+    public void verificarCnpj() {
+
+        if (!Utils.validarCNPJ(Caracteres.removecaracter(this.contratado.getCnpj()))) {
+            Msg.messagemError("CNPJ invalido !");
+        }
     }
 
     public void atualizar() {

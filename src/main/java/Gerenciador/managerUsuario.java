@@ -19,6 +19,7 @@ import modelo.Grupo;
 import modelo.Setor;
 import modelo.Usuario;
 import modelo.UnidadeOrganizacional;
+import util.Caracteres;
 import util.Msg;
 import util.Utils;
 
@@ -53,8 +54,11 @@ public class managerUsuario extends managerPrincipal implements Serializable {
         this.grupo = new Grupo();
         if (Utils.isNotEmpty(userlogado.getUnidadeOrganizacional())) {
             this.unidades = unidadeServico.FindUnidades(userlogado.getUnidadeOrganizacional());
+            System.err.println(this.unidades.size() + " total de unidadeasss");
         } else {
             this.unidades = unidadeServico.FindAll();
+            System.err.println(this.unidades.size() + " total de unidadeas");
+
         }
         this.user = userServico.find(Long.parseLong(param));
         if (Utils.isNotEmpty(this.user.getGrupos())) {
@@ -81,6 +85,12 @@ public class managerUsuario extends managerPrincipal implements Serializable {
             return setorServico.FindAll(userlogado.getUnidadeOrganizacional());
         } else {
             return setorServico.FindAll();
+        }
+    }
+
+    public void verificarCpf() {
+        if (!Utils.validarCPF(Caracteres.removecaracter(this.user.getCpf()))) {
+            Msg.messagemError("CPF invalido !");
         }
     }
 
@@ -177,6 +187,12 @@ public class managerUsuario extends managerPrincipal implements Serializable {
     public void instanciarUsuario() {
         this.user = new Usuario();
         this.user.setGrupos(new ArrayList<Grupo>());
+        if (Utils.isNotEmpty(userlogado)) {
+            if (Utils.isNotEmpty(userlogado.getUnidadeOrganizacional())) {
+                this.user.setUnidadeOrganizacional(userlogado.getUnidadeOrganizacional());
+            }
+        }
+
     }
 
     public void instanciarListUser() {
@@ -229,6 +245,14 @@ public class managerUsuario extends managerPrincipal implements Serializable {
 
     public void setGrupo(Grupo grupo) {
         this.grupo = grupo;
+    }
+
+    public Usuario getUserlogado() {
+        return userlogado;
+    }
+
+    public void setUserlogado(Usuario userlogado) {
+        this.userlogado = userlogado;
     }
 
 }

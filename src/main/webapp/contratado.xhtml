@@ -83,7 +83,9 @@
                                                  disabled="#{managerContratado.visualizar}"
                                                  requiredMessage="Este campo é obrigatório."
                                                  styleClass="form-control" 
-                                                 />
+                                                 >
+                                        <p:ajax event="blur" listener="#{managerContratado.verificarCnpj()}" process="@this " update="@this corpoInteiro:messages" />
+                                    </p:inputMask>
                                     <p:message for="cnpjPessoaJuriInput" />
                                 </div>
                             </div>
@@ -116,7 +118,10 @@
                                                  disabled="#{managerContratado.visualizar}"
                                                  requiredMessage="Este campo é obrigatório."
                                                  styleClass="form-control" 
-                                                 />
+                                                 >
+                                        <p:ajax event="blur" listener="#{managerContratado.verificarCpf()}" process="@this"  update="@this corpoInteiro:messages" />
+
+                                    </p:inputMask>
                                     <p:message for="cpfPessoaJuriInput" />
                                 </div>
                             </div>
@@ -258,7 +263,7 @@
                                            for="CidadePessoaJuriInput" />
                             <p:inputText id="CidadePessoaJuriInput"
                                          placeholder="Cidade"
-                                          required="true"
+                                         required="true"
                                          value="#{managerContratado.contratado.endereco.cidade}"
                                          disabled="#{managerContratado.visualizar}"
                                          requiredMessage="Este campo é obrigatório."
@@ -283,6 +288,98 @@
                     </div>
                 </div>
             </h:panelGroup>
+
+            <h4>Dados bancários</h4>
+            <hr></hr>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <p:outputLabel value="Banco"
+                                       for="bancoContrato" />
+                        <p:inputText id="bancoContrato"
+                                     placeholder=""
+                                     rendered="true"
+                                     disabled="#{managerContratado.visualizar}"
+                                     value="#{managerContratado.contratado.banco}"
+                                     requiredMessage="Este campo é obrigatório."
+                                     styleClass="form-control" 
+                                     />
+                        <p:message for="bancoContrato" />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <p:outputLabel value="N° da conta"
+                                       for="contaContrato" />
+                        <p:inputMask id="contaContrato"
+                                     style="display: flex; flex-direction: row"
+                                     styleClass="form-control" 
+                                     disabled="#{managerContratado.visualizar}"
+                                     value="#{managerContratado.contratado.numeroConta}"
+                                     requiredMessage="Este campo é obrigatório." />
+                        <p:message for="contaContrato" />
+                    </div> 
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <p:outputLabel value="Dígito"
+                                       for="digitoContaContrato" />
+                        <p:inputMask id="digitoContaContrato"
+                                     style="display: flex; flex-direction: row"
+                                     styleClass="form-control"
+                                     placeholder=""
+                                     disabled="#{managerContratado.visualizar}"
+                                     value="#{managerContratado.contratado.digito}"
+                                     requiredMessage="Este campo é obrigatório." />
+                        <p:message for="digitoContaContrato" />
+                    </div> 
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <p:outputLabel value="Agência"
+                                       for="agenciaContrato" />
+                        <p:inputText id="agenciaContrato"
+                                     placeholder=""
+                                     rendered="true"
+                                     disabled="#{managerContratado.visualizar}"
+                                     value="#{managerContratado.contratado.agencia}"
+                                     requiredMessage="Este campo é obrigatório."
+                                     styleClass="form-control" 
+                                     />
+                        <p:message for="agenciaContrato" />
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <p:outputLabel value="Operação"
+                                       for="operacaoContrato" />
+                        <p:inputMask id="operacaoContrato"
+                                     style="display: flex; flex-direction: row"
+                                     styleClass="form-control" 
+                                     placeholder=""
+                                     disabled="#{managerContratado.visualizar}"
+                                     value="#{managerContratado.contratado.operacao}"
+                                     requiredMessage="Este campo é obrigatório." />
+                        <p:message for="operacaoContrato" />
+                    </div> 
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group" style="display: flex;flex-direction: column" >
+                        <p:outputLabel value="Saldo inicial"
+                                       for="saldoContaContrato" />
+
+                        <p:inputNumber id="saldoContaContrato" style="width: 30%"  value="#{managerContratado.contratado.saldoInicial}" symbol="R$"
+                                       symbolPosition="p" emptyValue="always" requiredMessage="Este campo é obrigatório."
+                                       disabled="#{managerContratado.visualizar}" />
+                        <p:message for="saldoContaContrato" />
+
+                    </div> 
+                </div>
+            </div>
+
             <center>
                 <p:commandButton value="Salvar" icon="pi pi-save" process="contratadoPanelGroup" update="corpoInteiro:messages" actionListener="#{managerContratado.salvar()}" rendered="#{managerContratado.cadastrar}" />
                 <p:button value="Editar" icon="pi pi-pencil"  rendered="#{managerContratado.visualizar}" href="contratado.xhtml?editar=#{managerContratado.contratado.id}" />

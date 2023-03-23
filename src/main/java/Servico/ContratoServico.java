@@ -299,7 +299,7 @@ public class ContratoServico extends ServicoGenerico<Contrato> implements Serial
         return query.getResultList();
     }
 
-    public boolean existNumero(Long numero) {
+    public boolean existNumero(String numero) {
         String sql = "select c from Contrato c where c.ativo = true ";
         if (Utils.isNotEmpty(numero)) {
             sql += "and c.NumeroContrato = :numero ";

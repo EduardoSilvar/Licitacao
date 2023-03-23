@@ -85,7 +85,10 @@
                                          value="#{managerUnidadeOrganizacional.unidade.cnpj}"
                                          rendered="true"
                                          requiredMessage="Este campo é obrigatório."
-                                         />
+                                         >
+                                <p:ajax event="blur" listener="#{managerUnidadeOrganizacional.verificarCnpj()}" process="@this " update="@this corpoInteiro:messages" />
+
+                            </p:inputMask>
                             <p:message for="cnpjInput" />
                         </div>
                     </div>

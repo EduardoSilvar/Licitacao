@@ -1,6 +1,6 @@
 .ui-datatable .ui-datatable-header{
     color: white !important;
-    background-color: #01415B !important; 
+    background-color: #01415B !important;
     font-size: 16px;
     height: 30px !important;
     padding: 3px !important;
@@ -26,4 +26,8 @@ body .ui-calendar .ui-button.ui-button-icon-only {
 
 body{
     background:#f5fcfc;
+}
+body .ui-chkbox .ui-chkbox-box.ui-state-active{
+    background: #01415B !important;
+    border-color: #01415B !important;
 }

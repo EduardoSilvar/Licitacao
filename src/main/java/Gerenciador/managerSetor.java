@@ -15,6 +15,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import modelo.Setor;
 import modelo.Usuario;
+import util.Caracteres;
 import util.Msg;
 import util.Utils;
 
@@ -32,6 +33,7 @@ public class managerSetor extends managerPrincipal implements Serializable {
     private UsuarioServico userServico;
     private Setor setor;
     private List<Setor> setores;
+    private List<Usuario> users;
     private Usuario userLogado;
 
     @Override
@@ -39,6 +41,7 @@ public class managerSetor extends managerPrincipal implements Serializable {
         userLogado = userServico.getCurrentUser();
         this.setor = setorServico.find(Long.parseLong(param));
         this.setores = new ArrayList<>();
+        instanciarListUsuario();
     }
 
     @Override
@@ -46,6 +49,7 @@ public class managerSetor extends managerPrincipal implements Serializable {
         userLogado = userServico.getCurrentUser();
         instanciarSetor();
         instanciarSetores();
+        instanciarListUsuario();
     }
 
     public void instanciarSetores() {
@@ -54,6 +58,22 @@ public class managerSetor extends managerPrincipal implements Serializable {
 
     public void instanciarSetor() {
         this.setor = new Setor();
+    }
+
+    public void instanciarListUsuario() {
+        if (Utils.isNotEmpty(userLogado)) {
+            if (Utils.isNotEmpty(userLogado.getUnidadeOrganizacional())) {
+                this.users = userServico.FindAll(userLogado.getUnidadeOrganizacional());
+            } else {
+                this.users = userServico.FindAll();
+            }
+        }
+    }
+
+    public void verificarCpf() {
+        if (!Utils.validarCPF(Caracteres.removecaracter(this.setor.getCpfResponsavel()))) {
+            Msg.messagemError("CPF invalido !");
+        }
     }
 
     @Override
@@ -119,6 +139,14 @@ public class managerSetor extends managerPrincipal implements Serializable {
 
     public void setSetores(List<Setor> setores) {
         this.setores = setores;
+    }
+
+    public List<Usuario> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<Usuario> users) {
+        this.users = users;
     }
 
 }

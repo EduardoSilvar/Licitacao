@@ -62,7 +62,6 @@ public class managerIndex implements Serializable {
         final Date dataEvento = cal.getTime();
         Long agora = dataEvento.getTime() / (3600000 * 24);
 //            Long dataContrato = new Date().getTime() / (3600000 * 24);
-        System.out.println(agora + " " + todosContratos.size());
         for (Contrato c : todosContratos) {
             Long dataContrato = c.getDataFinal().getTime() / (3600000 * 24);
             Long output = (dataContrato - agora);

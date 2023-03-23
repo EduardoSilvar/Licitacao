@@ -14,6 +14,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import modelo.Endereco;
 import modelo.UnidadeOrganizacional;
+import util.Caracteres;
 import util.Msg;
 import util.Utils;
 
@@ -33,8 +34,12 @@ public class ManagerUnidadeOrganizacional extends managerPrincipal implements Se
     private Long id;
 
     public void salvar() {
-        unidadeServico.Save(this.unidade);
-        Msg.messagemInfoRedirect("Operação realizada com sucesso !", "orgao.xhtml?visualizar=" + this.unidade.getId());
+        if (Utils.validarCNPJ(Caracteres.removecaracter(this.unidade.getCnpj()))) {
+            unidadeServico.Save(this.unidade);
+            Msg.messagemInfoRedirect("Operação realizada com sucesso !", "orgao.xhtml?visualizar=" + this.unidade.getId());
+        } else {
+            Msg.messagemError("CNPJ invalido !");
+        }
     }
 
     public void deletar() {
@@ -47,6 +52,13 @@ public class ManagerUnidadeOrganizacional extends managerPrincipal implements Se
             this.unidades.remove(Novaunidade);
             this.unidades = unidadeServico.pesquisar(this.unidade);
             Msg.messagemInfo("Operação realizada com sucesso !");
+        }
+    }
+
+    public void verificarCnpj() {
+
+        if (!Utils.validarCNPJ(Caracteres.removecaracter(this.unidade.getCnpj()))) {
+            Msg.messagemError("CNPJ invalido !");
         }
     }
 

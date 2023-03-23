@@ -84,7 +84,9 @@
                                              disabled="#{managerUsuario.visualizar}"
                                              requiredMessage="Este campo é obrigatório."
                                              styleClass="form-control" 
-                                             />
+                                             >
+                                    <p:ajax event="blur" listener="#{managerUsuario.verificarCpf()}" process="@this"  update="@this corpoInteiro:messages" />
+                                </p:inputMask>
                                 <p:message for="cpfUserInput" />
                             </div>
                         </div>
@@ -169,14 +171,14 @@
                                                                  disabled="{managerUsuario.visualizar}"
                                                                   >
                                                     <f:selectItem  itemLabel="Selecione..." noSelectionOption="true" />
-                                                    <f:selectItems value="{managerAutoComplete.autocompletaGrupo}" var="tipo" itemLabel="#{tipo.label}" itemValue="#{tipo}"/>
+                                                    <f:selectItems value="{managerAutoComplete.autocompletaGrupo}" var="tipo" itemLabel="{tipo.label}" itemValue="#{tipo}"/>
                                                     <p:ajax update="corpoInteiro:acessoSelect"/>
                                                 </p:selectOneMenu>
                                             </div> 
                                         </div>-->
                 </div>
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-#{managerUsuario.userlogado.administrador ? 6 : 12}">
                         <div class="form-group" >
                             <p:outputLabel value="Setor" styleClass="control-label" for="setorSelect" />
                             <p:selectOneMenu id="setorSelect"
@@ -191,23 +193,24 @@
                             </p:selectOneMenu>
                         </div> 
                     </div>
-                    <div class="col-md-6">
-                        <div class="form-group" >
-                            <p:outputLabel value="Unidade Organizacional" styleClass="control-label" for="unidadeSelect" />
-                            <p:selectOneMenu id="unidadeSelect"
-                                             value="#{managerUsuario.user.unidadeOrganizacional}"
-                                             filter="true" 
-                                             placeholder="Tipo"
-                                             styleClass="form-control" 
-                                             required="true"
-                                             disabled="#{managerUsuario.visualizar}"
-                                             converter="unidadeconverter" >
-                                <f:selectItem  itemLabel="Selecione..." noSelectionOption="true" />
-                                <f:selectItems value="#{managerUsuario.unidades}" var="unidade" itemLabel="#{unidade.nome}" itemValue="#{unidade}"/>
-                            </p:selectOneMenu>
-                        </div> 
-                    </div>
-
+                    <h:panelGroup rendered="#{managerUsuario.userlogado.administrador}">
+                        <div class="col-md-6">
+                            <div class="form-group" >
+                                <p:outputLabel value="Unidade Organizacional" styleClass="control-label" for="unidadeSelect" />
+                                <p:selectOneMenu id="unidadeSelect"
+                                                 value="#{managerUsuario.user.unidadeOrganizacional}"
+                                                 filter="true" 
+                                                 placeholder="Tipo"
+                                                 styleClass="form-control" 
+                                                 required="true"
+                                                 disabled="#{managerUsuario.visualizar}"
+                                                 converter="unidadeconverter" >
+                                    <f:selectItem  itemLabel="Selecione..." noSelectionOption="true" />
+                                    <f:selectItems value="#{managerUsuario.unidades}" var="unidade" itemLabel="#{unidade.nome}" itemValue="#{unidade}"/>
+                                </p:selectOneMenu>
+                            </div> 
+                        </div>
+                    </h:panelGroup>
                 </div>
                 <div class="row">
                     <div class="col-md-4">
@@ -219,7 +222,7 @@
                                          value="#{managerUsuario.user.login}"
                                          disabled="#{managerUsuario.visualizar}"
                                          requiredMessage="Este campo é obrigatório."
-                                         styleClass="form-control" 
+                                         styleClass="form-control" onkeyup="toUppercase(this);"
                                          />
                             <p:message for="loginUserInput" />
                         </div>
@@ -312,5 +315,10 @@
 
 
         </p:dialog>
+        <script>
+            function toUppercase(el) {
+                el.value = el.value.toUpperCase();
+            }
+        </script>
     </ui:define>
 </ui:composition>

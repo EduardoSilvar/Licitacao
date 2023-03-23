@@ -88,8 +88,10 @@ public class ContratadoServico extends ServicoGenerico<Contratado> implements Se
         if (Utils.isNotEmpty(contratado.getNome())) {
             sql += "c.nome = :nome and ";
         }
-        if (Utils.isNotEmpty(user.getUnidadeOrganizacional())) {
-            sql += " c.unidadeOrganizacional = :unidade and ";
+        if (Utils.isNotEmpty(user)) {
+            if (Utils.isNotEmpty(user.getUnidadeOrganizacional())) {
+                sql += " c.unidadeOrganizacional = :unidade and ";
+            }
         }
 
         sql += "c.ativo = true";
@@ -110,8 +112,10 @@ public class ContratadoServico extends ServicoGenerico<Contratado> implements Se
         if (Utils.isNotEmpty(contratado.getNatureza())) {
             query.setParameter("nt", contratado.getNatureza());
         }
-        if (Utils.isNotEmpty(user.getUnidadeOrganizacional())) {
-            query.setParameter("unidade", user.getUnidadeOrganizacional());
+        if (Utils.isNotEmpty(user)) {
+            if (Utils.isNotEmpty(user.getUnidadeOrganizacional())) {
+                query.setParameter("unidade", user.getUnidadeOrganizacional());
+            }
         }
         return query.getResultList();
     }
@@ -124,6 +128,21 @@ public class ContratadoServico extends ServicoGenerico<Contratado> implements Se
         Query query = getEntityManager().createQuery(sql);
         if (Utils.isNotEmpty(cpf)) {
             query.setParameter("cpf", cpf);
+        }
+        if (query.getResultList().size() > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+     public boolean existCnpj(String cnpj) {
+        String sql = "select c from Contratado c where c.ativo = true ";
+        if (Utils.isNotEmpty(cnpj)) {
+            sql += "and c.cnpj = :cnpj ";
+        }
+        Query query = getEntityManager().createQuery(sql);
+        if (Utils.isNotEmpty(cnpj)) {
+            query.setParameter("cnpj", cnpj);
         }
         if (query.getResultList().size() > 0) {
             return true;

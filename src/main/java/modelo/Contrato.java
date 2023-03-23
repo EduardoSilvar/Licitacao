@@ -44,9 +44,9 @@ public class Contrato implements Serializable {
     @OneToOne
     private Contratado contratado;
     private String nome;
-    private Long NumeroContrato;
-    private Long NumeroProcesso;
-    private Long NumeroLicitacao;
+    private String NumeroContrato;
+    private String NumeroProcesso;
+    private String NumeroLicitacao;
     private BigDecimal valorRestante;
     @OneToOne
     private Setor setor;
@@ -66,7 +66,7 @@ public class Contrato implements Serializable {
     private Date dataAssinatura;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date dataRenovacao;
-    private Long objetoContrato;
+    private String objetoContrato;
     @OneToMany
     private List<Usuario> fiscalContrato;
     @Enumerated(EnumType.STRING)
@@ -162,29 +162,32 @@ public class Contrato implements Serializable {
         this.contratado = contratado;
     }
 
-    public Long getNumeroContrato() {
+    public String getNumeroContrato() {
         return NumeroContrato;
     }
 
-    public void setNumeroContrato(Long NumeroContrato) {
+    public void setNumeroContrato(String NumeroContrato) {
         this.NumeroContrato = NumeroContrato;
     }
 
-    public Long getNumeroProcesso() {
+
+    public String getNumeroProcesso() {
         return NumeroProcesso;
     }
 
-    public void setNumeroProcesso(Long NumeroProcesso) {
+    public void setNumeroProcesso(String NumeroProcesso) {
         this.NumeroProcesso = NumeroProcesso;
     }
 
-    public Long getNumeroLicitacao() {
+    public String getNumeroLicitacao() {
         return NumeroLicitacao;
     }
 
-    public void setNumeroLicitacao(Long NumeroLicitacao) {
+    public void setNumeroLicitacao(String NumeroLicitacao) {
         this.NumeroLicitacao = NumeroLicitacao;
     }
+
+    
 
     public Setor getSetor() {
         return setor;
@@ -250,13 +253,14 @@ public class Contrato implements Serializable {
         this.dataRenovacao = dataRenovacao;
     }
 
-    public Long getObjetoContrato() {
+    public String getObjetoContrato() {
         return objetoContrato;
     }
 
-    public void setObjetoContrato(Long objetoContrato) {
+    public void setObjetoContrato(String objetoContrato) {
         this.objetoContrato = objetoContrato;
     }
+
 
     public String getDescricao() {
         return descricao;

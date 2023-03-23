@@ -5,6 +5,8 @@
  */
 package util;
 
+import br.com.caelum.stella.validation.CNPJValidator;
+import br.com.caelum.stella.validation.CPFValidator;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
@@ -58,6 +60,40 @@ public class Utils {
 
     public static boolean isNotEmpty(Object... args) {
         return !isEmpty(args);
+    }
+
+    public static boolean validarCPF(String cpf) {
+        CPFValidator cpfValidator = new CPFValidator();
+        try {
+            cpfValidator.assertValid(cpf);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public static boolean validarCNPJ(String cnpj) {
+        CNPJValidator validator = new CNPJValidator();
+        try {
+            validator.assertValid(cnpj);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    private static int calcularDigito(String str, int peso) {
+        int soma = 0;
+        for (int i = str.length() - 1; i >= 0; i--) {
+            soma += Integer.parseInt(str.substring(i, i + 1)) * peso--;
+            if (peso < 2) {
+                peso = 9;
+            }
+        }
+        int digito = 11 - (soma % 11);
+        return digito > 9 ? 0 : digito;
     }
 
     public static String MD5(String md5) {
