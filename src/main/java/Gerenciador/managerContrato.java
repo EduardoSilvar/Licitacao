@@ -141,6 +141,22 @@ public class managerContrato extends managerPrincipal implements Serializable {
 
     }
 
+    public boolean renderedCnpjPEssoa() {
+        return contratado.getNatureza().equals(NaturezaEnum.JURÍDICA);
+    }
+
+    public boolean renderedCpfPEssoa() {
+        return contratado.getNatureza().equals(NaturezaEnum.FISICA);
+    }
+
+    public NaturezaEnum getJuridica() {
+        return NaturezaEnum.JURÍDICA;
+    }
+
+    public NaturezaEnum getFisica() {
+        return NaturezaEnum.FISICA;
+    }
+
     public void instanciarSelect() {
         if (Utils.isNotEmpty(userLogado.getUnidadeOrganizacional())) {
             this.setores = setorServico.FindAll(userLogado.getUnidadeOrganizacional());
@@ -162,6 +178,7 @@ public class managerContrato extends managerPrincipal implements Serializable {
 
     public void instanciarPesquisaContratados() {
         this.contratado = new Contratado();
+        contratado.setNatureza(NaturezaEnum.JURÍDICA);
         this.contratados = new ArrayList<>();
     }
 
@@ -289,10 +306,10 @@ public class managerContrato extends managerPrincipal implements Serializable {
     public void salvar() {
         userLogado = userServico.getCurrentUser();
 
-        if (Utils.isNotEmpty(this.contrato.getNumeroContrato())) {
-            if (contratoServico.existNumero(this.contrato.getNumeroContrato())) {
-                Msg.messagemError("Número de contrato já registrado !");
-            } else {
+//        if (Utils.isNotEmpty(this.contrato.getNumeroContrato())) {
+//            if (contratoServico.existNumero(this.contrato.getNumeroContrato())) {
+//                Msg.messagemError("Número de contrato já registrado !");
+//            } else {
                 if (Utils.isNotEmpty(userLogado)) {
                     if (Utils.isNotEmpty(userLogado.getUnidadeOrganizacional())) {
                         this.contrato.setUnidadeOrganizacional(userLogado.getUnidadeOrganizacional());
@@ -302,8 +319,8 @@ public class managerContrato extends managerPrincipal implements Serializable {
                 this.contrato.setValorRestante(this.contrato.getValor());
                 contratoServico.Save(this.contrato);
                 Msg.messagemInfoRedirect("Operação realizada com sucesso !", "contrato.xhtml?visualizar=" + this.contrato.getId());
-            }
-        }
+//            }
+//        }
     }
 
     public void pesquisar() {

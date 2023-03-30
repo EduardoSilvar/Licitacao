@@ -171,7 +171,7 @@
                                             <div class="form-group">
                                                 <p:outputLabel value="Possui tempo determinado ?"/>
                                                 <div class="ui-inputgroup">
-                                                    <p:selectBooleanButton id="tempoDeterminadoButton"   disabled="{managerContrato.visualizar}" value="#{managerContrato.contrato.possuiTempoDeterminado}" onLabel="Sim" offLabel="Não" style="width:12rem; color: white !important;border-radius: 5px">
+                                                    <p:selectBooleanButton id="tempoDeterminadoButton"   disabled="{managerContrato.visualizar}" value="{managerContrato.contrato.possuiTempoDeterminado}" onLabel="Sim" offLabel="Não" style="width:12rem; color: white !important;border-radius: 5px">
                                                         <p:ajax update="dataDefinida"/>
                                                     </p:selectBooleanButton>
                                                 </div>
@@ -774,7 +774,15 @@
                     Pesquisar Contratado
                 </h4>
                 <hr/>
+                <h:panelGroup id="selectorPanelGroup"  >
 
+
+                    <p:selectOneRadio id="console" value="#{managerContrato.contratado.natureza}"  unselectable="true"  style="margin: 10px">
+                        <f:selectItem itemLabel="Jurídica" itemValue="#{managerContrato.juridica}" />
+                        <f:selectItem itemLabel="Fisica" itemValue="#{managerContrato.fisica}"/>
+                        <p:ajax update="corpoInteiro:tabview:dadosContratado"  />
+                    </p:selectOneRadio>
+                </h:panelGroup>
                 <h:panelGroup id="dadosContratado">
 
                     <div class="row">
@@ -789,18 +797,36 @@
                                              styleClass="form-control" />
                             </div>
                         </div>
-
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <p:outputLabel value="CPF"
-                                               for="cpfConjugeInputMaskPesquisarConjugeDialog" />
-                                <p:inputMask id="cpfConjugeInputMaskPesquisarConjugeDialog"
-                                             value="#{managerContrato.contratado.cpf}"
-                                             placeholder="CPF"
-                                             mask="999.999.999-99"
-                                             styleClass="form-control" />
+                        <h:panelGroup rendered="#{managerContrato.renderedCnpjPEssoa()}">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <p:outputLabel value="CNPJ"
+                                                   for="cnpjPessoaJuriInput"  />
+                                    <p:inputMask id="cnpjPessoaJuriInput"
+                                                 placeholder="CNPJ"
+                                                 mask="99.999.999/9999-99"
+                                                 value="#{managerContrato.contratado.cnpj}"
+                                                 requiredMessage="Este campo é obrigatório."
+                                                 styleClass="form-control" 
+                                                 >
+                                    </p:inputMask>
+                                    <p:message for="cnpjPessoaJuriInput" />
+                                </div>
                             </div>
-                        </div>
+                        </h:panelGroup>
+                        <h:panelGroup rendered="#{managerContrato.renderedCpfPEssoa()}">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <p:outputLabel value="CPF"
+                                                   for="cpfConjugeInputMaskPesquisarConjugeDialog" />
+                                    <p:inputMask id="cpfConjugeInputMaskPesquisarConjugeDialog"
+                                                 value="#{managerContrato.contratado.cpf}"
+                                                 placeholder="CPF"
+                                                 mask="999.999.999-99"
+                                                 styleClass="form-control" />
+                                </div>
+                            </div>
+                        </h:panelGroup>
 
                     </div>
 
@@ -822,7 +848,7 @@
                                                  title="Limpar Pesquisa"
                                                  icon="pi pi-eraser"
                                                  process="@this"
-                                                 update="dadosContratado"
+                                                 update="dadosContratado selectorPanelGroup"
                                                  actionListener="#{managerContrato.instanciarPesquisaContratados()}"
                                                  styleClass="mr-md-1"
                                                  style="width: 130px;"/>

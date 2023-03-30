@@ -257,8 +257,8 @@ public class ContratoServico extends ServicoGenerico<Contrato> implements Serial
         if (Utils.isNotEmpty(unidade)) {
             sql += "c.unidadeOrganizacional = :unidade and ";
         }
-        if (Utils.isNotEmpty(contrato.getNumeroContrato())) {
-            sql += "c.numeroContrato = :numero and ";
+        if (Utils.isNotEmpty(contrato.getNumeroProcesso())) {
+            sql += "c.numeroProcesso = :numero and ";
         }
         if (Utils.isNotEmpty(contrato.getStatus())) {
             sql += "c.status = :status and ";
@@ -290,8 +290,8 @@ public class ContratoServico extends ServicoGenerico<Contrato> implements Serial
         if (Utils.isNotEmpty(contrato.getDataInicio())) {
             query.setParameter("datai", contrato.getDataInicio());
         }
-        if (Utils.isNotEmpty(contrato.getNumeroContrato())) {
-            query.setParameter("numero", contrato.getNumeroContrato());
+        if (Utils.isNotEmpty(contrato.getNumeroProcesso())) {
+            query.setParameter("numero", contrato.getNumeroProcesso());
         }
         if (Utils.isNotEmpty(contrato.getSetor())) {
             query.setParameter("setor", contrato.getSetor());

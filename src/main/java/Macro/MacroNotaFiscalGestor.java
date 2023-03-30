@@ -104,7 +104,7 @@ public class MacroNotaFiscalGestor {
         PdfPTable setimaTable = new PdfPTable(1);
         setimaTable.getDefaultCell().setBorder(0);
         paragraphGlobal = new Paragraph("2) FINALIDADE: \n\n", fonteRegularNegrito);
-        paragraphGlobal.add(new Chunk(" Receber definitivamente o contrato " + contrato.getNumeroContrato() + " assinado em " + contrato.getDataAssinatura() + ", com valor estimado de R$ " + contrato.getValor() + " (" + valorPorExtenso(new Double(contrato.getValor() + "")) + ").\n\n", fonteRegular));
+        paragraphGlobal.add(new Chunk(" Receber definitivamente o contrato " + contrato.getNumeroProcesso() + " assinado em " + contrato.getDataAssinatura() + ", com valor estimado de R$ " + contrato.getValor() + " (" + valorPorExtenso(new Double(contrato.getValor() + "")) + ").\n\n", fonteRegular));
         setimaTable.addCell(paragraphGlobal);
         document.add(setimaTable);
 
@@ -114,7 +114,7 @@ public class MacroNotaFiscalGestor {
         paragraphGlobal.add(new Chunk("    Informamos que durante o período a que se refere o presente relatório, foram celebrados " + acrescimo.size() + " Termo(s) Aditivo(s) e " + termosApostilamentos.size() + " Termo(s) de Apostilamento, conforme descrito abaixo:\n"
                 + "\n", fonteRegular));
         if (Utils.isNotEmpty(acrescimo)) {
-            paragraphGlobal.add(new Chunk("Termos Aditivo, tendo como objeto : " + contrato.getNumeroContrato() + "\n\n", fonteRegularNegrito));
+            paragraphGlobal.add(new Chunk("Termos Aditivo, tendo como objeto : " + contrato.getNumeroProcesso() + "\n\n", fonteRegularNegrito));
             int termo = 1;
             for (Acrescimo ac : acrescimo) {
                 paragraphGlobal.add(new Chunk("- " + termo + "º termo aditivo de número : " + ac.getNumeroTermo() + "\n\n", fonteRegular));
@@ -123,7 +123,7 @@ public class MacroNotaFiscalGestor {
         }
         if (Utils.isNotEmpty(termosApostilamentos)) {
 
-            paragraphGlobal.add(new Chunk("Termos Apostilamentos, tendo como objeto : " + contrato.getNumeroContrato() + "\n\n", fonteRegularNegrito));
+            paragraphGlobal.add(new Chunk("Termos Apostilamentos, tendo como objeto : " + contrato.getNumeroProcesso() + "\n\n", fonteRegularNegrito));
             int termo = 1;
             for (Repactuacao rp : termosApostilamentos) {
                 paragraphGlobal.add(new Chunk("- " + termo + "º termo apostilamento de número : " + rp.getNumeroTermo() + "\n\n", fonteRegular));
@@ -224,7 +224,7 @@ public class MacroNotaFiscalGestor {
         PdfPTable decimaTerceiraTable = new PdfPTable(1);
         decimaTerceiraTable.getDefaultCell().setBorder(0);
         paragraphGlobal = new Paragraph("5) DECLARAÇÃO DE QUITAÇÃO \n\n", fonteRegularNegrito);
-        paragraphGlobal.add(new Chunk(" Declaro para devidos fins que todos os débitos e obrigações originados pelo contrato nº " + contrato.getNumeroContrato() + ", com a empresa " + contrato.getContratado().getNome() + " foram quitados, conforme documento X (informar documento SEI ou folha do processo físico digitalizado.):\n\n", fonteRegular));
+        paragraphGlobal.add(new Chunk(" Declaro para devidos fins que todos os débitos e obrigações originados pelo contrato nº " + contrato.getNumeroProcesso() + ", com a empresa " + contrato.getContratado().getNome() + " foram quitados, conforme documento X (informar documento SEI ou folha do processo físico digitalizado.):\n\n", fonteRegular));
         decimaTerceiraTable.addCell(paragraphGlobal);
         document.add(decimaTerceiraTable);
 
@@ -233,9 +233,9 @@ public class MacroNotaFiscalGestor {
         paragraphGlobal = new Paragraph("6) CONCLUSÃO \n\n", fonteRegularNegrito);
 
         if (Utils.isNotEmpty(nota.getInicioFiscalizado()) && Utils.isNotEmpty(nota.getFinalFiscalizado())) {
-            paragraphGlobal.add(new Chunk("A empresa: " + contrato.getContratado().getNome() + ". Contratada com objetivo de " + contrato.getObjetoContrato() + ", conforme contrato " + contrato.getNumeroContrato() + ", executou, no período de " + DateUtils.format(DateUtils.DD_MM_YYYY, nota.getInicioFiscalizado()) + " a " + DateUtils.format(DateUtils.DD_MM_YYYY, nota.getFinalFiscalizado()) + " as suas atividades (informe o resultado da prestação do serviço).\n\n ", fonteRegular));
+            paragraphGlobal.add(new Chunk("A empresa: " + contrato.getContratado().getNome() + ". Contratada com objetivo de " + contrato.getObjetoContrato() + ", conforme contrato " + contrato.getNumeroProcesso() + ", executou, no período de " + DateUtils.format(DateUtils.DD_MM_YYYY, nota.getInicioFiscalizado()) + " a " + DateUtils.format(DateUtils.DD_MM_YYYY, nota.getFinalFiscalizado()) + " as suas atividades (informe o resultado da prestação do serviço).\n\n ", fonteRegular));
         } else {
-            paragraphGlobal.add(new Chunk("A empresa: " + contrato.getContratado().getNome() + ". Contratada com objetivo de " + contrato.getObjetoContrato() + ", conforme contrato " + contrato.getNumeroContrato() + ", executou, no período de " + "__/__/____ a __/__/____" + " as suas atividades (informe o resultado da prestação do serviço).\n\n ", fonteRegular));
+            paragraphGlobal.add(new Chunk("A empresa: " + contrato.getContratado().getNome() + ". Contratada com objetivo de " + contrato.getObjetoContrato() + ", conforme contrato " + contrato.getNumeroProcesso() + ", executou, no período de " + "__/__/____ a __/__/____" + " as suas atividades (informe o resultado da prestação do serviço).\n\n ", fonteRegular));
         }
         decimaQuartaTable.addCell(paragraphGlobal);
         document.add(decimaQuartaTable);
@@ -267,7 +267,7 @@ public class MacroNotaFiscalGestor {
 
         paragraphGlobal = new Paragraph(user.getNome() + "\n", fonteRegularNegrito);
         ultimaTable.addCell(paragraphGlobal);
-        paragraphGlobal = new Paragraph("Gestor do contrato " + contrato.getNumeroContrato() + "\n", fonteRegularNegrito);
+        paragraphGlobal = new Paragraph("Gestor do contrato " + contrato.getNumeroProcesso() + "\n", fonteRegularNegrito);
         ultimaTable.addCell(paragraphGlobal);
         if (Utils.isNotEmpty(nota.getInicioFiscalizado()) && Utils.isNotEmpty(nota.getFinalFiscalizado())) {
             paragraphGlobal = new Paragraph("Período de Gestão de " + DateUtils.format(DateUtils.DD_MM_YYYY, nota.getInicioFiscalizado()) + " à " + DateUtils.format(DateUtils.DD_MM_YYYY, nota.getFinalFiscalizado()) + "\n", fonteRegularNegrito

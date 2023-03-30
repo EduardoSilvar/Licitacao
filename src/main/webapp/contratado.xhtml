@@ -381,7 +381,7 @@
             </div>
 
             <center>
-                <p:commandButton value="Salvar" icon="pi pi-save" process="contratadoPanelGroup" update="corpoInteiro:messages" actionListener="#{managerContratado.salvar()}" rendered="#{managerContratado.cadastrar}" />
+                <p:commandButton value="Salvar" icon="pi pi-save" process="contratadoPanelGroup @this" update="corpoInteiro:messages" actionListener="#{managerContratado.salvar()}" rendered="#{managerContratado.cadastrar}" />
                 <p:button value="Editar" icon="pi pi-pencil"  rendered="#{managerContratado.visualizar}" href="contratado.xhtml?editar=#{managerContratado.contratado.id}" />
                 <p:commandButton value="Atualizar" icon="pi pi-sync" process="corpoInteiro:contratadoPanelGroup" update="@this corpoInteiro:messages" actionListener="#{managerContratado.atualizar()}" rendered="#{managerContratado.editar}"  />
                 <p:button value="Cancelar" icon="pi pi-ban"  href="contratado.xhtml" rendered="#{managerContratado.visualizar}" />
