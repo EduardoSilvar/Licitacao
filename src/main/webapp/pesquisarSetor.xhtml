@@ -98,7 +98,7 @@
             </h:panelGroup>
 
             <center>
-                <p:commandButton value="Pesquisar" icon="pi pi-search" process="@this corpoInteiro:pesquisaPanel" update="corpoInteiro:tipoContratadoDatatable corpoInteiro:messages" actionListener="#{managerSetor.pesquisar()}" />
+                <p:commandButton value="Pesquisar" id="pesquisarButton" icon="pi pi-search" process="@this corpoInteiro:pesquisaPanel" update="corpoInteiro:tipoContratadoDatatable corpoInteiro:messages" actionListener="#{managerSetor.pesquisar()}" />
                 <p:commandButton value="Limpar" icon="pi pi-ban" update="corpoInteiro:pesquisaPanel corpoInteiro:tipoContratadoDatatable" process="@this corpoInteiro:pesquisaPanel" actionListener="#{managerSetor.instanciar()}"/>
             </center>
             <hr/>
@@ -185,5 +185,18 @@
 
 
         </p:dialog>
+        <script>
+            document.addEventListener("keydown", function (event) {
+                if (event.keyCode === 13) { // 13 é o código da tecla Enter
+                    var form = document.getElementById("corpoInteiro");
+                    var button;
+                    if (document.getElementById("pesquisarButton").style.display !== "none") {
+                        button = document.getElementById("pesquisarButton");
+                    } 
+                    button.click();
+                    event.preventDefault();
+                }
+            });
+        </script>
     </ui:define>
 </ui:composition>

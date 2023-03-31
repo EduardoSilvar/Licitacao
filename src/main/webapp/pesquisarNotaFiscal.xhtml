@@ -98,7 +98,8 @@
                 </h:panelGroup>
 
                 <center>
-                    <p:commandButton value="Pesquisar" icon="pi pi-search" 
+                    <p:commandButton value="Pesquisar" icon="pi pi-search"
+                                     id="pesquisarButton"
                                      process="@this corpoInteiro:pesquisaPanel" 
                                      update="corpoInteiro:tipoNotaFiscalDatatable 
 
@@ -203,5 +204,15 @@
 
             </p:dialog>
         </h:panelGroup>
+        <script>
+            document.addEventListener("keydown", function (event) {
+                if (event.keyCode === 13) { // 13 é o código da tecla Enter
+                    var form = document.getElementById("corpoInteiro");
+                    var button = form.querySelector("[type='submit']");
+                    button.click();
+                    event.preventDefault();
+                }
+            });
+        </script>
     </ui:define>
 </ui:composition>

@@ -150,9 +150,9 @@
 
             </h:panelGroup>
             <center>
-                <p:commandButton value="Salvar" icon="pi pi-save" process="contratadoPanelGroup" update="corpoInteiro:messages" actionListener="#{managerSetor.salvar()}" rendered="#{managerSetor.cadastrar}" />
-                <p:button value="Editar" icon="pi pi-pencil"  rendered="#{managerSetor.visualizar}" href="setor.xhtml?editar=#{managerSetor.setor.id}" />
-                <p:commandButton value="Atualizar" icon="pi pi-sync" process="contratadoPanelGroup" update="corpoInteiro:messages" actionListener="#{managerSetor.atualizar()}" rendered="#{managerSetor.editar}"  />
+                <p:commandButton value="Salvar" id="cadastrarButton" icon="pi pi-save" process="contratadoPanelGroup" update="corpoInteiro:messages" actionListener="#{managerSetor.salvar()}" rendered="#{managerSetor.cadastrar}" />
+                <p:button value="Editar" id="editarButton" icon="pi pi-pencil"  rendered="#{managerSetor.visualizar}" href="setor.xhtml?editar=#{managerSetor.setor.id}" />
+                <p:commandButton value="Atualizar" id="atualizarButton" icon="pi pi-sync" process="contratadoPanelGroup" update="corpoInteiro:messages" actionListener="#{managerSetor.atualizar()}" rendered="#{managerSetor.editar}"  />
                 <p:button value="Cancelar" icon="pi pi-ban"  href="setor.xhtml" rendered="#{managerSetor.visualizar}" />
                 <p:button value="Cancelar" icon="pi pi-ban"  href="setor.xhtml?visualizar=#{managerSetor.setor.id}" rendered="#{managerSetor.editar}" />
                 <p:button value="Cancelar" icon="pi pi-ban"  href="index.xhtml" rendered="#{managerSetor.cadastrar}" />
@@ -210,5 +210,22 @@
 
 
         </p:dialog>
+        <script>
+            document.addEventListener("keydown", function (event) {
+                if (event.keyCode === 13) { // 13 é o código da tecla Enter
+                    var form = document.getElementById("corpoInteiro");
+                    var button;
+                    if (document.getElementById("cadastrarButton").style.display !== "none") {
+                        button = document.getElementById("cadastrarButton");
+                    } else if (document.getElementById("editarButton").style.display !== "none") {
+                        button = document.getElementById("editarButton");
+                    } else if (document.getElementById("atualizarButton").style.display !== "none") {
+                        button = document.getElementById("atualizarButton");
+                    }
+                    button.click();
+                    event.preventDefault();
+                }
+            });
+        </script>
     </ui:define>
 </ui:composition>

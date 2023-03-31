@@ -60,7 +60,7 @@
                         </p:autoComplete>
                     </div> 
                 </div>
-               
+
                 <div class="col-md-3">
                     <div class="form-group">
                         <p:outputLabel value="Data do Recebimento/Prestação"
@@ -94,13 +94,13 @@
                         </p:selectOneMenu> 
                     </div>
                 </div>
-                 <div class="col-md-3">
+                <div class="col-md-3">
                     <div class="form-group" style="display: flex;flex-direction: column" > 
                         <p:outputLabel value="Valor"
                                        for="valorNotaFiscal" />
 
                         <p:inputNumber id="valorNotaFiscal"   value="#{managerNotaFiscal.notaFiscal.valor}" symbol="R$"
-                                           symbolPosition="p" emptyValue="always" requiredMessage="Este campo é obrigatório."
+                                       symbolPosition="p" emptyValue="always" requiredMessage="Este campo é obrigatório."
                                        disabled="#{managerNotaFiscal.visualizar}" />
                         <p:message for="valorNotaFiscal" />
                         <!--                        <p:inputText id="valorNotaFiscal"
@@ -147,7 +147,7 @@
                         <p:message for="atoNotaFiscal" />
                     </div>
                 </div>
-               
+
                 <div class="col-md-3">
                     <div class="form-group">
                         <p:outputLabel value="Apartir de "
@@ -167,17 +167,17 @@
                         <p:message for="apartirNotaFiscal" />
                     </div>
                 </div>
-                 <div class="col-md-3">
+                <div class="col-md-3">
                     <div class="form-group" style="display: flex;flex-direction: column" >
                         <p:outputLabel value="Numero da Nota fiscal"
                                        for="numeroNotaFiscal" />
                         <p:inputText id="numeroNotaFiscal"
-                                       placeholder="Numero"
-                                       rendered="true"
-                                       disabled="#{managerNotaFiscal.visualizar}"
-                                       value="#{managerNotaFiscal.notaFiscal.numero}"
-                                       requiredMessage="Este campo é obrigatório."
-                                       />
+                                     placeholder="Numero"
+                                     rendered="true"
+                                     disabled="#{managerNotaFiscal.visualizar}"
+                                     value="#{managerNotaFiscal.notaFiscal.numero}"
+                                     requiredMessage="Este campo é obrigatório."
+                                     />
                         <p:message for="numeroNotaFiscal" />
                     </div>
                 </div>
@@ -199,7 +199,9 @@
                                     value="#{managerNotaFiscal.notaFiscal.inicioFiscalizado}"
                                     inputStyleClass="form-control"
                                     showOn="button"
-                                    />
+                                    >
+                            <p:ajax event="dateSelect" update="finalFiscalizacaoNotaFiscal" />
+                        </p:calendar>
                         <p:message for="inicioFiscalizacaoNotaFiscal" />
                     </div>
                 </div>
@@ -212,13 +214,15 @@
                                     locale="pt"
                                     pattern="dd/MM/yyyy"
                                     mask="true"
+                                    mindate="#{managerNotaFiscal.notaFiscal.inicioFiscalizado}"
                                     disabled="#{managerNotaFiscal.visualizar}"
                                     style="display: flex; flex-direction: row"
                                     requiredMessage="Este campo é obrigatório."
                                     value="#{managerNotaFiscal.notaFiscal.finalFiscalizado}"
                                     inputStyleClass="form-control"
                                     showOn="button"
-                                    />
+                                    >
+                        </p:calendar>
                         <p:message for="finalFiscalizacaoNotaFiscal" />
                     </div>
                 </div>
@@ -311,7 +315,7 @@
                         <p:message for="observacaoResultadoAtividadesNotaFiscal" />
                     </div>
                 </div>
-                 <div class="col-md-6">
+                <div class="col-md-6">
                     <div class="form-group">
                         <p:outputLabel value="Garantia Contratual"
                                        for="garantiaContratualNotaFiscal" />

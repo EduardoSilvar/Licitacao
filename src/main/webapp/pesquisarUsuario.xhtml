@@ -4,6 +4,7 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns="http://www.w3.org/1999/xhtml">
+    <p:defaultCommand target="pesquisarButton" />
     <ui:define name="acoes">
         <h:panelGroup class="panelAcoes">
             <p:splitButton value="Ações" style="margin: 0px -8px !important"
@@ -124,7 +125,7 @@
                 </div>
             </h:panelGroup>
             <center>
-                <p:commandButton value="Pesquisar" icon="pi pi-search" process="@this usurarioPanelGroup" update="corpoInteiro:messages tipoLicitacaoDatatable" actionListener="#{managerUsuario.pesquisar()}" />
+                <p:commandButton value="Pesquisar" id="pesquisarButton" icon="pi pi-search" process="@this usurarioPanelGroup" update="corpoInteiro:messages tipoLicitacaoDatatable" actionListener="#{managerUsuario.pesquisar()}" />
                 <p:commandButton value="Limpar" icon="pi pi-ban" update="@form" actionListener="#{managerUsuario.init()}"/>
             </center>
             <hr/>
@@ -206,7 +207,7 @@
                                          title="Cancelar Remoção"
                                          icon="fa fa-close"
                                          process="@this"
-                                         
+
                                          oncomplete="PF('removeraUserConfirmDialog').hide();"
                                          styleClass="ml-md-1"/>
 
@@ -218,5 +219,15 @@
 
 
         </p:dialog>
+<!--        <script>
+            document.addEventListener("keydown", function (event) {
+                if (event.keyCode === 13) { // 13 é o código da tecla Enter
+                    var form = document.getElementById("corpoInteiro");
+                    var button = form.querySelector("[type='submit']");
+                    button.click();
+                    event.preventDefault();
+                }
+            });
+        </script>-->
     </ui:define>
 </ui:composition>
