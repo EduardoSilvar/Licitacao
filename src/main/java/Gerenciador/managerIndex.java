@@ -22,6 +22,7 @@ import modelo.ContratoVo;
 import modelo.Usuario;
 import org.primefaces.PrimeFaces;
 import util.Msg;
+import util.Utils;
 
 /**
  *
@@ -57,7 +58,9 @@ public class managerIndex implements Serializable {
     public void mostrarContratosPorVencer() {
         this.contratosPertodeExpirar = new ArrayList<>();
         List<Contrato> todosContratos = new ArrayList<>();
-        todosContratos = contratoServico.findAllUnidade(user.getUnidadeOrganizacional());
+        if (Utils.isNotEmpty(user)) {
+            todosContratos = contratoServico.findAllUnidade(user.getUnidadeOrganizacional());
+        }
         Calendar cal = GregorianCalendar.getInstance();
         final Date dataEvento = cal.getTime();
         Long agora = dataEvento.getTime() / (3600000 * 24);

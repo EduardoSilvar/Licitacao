@@ -94,6 +94,8 @@ public class managerContrato extends managerPrincipal implements Serializable {
     private List<TipoLicitacao> tiposLicitacao;
     private List<Contrato> contratos;
     private List<Contratado> contratados;
+    private List<Contratado> contratadosPesquisa;
+
     private List<Setor> setores;
     private List<MensagemEmail> mensagensEmail;
     private Usuario fiscal;
@@ -125,6 +127,8 @@ public class managerContrato extends managerPrincipal implements Serializable {
             this.mensagensEmail = mensagemEmailServico.findMensagens(this.contrato.getContratado());
         }
         verificarTipoFiscal();
+        this.contratadosPesquisa = contratadoServico.FindAll(userLogado.getUnidadeOrganizacional());
+
     }
 
     @Override
@@ -138,6 +142,7 @@ public class managerContrato extends managerPrincipal implements Serializable {
         InstanciarContratos();
         instanciarVerificacaoRendered();
         instanciarPesquisaContratados();
+        this.contratadosPesquisa = contratadoServico.FindAll(userLogado.getUnidadeOrganizacional());
 
     }
 
@@ -183,8 +188,12 @@ public class managerContrato extends managerPrincipal implements Serializable {
     }
 
     public void pesquisarContratados() {
-        this.contratados = contratadoServico.findPesquisa(this.contratado, fiscal);
-
+        this.contratados = contratadoServico.findPesquisa(this.contratado, userLogado);
+        if (Utils.isNotEmpty(contratados)) {
+            Msg.messagemInfo("pesquisa realizada com sucesso !");
+        } else {
+            Msg.messagemError("Nenhum contratado encontrado !");
+        }
     }
 
     public boolean renderedEditar() {
@@ -310,15 +319,15 @@ public class managerContrato extends managerPrincipal implements Serializable {
 //            if (contratoServico.existNumero(this.contrato.getNumeroContrato())) {
 //                Msg.messagemError("Número de contrato já registrado !");
 //            } else {
-                if (Utils.isNotEmpty(userLogado)) {
-                    if (Utils.isNotEmpty(userLogado.getUnidadeOrganizacional())) {
-                        this.contrato.setUnidadeOrganizacional(userLogado.getUnidadeOrganizacional());
-                    }
-                }
-                this.contrato.setCorStatus(cores(this.contrato.getStatus()));
-                this.contrato.setValorRestante(this.contrato.getValor());
-                contratoServico.Save(this.contrato);
-                Msg.messagemInfoRedirect("Operação realizada com sucesso !", "contrato.xhtml?visualizar=" + this.contrato.getId());
+        if (Utils.isNotEmpty(userLogado)) {
+            if (Utils.isNotEmpty(userLogado.getUnidadeOrganizacional())) {
+                this.contrato.setUnidadeOrganizacional(userLogado.getUnidadeOrganizacional());
+            }
+        }
+        this.contrato.setCorStatus(cores(this.contrato.getStatus()));
+        this.contrato.setValorRestante(this.contrato.getValor());
+        contratoServico.Save(this.contrato);
+        Msg.messagemInfoRedirect("Operação realizada com sucesso !", "contrato.xhtml?visualizar=" + this.contrato.getId());
 //            }
 //        }
     }
@@ -554,6 +563,7 @@ public class managerContrato extends managerPrincipal implements Serializable {
 
     public void InstanciarContrato() {
         contrato = new Contrato();
+//        contrato.setContratado(new Contratado());
         contrato.setFiscalContrato(new ArrayList<Usuario>());
         contrato.setAnexos(new ArrayList<Anexo>());
     }
@@ -780,6 +790,14 @@ public class managerContrato extends managerPrincipal implements Serializable {
 
     public void setContratado(Contratado contratado) {
         this.contratado = contratado;
+    }
+
+    public List<Contratado> getContratadosPesquisa() {
+        return contratadosPesquisa;
+    }
+
+    public void setContratadosPesquisa(List<Contratado> contratadosPesquisa) {
+        this.contratadosPesquisa = contratadosPesquisa;
     }
 
 }

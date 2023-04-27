@@ -75,9 +75,9 @@
                                              styleClass="form-control"
                                              value="#{managerContrato.contrato.contratado}"
                                              disabled="#{managerContratado.visualizar}"
-                                             converter="contratoconverter" >
+                                             converter="contratadoconverter" >
                                 <f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
-                                <f:selectItems value="#{managerContrato.contratados}" var="contratado" itemLabel="#{contratado.nome}" itemValue="#{contratado}"/>
+                                <f:selectItems value="#{managerContrato.contratadosPesquisa}" var="contratado" itemLabel="#{contratado.nome}" itemValue="#{contratado}"/>
                             </p:selectOneMenu>
                         </div>
                     </div>

@@ -26,13 +26,13 @@ public class GrupoServico extends ServicoGenerico<Grupo> implements Serializable
         String jpql = "select c from Grupo c ";
 
         if (nome != null && !nome.isEmpty()) {
-            jpql += "where lower(c.nome) like lower(:nome) ";
+            jpql += "where UPPER(c.nome) like UPPER(:nome) ";
         }
 
         Query query = entityManager.createQuery(jpql);
 
         if (nome != null && !nome.isEmpty()) {
-            query.setParameter("nome", "%" + nome + "%");
+            query.setParameter("nome", "%" + nome.trim() + "%");
         }
 
         return query.getResultList();

@@ -58,9 +58,6 @@ public class ChatServico extends ServicoGenerico<Chat> {
         int naoLido = 0;
         for (Chat c : todosChats(user)) {
             if (c.isLidoEmissor() != true || c.isLidoReceptor() != true) {
-                System.err.println("o emissor é " + c.isLidoEmissor());
-                System.err.println("o receptor é " + c.isLidoReceptor());
-
                 naoLido = naoLido + 1;
             }
         }

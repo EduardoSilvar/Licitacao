@@ -34,7 +34,7 @@ public class UsuarioServico extends ServicoGenerico<Usuario> implements Serializ
         String jpql = "select c from Usuario c where ";
 
         if (nome != null && !nome.isEmpty()) {
-            jpql += "lower(c.nome) like lower(:nome) and ";
+            jpql += "UPPER(c.nome) like UPPER(:nome) and ";
         }
 
         jpql += "c.ativo = true";
@@ -42,7 +42,7 @@ public class UsuarioServico extends ServicoGenerico<Usuario> implements Serializ
         Query query = entityManager.createQuery(jpql);
 
         if (nome != null && !nome.isEmpty()) {
-            query.setParameter("nome", "%" + nome + "%");
+            query.setParameter("nome", "%" + nome.trim() + "%");
         }
 
         return query.getResultList();
@@ -50,9 +50,7 @@ public class UsuarioServico extends ServicoGenerico<Usuario> implements Serializ
 
     public void recuperarSenha(Usuario usuario, String senha) {
         Usuario novo = find(usuario.getId());
-        System.err.println(novo.getSenha());
         novo.setSenha(Usuario.encryptPassword(senha));
-        System.err.println(novo.getEmail() + "e a senha é " + novo.getSenha());
         Update(novo);
     }
 
@@ -110,7 +108,7 @@ public class UsuarioServico extends ServicoGenerico<Usuario> implements Serializ
             sql += " and u.unidadeOrganizacional = :unidade";
         }
         if (Utils.isNotEmpty(user.getNome())) {
-            sql += " and u.nome = :nome";
+            sql += " and UPPER(u.nome) LIKE UPPER(:nome)";
         }
         Query query = getEntityManager().createQuery(sql);
 
@@ -118,7 +116,7 @@ public class UsuarioServico extends ServicoGenerico<Usuario> implements Serializ
             query.setParameter("email", user.getEmail());
         }
         if (Utils.isNotEmpty(user.getNome())) {
-            query.setParameter("nome", user.getNome());
+            query.setParameter("nome", "%"+user.getNome().trim()+"%");
         }
            if (Utils.isNotEmpty(unidade)) {
            query.setParameter("unidade", unidade);

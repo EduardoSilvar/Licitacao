@@ -790,17 +790,6 @@
                 <h:panelGroup id="dadosContratado">
 
                     <div class="row">
-
-                        <div class="col-md-9">
-                            <div class="form-group">
-                                <p:outputLabel value="Nome"
-                                               for="nomeContratadoDialog" />
-                                <p:inputText id="nomeContratadoDialog"
-                                             value="#{managerContrato.contratado.nome}"
-                                             placeholder="Nome"
-                                             styleClass="form-control" />
-                            </div>
-                        </div>
                         <h:panelGroup rendered="#{managerContrato.renderedCnpjPEssoa()}">
                             <div class="col-md-3">
                                 <div class="form-group">
@@ -831,6 +820,16 @@
                                 </div>
                             </div>
                         </h:panelGroup>
+                        <div class="col-md-9">
+                            <div class="form-group">
+                                <p:outputLabel value="Nome"
+                                               for="nomeContratadoDialog" />
+                                <p:inputText id="nomeContratadoDialog"
+                                             value="#{managerContrato.contratado.nome}"
+                                             placeholder="Nome"
+                                             styleClass="form-control" />
+                            </div>
+                        </div>
 
                     </div>
 
@@ -844,7 +843,7 @@
                                                  title="Pesquisar Cônjuge"
                                                  icon="pi pi-search"
                                                  process="dadosContratado"
-                                                 update=" conjugesDataTable"
+                                                 update=" conjugesDataTable corpoInteiro:messages"
                                                  actionListener="#{managerContrato.pesquisarContratados()}"
                                                  styleClass="ml-md-1"
                                                  style="width: 130px;"/>
@@ -930,15 +929,17 @@
                                             var buttonClicked = false;
 
                                             document.addEventListener("keydown", function (event) {
-                                                if (event.keyCode === 13 && !buttonClicked) { // 13 é o código da tecla Enter
-                                                    var form = document.getElementById("corpoInteiro");
-                                                    var button;
-                                                    if (document.getElementById("cadastrarButton").style.display !== "none") {
-                                                        button = document.getElementById("cadastrarButton");
-                                                    } else if (document.getElementById("editarButton").style.display !== "none") {
-                                                        button = document.getElementById("editarButton");
-                                                    } else if (document.getElementById("atualizarButton").style.display !== "none") {
-                                                        button = document.getElementById("atualizarButton");
+                                                if (!buttonClicked) {
+                                                    if (event.keyCode === 13) { // 13 é o código da tecla Enter
+                                                        var form = document.getElementById("corpoInteiro");
+                                                        var button;
+                                                        if (document.getElementById("cadastrarButton").style.display !== "none") {
+                                                            button = document.getElementById("cadastrarButton");
+                                                        } else if (document.getElementById("editarButton").style.display !== "none") {
+                                                            button = document.getElementById("editarButton");
+                                                        } else if (document.getElementById("atualizarButton").style.display !== "none") {
+                                                            button = document.getElementById("atualizarButton");
+                                                        }
                                                     }
                                                 }
                                                 if (document.getElementById("pesquisarContratadoDialog").visible) {

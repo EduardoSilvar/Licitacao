@@ -30,7 +30,7 @@ public class ContratadoServico extends ServicoGenerico<Contratado> implements Se
         String jpql = "select c from Contratado c where ";
 
         if (nome != null && !nome.isEmpty()) {
-            jpql += "lower(c.nome) like lower(:nome) and ";
+            jpql += "UPPER(c.nome) like UPPER(:nome) and ";
         }
 
         jpql += "c.ativo = true";
@@ -38,7 +38,7 @@ public class ContratadoServico extends ServicoGenerico<Contratado> implements Se
         Query query = entityManager.createQuery(jpql);
 
         if (nome != null && !nome.isEmpty()) {
-            query.setParameter("nome", "%" + nome + "%");
+            query.setParameter("nome", "%" + nome.trim() + "%");
         }
 
         return query.getResultList();
@@ -48,7 +48,7 @@ public class ContratadoServico extends ServicoGenerico<Contratado> implements Se
         String jpql = "select c from Contratado c where ";
 
         if (nome != null && !nome.isEmpty()) {
-            jpql += "lower(c.nome) like lower(:nome) and ";
+            jpql += "UPPER(c.nome) like UPPER(:nome) and ";
         }
         if (Utils.isNotEmpty(unidade)) {
             if (Utils.isNotEmpty(unidade.getId())) {
@@ -61,7 +61,7 @@ public class ContratadoServico extends ServicoGenerico<Contratado> implements Se
         Query query = entityManager.createQuery(jpql);
 
         if (nome != null && !nome.isEmpty()) {
-            query.setParameter("nome", "%" + nome + "%");
+            query.setParameter("nome", "%" + nome.trim() + "%");
         }
         if (Utils.isNotEmpty(unidade)) {
             if (Utils.isNotEmpty(unidade.getId())) {
@@ -86,7 +86,7 @@ public class ContratadoServico extends ServicoGenerico<Contratado> implements Se
             sql += "c.especialidade = :especialidade and ";
         }
         if (Utils.isNotEmpty(contratado.getNome())) {
-            sql += "c.nome = :nome and ";
+            sql += "UPPER(c.nome) like  UPPER(:nome) and ";
         }
         if (Utils.isNotEmpty(user)) {
             if (Utils.isNotEmpty(user.getUnidadeOrganizacional())) {
@@ -107,7 +107,7 @@ public class ContratadoServico extends ServicoGenerico<Contratado> implements Se
             query.setParameter("especialidade", contratado.getEspecialidade());
         }
         if (Utils.isNotEmpty(contratado.getNome())) {
-            query.setParameter("nome", contratado.getNome());
+            query.setParameter("nome", "%"+contratado.getNome().trim()+"%");
         }
         if (Utils.isNotEmpty(contratado.getNatureza())) {
             query.setParameter("nt", contratado.getNatureza());

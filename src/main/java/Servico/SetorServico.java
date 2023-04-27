@@ -29,7 +29,7 @@ public class SetorServico extends ServicoGenerico<Setor> implements Serializable
         String jpql = "select c from Setor c where ";
 
         if (nome != null && !nome.isEmpty()) {
-            jpql += "lower(c.nome) like lower(:nome) and ";
+            jpql += "UPPER(c.nome) like UPPER(:nome) and ";
         }
 
         jpql += "c.ativo = true";
@@ -37,7 +37,7 @@ public class SetorServico extends ServicoGenerico<Setor> implements Serializable
         Query query = entityManager.createQuery(jpql);
 
         if (nome != null && !nome.isEmpty()) {
-            query.setParameter("nome", "%" + nome + "%");
+            query.setParameter("nome", "%" + nome.trim() + "%");
         }
 
         return query.getResultList();
@@ -47,7 +47,7 @@ public class SetorServico extends ServicoGenerico<Setor> implements Serializable
         String jpql = "select c from Setor c where ";
 
         if (nome != null && !nome.isEmpty()) {
-            jpql += "lower(c.nome) like lower(:nome) and ";
+            jpql += "UPPER(c.nome) like UPPER(:nome) and ";
         }
         if (Utils.isNotEmpty(unidade)) {
             if (Utils.isNotEmpty(unidade.getId())) {
@@ -63,7 +63,7 @@ public class SetorServico extends ServicoGenerico<Setor> implements Serializable
             }
         }
         if (nome != null && !nome.isEmpty()) {
-            query.setParameter("nome", "%" + nome + "%");
+            query.setParameter("nome", "%" + nome.trim() + "%");
         }
 
         return query.getResultList();
@@ -72,10 +72,10 @@ public class SetorServico extends ServicoGenerico<Setor> implements Serializable
     public List<Setor> pesquisar(Setor setor, Usuario user) {
         String sql = "select s from Setor s where s.ativo = true";
         if (Utils.isNotEmpty(setor.getNome())) {
-            sql += " and s.nome = :nome";
+            sql += " and UPPER(s.nome) LIKE UPPER(:nome)";
         }
         if (Utils.isNotEmpty(setor.getNomeResponsavel())) {
-            sql += " and s.nomeResponsavel = :nomeres";
+            sql += " and UPPER(s.nomeResponsavel) LIKE UPPER(:nomeres)";
         }
         if (Utils.isNotEmpty(setor.getCpfResponsavel())) {
             sql += " and s.cpfResponsavel = :cpf";
@@ -88,10 +88,10 @@ public class SetorServico extends ServicoGenerico<Setor> implements Serializable
         }
         Query query = getEntityManager().createQuery(sql);
         if (Utils.isNotEmpty(setor.getNome())) {
-            query.setParameter("nome", setor.getNome());
+            query.setParameter("nome", "%"+setor.getNome().trim()+"%");
         }
         if (Utils.isNotEmpty(setor.getNomeResponsavel())) {
-            query.setParameter("nomeres", setor.getNomeResponsavel());
+            query.setParameter("nomeres","%"+ setor.getNomeResponsavel().trim()+"%");
         }
         if (Utils.isNotEmpty(setor.getCpfResponsavel())) {
             query.setParameter("cpf", setor.getCpfResponsavel());

@@ -32,7 +32,9 @@ body .ui-chkbox .ui-chkbox-box.ui-state-active{
     border-color: #01415B !important;
 }
 body .ui-menu .ui-menu-list .ui-widget-header{
-    background: #073c52 !important;
+    background: #153542 !important;
+    border-radius: 5px !important;
+    border: 1px solid #246580 !important;
 }
 
 body .ui-menu .ui-menu-list .ui-widget-header h3{

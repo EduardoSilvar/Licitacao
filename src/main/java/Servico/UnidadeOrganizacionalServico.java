@@ -26,10 +26,10 @@ public class UnidadeOrganizacionalServico extends ServicoGenerico<UnidadeOrganiz
     public List<UnidadeOrganizacional> pesquisar(UnidadeOrganizacional unidade) {
         String sql = "select u from UnidadeOrganizacional u where u.ativo = true";
         if (Utils.isNotEmpty(unidade.getNome())) {
-            sql += " and u.nome = :nome";
+            sql += " and UPPER(u.nome) LIKE UPPER(:nome)";
         }
         if (Utils.isNotEmpty(unidade.getNomeRepresentante())) {
-            sql += " and u.NomeRepresentante = :nomerepresentante";
+            sql += " and UPPER(u.NomeRepresentante) LIKE UPPER(:nomerepresentante)";
         }
         if (Utils.isNotEmpty(unidade.getCnpj())) {
             sql += " and u.cnpj = :cnpj";
@@ -43,10 +43,10 @@ public class UnidadeOrganizacionalServico extends ServicoGenerico<UnidadeOrganiz
 
         Query query = getEntityManager().createQuery(sql);
         if (Utils.isNotEmpty(unidade.getNome())) {
-            query.setParameter("nome", unidade.getNome());
+            query.setParameter("nome","%"+ unidade.getNome().trim()+"%");
         }
         if (Utils.isNotEmpty(unidade.getNomeRepresentante())) {
-            query.setParameter("nomerepresentante", unidade.getNomeRepresentante());
+            query.setParameter("nomerepresentante", "%"+unidade.getNomeRepresentante().trim()+"%");
         }
         if (Utils.isNotEmpty(unidade.getCnpj())) {
             query.setParameter("cnpj", unidade.getCnpj());

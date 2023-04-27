@@ -122,7 +122,7 @@ public class ContratoServico extends ServicoGenerico<Contrato> implements Serial
 
         try {
             RelatorioConfig pdf = new RelatorioConfig(modelo.getTexto());
-            pdf.convert(new File("/opt/Licitacao/uploads/2509202201163507033_mapamemorial.png"));
+            pdf.convert(new File("/opt/Licitacao/uploads/LICITACAO.PDF"));
         } catch (TransformerException ex) {
             Logger.getLogger(null).log(Level.SEVERE, null, ex);
         }
@@ -173,16 +173,21 @@ public class ContratoServico extends ServicoGenerico<Contrato> implements Serial
         if (Utils.isNotEmpty(setor)) {
             sql += "and c.setor = :setor ";
         }
-        if (Utils.isNotEmpty(user.getUnidadeOrganizacional())) {
-            sql += "and c.unidadeOrganizacional = :unidade ";
+        if (Utils.isNotEmpty(user)) {
+            if (Utils.isNotEmpty(user.getUnidadeOrganizacional())) {
+                sql += "and c.unidadeOrganizacional = :unidade ";
+            }
         }
         Query query = getEntityManager().createQuery(sql);
 
         if (Utils.isNotEmpty(setor)) {
             query.setParameter("setor", setor);
         }
-        if (Utils.isNotEmpty(user.getUnidadeOrganizacional())) {
-            query.setParameter("unidade", user.getUnidadeOrganizacional());
+        if (Utils.isNotEmpty(user)) {
+
+            if (Utils.isNotEmpty(user.getUnidadeOrganizacional())) {
+                query.setParameter("unidade", user.getUnidadeOrganizacional());
+            }
         }
         return query.getResultList();
     }
@@ -191,7 +196,7 @@ public class ContratoServico extends ServicoGenerico<Contrato> implements Serial
         String jpql = "select c from Contrato c where ";
 
         if (nome != null && !nome.isEmpty()) {
-            jpql += "lower(c.nome) like lower(:nome) and ";
+            jpql += "UPPER(c.nome) like UPPER(:nome) and ";
         }
 
         jpql += "c.ativo = true";
@@ -199,7 +204,7 @@ public class ContratoServico extends ServicoGenerico<Contrato> implements Serial
         Query query = entityManager.createQuery(jpql);
 
         if (nome != null && !nome.isEmpty()) {
-            query.setParameter("nome", "%" + nome + "%");
+            query.setParameter("nome", "%" + nome.trim() + "%");
         }
 
         return query.getResultList();
@@ -209,7 +214,7 @@ public class ContratoServico extends ServicoGenerico<Contrato> implements Serial
         String jpql = "select c from Contrato c where ";
 
         if (nome != null && !nome.isEmpty()) {
-            jpql += "lower(c.nome) like lower(:nome) and ";
+            jpql += "UPPER(c.nome) like UPPER(:nome) and ";
         }
         if (Utils.isNotEmpty(unidade)) {
             jpql += "c.unidadeOrganizacional.id = :unidade and ";
@@ -219,7 +224,7 @@ public class ContratoServico extends ServicoGenerico<Contrato> implements Serial
         Query query = entityManager.createQuery(jpql);
 
         if (nome != null && !nome.isEmpty()) {
-            query.setParameter("nome", "%" + nome + "%");
+            query.setParameter("nome", "%" + nome.trim() + "%");
         }
         if (Utils.isNotEmpty(unidade)) {
             query.setParameter("unidade", unidade.getId());
@@ -258,7 +263,7 @@ public class ContratoServico extends ServicoGenerico<Contrato> implements Serial
             sql += "c.unidadeOrganizacional = :unidade and ";
         }
         if (Utils.isNotEmpty(contrato.getNumeroProcesso())) {
-            sql += "c.numeroProcesso = :numero and ";
+            sql += "c.NumeroProcesso = :numero and ";
         }
         if (Utils.isNotEmpty(contrato.getStatus())) {
             sql += "c.status = :status and ";

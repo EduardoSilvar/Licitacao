@@ -11,6 +11,7 @@ import Servico.UnidadeOrganizacionalServico;
 import Servico.UsuarioServico;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -20,6 +21,7 @@ import modelo.Setor;
 import modelo.Usuario;
 import modelo.UnidadeOrganizacional;
 import util.Caracteres;
+import util.DateUtils;
 import util.Msg;
 import util.Utils;
 
@@ -158,6 +160,7 @@ public class managerUsuario extends managerPrincipal implements Serializable {
     public void deletar() {
         Usuario novoUser = userServico.find(this.user.getId());
         novoUser.setAtivo(false);
+        novoUser.setLogin("deletado"+DateUtils.format(DateUtils.YYYY_MM_DD, new Date()));
         userServico.Update(novoUser);
         if (Utils.isNotEmpty(user)) {
             this.users = userServico.pesquisar(this.user, userlogado.getUnidadeOrganizacional());
