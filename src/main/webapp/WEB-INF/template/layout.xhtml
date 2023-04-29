@@ -179,69 +179,35 @@ and open the template in the editor.
                             <p:menu  style="width:220px;height: 100vh !important;overflow-y: auto; margin-left: -3px; background: #01415B !important;position: absolute;margin-top: -53px;">
                                 <p:menuitem value="Início" url="index.xhtml" icon="pi pi-home" style="margin-bottom: 15px"/>
 
-                                <p:submenu label="Contrato" >
-                                    <p:menuitem value="Cadastrar" url="contrato.xhtml" icon="pi pi-save"/>
-                                    <p:menuitem value="Pesquisar" url="pesquisarContrato.xhtml" icon="pi pi-search"/>
+                                <p:submenu label="Contrato" style="background: #033447 !important;">
+                                    <p:menuitem value="Cadastrar" class="teste" url="contrato.xhtml" icon="pi pi-save"/>
+                                    <p:menuitem value="Pesquisar" class="teste"  url="pesquisarContrato.xhtml" icon="pi pi-search"/>
                                 </p:submenu>
                                 <p:submenu label="Contratado" >
                                     <p:menuitem value="Cadastrar" url="contratado.xhtml" icon="pi pi-save"/>
                                     <p:menuitem value="Pesquisar" url="pesquisarContratado.xhtml" icon="pi pi-search"/>
                                 </p:submenu>
-                                <p:submenu  label="Ateste/Recebimento" >
-                                    <p:menuitem value="Cadastrar" url="notaFiscal.xhtml" icon="pi pi-save"/>
-                                    <p:menuitem value="Pesquisar" icon="pi pi-search" url="pesquisarNotaFiscal.xhtml"/>
+                                <p:submenu  label="Ateste/Recebimento" style="    background: #033447 !important;" >
+                                    <p:menuitem value="Cadastrar" class="teste"  url="notaFiscal.xhtml" icon="pi pi-save"/>
+                                    <p:menuitem value="Pesquisar" class="teste"  icon="pi pi-search" url="pesquisarNotaFiscal.xhtml"/>
                                 </p:submenu>
                                 <p:submenu label="Usuario" >
-                                    <p:menuitem value="Cadastrar" url="usuario.xhtml" icon="pi pi-save"/>
+                                    <p:menuitem value="Cadastrar"  url="usuario.xhtml" icon="pi pi-save"/>
                                     <p:menuitem value="Pesquisar"  icon="pi pi-search" url="pesquisarUsuario.xhtml"/>
                                 </p:submenu>
-                                <p:submenu label="Entidade"  rendered="#{managerLogin.usuarioLogado.administrador}">
-                                    <p:menuitem value="Cadastrar" url="orgao.xhtml" icon="pi pi-save"/>
-                                    <p:menuitem value="Pesquisar" icon="pi pi-search" url="pesquisarOrgao.xhtml"/>
+                                <p:submenu label="Entidade" style="    background: #033447 !important;" rendered="#{managerLogin.usuarioLogado.administrador}">
+                                    <p:menuitem value="Cadastrar" class="teste"  url="orgao.xhtml" icon="pi pi-save"/>
+                                    <p:menuitem value="Pesquisar" class="teste"  icon="pi pi-search" url="pesquisarOrgao.xhtml"/>
                                 </p:submenu>
-                                <p:submenu label="Setor">
+                                <p:submenu label="Setor"  rendered="#{managerLogin.usuarioLogado.administrador}">
                                     <p:menuitem value="Cadastrar" url="setor.xhtml" icon="pi pi-save"/>
                                     <p:menuitem value="Pesquisar" style="margin-bottom: 100px !important; " url="pesquisarSetor.xhtml" icon="pi pi-search"/>
                                 </p:submenu>
+                                <p:submenu label="Setor"  style="  background: #033447 !important;" rendered="#{!managerLogin.usuarioLogado.administrador}" >
+                                    <p:menuitem value="Cadastrar" class="teste"  url="setor.xhtml" icon="pi pi-save"/>
+                                    <p:menuitem value="Pesquisar" class="teste" style="margin-bottom: 100px !important; " url="pesquisarSetor.xhtml" icon="pi pi-search"/>
+                                </p:submenu>
                             </p:menu>
-                            <!--                            <p:slideMenu style="width:220px;height: 100% !important; margin-left: -3px; background: #01415B !important;position: fixed;margin-top: -53px;">
-                                                            <p:submenu label="Contrato" icon="pi pi-file-o">
-                                                               
-                                                            </p:submenu>
-                                                            <p:submenu label="Contratado" icon="pi pi-user">
-                                                                
-                                                            </p:submenu>
-                                                                                            <p:submenu label="Tipo de Contrato" icon="pi pi-bookmark">
-                                                                                                <p:menuitem value="Cadastrar" url="tipoContrato.xhtml" icon="pi pi-save"/>
-                                                                                                <p:menuitem value="Pesquisar"  icon="pi pi-search" url="pesquisarTipoContrato.xhtml"/>
-                                                                                            </p:submenu>
-                            
-                                                        </p:slideMenu>-->
-                            <!--                            <p:slideMenu style="width:220px;height: 100% !important;  background: #01415B !important; margin-left: -3px;position: fixed;margin-top: 120px;border-top-right-radius: 15px !important">
-                                                            <p:submenu label="Ateste/Recebimento" icon="pi pi-file">
-                                                                <p:menuitem value="Cadastrar" url="notaFiscal.xhtml" icon="pi pi-save"/>
-                                                                <p:menuitem value="Pesquisar" icon="pi pi-search" url="pesquisarNotaFiscal.xhtml"/>
-                                                            </p:submenu>
-                                                                                            <p:submenu label="Tipo Licitação" icon="pi pi-bookmark">
-                                                                                                <p:menuitem value="Cadastrar" url="tipoLicitacao.xhtml"
-                                                                                                            icon="pi pi-save"/>
-                                                                                                <p:menuitem value="Pesquisar" icon="pi pi-search" url="pesquisarTipoLicitacao.xhtml"/>
-                                                                                            </p:submenu>
-                                                        </p:slideMenu>-->
-                            <!--                            <p:slideMenu style="width:220px;height: 100% !important;  background: #01415B !important; margin-left: -3px;position: fixed;margin-top: 310px;border-top-right-radius: 15px !important">
-                                                            <p:submenu label="Usuario" icon="pi pi-users">
-                                                                <p:menuitem value="Cadastrar" url="usuario.xhtml" icon="pi pi-save"/>
-                                                                <p:menuitem value="Pesquisar"  icon="pi pi-search" url="pesquisarUsuario.xhtml"/>
-                                                            </p:submenu>
-                                                            <p:submenu label="Entidade" icon="pi pi-building" rendered="{managerLogin.usuarioLogado.administrador}">
-                                                                <p:menuitem value="Cadastrar" url="orgao.xhtml" icon="pi pi-save"/>
-                                                                <p:menuitem value="Pesquisar" icon="pi pi-search" url="pesquisarOrgao.xhtml"/>
-                                                            </p:submenu>
-                                                            <p:submenu label="Setor" icon="pi pi-building" >
-                                                                <p:menuitem value="Cadastrar" url="setor.xhtml" icon="pi pi-save"/>
-                                                                <p:menuitem value="Pesquisar" url="pesquisarSetor.xhtml" icon="pi pi-search"/>
-                                                            </p:submenu>
-                                                        </p:slideMenu>-->
                         </div>
 
                     </div>
