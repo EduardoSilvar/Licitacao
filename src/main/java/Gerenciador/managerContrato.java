@@ -326,8 +326,13 @@ public class managerContrato extends managerPrincipal implements Serializable {
         }
         this.contrato.setCorStatus(cores(this.contrato.getStatus()));
         this.contrato.setValorRestante(this.contrato.getValor());
-        contratoServico.Save(this.contrato);
-        Msg.messagemInfoRedirect("Operação realizada com sucesso !", "contrato.xhtml?visualizar=" + this.contrato.getId());
+        if (this.contrato.getDataFinal().before(this.contrato.getDataInicio())) {
+            Msg.messagemError("A data final deve ser posterior à data inicial.");
+        } else {
+            contratoServico.Save(this.contrato);
+            Msg.messagemInfoRedirect("Operação realizada com sucesso !", "contrato.xhtml?visualizar=" + this.contrato.getId());
+        }
+
 //            }
 //        }
     }
@@ -382,8 +387,13 @@ public class managerContrato extends managerPrincipal implements Serializable {
             valorFinal = contratoBD.getValorRestante();
         }
         this.contrato.setValorRestante(valorFinal);
-        contratoServico.Update(this.contrato);
-        Msg.messagemInfoRedirect("Operação realizada com sucesso !", "contrato.xhtml?visualizar=" + this.contrato.getId());
+        if (this.contrato.getDataFinal().before(this.contrato.getDataInicio())) {
+            Msg.messagemError("A data final deve ser posterior à data inicial.");
+        } else {
+            contratoServico.Update(this.contrato);
+            Msg.messagemInfoRedirect("Operação realizada com sucesso !", "contrato.xhtml?visualizar=" + this.contrato.getId());
+        }
+
     }
 
     public String abreviacao(StatusContrato stts) {

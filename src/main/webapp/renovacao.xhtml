@@ -101,7 +101,9 @@
                                     requiredMessage="Este campo é obrigatório."
                                     inputStyleClass="form-control"
                                     showOn="button"
-                                    />
+                                    >
+                            <p:ajax event="dateSelect" update="dataFinalRenovacao" />
+                        </p:calendar>
                         <p:message for="dataInicialRenovacao" />
                     </div>
                     <div class="col-md-6">
@@ -112,11 +114,15 @@
                                     rendered="true"
                                     disabled="#{managerRenovacao.visualizar}"
                                     mask="true"
+                                    onblur="checkDate()"
+                                    mindate="#{managerRenovacao.renovacao.dataInicial}"
                                     style="display: flex; flex-direction: row"
                                     requiredMessage="Este campo é obrigatório."
                                     inputStyleClass="form-control"
                                     showOn="button"
-                                    />
+                                    >
+                            <p:ajax event="blur" listener="#{managerRenovacao.validarDataFinal()}" update="messages"/>
+                        </p:calendar>
                         <p:message for="dataFinalRenovacao" />
                     </div>
 
@@ -325,7 +331,6 @@
 
 
         </p:dialog>
-
     </ui:define>
 </ui:composition>
 

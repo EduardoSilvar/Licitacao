@@ -18,6 +18,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -145,9 +146,14 @@ public class managerRenovacao extends managerPrincipal implements Serializable {
                     valorFinal = contrato.getValorRestante();
                 }
                 contrato.setValorRestante(valorFinal);
-                contratoServico.Update(this.renovacao.getContrato());
-                renovacaoServico.Save(this.renovacao);
-                Msg.messagemInfoRedirect("Operação realizada com sucesso !", "renovacao.xhtml?visualizar=" + this.renovacao.getId() + "&renovacao=TRUE");
+                if (this.renovacao.getDataFinal().before(this.renovacao.getDataInicial())) {
+                    Msg.messagemError("A data final deve ser posterior à data inicial.");
+                } else {
+                    contratoServico.Update(this.renovacao.getContrato());
+                    renovacaoServico.Save(this.renovacao);
+                    Msg.messagemInfoRedirect("Operação realizada com sucesso !", "renovacao.xhtml?visualizar=" + this.renovacao.getId() + "&renovacao=TRUE");
+                }
+
             }
         }
     }
@@ -196,14 +202,30 @@ public class managerRenovacao extends managerPrincipal implements Serializable {
             }
         }
         contrato.setValorRestante(valorFinal);
-        contratoServico.Update(contrato);
-        renovacaoServico.Update(this.renovacao);
-        System.out.println("qualquer coisa");
-        Msg.messagemInfoRedirect("Operação realizada com sucesso !", "renovacao.xhtml?visualizar=" + this.renovacao.getId() + "&renovacao=TRUE");
+        if (this.renovacao.getDataFinal().before(this.renovacao.getDataInicial())) {
+            Msg.messagemError("A data final deve ser posterior à data inicial.");
+        } else {
+            contratoServico.Update(contrato);
+            renovacaoServico.Update(this.renovacao);
+            System.out.println("qualquer coisa");
+            Msg.messagemInfoRedirect("Operação realizada com sucesso !", "renovacao.xhtml?visualizar=" + this.renovacao.getId() + "&renovacao=TRUE");
+        }
+
     }
 
     public void pesquisar(Contrato contrato) {
         this.renovacoes = renovacaoServico.pesquisarRenovacaoPorContrato(contrato, this.renovacao);
+    }
+
+    public boolean validarDataFinal() {
+        Date startDate = renovacao.getDataFinal(); // recupera a data inicial do bean
+        Date endDate = renovacao.getDataFinal(); // recupera a data final do bean
+
+        if (endDate.before(startDate)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public void selecionarAnexo(FileUploadEvent event) {
@@ -215,9 +237,9 @@ public class managerRenovacao extends managerPrincipal implements Serializable {
         this.anexo.setTipoAnexo(TipoAnexo.RENOVACAO);
         adicionarAnexo();
     }
-    
-    public void selecionarContrato(){
-        if(this.renovacao.getContrato().getTipoFiscalizacao().equals(TipoFiscalizacaoEnum.INDIVIDUAL)){
+
+    public void selecionarContrato() {
+        if (this.renovacao.getContrato().getTipoFiscalizacao().equals(TipoFiscalizacaoEnum.INDIVIDUAL)) {
             this.renovacao.setFiscal(new Usuario());
             this.renovacao.setFiscal(this.renovacao.getContrato().getFiscal());
         }
