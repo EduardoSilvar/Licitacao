@@ -97,6 +97,7 @@
                                     rendered="true"
                                     disabled="#{managerRenovacao.visualizar}"
                                     mask="true"
+                                    required="true"
                                     style="display: flex; flex-direction: row"
                                     requiredMessage="Este campo é obrigatório."
                                     inputStyleClass="form-control"
@@ -112,6 +113,7 @@
                         <p:calendar id="dataFinalRenovacao"
                                     value="#{managerRenovacao.renovacao.dataFinal}"
                                     rendered="true"
+                                    required="true"
                                     disabled="#{managerRenovacao.visualizar}"
                                     mask="true"
                                     onblur="checkDate()"
@@ -121,7 +123,7 @@
                                     inputStyleClass="form-control"
                                     showOn="button"
                                     >
-                            <p:ajax event="blur" listener="#{managerRenovacao.validarDataFinal()}" update="messages"/>
+                            <p:ajax listener="#{managerRenovacao.verificarData()}" event="blur"  update="corpoInteiro:messages" />
                         </p:calendar>
                         <p:message for="dataFinalRenovacao" />
                     </div>

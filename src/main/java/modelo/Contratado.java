@@ -45,7 +45,7 @@ public class Contratado implements Serializable {
     private String banco;
     private Long numeroConta;
     private Long digito;
-    private Long agencia;
+    private String agencia;
     private Long operacao;
     private BigDecimal saldoInicial;
 
@@ -193,11 +193,11 @@ public class Contratado implements Serializable {
         this.digito = digito;
     }
 
-    public Long getAgencia() {
+    public String getAgencia() {
         return agencia;
     }
 
-    public void setAgencia(Long agencia) {
+    public void setAgencia(String agencia) {
         this.agencia = agencia;
     }
 

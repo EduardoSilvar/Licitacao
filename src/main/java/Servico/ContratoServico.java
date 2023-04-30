@@ -219,6 +219,8 @@ public class ContratoServico extends ServicoGenerico<Contrato> implements Serial
         if (Utils.isNotEmpty(unidade)) {
             jpql += "c.unidadeOrganizacional.id = :unidade and ";
         }
+        jpql += "c.status = :statusContrato and ";
+
         jpql += "c.ativo = true";
 
         Query query = entityManager.createQuery(jpql);
@@ -226,6 +228,7 @@ public class ContratoServico extends ServicoGenerico<Contrato> implements Serial
         if (nome != null && !nome.isEmpty()) {
             query.setParameter("nome", "%" + nome.trim() + "%");
         }
+        query.setParameter("statusContrato", StatusContrato.VIGENCIA);
         if (Utils.isNotEmpty(unidade)) {
             query.setParameter("unidade", unidade.getId());
         }

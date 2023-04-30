@@ -217,11 +217,22 @@ public class managerRenovacao extends managerPrincipal implements Serializable {
         this.renovacoes = renovacaoServico.pesquisarRenovacaoPorContrato(contrato, this.renovacao);
     }
 
+    public void verificarData() {
+        System.err.println("entrou aqui ");
+        if (Utils.isNotEmpty(this.renovacao.getDataFinal())) {
+            if (this.renovacao.getDataInicial().before(this.renovacao.getDataFinal())) {
+                Msg.messagemError("A data final deve ser posterior à data inicial.");
+            }
+        } else {
+            Msg.messagemError("A data final deve ser posterior à data inicial.");
+        }
+    }
+
     public boolean validarDataFinal() {
-        Date startDate = renovacao.getDataFinal(); // recupera a data inicial do bean
+        Date startDate = renovacao.getDataInicial(); // recupera a data inicial do bean
         Date endDate = renovacao.getDataFinal(); // recupera a data final do bean
 
-        if (endDate.before(startDate)) {
+        if (startDate.before(endDate)) {
             return true;
         } else {
             return false;

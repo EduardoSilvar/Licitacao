@@ -211,7 +211,7 @@
                                             value="#{managerContrato.contrato.dataFinal}"
                                             showOn="button"
                                             >
-
+                                    <p:ajax listener="#{managerContrato.verificarData()}" event="blur" update="corpoInteiro:messages" />
                                 </p:calendar>
                                 <p:message for="dataFinalContrato" />
                             </div>

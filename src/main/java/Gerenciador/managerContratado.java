@@ -95,7 +95,7 @@ public class managerContratado extends managerPrincipal implements Serializable 
             }
         } else {
             if (Utils.validarCNPJ(Caracteres.removecaracter(this.contratado.getCnpj()))) {
-                if (contratadoServico.existCpf(contratado.getCpf())) {
+                if (contratadoServico.existCnpj(contratado.getCnpj())) {
                     Msg.messagemError("CNPJ ja esta sendo usado !");
                 } else {
                     if (Utils.isNotEmpty(userLogado)) {

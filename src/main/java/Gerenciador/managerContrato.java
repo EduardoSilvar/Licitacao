@@ -176,6 +176,16 @@ public class managerContrato extends managerPrincipal implements Serializable {
         }
     }
 
+    public void verificarData() {
+        if (Utils.isNotEmpty(contrato.getDataInicio())) {
+            if (this.contrato.getDataFinal().before(this.contrato.getDataInicio())) {
+                Msg.messagemError("A data final deve ser posterior à data inicial.");
+            }
+        } else {
+            Msg.messagemError("A data final deve ser posterior à data inicial.");
+        }
+    }
+
     public void instanciarVerificacaoRendered() {
         this.renderedFiscalIndividual = false;
         this.renderedFiscalComissao = false;

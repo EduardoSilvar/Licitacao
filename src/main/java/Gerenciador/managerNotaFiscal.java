@@ -86,11 +86,43 @@ public class managerNotaFiscal extends managerPrincipal {
         if (Utils.isNotEmpty(userLogado.getUnidadeOrganizacional())) {
             this.notaFiscal.setUnidadeOrganizacional(userLogado.getUnidadeOrganizacional());
         }
+        if (Utils.isNotEmpty(notaFiscal.isObrigacaoMensal())) {
+            notaFiscal.setObrigacaoMensalSeAplica(notaFiscal.isObrigacaoMensal());
+        }
+        if (Utils.isNotEmpty(notaFiscal.isPrazoEstabelecido())) {
+            notaFiscal.setPrazoEstabelecidoSeAplica(notaFiscal.isPrazoEstabelecido());
+        }
+        if (Utils.isNotEmpty(notaFiscal.isDocumentoObrigatorio())) {
+            notaFiscal.setDiligenciaNecessariasSeAplica(notaFiscal.isDocumentoObrigatorio());
+        }
+        if (Utils.isNotEmpty(notaFiscal.isRelatorio())) {
+            notaFiscal.setRelatorioSeAplica(notaFiscal.isRelatorio());
+        }
+        if (Utils.isNotEmpty(notaFiscal.isInformouSituacao())) {
+            notaFiscal.setInformouSituacaoSeAplica(notaFiscal.isInformouSituacao());
+        }
+        if (Utils.isNotEmpty(notaFiscal.isQualidadeEsperada())) {
+            notaFiscal.setQualidadeEsperadaSeAplica(notaFiscal.isQualidadeEsperada());
+        }
+        if (Utils.isNotEmpty(notaFiscal.isDiligenciaNecessarias())) {
+            notaFiscal.setDiligenciaNecessariasSeAplica(notaFiscal.isDiligenciaNecessarias());
+        }
+
         Contrato contrato = this.notaFiscal.getContrato();
         contrato.setValorRestante(contrato.getValorRestante().subtract(new BigDecimal(this.notaFiscal.getValor().toString())));
         contratoServico.Update(contrato);
         notaFiscalServico.Save(this.notaFiscal);
         Msg.messagemInfoRedirect("Operação realizada com sucesso !", "notaFiscal.xhtml?visualizar=" + this.notaFiscal.getId());
+    }
+    
+     public void verificarData() {
+        if (Utils.isNotEmpty(notaFiscal.getInicioFiscalizado())) {
+            if (this.notaFiscal.getInicioFiscalizado().before(this.notaFiscal.getFinalFiscalizado())) {
+                Msg.messagemError("A data final deve ser posterior à data inicial.");
+            }
+        } else {
+            Msg.messagemError("A data final deve ser posterior à data inicial.");
+        }
     }
 
     public void deletar() {
@@ -122,7 +154,6 @@ public class managerNotaFiscal extends managerPrincipal {
 //            throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "A data inicial deve ser preenchida primeiro", null));
 //        }
 //    }
-
     public List<Contrato> autocompletaContrato(String nome) {
         return contratoServico.findContrato(nome, userLogado.getUnidadeOrganizacional());
     }

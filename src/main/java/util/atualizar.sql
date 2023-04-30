@@ -114,5 +114,10 @@ alter table contratado add column banco varchar(250);
 
 alter table contratado add column saldoInicial numeric(10,2);
 
+ALTER TABLE contratado ALTER COLUMN agencia TYPE varchar(250);
+
+
+ALTER TABLE contrato ALTER COLUMN agencia TYPE varchar(250);
+
 
 
