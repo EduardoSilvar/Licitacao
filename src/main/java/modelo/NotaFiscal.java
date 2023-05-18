@@ -4,6 +4,7 @@
  */
 package modelo;
 
+import Enum.StatusCumprimento;
 import Enum.TipoRecebimentoEnum;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -56,79 +57,66 @@ public class NotaFiscal implements Serializable {
     private Date periodoFiscalizado;
     private Date inicioFiscalizado;
     private Date finalFiscalizado;
-    private boolean obrigacaoMensal;
+    @Enumerated(EnumType.STRING)
+    private StatusCumprimento obrigacaoMensal;
     private boolean obrigacaoMensalSeAplica;
-    private boolean prazoEstabelecido;
+    @Enumerated(EnumType.STRING)
+    private StatusCumprimento prazoEstabelecido;
     private boolean prazoEstabelecidoSeAplica;
-    private boolean documentoObrigatorio;
+    @Enumerated(EnumType.STRING)
+    private StatusCumprimento documentoObrigatorio;
     private boolean documentoObrigatorioSeAplica;
-    private boolean relatorio;
+    @Enumerated(EnumType.STRING)
+    private StatusCumprimento relatorio;
     private boolean relatorioSeAplica;
-    private boolean qualidadeEsperada;
+    @Enumerated(EnumType.STRING)
+    private StatusCumprimento qualidadeEsperada;
     private boolean qualidadeEsperadaSeAplica;
-    private boolean informouSituacao;
+    @Enumerated(EnumType.STRING)
+    private StatusCumprimento informouSituacao;
     private boolean informouSituacaoSeAplica;
-    private boolean diligenciaNecessarias;
+    @Enumerated(EnumType.STRING)
+    private StatusCumprimento diligenciaNecessarias;
     private boolean diligenciaNecessariasSeAplica;
     private String garantiaContratual;
-
-    public boolean isAtivo() {
-        return ativo;
-    }
-
-    public void setAtivo(boolean ativo) {
-        this.ativo = ativo;
-    }
 
     public NotaFiscal() {
     }
 
-    public Date getInicioFiscalizado() {
-        return inicioFiscalizado;
-    }
-
-    public void setInicioFiscalizado(Date inicioFiscalizado) {
-        this.inicioFiscalizado = inicioFiscalizado;
-    }
-
-    public Date getFinalFiscalizado() {
-        return finalFiscalizado;
-    }
-
-    public void setFinalFiscalizado(Date finalFiscalizado) {
-        this.finalFiscalizado = finalFiscalizado;
-    }
-
-    public String getLotacao() {
-        return lotacao;
-    }
-
-    public void setLotacao(String lotacao) {
+    public NotaFiscal(Long id, Long numero, String descricao, Contratado contratado, BigDecimal valor, Date dataPagamento, Usuario responsavel, Contrato contrato, List<Anexo> anexos, TipoRecebimentoEnum tipoRecebimento, UnidadeOrganizacional unidadeOrganizacional, String lotacao, String atoDesignacao, Date apartir, Date dataExtrato, Date periodoFiscalizado, Date inicioFiscalizado, Date finalFiscalizado, StatusCumprimento obrigacaoMensal, boolean obrigacaoMensalSeAplica, StatusCumprimento prazoEstabelecido, boolean prazoEstabelecidoSeAplica, StatusCumprimento documentoObrigatorio, boolean documentoObrigatorioSeAplica, StatusCumprimento relatorio, boolean relatorioSeAplica, StatusCumprimento qualidadeEsperada, boolean qualidadeEsperadaSeAplica, StatusCumprimento informouSituacao, boolean informouSituacaoSeAplica, StatusCumprimento diligenciaNecessarias, boolean diligenciaNecessariasSeAplica, String garantiaContratual) {
+        this.id = id;
+        this.numero = numero;
+        this.descricao = descricao;
+        this.contratado = contratado;
+        this.valor = valor;
+        this.dataPagamento = dataPagamento;
+        this.responsavel = responsavel;
+        this.contrato = contrato;
+        this.anexos = anexos;
+        this.tipoRecebimento = tipoRecebimento;
+        this.unidadeOrganizacional = unidadeOrganizacional;
         this.lotacao = lotacao;
-    }
-
-    public String getAtoDesignacao() {
-        return atoDesignacao;
-    }
-
-    public void setAtoDesignacao(String atoDesignacao) {
         this.atoDesignacao = atoDesignacao;
-    }
-
-    public Date getApartir() {
-        return apartir;
-    }
-
-    public void setApartir(Date apartir) {
         this.apartir = apartir;
-    }
-
-    public Date getDataExtrato() {
-        return dataExtrato;
-    }
-
-    public void setDataExtrato(Date dataExtrato) {
         this.dataExtrato = dataExtrato;
+        this.periodoFiscalizado = periodoFiscalizado;
+        this.inicioFiscalizado = inicioFiscalizado;
+        this.finalFiscalizado = finalFiscalizado;
+        this.obrigacaoMensal = obrigacaoMensal;
+        this.obrigacaoMensalSeAplica = obrigacaoMensalSeAplica;
+        this.prazoEstabelecido = prazoEstabelecido;
+        this.prazoEstabelecidoSeAplica = prazoEstabelecidoSeAplica;
+        this.documentoObrigatorio = documentoObrigatorio;
+        this.documentoObrigatorioSeAplica = documentoObrigatorioSeAplica;
+        this.relatorio = relatorio;
+        this.relatorioSeAplica = relatorioSeAplica;
+        this.qualidadeEsperada = qualidadeEsperada;
+        this.qualidadeEsperadaSeAplica = qualidadeEsperadaSeAplica;
+        this.informouSituacao = informouSituacao;
+        this.informouSituacaoSeAplica = informouSituacaoSeAplica;
+        this.diligenciaNecessarias = diligenciaNecessarias;
+        this.diligenciaNecessariasSeAplica = diligenciaNecessariasSeAplica;
+        this.garantiaContratual = garantiaContratual;
     }
 
     public Long getId() {
@@ -137,6 +125,14 @@ public class NotaFiscal implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getNumero() {
+        return numero;
+    }
+
+    public void setNumero(Long numero) {
+        this.numero = numero;
     }
 
     public String getDescricao() {
@@ -195,6 +191,14 @@ public class NotaFiscal implements Serializable {
         this.anexos = anexos;
     }
 
+    public TipoRecebimentoEnum getTipoRecebimento() {
+        return tipoRecebimento;
+    }
+
+    public void setTipoRecebimento(TipoRecebimentoEnum tipoRecebimento) {
+        this.tipoRecebimento = tipoRecebimento;
+    }
+
     public UnidadeOrganizacional getUnidadeOrganizacional() {
         return unidadeOrganizacional;
     }
@@ -203,12 +207,44 @@ public class NotaFiscal implements Serializable {
         this.unidadeOrganizacional = unidadeOrganizacional;
     }
 
-    public TipoRecebimentoEnum getTipoRecebimento() {
-        return tipoRecebimento;
+    public String getLotacao() {
+        return lotacao;
     }
 
-    public void setTipoRecebimento(TipoRecebimentoEnum tipoRecebimento) {
-        this.tipoRecebimento = tipoRecebimento;
+    public void setLotacao(String lotacao) {
+        this.lotacao = lotacao;
+    }
+
+    public String getAtoDesignacao() {
+        return atoDesignacao;
+    }
+
+    public void setAtoDesignacao(String atoDesignacao) {
+        this.atoDesignacao = atoDesignacao;
+    }
+
+    public Date getApartir() {
+        return apartir;
+    }
+
+    public void setApartir(Date apartir) {
+        this.apartir = apartir;
+    }
+
+    public boolean isAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(boolean ativo) {
+        this.ativo = ativo;
+    }
+
+    public Date getDataExtrato() {
+        return dataExtrato;
+    }
+
+    public void setDataExtrato(Date dataExtrato) {
+        this.dataExtrato = dataExtrato;
     }
 
     public Date getPeriodoFiscalizado() {
@@ -219,76 +255,28 @@ public class NotaFiscal implements Serializable {
         this.periodoFiscalizado = periodoFiscalizado;
     }
 
-    public boolean isObrigacaoMensal() {
+    public Date getInicioFiscalizado() {
+        return inicioFiscalizado;
+    }
+
+    public void setInicioFiscalizado(Date inicioFiscalizado) {
+        this.inicioFiscalizado = inicioFiscalizado;
+    }
+
+    public Date getFinalFiscalizado() {
+        return finalFiscalizado;
+    }
+
+    public void setFinalFiscalizado(Date finalFiscalizado) {
+        this.finalFiscalizado = finalFiscalizado;
+    }
+
+    public StatusCumprimento getObrigacaoMensal() {
         return obrigacaoMensal;
     }
 
-    public void setObrigacaoMensal(boolean obrigacaoMensal) {
+    public void setObrigacaoMensal(StatusCumprimento obrigacaoMensal) {
         this.obrigacaoMensal = obrigacaoMensal;
-    }
-
-    public boolean isPrazoEstabelecido() {
-        return prazoEstabelecido;
-    }
-
-    public void setPrazoEstabelecido(boolean prazoEstabelecido) {
-        this.prazoEstabelecido = prazoEstabelecido;
-    }
-
-    public boolean isDocumentoObrigatorio() {
-        return documentoObrigatorio;
-    }
-
-    public void setDocumentoObrigatorio(boolean documentoObrigatorio) {
-        this.documentoObrigatorio = documentoObrigatorio;
-    }
-
-    public boolean isRelatorio() {
-        return relatorio;
-    }
-
-    public void setRelatorio(boolean relatorio) {
-        this.relatorio = relatorio;
-    }
-
-    public boolean isQualidadeEsperada() {
-        return qualidadeEsperada;
-    }
-
-    public void setQualidadeEsperada(boolean qualidadeEsperada) {
-        this.qualidadeEsperada = qualidadeEsperada;
-    }
-
-    public boolean isInformouSituacao() {
-        return informouSituacao;
-    }
-
-    public void setInformouSituacao(boolean informouSituacao) {
-        this.informouSituacao = informouSituacao;
-    }
-
-    public boolean isDiligenciaNecessarias() {
-        return diligenciaNecessarias;
-    }
-
-    public void setDiligenciaNecessarias(boolean diligenciaNecessarias) {
-        this.diligenciaNecessarias = diligenciaNecessarias;
-    }
-
-    public Long getNumero() {
-        return numero;
-    }
-
-    public void setNumero(Long numero) {
-        this.numero = numero;
-    }
-
-    public String getGarantiaContratual() {
-        return garantiaContratual;
-    }
-
-    public void setGarantiaContratual(String garantiaContratual) {
-        this.garantiaContratual = garantiaContratual;
     }
 
     public boolean isObrigacaoMensalSeAplica() {
@@ -299,12 +287,28 @@ public class NotaFiscal implements Serializable {
         this.obrigacaoMensalSeAplica = obrigacaoMensalSeAplica;
     }
 
+    public StatusCumprimento getPrazoEstabelecido() {
+        return prazoEstabelecido;
+    }
+
+    public void setPrazoEstabelecido(StatusCumprimento prazoEstabelecido) {
+        this.prazoEstabelecido = prazoEstabelecido;
+    }
+
     public boolean isPrazoEstabelecidoSeAplica() {
         return prazoEstabelecidoSeAplica;
     }
 
     public void setPrazoEstabelecidoSeAplica(boolean prazoEstabelecidoSeAplica) {
         this.prazoEstabelecidoSeAplica = prazoEstabelecidoSeAplica;
+    }
+
+    public StatusCumprimento getDocumentoObrigatorio() {
+        return documentoObrigatorio;
+    }
+
+    public void setDocumentoObrigatorio(StatusCumprimento documentoObrigatorio) {
+        this.documentoObrigatorio = documentoObrigatorio;
     }
 
     public boolean isDocumentoObrigatorioSeAplica() {
@@ -315,12 +319,28 @@ public class NotaFiscal implements Serializable {
         this.documentoObrigatorioSeAplica = documentoObrigatorioSeAplica;
     }
 
+    public StatusCumprimento getRelatorio() {
+        return relatorio;
+    }
+
+    public void setRelatorio(StatusCumprimento relatorio) {
+        this.relatorio = relatorio;
+    }
+
     public boolean isRelatorioSeAplica() {
         return relatorioSeAplica;
     }
 
     public void setRelatorioSeAplica(boolean relatorioSeAplica) {
         this.relatorioSeAplica = relatorioSeAplica;
+    }
+
+    public StatusCumprimento getQualidadeEsperada() {
+        return qualidadeEsperada;
+    }
+
+    public void setQualidadeEsperada(StatusCumprimento qualidadeEsperada) {
+        this.qualidadeEsperada = qualidadeEsperada;
     }
 
     public boolean isQualidadeEsperadaSeAplica() {
@@ -331,12 +351,28 @@ public class NotaFiscal implements Serializable {
         this.qualidadeEsperadaSeAplica = qualidadeEsperadaSeAplica;
     }
 
+    public StatusCumprimento getInformouSituacao() {
+        return informouSituacao;
+    }
+
+    public void setInformouSituacao(StatusCumprimento informouSituacao) {
+        this.informouSituacao = informouSituacao;
+    }
+
     public boolean isInformouSituacaoSeAplica() {
         return informouSituacaoSeAplica;
     }
 
     public void setInformouSituacaoSeAplica(boolean informouSituacaoSeAplica) {
         this.informouSituacaoSeAplica = informouSituacaoSeAplica;
+    }
+
+    public StatusCumprimento getDiligenciaNecessarias() {
+        return diligenciaNecessarias;
+    }
+
+    public void setDiligenciaNecessarias(StatusCumprimento diligenciaNecessarias) {
+        this.diligenciaNecessarias = diligenciaNecessarias;
     }
 
     public boolean isDiligenciaNecessariasSeAplica() {
@@ -347,43 +383,51 @@ public class NotaFiscal implements Serializable {
         this.diligenciaNecessariasSeAplica = diligenciaNecessariasSeAplica;
     }
 
+    public String getGarantiaContratual() {
+        return garantiaContratual;
+    }
+
+    public void setGarantiaContratual(String garantiaContratual) {
+        this.garantiaContratual = garantiaContratual;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 79 * hash + Objects.hashCode(this.id);
-        hash = 79 * hash + Objects.hashCode(this.numero);
-        hash = 79 * hash + Objects.hashCode(this.descricao);
-        hash = 79 * hash + Objects.hashCode(this.contratado);
-        hash = 79 * hash + Objects.hashCode(this.valor);
-        hash = 79 * hash + Objects.hashCode(this.dataPagamento);
-        hash = 79 * hash + Objects.hashCode(this.responsavel);
-        hash = 79 * hash + Objects.hashCode(this.contrato);
-        hash = 79 * hash + Objects.hashCode(this.anexos);
-        hash = 79 * hash + Objects.hashCode(this.tipoRecebimento);
-        hash = 79 * hash + Objects.hashCode(this.unidadeOrganizacional);
-        hash = 79 * hash + Objects.hashCode(this.lotacao);
-        hash = 79 * hash + Objects.hashCode(this.atoDesignacao);
-        hash = 79 * hash + Objects.hashCode(this.apartir);
-        hash = 79 * hash + (this.ativo ? 1 : 0);
-        hash = 79 * hash + Objects.hashCode(this.dataExtrato);
-        hash = 79 * hash + Objects.hashCode(this.periodoFiscalizado);
-        hash = 79 * hash + Objects.hashCode(this.inicioFiscalizado);
-        hash = 79 * hash + Objects.hashCode(this.finalFiscalizado);
-        hash = 79 * hash + (this.obrigacaoMensal ? 1 : 0);
-        hash = 79 * hash + (this.obrigacaoMensalSeAplica ? 1 : 0);
-        hash = 79 * hash + (this.prazoEstabelecido ? 1 : 0);
-        hash = 79 * hash + (this.prazoEstabelecidoSeAplica ? 1 : 0);
-        hash = 79 * hash + (this.documentoObrigatorio ? 1 : 0);
-        hash = 79 * hash + (this.documentoObrigatorioSeAplica ? 1 : 0);
-        hash = 79 * hash + (this.relatorio ? 1 : 0);
-        hash = 79 * hash + (this.relatorioSeAplica ? 1 : 0);
-        hash = 79 * hash + (this.qualidadeEsperada ? 1 : 0);
-        hash = 79 * hash + (this.qualidadeEsperadaSeAplica ? 1 : 0);
-        hash = 79 * hash + (this.informouSituacao ? 1 : 0);
-        hash = 79 * hash + (this.informouSituacaoSeAplica ? 1 : 0);
-        hash = 79 * hash + (this.diligenciaNecessarias ? 1 : 0);
-        hash = 79 * hash + (this.diligenciaNecessariasSeAplica ? 1 : 0);
-        hash = 79 * hash + Objects.hashCode(this.garantiaContratual);
+        int hash = 5;
+        hash = 37 * hash + Objects.hashCode(this.id);
+        hash = 37 * hash + Objects.hashCode(this.numero);
+        hash = 37 * hash + Objects.hashCode(this.descricao);
+        hash = 37 * hash + Objects.hashCode(this.contratado);
+        hash = 37 * hash + Objects.hashCode(this.valor);
+        hash = 37 * hash + Objects.hashCode(this.dataPagamento);
+        hash = 37 * hash + Objects.hashCode(this.responsavel);
+        hash = 37 * hash + Objects.hashCode(this.contrato);
+        hash = 37 * hash + Objects.hashCode(this.anexos);
+        hash = 37 * hash + Objects.hashCode(this.tipoRecebimento);
+        hash = 37 * hash + Objects.hashCode(this.unidadeOrganizacional);
+        hash = 37 * hash + Objects.hashCode(this.lotacao);
+        hash = 37 * hash + Objects.hashCode(this.atoDesignacao);
+        hash = 37 * hash + Objects.hashCode(this.apartir);
+        hash = 37 * hash + (this.ativo ? 1 : 0);
+        hash = 37 * hash + Objects.hashCode(this.dataExtrato);
+        hash = 37 * hash + Objects.hashCode(this.periodoFiscalizado);
+        hash = 37 * hash + Objects.hashCode(this.inicioFiscalizado);
+        hash = 37 * hash + Objects.hashCode(this.finalFiscalizado);
+        hash = 37 * hash + Objects.hashCode(this.obrigacaoMensal);
+        hash = 37 * hash + (this.obrigacaoMensalSeAplica ? 1 : 0);
+        hash = 37 * hash + Objects.hashCode(this.prazoEstabelecido);
+        hash = 37 * hash + (this.prazoEstabelecidoSeAplica ? 1 : 0);
+        hash = 37 * hash + Objects.hashCode(this.documentoObrigatorio);
+        hash = 37 * hash + (this.documentoObrigatorioSeAplica ? 1 : 0);
+        hash = 37 * hash + Objects.hashCode(this.relatorio);
+        hash = 37 * hash + (this.relatorioSeAplica ? 1 : 0);
+        hash = 37 * hash + Objects.hashCode(this.qualidadeEsperada);
+        hash = 37 * hash + (this.qualidadeEsperadaSeAplica ? 1 : 0);
+        hash = 37 * hash + Objects.hashCode(this.informouSituacao);
+        hash = 37 * hash + (this.informouSituacaoSeAplica ? 1 : 0);
+        hash = 37 * hash + Objects.hashCode(this.diligenciaNecessarias);
+        hash = 37 * hash + (this.diligenciaNecessariasSeAplica ? 1 : 0);
+        hash = 37 * hash + Objects.hashCode(this.garantiaContratual);
         return hash;
     }
 
@@ -402,43 +446,22 @@ public class NotaFiscal implements Serializable {
         if (this.ativo != other.ativo) {
             return false;
         }
-        if (this.obrigacaoMensal != other.obrigacaoMensal) {
-            return false;
-        }
         if (this.obrigacaoMensalSeAplica != other.obrigacaoMensalSeAplica) {
-            return false;
-        }
-        if (this.prazoEstabelecido != other.prazoEstabelecido) {
             return false;
         }
         if (this.prazoEstabelecidoSeAplica != other.prazoEstabelecidoSeAplica) {
             return false;
         }
-        if (this.documentoObrigatorio != other.documentoObrigatorio) {
-            return false;
-        }
         if (this.documentoObrigatorioSeAplica != other.documentoObrigatorioSeAplica) {
-            return false;
-        }
-        if (this.relatorio != other.relatorio) {
             return false;
         }
         if (this.relatorioSeAplica != other.relatorioSeAplica) {
             return false;
         }
-        if (this.qualidadeEsperada != other.qualidadeEsperada) {
-            return false;
-        }
         if (this.qualidadeEsperadaSeAplica != other.qualidadeEsperadaSeAplica) {
             return false;
         }
-        if (this.informouSituacao != other.informouSituacao) {
-            return false;
-        }
         if (this.informouSituacaoSeAplica != other.informouSituacaoSeAplica) {
-            return false;
-        }
-        if (this.diligenciaNecessarias != other.diligenciaNecessarias) {
             return false;
         }
         if (this.diligenciaNecessariasSeAplica != other.diligenciaNecessariasSeAplica) {
@@ -498,14 +521,33 @@ public class NotaFiscal implements Serializable {
         if (!Objects.equals(this.inicioFiscalizado, other.inicioFiscalizado)) {
             return false;
         }
-        return Objects.equals(this.finalFiscalizado, other.finalFiscalizado);
+        if (!Objects.equals(this.finalFiscalizado, other.finalFiscalizado)) {
+            return false;
+        }
+        if (this.obrigacaoMensal != other.obrigacaoMensal) {
+            return false;
+        }
+        if (this.prazoEstabelecido != other.prazoEstabelecido) {
+            return false;
+        }
+        if (this.documentoObrigatorio != other.documentoObrigatorio) {
+            return false;
+        }
+        if (this.relatorio != other.relatorio) {
+            return false;
+        }
+        if (this.qualidadeEsperada != other.qualidadeEsperada) {
+            return false;
+        }
+        if (this.informouSituacao != other.informouSituacao) {
+            return false;
+        }
+        return this.diligenciaNecessarias == other.diligenciaNecessarias;
     }
 
     @Override
     public String toString() {
         return "NotaFiscal{" + "id=" + id + ", numero=" + numero + ", descricao=" + descricao + ", contratado=" + contratado + ", valor=" + valor + ", dataPagamento=" + dataPagamento + ", responsavel=" + responsavel + ", contrato=" + contrato + ", anexos=" + anexos + ", tipoRecebimento=" + tipoRecebimento + ", unidadeOrganizacional=" + unidadeOrganizacional + ", lotacao=" + lotacao + ", atoDesignacao=" + atoDesignacao + ", apartir=" + apartir + ", ativo=" + ativo + ", dataExtrato=" + dataExtrato + ", periodoFiscalizado=" + periodoFiscalizado + ", inicioFiscalizado=" + inicioFiscalizado + ", finalFiscalizado=" + finalFiscalizado + ", obrigacaoMensal=" + obrigacaoMensal + ", obrigacaoMensalSeAplica=" + obrigacaoMensalSeAplica + ", prazoEstabelecido=" + prazoEstabelecido + ", prazoEstabelecidoSeAplica=" + prazoEstabelecidoSeAplica + ", documentoObrigatorio=" + documentoObrigatorio + ", documentoObrigatorioSeAplica=" + documentoObrigatorioSeAplica + ", relatorio=" + relatorio + ", relatorioSeAplica=" + relatorioSeAplica + ", qualidadeEsperada=" + qualidadeEsperada + ", qualidadeEsperadaSeAplica=" + qualidadeEsperadaSeAplica + ", informouSituacao=" + informouSituacao + ", informouSituacaoSeAplica=" + informouSituacaoSeAplica + ", diligenciaNecessarias=" + diligenciaNecessarias + ", diligenciaNecessariasSeAplica=" + diligenciaNecessariasSeAplica + ", garantiaContratual=" + garantiaContratual + '}';
     }
-
-    
 
 }

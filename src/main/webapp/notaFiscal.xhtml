@@ -231,10 +231,18 @@
                     <div class="form-group">
                         <p:outputLabel value="Compriu as obrigações mensais ?"/>
 
-                        <p:selectOneRadio  value="#{managerNotaFiscal.notaFiscal.obrigacaoMensal}">
+                        <p:selectOneRadio id="obrigacaoSelectOneRadio"
+                                          required="true"
+                                          value="#{managerNotaFiscal.notaFiscal.obrigacaoMensal}"
+                                          disabled="#{managerNotaFiscal.visualizar}">
+                            <f:selectItems value="#{managerEnuns.statusCumprimento}" />
+                        </p:selectOneRadio>
+<!--                        <p:selectOneRadio  value="{managerNotaFiscal.notaFiscal.obrigacaoMensal}">
                             <f:selectItem itemLabel="Sim" itemValue="true" />
-                            <f:selectItem itemLabel="Não se aplica" itemValue="false" />
-                        </p:selectOneRadio >
+                            <f:selectItem itemLabel="Não" itemValue="false" />
+                            <f:selectItem itemLabel="Não se aplica" itemValue="{null}" />
+
+                        </p:selectOneRadio >-->
 
 
                         <!--                        <div class="ui-inputgroup">
@@ -252,10 +260,17 @@
                         <p:outputLabel value="Obdeceu os prazos estabelecidos ?"/>
                         <div class="ui-inputgroup">
 
-                            <p:selectOneRadio  value="#{managerNotaFiscal.notaFiscal.prazoEstabelecido}">
+                            <p:selectOneRadio id="prazoSelectOneRadio"
+                                          required="true"
+                                          value="#{managerNotaFiscal.notaFiscal.prazoEstabelecido}"
+                                          disabled="#{managerNotaFiscal.visualizar}">
+                            <f:selectItems value="#{managerEnuns.statusCumprimento}" />
+                        </p:selectOneRadio>
+                            
+<!--                            <p:selectOneRadio  value="">
                                 <f:selectItem itemLabel="Sim" itemValue="true" />
                                 <f:selectItem itemLabel="Não se aplica" itemValue="false" />
-                            </p:selectOneRadio >
+                            </p:selectOneRadio >-->
                             <!--                            <p:selectBooleanButton id="prazosDeterminadoButton"   disabled="{managerNotaFiscal.visualizar}" value="{managerNotaFiscal.notaFiscal.prazoEstabelecido}" onLabel="Sim" offLabel="Não" style="width:12rem; color: white !important;border-radius: 5px">
                                                         </p:selectBooleanButton
                                                         <p:selectBooleanCheckbox value="{managerNotaFiscal.notaFiscal.prazoEstabelecidoSeAplica}" itemLabel="Se aplica"/>-->
@@ -266,11 +281,18 @@
                     <div class="form-group">
                         <p:outputLabel value="Entregou os documentos obrigatórios ?"/>
                         <div class="ui-inputgroup">
+                            
+                             <p:selectOneRadio id="documentoSelectOneRadio"
+                                          required="true"
+                                          value="#{managerNotaFiscal.notaFiscal.documentoObrigatorio}"
+                                          disabled="#{managerNotaFiscal.visualizar}">
+                            <f:selectItems value="#{managerEnuns.statusCumprimento}" />
+                        </p:selectOneRadio>
 
-                            <p:selectOneRadio  value="#{managerNotaFiscal.notaFiscal.documentoObrigatorio}">
+<!--                            <p:selectOneRadio  value="{managerNotaFiscal.notaFiscal.documentoObrigatorio}">
                                 <f:selectItem itemLabel="Sim" itemValue="true" />
                                 <f:selectItem itemLabel="Não se aplica" itemValue="false" />
-                            </p:selectOneRadio >
+                            </p:selectOneRadio >-->
 
                             <!--                            <p:selectBooleanButton id="documentosDeterminadoButton"   disabled="{managerNotaFiscal.visualizar}" value="{managerNotaFiscal.notaFiscal.documentoObrigatorio}" onLabel="Sim" offLabel="Não" style="width:12rem; color: white !important;border-radius: 5px">
                                                         </p:selectBooleanButton>
@@ -282,11 +304,18 @@
                     <div class="form-group">
                         <p:outputLabel value="Elaborou e encaminhou relatorio mensal ?"/>
                         <div class="ui-inputgroup">
+                            
+                            <p:selectOneRadio id="relatorioSelectOneRadio"
+                                          required="true"
+                                          value="#{managerNotaFiscal.notaFiscal.relatorio}"
+                                          disabled="#{managerNotaFiscal.visualizar}">
+                            <f:selectItems value="#{managerEnuns.statusCumprimento}" />
+                        </p:selectOneRadio>
 
-                            <p:selectOneRadio  value="#{managerNotaFiscal.notaFiscal.relatorio}">
+<!--                            <p:selectOneRadio  value="{managerNotaFiscal.notaFiscal.relatorio}">
                                 <f:selectItem itemLabel="Sim" itemValue="true" />
                                 <f:selectItem itemLabel="Não se aplica" itemValue="false" />
-                            </p:selectOneRadio >
+                            </p:selectOneRadio >-->
 
                             <!--                            <p:selectBooleanButton id="relatorioDeterminadoButton"   disabled="{managerNotaFiscal.visualizar}" value="{managerNotaFiscal.notaFiscal.relatorio}" onLabel="Sim" offLabel="Não" style="width:12rem; color: white !important;border-radius: 5px">
                                                         </p:selectBooleanButton>
@@ -302,10 +331,17 @@
                         <p:outputLabel value="Informou ou comunicou situações a que estava obrigado ?"/>
                         <div class="ui-inputgroup">
 
-                            <p:selectOneRadio  value="#{managerNotaFiscal.notaFiscal.informouSituacao}">
+                            <p:selectOneRadio id="informouSelectOneRadio"
+                                          required="true"
+                                          value="#{managerNotaFiscal.notaFiscal.informouSituacao}"
+                                          disabled="#{managerNotaFiscal.visualizar}">
+                            <f:selectItems value="#{managerEnuns.statusCumprimento}" />
+                        </p:selectOneRadio>
+                            
+<!--                            <p:selectOneRadio  value="">
                                 <f:selectItem itemLabel="Sim" itemValue="true" />
                                 <f:selectItem itemLabel="Não se aplica" itemValue="false" />
-                            </p:selectOneRadio >
+                            </p:selectOneRadio >-->
 
                             <!--                            <p:selectBooleanButton id="comunicouDeterminadoButton"   disabled="{managerNotaFiscal.visualizar}" value="{managerNotaFiscal.notaFiscal.informouSituacao}" onLabel="Sim" offLabel="Não" style="width:12rem; color: white !important;border-radius: 5px">
                                                         </p:selectBooleanButton>
@@ -317,11 +353,18 @@
                     <div class="form-group">
                         <p:outputLabel value="Prestou serviço com qualidade esperada ?"/>
                         <div class="ui-inputgroup">
+                            
+                             <p:selectOneRadio id="qualidadeSelectOneRadio"
+                                          required="true"
+                                          value="#{managerNotaFiscal.notaFiscal.qualidadeEsperada}"
+                                          disabled="#{managerNotaFiscal.visualizar}">
+                            <f:selectItems value="#{managerEnuns.statusCumprimento}" />
+                        </p:selectOneRadio>
 
-                            <p:selectOneRadio  value="#{managerNotaFiscal.notaFiscal.qualidadeEsperada}">
+<!--                            <p:selectOneRadio  value="">
                                 <f:selectItem itemLabel="Sim" itemValue="true" />
                                 <f:selectItem itemLabel="Não se aplica" itemValue="false" />
-                            </p:selectOneRadio >
+                            </p:selectOneRadio >-->
 
                             <!--                            <p:selectBooleanButton id="qualidadeDeterminadoButton"   disabled="{managerNotaFiscal.visualizar}" value="{managerNotaFiscal.notaFiscal.qualidadeEsperada}" onLabel="Sim" offLabel="Não" style="width:12rem; color: white !important;border-radius: 5px">
                                                         </p:selectBooleanButton>
@@ -334,10 +377,18 @@
                         <p:outputLabel value="Realizou diligências necessárias ?"/>
                         <div class="ui-inputgroup">
 
-                            <p:selectOneRadio  value="#{managerNotaFiscal.notaFiscal.diligenciaNecessarias}">
+                            
+                            <p:selectOneRadio id="dilemaSelectOneRadio"
+                                          required="true"
+                                          value="#{managerNotaFiscal.notaFiscal.diligenciaNecessarias}"
+                                          disabled="#{managerNotaFiscal.visualizar}">
+                            <f:selectItems value="#{managerEnuns.statusCumprimento}" />
+                        </p:selectOneRadio>
+                            
+<!--                            <p:selectOneRadio  value="">
                                 <f:selectItem itemLabel="Sim" itemValue="true" />
                                 <f:selectItem itemLabel="Não se aplica" itemValue="false" />
-                            </p:selectOneRadio >
+                            </p:selectOneRadio >-->
 
                             <!--                            <p:selectBooleanButton id="diligenciaDeterminadoButton"   disabled="{managerNotaFiscal.visualizar}" value="{managerNotaFiscal.notaFiscal.diligenciaNecessarias}" onLabel="Sim" offLabel="Não" style="width:12rem; color: white !important;border-radius: 5px">
                                                         </p:selectBooleanButton>
@@ -370,7 +421,7 @@
                         <p:outputLabel value="Garantia Contratual"
                                        for="garantiaContratualNotaFiscal" />
                         <p:inputTextarea id="garantiaContratualNotaFiscal"
-                                         placeholder="Observação"
+                                         placeholder="Garantia Contratual"
                                          rendered="true"
                                          disabled="#{managerNotaFiscal.visualizar}"
                                          value="#{managerNotaFiscal.notaFiscal.garantiaContratual}"

@@ -48,9 +48,9 @@ alter table notaFiscal add column lotacao varchar(250);
 alter table notaFiscal add column atoDesignacao varchar(250);
 alter table notaFiscal add column apartir varchar(250);
 alter table notaFiscal add column periodoFiscalizado varchar(250);
+
 alter table notaFiscal add column obrigacaoMensal boolean default false;
 alter table notaFiscal add column prazoEstabelecido boolean default false;
-
 alter table notaFiscal add column documentoObrigatorio boolean default false;
 alter table notaFiscal add column relatorio boolean default false;
 alter table notaFiscal add column qualidadeEsperada boolean default false;
@@ -118,6 +118,26 @@ ALTER TABLE contratado ALTER COLUMN agencia TYPE varchar(250);
 
 
 ALTER TABLE contrato ALTER COLUMN agencia TYPE varchar(250);
+
+
+
+alter table notaFiscal drop column obrigacaoMensal ;
+alter table notaFiscal drop column prazoEstabelecido ;
+alter table notaFiscal drop column documentoObrigatorio ;
+alter table notaFiscal drop column relatorio ;
+alter table notaFiscal drop column qualidadeEsperada;
+alter table notaFiscal drop column informouSituacao ;
+alter table notaFiscal drop column diligenciaNecessarias ;
+
+
+alter table notaFiscal add column obrigacaoMensal varchar(250);
+alter table notaFiscal add column prazoEstabelecido varchar(250);
+alter table notaFiscal add column documentoObrigatorio varchar(250);
+alter table notaFiscal add column relatorio varchar(250);
+alter table notaFiscal add column qualidadeEsperada varchar(250);
+alter table notaFiscal add column informouSituacao varchar(250);
+alter table notaFiscal add column diligenciaNecessarias varchar(250);
+
 
 
 

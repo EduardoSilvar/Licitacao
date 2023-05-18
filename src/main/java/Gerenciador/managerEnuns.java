@@ -29,6 +29,14 @@ public class managerEnuns implements Serializable {
         return items;
     }
 
+    public List<SelectItem> getStatusCumprimento() {
+        List<SelectItem> items = new ArrayList<>();
+        for (StatusCumprimento item : StatusCumprimento.values()) {
+            items.add(new SelectItem(item, item.getStatus()));
+        }
+        return items;
+    }
+
     public List<SelectItem> getStatusContrato() {
         List<SelectItem> items = new ArrayList<>();
         for (StatusContrato item : StatusContrato.values()) {
@@ -36,7 +44,7 @@ public class managerEnuns implements Serializable {
         }
         return items;
     }
-    
+
     public List<SelectItem> getEstados() {
         List<SelectItem> items = new ArrayList<>();
         for (Estado item : Estado.values()) {
@@ -44,32 +52,32 @@ public class managerEnuns implements Serializable {
         }
         return items;
     }
-    
-    public List<SelectItem> getTipoContrato(){
+
+    public List<SelectItem> getTipoContrato() {
         List<SelectItem> items = new ArrayList<>();
         for (TipoContratoEnum item : TipoContratoEnum.values()) {
             items.add(new SelectItem(item, item.getNome()));
         }
         return items;
     }
-    
-    public List<SelectItem> getTipoLicitacao(){
+
+    public List<SelectItem> getTipoLicitacao() {
         List<SelectItem> items = new ArrayList<>();
         for (TipoLicitacaoEnum item : TipoLicitacaoEnum.values()) {
             items.add(new SelectItem(item, item.getNome()));
         }
         return items;
     }
-    
-    public List<SelectItem> getTipoRecebimento(){
+
+    public List<SelectItem> getTipoRecebimento() {
         List<SelectItem> items = new ArrayList<>();
         for (TipoRecebimentoEnum item : TipoRecebimentoEnum.values()) {
             items.add(new SelectItem(item, item.getNome()));
         }
         return items;
     }
-    
-    public List<SelectItem> getTipoFiscalizacao(){
+
+    public List<SelectItem> getTipoFiscalizacao() {
         List<SelectItem> items = new ArrayList<>();
         for (TipoFiscalizacaoEnum item : TipoFiscalizacaoEnum.values()) {
             items.add(new SelectItem(item, item.getNome()));

@@ -4,6 +4,7 @@
  */
 package Macro;
 
+import Enum.StatusCumprimento;
 import Enum.TipoFiscalizacaoEnum;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Chunk;
@@ -294,7 +295,7 @@ public class MacroNotaFiscal {
         paragraphGlobal = new Paragraph("1. Cumpriu as obrigações contratuais mensais ", fonte);
         tableMaePai.addCell(paragraphGlobal);
 
-        if (nota.isObrigacaoMensal()) {
+        if (nota.getObrigacaoMensal().equals(StatusCumprimento.SIM)) {
             paragraphGlobal = new Paragraph("Sim", regular);
         } else {
             paragraphGlobal = new Paragraph("Não", regular);
@@ -303,7 +304,7 @@ public class MacroNotaFiscal {
         paragraphGlobal = new Paragraph("2. Obedeceu aos prazos estabelecidos ", fonte);
         tableMaePai.addCell(paragraphGlobal);
 
-        if (nota.isPrazoEstabelecido()) {
+        if (nota.getPrazoEstabelecido().equals(StatusCumprimento.SIM)) {
             paragraphGlobal = new Paragraph("Sim", regular);
         } else {
             paragraphGlobal = new Paragraph("Não", regular);
@@ -313,7 +314,7 @@ public class MacroNotaFiscal {
         paragraphGlobal = new Paragraph("3. Entregou documentos a que estava obrigado ", fonte);
         tableMaePai.addCell(paragraphGlobal);
 
-        if (nota.isDocumentoObrigatorio()) {
+        if (nota.getDocumentoObrigatorio().equals(StatusCumprimento.SIM)) {
             paragraphGlobal = new Paragraph("Sim", regular);
         } else {
             paragraphGlobal = new Paragraph("Não", regular);
@@ -322,7 +323,7 @@ public class MacroNotaFiscal {
         paragraphGlobal = new Paragraph("4. Elaborou e encaminhou relatório mensal de atividades ", fonte);
         tableMaePai.addCell(paragraphGlobal);
 
-        if (nota.isObrigacaoMensal()) {
+        if (nota.getObrigacaoMensal().equals(StatusCumprimento.SIM)) {
             paragraphGlobal = new Paragraph("Sim", regular);
         } else {
             paragraphGlobal = new Paragraph("Não", regular);
@@ -331,7 +332,7 @@ public class MacroNotaFiscal {
         paragraphGlobal = new Paragraph("5. Prestou serviço com a qualidade esperada ", fonte);
         tableMaePai.addCell(paragraphGlobal);
 
-        if (nota.isQualidadeEsperada()) {
+        if (nota.getQualidadeEsperada().equals(StatusCumprimento.SIM)) {
             paragraphGlobal = new Paragraph("Sim", regular);
         } else {
             paragraphGlobal = new Paragraph("Não", regular);
@@ -340,7 +341,7 @@ public class MacroNotaFiscal {
         paragraphGlobal = new Paragraph("6. Informou ou comunicou situações a que estava  obrigado ", fonte);
         tableMaePai.addCell(paragraphGlobal);
 
-        if (nota.isInformouSituacao()) {
+        if (nota.getInformouSituacao().equals(StatusCumprimento.SIM)) {
             paragraphGlobal = new Paragraph("Sim", regular);
         } else {
             paragraphGlobal = new Paragraph("Não", regular);
@@ -349,7 +350,7 @@ public class MacroNotaFiscal {
         paragraphGlobal = new Paragraph("7. Realizou diligências necessárias ", fonte);
         tableMaePai.addCell(paragraphGlobal);
 
-        if (nota.isDiligenciaNecessarias()) {
+        if (nota.getDiligenciaNecessarias().equals(StatusCumprimento.SIM)) {
             paragraphGlobal = new Paragraph("Sim", regular);
         } else {
             paragraphGlobal = new Paragraph("Não", regular);
