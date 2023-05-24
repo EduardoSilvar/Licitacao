@@ -1,0 +1,267 @@
+<ui:composition
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns="http://www.w3.org/1999/xhtml">
+
+
+    <h:panelGroup>
+
+            <h5>
+                 Dados Gerais
+
+            </h5>
+        <hr/>
+
+        <div class="row">
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <p:outputLabel value="Nome" for="nomeCabecalhoInputText"/>
+                    <p:inputText id="nomeCabecalhoInputText" value="#{managerCabecalhoRodape.cabecalhoRodape.nome}"
+                                 required="true" requiredMessage="Este campo é obrigatório."
+                                 styleClass="form-control"  disabled="#{managerCabecalhoRodape.visualizar}"/>
+                    <p:message for="nomeCabecalhoInputText" />
+                </div>
+            </div>
+
+<!--            <div class="col-md-6">
+                <div class="form-group">
+                    <p:outputLabel value="Tipo do Cabeçalho"
+                                   for="tipoCabecalhoSelectOneMenu" />
+                    <p:selectOneMenu id="tipoCabecalhoSelectOneMenu"
+                                     value="{managerCabecalhoRodape.cabecalhoRodape.tipoRelatorio}"
+                                     filter="true"
+                                     placeholder="Tipo de Cabeçalho"
+                                     styleClass="form-control"
+                                     disabled="{managerCabecalhoRodape.visualizar}" required="true">
+                        <f:selectItem itemLabel="Selecione..." noSelectionOption="true" />
+                        <f:selectItems value="{managerEnums.tiposRelatorio}" />
+                        <p:ajax update="tipoCabecalhoSelectOneMenu" />
+                    </p:selectOneMenu>
+                </div>
+            </div>-->
+
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <p:outputLabel value="Tamanho da letra" for="fontCabecalhoInputText"/>
+                    <p:inputText id="fontCabecalhoInputText" value="#{managerCabecalhoRodape.cabecalhoRodape.fonSize}"
+                                 required="true"     styleClass="form-control" disabled="#{managerCabecalhoRodape.visualizar}" />
+                    <p:message for="fontCabecalhoInputText" />
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="form-group">
+                    <p:outputLabel value="Texto cabeçalho " for="textoCabecalhoInputText"/>
+                    <p:inputTextarea id="textoCabecalhoInputText" value="#{managerCabecalhoRodape.cabecalhoRodape.texto}"
+                                     required="true"  styleClass="form-control" disabled="#{managerCabecalhoRodape.visualizar}" />
+                    <p:message for="textoCabecalhoInputText" />
+                </div>
+            </div>
+        </div>
+    </h:panelGroup>
+        <h5>
+            <i class="pi pi-file"></i> Margens do Cabeçalho
+
+        </h5>
+    <hr/>
+    <div class="row"> 
+        <div class="col-md-3">
+            <div class="form-group">
+                <p:outputLabel value="Margem da esquerda" for="margemEsquerdaInputText"/>
+                <p:inputText id="margemEsquerdaInputText" value="#{managerCabecalhoRodape.cabecalhoRodape.margemEsquerda}"
+                             required="true"           styleClass="form-control" disabled="#{managerCabecalhoRodape.visualizar}" />
+                <p:message for="margemEsquerdaInputText" />
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <p:outputLabel value="Margem da direita" for="margemDireitaInputText"/>
+                <p:inputText id="margemDireitaInputText" value="#{managerCabecalhoRodape.cabecalhoRodape.margemDireita}"
+                             required="true"      styleClass="form-control" disabled="#{managerCabecalhoRodape.visualizar}" />
+                <p:message for="margemDireitaInputText" />
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <p:outputLabel value="Margem de baixo" for="margemBaixoInputText"/>
+                <p:inputText id="margemBaixoInputText" value="#{managerCabecalhoRodape.cabecalhoRodape.margemBaixo}"
+                             required="true"      styleClass="form-control" disabled="#{managerCabecalhoRodape.visualizar}" />
+                <p:message for="margemBaixoInputText" />
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <p:outputLabel value="Margem de Cima" for="margemCimaInputText"/>
+                <p:inputText id="margemCimaInputText" value="#{managerCabecalhoRodape.cabecalhoRodape.margemTopo}"
+                             required="true"      styleClass="form-control" disabled="#{managerCabecalhoRodape.visualizar}" />
+                <p:message for="margemCimaInputText" />
+            </div>
+        </div>
+    </div>
+        <h5>
+            <i class="pi pi-file"></i> Margens do Texto
+        </h5>
+    <hr/>
+    <div class="row"> 
+        <div class="col-md-6">
+            <div class="form-group">
+                <p:outputLabel value="Margem da esquerda" for="margemEsquerdaTextoInputText"/>
+                <p:inputText id="margemEsquerdaTextoInputText" value="#{managerCabecalhoRodape.cabecalhoRodape.margemEsquerdaTexto}"
+                             required="true"           styleClass="form-control" disabled="#{managerCabecalhoRodape.visualizar}" />
+                <p:message for="margemEsquerdaTextoInputText" />
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <p:outputLabel value="Margem da direita" for="margemDireitaTextoInputText"/>
+                <p:inputText id="margemDireitaTextoInputText" value="#{managerCabecalhoRodape.cabecalhoRodape.margemDireitaTexto}"
+                             required="true"      styleClass="form-control" disabled="#{managerCabecalhoRodape.visualizar}" />
+                <p:message for="margemDireitaTextoInputText" />
+            </div>
+        </div>
+    </div>
+    <div>
+        <hr/>
+
+        <div class="form-group">
+            <p:outputLabel value="Possui Imagem ?"
+                           for="possuiImagemSelectBooleanButton"/>
+            <div class="ui-inputgroup">
+                <p:selectBooleanButton id="possuiImagemSelectBooleanButton"
+                                       value="#{managerCabecalhoRodape.cabecalhoRodape.possuiImagem}"
+                                       onLabel="Sim"  
+                                       disabled="#{managerCabecalhoRodape.visualizar}"
+                                       offLabel="Não">
+                    <p:ajax update="possuiImagemSelectBooleanButton panelImagemCabecalho" />
+                </p:selectBooleanButton>    
+            </div>
+        </div>
+        <h:panelGroup id="panelImagemCabecalho">
+            <h:panelGroup  rendered="#{managerCabecalhoRodape.cabecalhoRodape.possuiImagem}">
+                    <h5>
+                        <i class="pi pi-file"></i> Margens da Imagem
+                    </h5>
+                <hr/>
+                <div class="row"> 
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <p:outputLabel value="Altura da Imagem" for="alturaImagemInputText"/>
+                            <p:inputText id="alturaImagemInputText" value="#{managerCabecalhoRodape.cabecalhoRodape.alturaImagem}"
+                                         required="true"      styleClass="form-control" disabled="#{managerCabecalhoRodape.visualizar}" />
+                            <p:message for="alturaImagemInputText" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <p:outputLabel value="Posição da imagem"
+                                           for="utilizarDiagnosticoSelectBooleanButton"/>
+                            <div class="ui-inputgroup">
+                                <p:selectBooleanButton id="utilizarDiagnosticoSelectBooleanButton"
+                                                       value="#{managerCabecalhoRodape.cabecalhoRodape.imagemEsquerda}"
+                                                       onLabel="Esquerda"  
+                                                       disabled="#{managerCabecalhoRodape.visualizar}"
+                                                       offLabel="Direita">
+                                    <p:ajax update="utilizarDiagnosticoSelectBooleanButton" />
+                                </p:selectBooleanButton>    
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <p:outputLabel value="Margem da esquerda" for="margemEsquerdaImagemInputText"/>
+                            <p:inputText id="margemEsquerdaImagemInputText" value="#{managerCabecalhoRodape.cabecalhoRodape.margemEsquerdaImagem}"
+                                         required="true"           styleClass="form-control" disabled="#{managerCabecalhoRodape.visualizar}" />
+                            <p:message for="margemEsquerdaImagemInputText" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <p:outputLabel value="Margem da direita" for="margemDireitaImagemInputText"/>
+                            <p:inputText id="margemDireitaImagemInputText" value="#{managerCabecalhoRodape.cabecalhoRodape.margemDireitaImagem}"
+                                         required="true"      styleClass="form-control" disabled="#{managerCabecalhoRodape.visualizar}" />
+                            <p:message for="margemDireitaImagemInputText" />
+                        </div>
+                    </div>
+                </div>
+                <h:panelGroup id="anexoProtocoloPanelGroup">
+                    <p:fileUpload
+                        required="true"
+                        requiredMessage="Os Documentos de Anexo devem ser enviados"
+                        auto="true"
+                        mode="advanced"
+                        label="Anexar"
+                        listener="#{ managerCabecalhoRodape.selecionarAnexo }"
+                        uploadLabel="Enviar"
+                        cancelLabel="Cancelar"
+                        multiple="true"
+                        allowTypes="/(\.|\/)(jpe?g|png|doc|docx|pdf|odt|tiff|tif)$/"
+                        dragDropSupport="true"
+                        invalidFileMessage="Tipo de arquivo não suportado."
+                        invalidSizeMessage="Tamanho do arquivo não é suportado"
+                        process="@this @form"
+                        update="@this, anexoProtocoloPanelGroup anexosPanelGroup" 
+                        rendered="#{not managerCabecalhoRodape.visualizar}"/>
+                </h:panelGroup>
+                <h:panelGroup id="anexosPanelGroup">
+                    <div style="display: flex; flex-direction: row">
+                        <ui:repeat value="#{managerCabecalhoRodape.cabecalhoRodape.anexos}" var="anexo" >
+                            <div style="display: flex; flex-direction: row">
+                                <div style="display: flex; flex-direction: column;background: #e1e6e5;width: 200px; padding: 5px 10px; margin: 10px 30px ">
+                                    <div style="display: flex; flex-direction: row;width: 200px">
+                                        <p:commandButton style="width: 25px; height: 30px;" icon="pi pi-eye" rendered="#{managerRelatorio.isPDF(anexo)}" onclick="target = '_blank'" ajax="false"  actionListener="#{managerCabecalhoRodape.visualizarAnexo(anexo)}"/>
+
+                                        <h:panelGroup rendered="#{!managerCabecalhoRodape.isPDF(anexo)}">
+                                            <a href="#{managerCabecalhoRodape.anexoUrl(anexo)}" target="_blank">
+                                                <i  style="border-radius: 3px;border: 1px solid #08c1cf ; width: 25px;justify-content: center;padding-top: 7px;color: #ffffff;text-align: center; height: 30px;background: #01415B !important" class="pi pi-eye"></i>
+                                            </a> 
+                                        </h:panelGroup>
+                                        <p:commandButton actionListener="#{managerCabecalhoRodape.deletarAnexo(anexo)}" 
+                                                         update="corpoInteiro:messages corpoInteiro" disabled="#{managerCabecalhoRodape.visualizar}" icon="pi pi-trash" style="width: 25px; height: 30px;" />
+                                        <p:outputLabel value="Contrato" style="font-weight: bold;margin-left: 10px;"/>
+                                    </div>
+                                    <img  src="#{managerCabecalhoRodape.anexoUrl(anexo)}" style="width: 180px;height: 180px" />
+                                </div>
+                            </div>
+                        </ui:repeat>
+                    </div>
+                </h:panelGroup>
+            </h:panelGroup>
+
+        </h:panelGroup>
+    </div>
+    <!--        <div class="row"> 
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <p:outputLabel value="Cor do Cabeçalho (RGB)"/>
+                        <p:inputText value="{managerRelatorio.relatorio.corCabecalho}"
+                                     required="true"    styleClass="form-control" disabled="{managerRelatorio.visualizar}"/>
+                    </div>
+                </div>
+            </div>-->
+
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <center>
+
+                <p:commandButton value="Salvar"
+                                 icon="pi pi-save"
+                                 process="@form"
+                                 update="@form"
+                                 actionListener="#{managerCabecalhoRodape.salvarCabecalho()}"
+                                 rendered="#{not managerCabecalhoRodape.visualizar}"/>
+
+                <p:button href="#{managerCabecalhoRodape.urlAposCancelar}"
+                          value="Cancelar" icon="pi pi-ban"/>
+
+            </center>
+        </div>
+    </div>
+
+</ui:composition>

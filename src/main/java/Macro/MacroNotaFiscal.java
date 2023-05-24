@@ -295,17 +295,24 @@ public class MacroNotaFiscal {
         paragraphGlobal = new Paragraph("1. Cumpriu as obrigações contratuais mensais ", fonte);
         tableMaePai.addCell(paragraphGlobal);
 
-        if (nota.getObrigacaoMensal().equals(StatusCumprimento.SIM)) {
-            paragraphGlobal = new Paragraph("Sim", regular);
+        if (Utils.isNotEmpty(nota.getObrigacaoMensal())) {
+            if (nota.getObrigacaoMensal().equals(StatusCumprimento.SIM)) {
+                paragraphGlobal = new Paragraph("Sim", regular);
+            } else {
+                paragraphGlobal = new Paragraph("Não", regular);
+            }
         } else {
             paragraphGlobal = new Paragraph("Não", regular);
         }
         tableMaePai.addCell(paragraphGlobal);
         paragraphGlobal = new Paragraph("2. Obedeceu aos prazos estabelecidos ", fonte);
         tableMaePai.addCell(paragraphGlobal);
-
-        if (nota.getPrazoEstabelecido().equals(StatusCumprimento.SIM)) {
-            paragraphGlobal = new Paragraph("Sim", regular);
+        if (Utils.isNotEmpty(nota.getPrazoEstabelecido())) {
+            if (nota.getPrazoEstabelecido().equals(StatusCumprimento.SIM)) {
+                paragraphGlobal = new Paragraph("Sim", regular);
+            } else {
+                paragraphGlobal = new Paragraph("Não", regular);
+            }
         } else {
             paragraphGlobal = new Paragraph("Não", regular);
         }
@@ -314,44 +321,60 @@ public class MacroNotaFiscal {
         paragraphGlobal = new Paragraph("3. Entregou documentos a que estava obrigado ", fonte);
         tableMaePai.addCell(paragraphGlobal);
 
-        if (nota.getDocumentoObrigatorio().equals(StatusCumprimento.SIM)) {
-            paragraphGlobal = new Paragraph("Sim", regular);
+        if (Utils.isNotEmpty(nota.getDocumentoObrigatorio())) {
+            if (nota.getDocumentoObrigatorio().equals(StatusCumprimento.SIM)) {
+                paragraphGlobal = new Paragraph("Sim", regular);
+            } else {
+                paragraphGlobal = new Paragraph("Não", regular);
+            }
         } else {
             paragraphGlobal = new Paragraph("Não", regular);
         }
         tableMaePai.addCell(paragraphGlobal);
         paragraphGlobal = new Paragraph("4. Elaborou e encaminhou relatório mensal de atividades ", fonte);
         tableMaePai.addCell(paragraphGlobal);
-
-        if (nota.getObrigacaoMensal().equals(StatusCumprimento.SIM)) {
-            paragraphGlobal = new Paragraph("Sim", regular);
+        if (Utils.isNotEmpty(nota.getObrigacaoMensal())) {
+            if (nota.getObrigacaoMensal().equals(StatusCumprimento.SIM)) {
+                paragraphGlobal = new Paragraph("Sim", regular);
+            } else {
+                paragraphGlobal = new Paragraph("Não", regular);
+            }
         } else {
             paragraphGlobal = new Paragraph("Não", regular);
         }
         tableMaePai.addCell(paragraphGlobal);
         paragraphGlobal = new Paragraph("5. Prestou serviço com a qualidade esperada ", fonte);
         tableMaePai.addCell(paragraphGlobal);
-
-        if (nota.getQualidadeEsperada().equals(StatusCumprimento.SIM)) {
-            paragraphGlobal = new Paragraph("Sim", regular);
+        if (Utils.isNotEmpty(nota.getQualidadeEsperada())) {
+            if (nota.getQualidadeEsperada().equals(StatusCumprimento.SIM)) {
+                paragraphGlobal = new Paragraph("Sim", regular);
+            } else {
+                paragraphGlobal = new Paragraph("Não", regular);
+            }
         } else {
             paragraphGlobal = new Paragraph("Não", regular);
         }
         tableMaePai.addCell(paragraphGlobal);
         paragraphGlobal = new Paragraph("6. Informou ou comunicou situações a que estava  obrigado ", fonte);
         tableMaePai.addCell(paragraphGlobal);
-
-        if (nota.getInformouSituacao().equals(StatusCumprimento.SIM)) {
-            paragraphGlobal = new Paragraph("Sim", regular);
+        if (Utils.isNotEmpty(nota.getInformouSituacao())) {
+            if (nota.getInformouSituacao().equals(StatusCumprimento.SIM)) {
+                paragraphGlobal = new Paragraph("Sim", regular);
+            } else {
+                paragraphGlobal = new Paragraph("Não", regular);
+            }
         } else {
             paragraphGlobal = new Paragraph("Não", regular);
         }
         tableMaePai.addCell(paragraphGlobal);
         paragraphGlobal = new Paragraph("7. Realizou diligências necessárias ", fonte);
         tableMaePai.addCell(paragraphGlobal);
-
-        if (nota.getDiligenciaNecessarias().equals(StatusCumprimento.SIM)) {
-            paragraphGlobal = new Paragraph("Sim", regular);
+        if (Utils.isNotEmpty(nota.getDiligenciaNecessarias())) {
+            if (nota.getDiligenciaNecessarias().equals(StatusCumprimento.SIM)) {
+                paragraphGlobal = new Paragraph("Sim", regular);
+            } else {
+                paragraphGlobal = new Paragraph("Não", regular);
+            }
         } else {
             paragraphGlobal = new Paragraph("Não", regular);
         }

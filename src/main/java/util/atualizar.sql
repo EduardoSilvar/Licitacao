@@ -141,3 +141,30 @@ alter table notaFiscal add column diligenciaNecessarias varchar(250);
 
 
 
+alter table relatorio add column logo_id bigint;
+ALTER TABLE relatorio ADD CONSTRAINT fk_logo_id FOREIGN KEY (logo_id) REFERENCES anexo (id);
+
+alter table relatorio add column marginDireitaCabecalho int;
+alter table relatorio add column margineEsquerdaCabecalho int;
+alter table relatorio add column marginDireitaRodape int;
+alter table relatorio add column margineEsquerdaRodape int;
+alter table relatorio add column fontSizeRodape int;
+alter table relatorio add column fontSizeCabecalho int;
+
+alter table relatorio add column urlImagem varchar(250);
+alter table relatorio add column urlImagemrodape varchar(250);
+alter table relatorio add column rodape varchar(250);
+alter table relatorio add column cabecalho varchar(250);
+
+alter table relatorio add column corRodape varchar(250);
+alter table relatorio add column corCabecalho varchar(250);
+
+alter table unidadeorganizacional add column configuracao_id bigint;
+ALTER TABLE unidadeorganizacional ADD CONSTRAINT fk_configuracao_id FOREIGN KEY (configuracao_id) REFERENCES configuracao (id);
+
+
+alter table notaFiscal add column notificacaoExtrajudicial varchar(250);
+alter table notaFiscal add column procedimentoPenalizacao varchar(250);
+alter table notaFiscal add column suspensaoParalizacao varchar(250);
+alter table notaFiscal add column necessidadeRescisao varchar(250);
+

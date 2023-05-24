@@ -14,6 +14,7 @@ public enum TipoAnexo {
     ACRESCIMO("Acrescimo", "Acrescimo/"),
     RENOVACAO("Renovacao", "Renovacao/"),
     REPACTUACAO("Repactuacao", "repactuacao/"),
+    CABECALHO_RODAPE("Cabecalho_Rodape", "cabecalho_rodape/"),
     SUPRESSAO("Supressao", "Supressao/");
 
     private String nome;

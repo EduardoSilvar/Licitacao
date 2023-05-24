@@ -4,20 +4,22 @@
  */
 package Macro;
 
-import Enum.NaturezaEnum;
-import com.itextpdf.text.BaseColor;
-import com.itextpdf.text.Chunk;
-import com.itextpdf.text.Document;
+import Enum.StatusCumprimento;
+import Enum.TipoRecebimentoEnum;
+import com.itextpdf.io.font.FontConstants;
+import com.itextpdf.kernel.colors.Color;
+import com.itextpdf.kernel.colors.DeviceRgb;
+import com.itextpdf.kernel.font.PdfFont;
+import com.itextpdf.kernel.font.PdfFontFactory;
+import com.itextpdf.layout.element.Paragraph;
+import com.itextpdf.layout.element.Table;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.borders.Border;
+import com.itextpdf.layout.element.Cell;
+import com.itextpdf.layout.element.Text;
+import com.itextpdf.layout.property.TextAlignment;
 import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Element;
-import com.itextpdf.text.Font;
-import com.itextpdf.text.FontFactory;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.Phrase;
-import com.itextpdf.text.pdf.PdfName;
-import com.itextpdf.text.pdf.PdfPCell;
-import com.itextpdf.text.pdf.PdfPTable;
-import java.math.BigDecimal;
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import modelo.Acrescimo;
@@ -36,249 +38,484 @@ import util.Utils;
  */
 public class MacroNotaFiscalGestor {
 
-    public static Document MacroNotaFiscal(Document document, Contratado contratado, Contrato contrato, NotaFiscal nota, UnidadeOrganizacional orgao, List<Acrescimo> acrescimo, List<Repactuacao> termosApostilamentos, Usuario user, List<NotaFiscal> notas) throws DocumentException {
-        document.open();
-        document.setRole(new PdfName("RecebimentoProvisorio.pdf"));
-        PdfPTable table1 = new PdfPTable(1);
-        table1.getDefaultCell().setBorder(0);
-        Font fonter = FontFactory.getFont(FontFactory.HELVETICA, 11, Font.BOLD, new BaseColor(255, 255, 255));
-        Font fonteTitulo = FontFactory.getFont(FontFactory.HELVETICA, 11, Font.BOLD, new BaseColor(0, 0, 0));
-        Font fonteSubTitulo = FontFactory.getFont(FontFactory.HELVETICA, 10, Font.BOLD, new BaseColor(0, 0, 0));
-        Font fonteRegular = new Font(Font.FontFamily.HELVETICA, 9);
-        Font fonteRegularNegrito = FontFactory.getFont(FontFactory.HELVETICA, 9, Font.BOLD, new BaseColor(0, 0, 0));
-        Font fonteBranca = FontFactory.getFont(FontFactory.HELVETICA, 10, Font.BOLD, new BaseColor(255, 255, 255));
+    public static Document MacroNotaFiscal(Document document, Contratado contratado, Contrato contrato, NotaFiscal nota, UnidadeOrganizacional orgao, List<Acrescimo> acrescimo, List<Repactuacao> termosApostilamentos, Usuario user, List<NotaFiscal> notas) throws DocumentException, IOException {
+        Table table1 = new Table(1);
+        PdfFont font = PdfFontFactory.createFont(FontConstants.TIMES_BOLD);
+        PdfFont font2 = PdfFontFactory.createFont(FontConstants.HELVETICA);
+        Color fontColor = new DeviceRgb(38, 38, 38);
 
-        PdfPCell cell = new PdfPCell(new Phrase(".", fonter));
-        cell.setBorderColor(BaseColor.WHITE);
-        cell.setPaddingBottom(30);
-        table1.addCell(cell);
-        document.add(table1);
-        PdfPTable segundaTable = new PdfPTable(1);
-        segundaTable.getDefaultCell().setBorder(0);
-        segundaTable.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
-        segundaTable.getDefaultCell().setVerticalAlignment(Element.ALIGN_CENTER);
+        Cell cell = new Cell();
+        DeviceRgb lightGray = new DeviceRgb(211, 211, 211);
+        Table segundaTable = new Table(1);
+        segundaTable.addCell(new Paragraph("RELATÓRIO DE FISCALIZAÇÃO DE CONTRATOS\n"
+                + "EXERCÍCIO FINANDEIRO 2023")).setBackgroundColor(lightGray).setTextAlignment(TextAlignment.CENTER).setFontSize(9).setFont(font);
+        segundaTable.setPadding(3);
+        segundaTable.setWidth(550);
 
-        segundaTable.addCell(new Paragraph("TERMO DE RECEBIMENTO DEFINITIVO", fonteTitulo));
-        if (Utils.isNotEmpty(nota.getInicioFiscalizado()) && Utils.isNotEmpty(nota.getFinalFiscalizado())) {
-            segundaTable.addCell(new Paragraph("\nPERÍODO  – " + DateUtils.format(DateUtils.DD_MM_YYYY, nota.getInicioFiscalizado()) + " à " + DateUtils.format(DateUtils.DD_MM_YYYY, nota.getFinalFiscalizado()) + "\n\n", fonteSubTitulo));
-        } else {
-            segundaTable.addCell(new Paragraph("\nPERÍODO  – " + "__/__/____ à __/__/____" + "\n\n", fonteSubTitulo));
-        }
         document.add(segundaTable);
-
-        PdfPTable terceiraTable = new PdfPTable(1);
-        terceiraTable.getDefaultCell().setBorder(0);
-        Paragraph paragraphGlobal = new Paragraph("1) DESCRIÇÃO DO CONTRATO:\n\n", fonteRegularNegrito);
-        paragraphGlobal.add(new Chunk(" Contrato de Serviços que entre si celebram a(s) instituição(ões):\n\n", fonteRegular));
-        terceiraTable.addCell(paragraphGlobal);
-        document.add(terceiraTable);
-
-        PdfPTable quartaTable = new PdfPTable(2);
-        quartaTable.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
-        quartaTable.getDefaultCell().setVerticalAlignment(Element.ALIGN_CENTER);
-        quartaTable.getDefaultCell().setBackgroundColor(new BaseColor(204, 203, 200));
-        quartaTable.addCell(new Paragraph("Nome", fonteSubTitulo));
-        quartaTable.addCell(new Paragraph("CNPJ/CPF", fonteSubTitulo));
-
-        document.add(quartaTable);
-
-        PdfPTable quintaTable = new PdfPTable(2);
-        quintaTable.addCell(new Paragraph(contratado.getNome(), fonteSubTitulo));
-        if (contratado.getNatureza().equals(NaturezaEnum.FISICA)) {
-            quintaTable.addCell(new Paragraph(contratado.getCpf(), fonteRegular));
-        } else {
-            quintaTable.addCell(new Paragraph(contratado.getCnpj(), fonteRegular));
+        Table tableMaiorTerceira = new Table(1);
+        tableMaiorTerceira.setPadding(3);
+        tableMaiorTerceira.setWidth(550);
+        Table terceiraTable = new Table(1);
+        terceiraTable.setPadding(3);
+        terceiraTable.setWidth(550);
+        Paragraph paragraphGlobal = new Paragraph("CONTRATO Nº   " + contrato.getNumeroProcesso() + " - DL").setTextAlignment(TextAlignment.CENTER).setFontSize(9).setFont(font);
+        cell = new Cell();
+        cell.setBorder(Border.NO_BORDER);
+        cell.add(paragraphGlobal);
+        terceiraTable.addCell(cell);
+        paragraphGlobal = new Paragraph("Objeto: \n");
+        paragraphGlobal.setBorder(Border.NO_BORDER).setFontSize(10).setFont(font);
+        if (Utils.isNotEmpty(contrato.getObjetoContrato())) {
+            Text text2 = new Text(contrato.getObjetoContrato());
+            text2.setFont(font2);
+            text2.setFontSize(9);
+            text2.setFontColor(fontColor);
+            paragraphGlobal.add(text2);
         }
+        cell = new Cell();
+        cell.setBorder(Border.NO_BORDER);
+        cell.add(paragraphGlobal);
+        terceiraTable.addCell(cell);
+        tableMaiorTerceira.addCell(terceiraTable);
+        document.add(tableMaiorTerceira);
 
+        Table quartaTable = new Table(1);
+        quartaTable.setPadding(3);
+        quartaTable.setWidth(550);
+        quartaTable.addCell(new Paragraph("DADOS DO FISCAL DESIGNADO")).setBackgroundColor(lightGray).setTextAlignment(TextAlignment.CENTER).setFontSize(9).setFont(font);
+        Table quartintaTable = new Table(1);
+        quartintaTable.setPadding(3);
+        quartintaTable.setWidth(550);
+        paragraphGlobal = new Paragraph("FISCAL DE CONTRATOS : ").setFontSize(9);
+        if (Utils.isNotEmpty(contrato.getObjetoContrato())) {
+            Text text2 = new Text(contrato.getFiscal().getNome());
+            text2.setFont(font2);
+            text2.setFontSize(9);
+            text2.setFontColor(fontColor);
+            paragraphGlobal.add(text2);
+        }
+        Text text2 = new Text("\nPORTARIA DE NOMEAÇÃO: ");
+        text2.setFont(font2);
+        text2.setFontSize(9);
+        text2.setFontColor(fontColor);
+        paragraphGlobal.add(text2);
+        quartintaTable.addCell(paragraphGlobal);
+        document.add(quartaTable);
+        document.add(quartintaTable);
+
+        Table quintaTable = new Table(1);
+        quintaTable.setPadding(3);
+        quintaTable.setWidth(550);
+        quintaTable.addCell(new Paragraph("COMPETÊNCIA DA FISCALIZAÇÃO")).setBackgroundColor(lightGray).setTextAlignment(TextAlignment.CENTER).setFontSize(9).setFont(font);
         document.add(quintaTable);
 
-        PdfPTable sextaTable = new PdfPTable(1);
-        sextaTable.getDefaultCell().setBorder(0);
-        paragraphGlobal = new Paragraph("\n\nO presente contrato tem como objeto ", fonteRegular);
-        if (Utils.isNotEmpty(contrato.getObjetoContrato())) {
-            paragraphGlobal.add(new Chunk(contrato.getObjetoContrato() + "\n\n", fonteRegular));
-        }
+        Table sextaTable = new Table(1);
+        sextaTable.setPadding(3);
+        sextaTable.setWidth(550);
+        paragraphGlobal = new Paragraph("Período fiscalizado: de " + DateUtils.format(DateUtils.DD_MM_YYYY, nota.getInicioFiscalizado()) + " a " + DateUtils.format(DateUtils.DD_MM_YYYY, nota.getFinalFiscalizado()) + ".");
         sextaTable.addCell(paragraphGlobal);
         document.add(sextaTable);
 
-        PdfPTable setimaTable = new PdfPTable(1);
-        setimaTable.getDefaultCell().setBorder(0);
-        paragraphGlobal = new Paragraph("2) FINALIDADE: \n\n", fonteRegularNegrito);
-        paragraphGlobal.add(new Chunk(" Receber definitivamente o contrato " + contrato.getNumeroProcesso() + " assinado em " + contrato.getDataAssinatura() + ", com valor estimado de R$ " + contrato.getValor() + " (" + valorPorExtenso(new Double(contrato.getValor() + "")) + ").\n\n", fonteRegular));
-        setimaTable.addCell(paragraphGlobal);
+        Table setimaTable = new Table(1);
+        setimaTable.addCell(new Paragraph("OCORRÊNCIAS")).setBackgroundColor(lightGray).setTextAlignment(TextAlignment.CENTER).setFontSize(9).setFont(font);
+        setimaTable.setPadding(3);
+        setimaTable.setWidth(550);
         document.add(setimaTable);
-
-        PdfPTable oitavaTable = new PdfPTable(1);
-        oitavaTable.getDefaultCell().setBorder(0);
-        paragraphGlobal = new Paragraph("3) TERMOS ADITIVOS E APOSTILAMENTOS: \n\n", fonteRegularNegrito);
-        paragraphGlobal.add(new Chunk("    Informamos que durante o período a que se refere o presente relatório, foram celebrados " + acrescimo.size() + " Termo(s) Aditivo(s) e " + termosApostilamentos.size() + " Termo(s) de Apostilamento, conforme descrito abaixo:\n"
-                + "\n", fonteRegular));
-        if (Utils.isNotEmpty(acrescimo)) {
-            paragraphGlobal.add(new Chunk("Termos Aditivo, tendo como objeto : " + contrato.getNumeroProcesso() + "\n\n", fonteRegularNegrito));
-            int termo = 1;
-            for (Acrescimo ac : acrescimo) {
-                paragraphGlobal.add(new Chunk("- " + termo + "º termo aditivo de número : " + ac.getNumeroTermo() + "\n\n", fonteRegular));
-                termo = termo + 1;
-            }
-        }
-        if (Utils.isNotEmpty(termosApostilamentos)) {
-
-            paragraphGlobal.add(new Chunk("Termos Apostilamentos, tendo como objeto : " + contrato.getNumeroProcesso() + "\n\n", fonteRegularNegrito));
-            int termo = 1;
-            for (Repactuacao rp : termosApostilamentos) {
-                paragraphGlobal.add(new Chunk("- " + termo + "º termo apostilamento de número : " + rp.getNumeroTermo() + "\n\n", fonteRegular));
-                termo = termo + 1;
-
-            }
-        }
+        Table oitavaTable = new Table(4);
+        oitavaTable.setPadding(3);
+        oitavaTable.setWidth(550);
+        paragraphGlobal = new Paragraph("1. Cumpriu as obrigações contratuais mensais").setFont(font2).setFontSize(9);
         oitavaTable.addCell(paragraphGlobal);
+        if (nota.getObrigacaoMensal().equals(StatusCumprimento.SIM)) {
+            paragraphGlobal = new Paragraph("( X )Sim").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+            paragraphGlobal = new Paragraph("(  )Não").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+            paragraphGlobal = new Paragraph("(  )Não se Aplica").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+        } else if (nota.getObrigacaoMensal().equals(StatusCumprimento.NAO)) {
+            paragraphGlobal = new Paragraph("(  )Sim").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+            paragraphGlobal = new Paragraph("( X )Não").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+            paragraphGlobal = new Paragraph("(  )Não se Aplica").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+        } else if (nota.getObrigacaoMensal().equals(StatusCumprimento.NAO_APLICA)) {
+            paragraphGlobal = new Paragraph("(  )Sim").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+            paragraphGlobal = new Paragraph("(  )Não").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+            paragraphGlobal = new Paragraph("( X )Não se Aplica").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+        }
+
+        paragraphGlobal = new Paragraph("2. Obedeceu aos prazos estabelecidos").setFont(font2).setFontSize(9);
+        oitavaTable.addCell(paragraphGlobal);
+
+        if (nota.getPrazoEstabelecido().equals(StatusCumprimento.SIM)) {
+            paragraphGlobal = new Paragraph("( X )Sim").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+            paragraphGlobal = new Paragraph("(  )Não").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+            paragraphGlobal = new Paragraph("(  )Não se Aplica").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+        } else if (nota.getPrazoEstabelecido().equals(StatusCumprimento.NAO)) {
+            paragraphGlobal = new Paragraph("(  )Sim").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+            paragraphGlobal = new Paragraph("( X )Não").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+            paragraphGlobal = new Paragraph("(  )Não se Aplica").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+        } else if (nota.getPrazoEstabelecido().equals(StatusCumprimento.NAO_APLICA)) {
+            paragraphGlobal = new Paragraph("(  )Sim").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+            paragraphGlobal = new Paragraph("(  )Não").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+            paragraphGlobal = new Paragraph("( X )Não se Aplica").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+        }
+        paragraphGlobal = new Paragraph("3. Entregou documentos a que estava obrigado").setFont(font2).setFontSize(9);
+        oitavaTable.addCell(paragraphGlobal);
+
+        if (nota.getDocumentoObrigatorio().equals(StatusCumprimento.SIM)) {
+            paragraphGlobal = new Paragraph("( X )Sim").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+            paragraphGlobal = new Paragraph("(  )Não").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+            paragraphGlobal = new Paragraph("(  )Não se Aplica").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+        } else if (nota.getDocumentoObrigatorio().equals(StatusCumprimento.NAO)) {
+            paragraphGlobal = new Paragraph("(  )Sim").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+            paragraphGlobal = new Paragraph("( X )Não").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+            paragraphGlobal = new Paragraph("(  )Não se Aplica").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+        } else if (nota.getDocumentoObrigatorio().equals(StatusCumprimento.NAO_APLICA)) {
+            paragraphGlobal = new Paragraph("(  )Sim").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+            paragraphGlobal = new Paragraph("(  )Não").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+            paragraphGlobal = new Paragraph("( X )Não se Aplica").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+        }
+
+        paragraphGlobal = new Paragraph("4. Elaborou e encaminhou relatório mensal de atividades").setFont(font2).setFontSize(9);
+        oitavaTable.addCell(paragraphGlobal);
+
+        if (nota.getRelatorio().equals(StatusCumprimento.SIM)) {
+            paragraphGlobal = new Paragraph("( X )Sim").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+            paragraphGlobal = new Paragraph("(  )Não").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+            paragraphGlobal = new Paragraph("(  )Não se Aplica").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+        } else if (nota.getRelatorio().equals(StatusCumprimento.NAO)) {
+            paragraphGlobal = new Paragraph("(  )Sim").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+            paragraphGlobal = new Paragraph("( X )Não").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+            paragraphGlobal = new Paragraph("(  )Não se Aplica").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+        } else if (nota.getRelatorio().equals(StatusCumprimento.NAO_APLICA)) {
+            paragraphGlobal = new Paragraph("(  )Sim").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+            paragraphGlobal = new Paragraph("(  )Não").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+            paragraphGlobal = new Paragraph("( X )Não se Aplica").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+        }
+
+        paragraphGlobal = new Paragraph("5. Prestou serviço com a qualidade esperada").setFont(font2).setFontSize(9);
+        oitavaTable.addCell(paragraphGlobal);
+
+        if (nota.getQualidadeEsperada().equals(StatusCumprimento.SIM)) {
+            paragraphGlobal = new Paragraph("( X )Sim").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+            paragraphGlobal = new Paragraph("(  )Não").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+            paragraphGlobal = new Paragraph("(  )Não se Aplica").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+        } else if (nota.getQualidadeEsperada().equals(StatusCumprimento.NAO)) {
+            paragraphGlobal = new Paragraph("(  )Sim").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+            paragraphGlobal = new Paragraph("( X )Não").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+            paragraphGlobal = new Paragraph("(  )Não se Aplica").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+        } else if (nota.getQualidadeEsperada().equals(StatusCumprimento.NAO_APLICA)) {
+            paragraphGlobal = new Paragraph("(  )Sim").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+            paragraphGlobal = new Paragraph("(  )Não").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+            paragraphGlobal = new Paragraph("( X )Não se Aplica").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+        }
+
+        paragraphGlobal = new Paragraph("6. Informou ou comunicou situações a que estava obrigado").setFont(font2).setFontSize(9);
+        oitavaTable.addCell(paragraphGlobal);
+
+        if (nota.getInformouSituacao().equals(StatusCumprimento.SIM)) {
+            paragraphGlobal = new Paragraph("( X )Sim").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+            paragraphGlobal = new Paragraph("(  )Não").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+            paragraphGlobal = new Paragraph("(  )Não se Aplica").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+        } else if (nota.getInformouSituacao().equals(StatusCumprimento.NAO)) {
+            paragraphGlobal = new Paragraph("(  )Sim").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+            paragraphGlobal = new Paragraph("( X )Não").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+            paragraphGlobal = new Paragraph("(  )Não se Aplica").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+        } else if (nota.getInformouSituacao().equals(StatusCumprimento.NAO_APLICA)) {
+            paragraphGlobal = new Paragraph("(  )Sim").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+            paragraphGlobal = new Paragraph("(  )Não").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+            paragraphGlobal = new Paragraph("( X )Não se Aplica").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+        }
+
+        paragraphGlobal = new Paragraph("7. Realizou diligências necessárias").setFont(font2).setFontSize(9);
+        oitavaTable.addCell(paragraphGlobal);
+
+        if (nota.getDiligenciaNecessarias().equals(StatusCumprimento.SIM)) {
+            paragraphGlobal = new Paragraph("( X )Sim").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+            paragraphGlobal = new Paragraph("(  )Não").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+            paragraphGlobal = new Paragraph("(  )Não se Aplica").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+        } else if (nota.getDiligenciaNecessarias().equals(StatusCumprimento.NAO)) {
+            paragraphGlobal = new Paragraph("(  )Sim").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+            paragraphGlobal = new Paragraph("( X )Não").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+            paragraphGlobal = new Paragraph("(  )Não se Aplica").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+        } else if (nota.getDiligenciaNecessarias().equals(StatusCumprimento.NAO_APLICA)) {
+            paragraphGlobal = new Paragraph("(  )Sim").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+            paragraphGlobal = new Paragraph("(  )Não").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+            paragraphGlobal = new Paragraph("( X )Não se Aplica").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+        }
+
+        paragraphGlobal = new Paragraph("8. Necessidade de Notificação Extrajudicial").setFont(font2).setFontSize(9);
+        oitavaTable.addCell(paragraphGlobal);
+
+        if (nota.getNotificacaoExtrajudicial().equals(StatusCumprimento.SIM)) {
+            paragraphGlobal = new Paragraph("( X )Sim").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+            paragraphGlobal = new Paragraph("(  )Não").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+            paragraphGlobal = new Paragraph("(  )Não se Aplica").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+        } else if (nota.getNotificacaoExtrajudicial().equals(StatusCumprimento.NAO)) {
+            paragraphGlobal = new Paragraph("(  )Sim").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+            paragraphGlobal = new Paragraph("( X )Não").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+            paragraphGlobal = new Paragraph("(  )Não se Aplica").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+        } else if (nota.getNotificacaoExtrajudicial().equals(StatusCumprimento.NAO_APLICA)) {
+            paragraphGlobal = new Paragraph("(  )Sim").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+            paragraphGlobal = new Paragraph("(  )Não").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+            paragraphGlobal = new Paragraph("( X )Não se Aplica").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+        }
+
+        paragraphGlobal = new Paragraph("9.Necessidade de Abertura de Procedimento de Penalização").setFont(font2).setFontSize(9);
+        oitavaTable.addCell(paragraphGlobal);
+
+        if (nota.getProcedimentoPenalizacao().equals(StatusCumprimento.SIM)) {
+            paragraphGlobal = new Paragraph("( X )Sim").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+            paragraphGlobal = new Paragraph("(  )Não").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+            paragraphGlobal = new Paragraph("(  )Não se Aplica").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+        } else if (nota.getProcedimentoPenalizacao().equals(StatusCumprimento.NAO)) {
+            paragraphGlobal = new Paragraph("(  )Sim").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+            paragraphGlobal = new Paragraph("( X )Não").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+            paragraphGlobal = new Paragraph("(  )Não se Aplica").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+        } else if (nota.getProcedimentoPenalizacao().equals(StatusCumprimento.NAO_APLICA)) {
+            paragraphGlobal = new Paragraph("(  )Sim").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+            paragraphGlobal = new Paragraph("(  )Não").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+            paragraphGlobal = new Paragraph("( X )Não se Aplica").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+        }
+
+//        paragraphGlobal = new Paragraph("10. Suspensão do Contrato ou Paralisação dos Serviços").setFont(font2).setFontSize(9);
+//        oitavaTable.addCell(paragraphGlobal);
+//
+//        if (nota.getSuspensaoParalizacao().equals(StatusCumprimento.SIM)) {
+//            paragraphGlobal = new Paragraph("( X )Sim").setFont(font2).setFontSize(9);
+//            oitavaTable.addCell(paragraphGlobal);
+//            paragraphGlobal = new Paragraph("(  )Não").setFont(font2).setFontSize(9);
+//            oitavaTable.addCell(paragraphGlobal);
+//            paragraphGlobal = new Paragraph("(  )Não se Aplica").setFont(font2).setFontSize(9);
+//            oitavaTable.addCell(paragraphGlobal);
+//        } else if (nota.getSuspensaoParalizacao().equals(StatusCumprimento.NAO)) {
+//            paragraphGlobal = new Paragraph("(  )Sim").setFont(font2).setFontSize(9);
+//            oitavaTable.addCell(paragraphGlobal);
+//            paragraphGlobal = new Paragraph("( X )Não").setFont(font2).setFontSize(9);
+//            oitavaTable.addCell(paragraphGlobal);
+//            paragraphGlobal = new Paragraph("(  )Não se Aplica").setFont(font2).setFontSize(9);
+//            oitavaTable.addCell(paragraphGlobal);
+//        } else if (nota.getSuspensaoParalizacao().equals(StatusCumprimento.NAO_APLICA)) {
+//            paragraphGlobal = new Paragraph("(  )Sim").setFont(font2).setFontSize(9);
+//            oitavaTable.addCell(paragraphGlobal);
+//            paragraphGlobal = new Paragraph("(  )Não").setFont(font2).setFontSize(9);
+//            oitavaTable.addCell(paragraphGlobal);
+//            paragraphGlobal = new Paragraph("( X )Não se Aplica").setFont(font2).setFontSize(9);
+//            oitavaTable.addCell(paragraphGlobal);
+//        }
+        paragraphGlobal = new Paragraph("10. Suspensão do Contrato ou Paralisação dos Serviços").setFont(font2).setFontSize(9);
+        oitavaTable.addCell(paragraphGlobal);
+
+        if (nota.getSuspensaoParalizacao().equals(StatusCumprimento.SIM)) {
+            paragraphGlobal = new Paragraph("( X )Sim").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+            paragraphGlobal = new Paragraph("(  )Não").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+            paragraphGlobal = new Paragraph("(  )Não se Aplica").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+        } else if (nota.getSuspensaoParalizacao().equals(StatusCumprimento.NAO)) {
+            paragraphGlobal = new Paragraph("(  )Sim").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+            paragraphGlobal = new Paragraph("( X )Não").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+            paragraphGlobal = new Paragraph("(  )Não se Aplica").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+        } else if (nota.getSuspensaoParalizacao().equals(StatusCumprimento.NAO_APLICA)) {
+            paragraphGlobal = new Paragraph("(  )Sim").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+            paragraphGlobal = new Paragraph("(  )Não").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+            paragraphGlobal = new Paragraph("( X )Não se Aplica").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+        }
+
+        paragraphGlobal = new Paragraph("11. Necessidade de Rescisão").setFont(font2).setFontSize(9);
+        oitavaTable.addCell(paragraphGlobal);
+
+        if (nota.getNecessidadeRescisao().equals(StatusCumprimento.SIM)) {
+            paragraphGlobal = new Paragraph("( X )Sim").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+            paragraphGlobal = new Paragraph("(  )Não").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+            paragraphGlobal = new Paragraph("(  )Não se Aplica").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+        } else if (nota.getNecessidadeRescisao().equals(StatusCumprimento.NAO)) {
+            paragraphGlobal = new Paragraph("(  )Sim").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+            paragraphGlobal = new Paragraph("( X )Não").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+            paragraphGlobal = new Paragraph("(  )Não se Aplica").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+        } else if (nota.getNecessidadeRescisao().equals(StatusCumprimento.NAO_APLICA)) {
+            paragraphGlobal = new Paragraph("(  )Sim").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+            paragraphGlobal = new Paragraph("(  )Não").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+            paragraphGlobal = new Paragraph("( X )Não se Aplica").setFont(font2).setFontSize(9);
+            oitavaTable.addCell(paragraphGlobal);
+        }
+
         document.add(oitavaTable);
-
-        PdfPTable nonaTable = new PdfPTable(1);
-        nonaTable.getDefaultCell().setBorder(0);
-        paragraphGlobal = new Paragraph("4) PRESTAÇÃO DE CONTA: \n\n", fonteRegularNegrito);
-        paragraphGlobal.add(new Chunk(" Gestor do Contrato: " + user.getNome() + ", designado pela Instrução de Serviço nº __ de __ de _____ de 20__.\n\n", fonteRegular));
-        nonaTable.addCell(paragraphGlobal);
-        document.add(nonaTable);
-
-        PdfPTable decimaTable = new PdfPTable(1);
-        decimaTable.getDefaultCell().setBorder(0);
-        paragraphGlobal = new Paragraph("4.1 - RESULTADOS DAS ATIVIDADES \n\n", fonteRegularNegrito);
-        if (Utils.isNotEmpty(nota.getDescricao())) {
-            paragraphGlobal.add(new Chunk(nota.getDescricao() + "\n\n", fonteRegular));
-            decimaTable.addCell(paragraphGlobal);
+        Table notaTable = new Table(1);
+        notaTable.setPadding(3);
+        notaTable.setWidth(550);
+        if (nota.getTipoRecebimento().equals(TipoRecebimentoEnum.DEFINITIVO)) {
+            paragraphGlobal = new Paragraph("(   ) Recebimento Provisório (mensal) ").setFont(font2).setFontSize(9);
+            cell = new Cell();
+            cell.add(paragraphGlobal).setBorder(Border.NO_BORDER);
+            notaTable.addCell(cell);
+            paragraphGlobal = new Paragraph("( X ) Recebimento Definitivo – Data: " + DateUtils.format(DateUtils.SIMPLE_DATE, nota.getDataPagamento())).setFont(font2).setFontSize(9);
+            cell = new Cell();
+            cell.add(paragraphGlobal).setBorder(Border.NO_BORDER);
+            notaTable.addCell(cell);
+            paragraphGlobal = new Paragraph("Considerações : ").setFont(font2).setFontSize(9);
+            cell = new Cell();
+            cell.add(paragraphGlobal).setBorder(Border.NO_BORDER);
+            notaTable.addCell(cell);
         } else {
-            paragraphGlobal.add(new Chunk("Não houve resultados nas atividades.\n\n", fonteRegular));
-            decimaTable.addCell(paragraphGlobal);
+            paragraphGlobal = new Paragraph("( X ) Recebimento Provisório (mensal) ").setFont(font2).setFontSize(9);
+            cell = new Cell();
+            cell.add(paragraphGlobal).setBorder(Border.NO_BORDER);
+            notaTable.addCell(cell);
+            paragraphGlobal = new Paragraph("(   ) Recebimento Definitivo – Data: __/__/____").setFont(font2).setFontSize(9);
+            cell = new Cell();
+            cell.add(paragraphGlobal).setBorder(Border.NO_BORDER);
+            notaTable.addCell(cell);
+            paragraphGlobal = new Paragraph("Considerações : ").setFont(font2).setFontSize(9);
+            cell = new Cell();
+            cell.add(paragraphGlobal).setBorder(Border.NO_BORDER);
+            notaTable.addCell(cell);
         }
-
-        document.add(decimaTable);
-
-        PdfPTable decimaPrimeiraTable = new PdfPTable(1);
-        decimaPrimeiraTable.getDefaultCell().setBorder(0);
-        paragraphGlobal = new Paragraph("CRONOGRAMA DESEMBOLSO – PAGAMENTO DE FATURAS \n\n", fonteRegularNegrito);
-        decimaPrimeiraTable.addCell(paragraphGlobal);
-        document.add(decimaPrimeiraTable);
-        PdfPTable headerPagamentosTable = new PdfPTable(3);
-        headerPagamentosTable.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
-        headerPagamentosTable.getDefaultCell().setVerticalAlignment(Element.ALIGN_CENTER);
-        headerPagamentosTable.getDefaultCell().setBackgroundColor(new BaseColor(204, 203, 200));
-        headerPagamentosTable.addCell(new Paragraph("Nº NOTA FISCAL", fonteSubTitulo));
-        headerPagamentosTable.addCell(new Paragraph("DATA DA NOTA FISCAL", fonteSubTitulo));
-        headerPagamentosTable.addCell(new Paragraph("VALOR (R$)", fonteSubTitulo));
-
-        document.add(headerPagamentosTable);
-        if (Utils.isNotEmpty(notas)) {
-            BigDecimal valorTotal = new BigDecimal("0");
-            for (NotaFiscal n : notas) {
-                PdfPTable pagamentosTable = new PdfPTable(3);
-                pagamentosTable.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
-                pagamentosTable.getDefaultCell().setVerticalAlignment(Element.ALIGN_CENTER);
-                if (n.getNumero() != null) {
-                    pagamentosTable.addCell(new Paragraph(n.getNumero().toString(), fonteSubTitulo));
-                } else {
-                    pagamentosTable.addCell(new Paragraph(".", fonteBranca));
-                }
-                if (Utils.isNotEmpty(n.getDataPagamento())) {
-                    pagamentosTable.addCell(new Paragraph(DateUtils.format(DateUtils.DD_MM_YYYY, n.getDataPagamento()), fonteSubTitulo));
-                } else {
-                    pagamentosTable.addCell(new Paragraph(".", fonteBranca));
-                }
-                if (Utils.isNotEmpty(n.getValor())) {
-                    pagamentosTable.addCell(new Paragraph(n.getValor() + "", fonteSubTitulo));
-                } else {
-                    pagamentosTable.addCell(new Paragraph(".", fonteBranca));
-
-                }
-                document.add(pagamentosTable);
-                valorTotal = valorTotal.add(new BigDecimal(n.getValor() + ""));
-            }
-            PdfPTable valorTable = new PdfPTable(1);
-            paragraphGlobal = new Paragraph("Valor Total do Desembolso ", fonteRegularNegrito);
-            paragraphGlobal.add(new Chunk(valorTotal + " R$", fonteRegular));
-            valorTable.addCell(paragraphGlobal);
-
-            document.add(valorTable);
-        } else {
-            PdfPTable pagamentosTable = new PdfPTable(3);
-            pagamentosTable.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
-            pagamentosTable.getDefaultCell().setVerticalAlignment(Element.ALIGN_CENTER);
-
-            pagamentosTable.addCell(new Paragraph(".", fonter));
-            pagamentosTable.addCell(new Paragraph(".", fonter));
-            pagamentosTable.addCell(new Paragraph(".", fonter));
-
-            document.add(pagamentosTable);
-        }
-        PdfPTable decimaSegundaTable = new PdfPTable(1);
-        decimaSegundaTable.getDefaultCell().setBorder(0);
-        paragraphGlobal = new Paragraph("\n\n4.3. – GARANTIA CONTRATUAL \n\n", fonteRegularNegrito);
-        if (Utils.isNotEmpty(nota.getDescricao())) {
-            paragraphGlobal.add(new Chunk(nota.getGarantiaContratual() + "\n\n", fonteRegular));
-        } else {
-            paragraphGlobal.add(new Chunk("Não houve garantia contratual.\n\n", fonteRegular));
-        }
-        decimaSegundaTable.addCell(paragraphGlobal);
+        Table decimaSegundaTable = new Table(1);
+        decimaSegundaTable.setPadding(3);
+        decimaSegundaTable.setWidth(550);
+        decimaSegundaTable.addCell(notaTable);
         document.add(decimaSegundaTable);
 
-        PdfPTable decimaTerceiraTable = new PdfPTable(1);
-        decimaTerceiraTable.getDefaultCell().setBorder(0);
-        paragraphGlobal = new Paragraph("5) DECLARAÇÃO DE QUITAÇÃO \n\n", fonteRegularNegrito);
-        paragraphGlobal.add(new Chunk(" Declaro para devidos fins que todos os débitos e obrigações originados pelo contrato nº " + contrato.getNumeroProcesso() + ", com a empresa " + contrato.getContratado().getNome() + " foram quitados, conforme documento X (informar documento SEI ou folha do processo físico digitalizado.):\n\n", fonteRegular));
-        decimaTerceiraTable.addCell(paragraphGlobal);
-        document.add(decimaTerceiraTable);
+        if (nota.getDiligenciaNecessarias().equals(StatusCumprimento.SIM)
+                || nota.getNotificacaoExtrajudicial().equals(StatusCumprimento.SIM)
+                || nota.getSuspensaoParalizacao().equals(StatusCumprimento.SIM)
+                || nota.getProcedimentoPenalizacao().equals(StatusCumprimento.SIM)
+                || nota.getNecessidadeRescisao().equals(StatusCumprimento.SIM)) {
 
-        PdfPTable decimaQuartaTable = new PdfPTable(1);
-        decimaQuartaTable.getDefaultCell().setBorder(0);
-        paragraphGlobal = new Paragraph("6) CONCLUSÃO \n\n", fonteRegularNegrito);
+            Table decimaTable = new Table(1);
+            decimaTable.setPadding(3);
+            decimaTable.setWidth(550);
+            paragraphGlobal = new Paragraph("OBSERVAÇÕES: ").setFont(font2).setFontSize(10);
+            decimaTable.addCell(paragraphGlobal);
 
-        if (Utils.isNotEmpty(nota.getInicioFiscalizado()) && Utils.isNotEmpty(nota.getFinalFiscalizado())) {
-            paragraphGlobal.add(new Chunk("A empresa: " + contrato.getContratado().getNome() + ". Contratada com objetivo de " + contrato.getObjetoContrato() + ", conforme contrato " + contrato.getNumeroProcesso() + ", executou, no período de " + DateUtils.format(DateUtils.DD_MM_YYYY, nota.getInicioFiscalizado()) + " a " + DateUtils.format(DateUtils.DD_MM_YYYY, nota.getFinalFiscalizado()) + " as suas atividades (informe o resultado da prestação do serviço).\n\n ", fonteRegular));
-        } else {
-            paragraphGlobal.add(new Chunk("A empresa: " + contrato.getContratado().getNome() + ". Contratada com objetivo de " + contrato.getObjetoContrato() + ", conforme contrato " + contrato.getNumeroProcesso() + ", executou, no período de " + "__/__/____ a __/__/____" + " as suas atividades (informe o resultado da prestação do serviço).\n\n ", fonteRegular));
+            document.add(decimaTable);
         }
-        decimaQuartaTable.addCell(paragraphGlobal);
-        document.add(decimaQuartaTable);
+        Table decimaPrimeiraTable = new Table(1);
+        decimaPrimeiraTable.setPadding(3);
+        decimaPrimeiraTable.setWidth(550);
+        paragraphGlobal = new Paragraph(orgao.getEndereco().getCidade() + " - " + orgao.getEndereco().getEstado() + ", " + DateUtils.format(DateUtils.DD_DE_MMMM_DE_YYYY, new Date())).setFont(font2).setPaddingTop(10).setFontSize(10);
+        cell = new Cell();
+        cell.add(paragraphGlobal);
+        cell.setBorder(Border.NO_BORDER);
+        decimaPrimeiraTable.addCell(cell);
+        document.add(decimaPrimeiraTable);
 
-        PdfPTable decimaQuintaTable = new PdfPTable(1);
-        decimaQuintaTable.getDefaultCell().setBorder(0);
-        String textoLocal = "";
+        Table decimaTerceira = new Table(1);
 
-        if (Utils.isNotEmpty(orgao)) {
-            if (Utils.isNotEmpty(orgao.getEndereco())) {
-                if (Utils.isNotEmpty(orgao.getEndereco().getCidade())) {
-                    textoLocal += orgao.getEndereco().getCidade();
-                }
-                if (Utils.isNotEmpty(orgao.getEndereco().getEstado())) {
-                    textoLocal += " - " + orgao.getEndereco().getEstado();
-                }
-                textoLocal += "., de " + DateUtils.format(DateUtils.DD_MM_YYYY, new Date());
-            }
-        }
-        paragraphGlobal = new Paragraph(textoLocal + "\n\n", fonteRegularNegrito);
-        decimaQuintaTable.addCell(paragraphGlobal);
-        document.add(decimaQuintaTable);
+        decimaTerceira.setPadding(3);
+        decimaTerceira.setWidth(550);
+        paragraphGlobal = new Paragraph("FISCAL DE CONTRATOS").setFont(font).setFontSize(9).setTextAlignment(TextAlignment.CENTER);
+        cell = new Cell();
+        cell.add(paragraphGlobal).setPaddingTop(40);
+        cell.setBorder(Border.NO_BORDER);
+        decimaTerceira.addCell(cell);
+        paragraphGlobal = new Paragraph(orgao.getNome()).setFont(font).setFontSize(9).setTextAlignment(TextAlignment.CENTER);
+        cell = new Cell();
+        cell.add(paragraphGlobal);
+        cell.setBorder(Border.NO_BORDER);
+        decimaTerceira.addCell(cell);
+        paragraphGlobal = new Paragraph(contrato.getFiscal().getNome()).setFont(font).setFontSize(9).setTextAlignment(TextAlignment.CENTER);
+        cell = new Cell();
+        cell.add(paragraphGlobal);
+        cell.setBorder(Border.NO_BORDER);
+        decimaTerceira.addCell(cell);
 
-        PdfPTable ultimaTable = new PdfPTable(1);
-        ultimaTable.getDefaultCell().setBorder(0);
-        ultimaTable.getDefaultCell().setPadding(0);
-        ultimaTable.getDefaultCell().setVerticalAlignment(Element.ALIGN_CENTER);
-        ultimaTable.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
-
-        paragraphGlobal = new Paragraph(user.getNome() + "\n", fonteRegularNegrito);
-        ultimaTable.addCell(paragraphGlobal);
-        paragraphGlobal = new Paragraph("Gestor do contrato " + contrato.getNumeroProcesso() + "\n", fonteRegularNegrito);
-        ultimaTable.addCell(paragraphGlobal);
-        if (Utils.isNotEmpty(nota.getInicioFiscalizado()) && Utils.isNotEmpty(nota.getFinalFiscalizado())) {
-            paragraphGlobal = new Paragraph("Período de Gestão de " + DateUtils.format(DateUtils.DD_MM_YYYY, nota.getInicioFiscalizado()) + " à " + DateUtils.format(DateUtils.DD_MM_YYYY, nota.getFinalFiscalizado()) + "\n", fonteRegularNegrito
-            );
-        } else {
-            paragraphGlobal = new Paragraph("Período de Gestão de " + "__/__/____ à __/__/____" + "\n", fonteRegularNegrito
-            );
-        }
-
-        ultimaTable.addCell(paragraphGlobal);
-        document.add(ultimaTable);
+        document.add(decimaTerceira);
 
         return document;
     }

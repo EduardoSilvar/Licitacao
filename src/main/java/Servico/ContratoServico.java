@@ -6,7 +6,7 @@
 package Servico;
 
 import Enum.StatusContrato;
-import Gerenciador.RelatorioConfig;
+import Gerenciador.relatorioConfig;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.pdf.PdfPTable;
@@ -121,7 +121,7 @@ public class ContratoServico extends ServicoGenerico<Contrato> implements Serial
 //        document.open();
 
         try {
-            RelatorioConfig pdf = new RelatorioConfig(modelo.getTexto());
+            relatorioConfig pdf = new relatorioConfig(modelo.getTexto());
             pdf.convert(new File("/opt/Licitacao/uploads/LICITACAO.PDF"));
         } catch (TransformerException ex) {
             Logger.getLogger(null).log(Level.SEVERE, null, ex);

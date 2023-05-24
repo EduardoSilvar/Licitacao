@@ -9,12 +9,9 @@ import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 
@@ -40,32 +37,18 @@ public class ModeloDocumento implements Serializable {
     @Column(name = "texto", columnDefinition = "text")
     private String texto;
     @OneToOne
-    private UnidadeOrganizacional orgao;
-    @OneToOne
-    private Relatorio cabecalho;
+    private CabecalhoRodape cabecalho;
 
     @OneToOne(cascade = CascadeType.ALL)
     private Anexo papelTimbrado;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    private Anexo logo;
+
     @OneToOne
-    private Relatorio rodape;
+    private CabecalhoRodape rodape;
 
     public ModeloDocumento() {
-    }
-
-    public ModeloDocumento(Long id, String nome, int margemCima, boolean possuiTimbrado, int margemDireita, int margemBaixo, boolean poosuiCabecalhoRodape, int margemEsquerda, String texto, UnidadeOrganizacional orgao, Relatorio cabecalho, Anexo papelTimbrado, Relatorio rodape) {
-        this.id = id;
-        this.nome = nome;
-        this.margemCima = margemCima;
-        this.possuiTimbrado = possuiTimbrado;
-        this.margemDireita = margemDireita;
-        this.margemBaixo = margemBaixo;
-        this.poosuiCabecalhoRodape = poosuiCabecalhoRodape;
-        this.margemEsquerda = margemEsquerda;
-        this.texto = texto;
-        this.orgao = orgao;
-        this.cabecalho = cabecalho;
-        this.papelTimbrado = papelTimbrado;
-        this.rodape = rodape;
     }
 
     public Long getId() {
@@ -140,19 +123,11 @@ public class ModeloDocumento implements Serializable {
         this.texto = texto;
     }
 
-    public UnidadeOrganizacional getOrgao() {
-        return orgao;
-    }
-
-    public void setOrgao(UnidadeOrganizacional orgao) {
-        this.orgao = orgao;
-    }
-
-    public Relatorio getCabecalho() {
+    public CabecalhoRodape getCabecalho() {
         return cabecalho;
     }
 
-    public void setCabecalho(Relatorio cabecalho) {
+    public void setCabecalho(CabecalhoRodape cabecalho) {
         this.cabecalho = cabecalho;
     }
 
@@ -164,30 +139,54 @@ public class ModeloDocumento implements Serializable {
         this.papelTimbrado = papelTimbrado;
     }
 
-    public Relatorio getRodape() {
+    public Anexo getLogo() {
+        return logo;
+    }
+
+    public void setLogo(Anexo logo) {
+        this.logo = logo;
+    }
+
+    public CabecalhoRodape getRodape() {
         return rodape;
     }
 
-    public void setRodape(Relatorio rodape) {
+    public void setRodape(CabecalhoRodape rodape) {
+        this.rodape = rodape;
+    }
+
+    public ModeloDocumento(Long id, String nome, int margemCima, boolean possuiTimbrado, int margemDireita, int margemBaixo, boolean poosuiCabecalhoRodape, int margemEsquerda, String texto, CabecalhoRodape cabecalho, Anexo papelTimbrado, Anexo logo, CabecalhoRodape rodape) {
+        this.id = id;
+        this.nome = nome;
+        this.margemCima = margemCima;
+        this.possuiTimbrado = possuiTimbrado;
+        this.margemDireita = margemDireita;
+        this.margemBaixo = margemBaixo;
+        this.poosuiCabecalhoRodape = poosuiCabecalhoRodape;
+        this.margemEsquerda = margemEsquerda;
+        this.texto = texto;
+        this.cabecalho = cabecalho;
+        this.papelTimbrado = papelTimbrado;
+        this.logo = logo;
         this.rodape = rodape;
     }
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 29 * hash + Objects.hashCode(this.id);
-        hash = 29 * hash + Objects.hashCode(this.nome);
-        hash = 29 * hash + this.margemCima;
-        hash = 29 * hash + (this.possuiTimbrado ? 1 : 0);
-        hash = 29 * hash + this.margemDireita;
-        hash = 29 * hash + this.margemBaixo;
-        hash = 29 * hash + (this.poosuiCabecalhoRodape ? 1 : 0);
-        hash = 29 * hash + this.margemEsquerda;
-        hash = 29 * hash + Objects.hashCode(this.texto);
-        hash = 29 * hash + Objects.hashCode(this.orgao);
-        hash = 29 * hash + Objects.hashCode(this.cabecalho);
-        hash = 29 * hash + Objects.hashCode(this.papelTimbrado);
-        hash = 29 * hash + Objects.hashCode(this.rodape);
+        int hash = 3;
+        hash = 59 * hash + Objects.hashCode(this.id);
+        hash = 59 * hash + Objects.hashCode(this.nome);
+        hash = 59 * hash + this.margemCima;
+        hash = 59 * hash + (this.possuiTimbrado ? 1 : 0);
+        hash = 59 * hash + this.margemDireita;
+        hash = 59 * hash + this.margemBaixo;
+        hash = 59 * hash + (this.poosuiCabecalhoRodape ? 1 : 0);
+        hash = 59 * hash + this.margemEsquerda;
+        hash = 59 * hash + Objects.hashCode(this.texto);
+        hash = 59 * hash + Objects.hashCode(this.cabecalho);
+        hash = 59 * hash + Objects.hashCode(this.papelTimbrado);
+        hash = 59 * hash + Objects.hashCode(this.logo);
+        hash = 59 * hash + Objects.hashCode(this.rodape);
         return hash;
     }
 
@@ -230,13 +229,13 @@ public class ModeloDocumento implements Serializable {
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }
-        if (!Objects.equals(this.orgao, other.orgao)) {
-            return false;
-        }
         if (!Objects.equals(this.cabecalho, other.cabecalho)) {
             return false;
         }
         if (!Objects.equals(this.papelTimbrado, other.papelTimbrado)) {
+            return false;
+        }
+        if (!Objects.equals(this.logo, other.logo)) {
             return false;
         }
         return Objects.equals(this.rodape, other.rodape);
@@ -244,7 +243,7 @@ public class ModeloDocumento implements Serializable {
 
     @Override
     public String toString() {
-        return "ModeloDocumento{" + "id=" + id + ", nome=" + nome + ", margemCima=" + margemCima + ", possuiTimbrado=" + possuiTimbrado + ", margemDireita=" + margemDireita + ", margemBaixo=" + margemBaixo + ", poosuiCabecalhoRodape=" + poosuiCabecalhoRodape + ", margemEsquerda=" + margemEsquerda + ", texto=" + texto + ", orgao=" + orgao + ", cabecalho=" + cabecalho + ", papelTimbrado=" + papelTimbrado + ", rodape=" + rodape + '}';
+        return "ModeloDocumento{" + "id=" + id + ", nome=" + nome + ", margemCima=" + margemCima + ", possuiTimbrado=" + possuiTimbrado + ", margemDireita=" + margemDireita + ", margemBaixo=" + margemBaixo + ", poosuiCabecalhoRodape=" + poosuiCabecalhoRodape + ", margemEsquerda=" + margemEsquerda + ", texto=" + texto + ", cabecalho=" + cabecalho + ", papelTimbrado=" + papelTimbrado + ", logo=" + logo + ", rodape=" + rodape + '}';
     }
 
 }

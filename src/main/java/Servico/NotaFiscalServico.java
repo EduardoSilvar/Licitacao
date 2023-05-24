@@ -4,7 +4,7 @@
  */
 package Servico;
 
-import Gerenciador.RelatorioConfig;
+import Gerenciador.relatorioConfig;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.PageSize;
@@ -107,7 +107,7 @@ public class NotaFiscalServico extends ServicoGenerico<NotaFiscal> implements Se
         document.open();
 
         try {
-            RelatorioConfig pdf = new RelatorioConfig(modelo.getTexto());
+            relatorioConfig pdf = new relatorioConfig(modelo.getTexto());
             pdf.converts(ouputStream, document, contratado, contrato, nota, orgao, acrescimos, apostilamento, user, notasFiscais);
         } catch (TransformerException ex) {
             Logger.getLogger(null).log(Level.SEVERE, null, ex);
@@ -143,7 +143,7 @@ public class NotaFiscalServico extends ServicoGenerico<NotaFiscal> implements Se
         document.open();
 
         try {
-            RelatorioConfig pdf = new RelatorioConfig(modelo.getTexto());
+            relatorioConfig pdf = new relatorioConfig(modelo.getTexto());
             pdf.converts(ouputStream, document, contratado, contrato, nota, orgao);
         } catch (TransformerException ex) {
             Logger.getLogger(null).log(Level.SEVERE, null, ex);

@@ -30,7 +30,7 @@ import util.Utils;
  */
 @ManagedBean
 @ViewScoped
-public class ManagerRecebimentos implements Serializable{
+public class managerRecebimentos implements Serializable{
     @EJB
     private ContratoServico contratoServico;
     @EJB

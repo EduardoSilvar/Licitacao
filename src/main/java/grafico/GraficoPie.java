@@ -195,7 +195,10 @@ public class GraficoPie implements Serializable {
     }
 
     public List<ContratoVo> TiposContrato() {
-        return contratoServico.buscarTipoContrato(user);
+        if (Utils.isNotEmpty(user)) {
+            return contratoServico.buscarTipoContrato(user);
+        }
+        return new ArrayList<>();
     }
 
     public List<Setor> autocompletaSetor(String nome) {
@@ -214,15 +217,17 @@ public class GraficoPie implements Serializable {
 
     public List<ContratoVo> buscarValorContrato() {
         List<ContratoVo> contratoValor = new ArrayList<>();
-        List<Contrato> contratos = contratoServico.buscarValorContrato(this.setor, user);
-        BigDecimal valor = new BigDecimal(0);
-        for (ContratoVo cv : contratoVos) {
-            for (Contrato c : contratos) {
-                if (c.getStatus().getStatus().equals(cv.getNome())) {
-                    valor = valor.add(c.getValor());
+        if (Utils.isNotEmpty(user)) {
+            List<Contrato> contratos = contratoServico.buscarValorContrato(this.setor, user);
+            BigDecimal valor = new BigDecimal(0);
+            for (ContratoVo cv : contratoVos) {
+                for (Contrato c : contratos) {
+                    if (c.getStatus().getStatus().equals(cv.getNome())) {
+                        valor = valor.add(c.getValor());
+                    }
                 }
+                contratoValor.add(new ContratoVo(cv.getNome(), valor));
             }
-            contratoValor.add(new ContratoVo(cv.getNome(), valor));
         }
         return contratoValor;
     }
@@ -236,11 +241,14 @@ public class GraficoPie implements Serializable {
         data.addChartDataSet(dataSet);
         List<String> labels = new ArrayList<>();
         List<String> bgColors = new ArrayList<>();
-
-        for (ContratoVo contra : contratoServico.buscarContratos(user)) {
-            values.add(contra.getQuantidade());
-            labels.add(contra.getNome());
-            bgColors.add(cores(contra.getNome()));
+        if (Utils.isNotEmpty(user)) {
+            if (Utils.isNotEmpty(contratoServico.buscarContratos(user))) {
+                for (ContratoVo contra : contratoServico.buscarContratos(user)) {
+                    values.add(contra.getQuantidade());
+                    labels.add(contra.getNome());
+                    bgColors.add(cores(contra.getNome()));
+                }
+            }
         }
         dataSet.setData(values);
         PieChartOptions options = new PieChartOptions();

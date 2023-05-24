@@ -16,6 +16,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 import modelo.Usuario;
+import util.Utils;
 
 /**
  *
@@ -53,7 +54,10 @@ public class managerLogin implements Serializable {
     }
 
     public int totalChats() {
-        return chatServico.totalChatNaoLido(usuarioLogado);
+        if (Utils.isNotEmpty(usuarioLogado)) {
+            return chatServico.totalChatNaoLido(usuarioLogado);
+        }
+        return 0;
     }
 
     public void iniciarPagina() {

@@ -49,6 +49,28 @@ public class Configuracao implements Serializable {
     @Enumerated(EnumType.STRING)
     private GraficoEnum terceiroGrafico;
     private boolean ativo = true;
+    @OneToOne
+    private CabecalhoRodape cabecalhoNotaFiscal;
+    @OneToOne
+    private CabecalhoRodape rodapeNotaFiscal;
+
+    public Configuracao(Long id, UnidadeOrganizacional unidadeOrganizacional, Long diasPraExpirar, StatusContrato primeiroStatus, StatusContrato SegundoStatus, StatusContrato terceiroStatus, List<PedidoRenovacao> pedidosRenovacao, GraficoEnum primeiroGrafico, GraficoEnum segundoGrafico, GraficoEnum terceiroGrafico, CabecalhoRodape cabecalhoNotaFiscal, CabecalhoRodape rodapeNotaFiscal) {
+        this.id = id;
+        this.unidadeOrganizacional = unidadeOrganizacional;
+        this.diasPraExpirar = diasPraExpirar;
+        this.primeiroStatus = primeiroStatus;
+        this.SegundoStatus = SegundoStatus;
+        this.terceiroStatus = terceiroStatus;
+        this.pedidosRenovacao = pedidosRenovacao;
+        this.primeiroGrafico = primeiroGrafico;
+        this.segundoGrafico = segundoGrafico;
+        this.terceiroGrafico = terceiroGrafico;
+        this.cabecalhoNotaFiscal = cabecalhoNotaFiscal;
+        this.rodapeNotaFiscal = rodapeNotaFiscal;
+    }
+
+    public Configuracao() {
+    }
 
     public Long getId() {
         return id;
@@ -56,6 +78,22 @@ public class Configuracao implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public CabecalhoRodape getCabecalhoNotaFiscal() {
+        return cabecalhoNotaFiscal;
+    }
+
+    public void setCabecalhoNotaFiscal(CabecalhoRodape cabecalhoNotaFiscal) {
+        this.cabecalhoNotaFiscal = cabecalhoNotaFiscal;
+    }
+
+    public CabecalhoRodape getRodapeNotaFiscal() {
+        return rodapeNotaFiscal;
+    }
+
+    public void setRodapeNotaFiscal(CabecalhoRodape rodapeNotaFiscal) {
+        this.rodapeNotaFiscal = rodapeNotaFiscal;
     }
 
     public Long getDiasPraExpirar() {
@@ -140,18 +178,20 @@ public class Configuracao implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 37 * hash + Objects.hashCode(this.id);
-        hash = 37 * hash + Objects.hashCode(this.unidadeOrganizacional);
-        hash = 37 * hash + Objects.hashCode(this.diasPraExpirar);
-        hash = 37 * hash + Objects.hashCode(this.primeiroStatus);
-        hash = 37 * hash + Objects.hashCode(this.SegundoStatus);
-        hash = 37 * hash + Objects.hashCode(this.terceiroStatus);
-        hash = 37 * hash + Objects.hashCode(this.pedidosRenovacao);
-        hash = 37 * hash + Objects.hashCode(this.primeiroGrafico);
-        hash = 37 * hash + Objects.hashCode(this.segundoGrafico);
-        hash = 37 * hash + Objects.hashCode(this.terceiroGrafico);
-        hash = 37 * hash + (this.ativo ? 1 : 0);
+        int hash = 5;
+        hash = 97 * hash + Objects.hashCode(this.id);
+        hash = 97 * hash + Objects.hashCode(this.unidadeOrganizacional);
+        hash = 97 * hash + Objects.hashCode(this.diasPraExpirar);
+        hash = 97 * hash + Objects.hashCode(this.primeiroStatus);
+        hash = 97 * hash + Objects.hashCode(this.SegundoStatus);
+        hash = 97 * hash + Objects.hashCode(this.terceiroStatus);
+        hash = 97 * hash + Objects.hashCode(this.pedidosRenovacao);
+        hash = 97 * hash + Objects.hashCode(this.primeiroGrafico);
+        hash = 97 * hash + Objects.hashCode(this.segundoGrafico);
+        hash = 97 * hash + Objects.hashCode(this.terceiroGrafico);
+        hash = 97 * hash + (this.ativo ? 1 : 0);
+        hash = 97 * hash + Objects.hashCode(this.cabecalhoNotaFiscal);
+        hash = 97 * hash + Objects.hashCode(this.rodapeNotaFiscal);
         return hash;
     }
 
@@ -200,7 +240,10 @@ public class Configuracao implements Serializable {
         if (this.terceiroGrafico != other.terceiroGrafico) {
             return false;
         }
-        return true;
+        if (!Objects.equals(this.cabecalhoNotaFiscal, other.cabecalhoNotaFiscal)) {
+            return false;
+        }
+        return Objects.equals(this.rodapeNotaFiscal, other.rodapeNotaFiscal);
     }
 
 }

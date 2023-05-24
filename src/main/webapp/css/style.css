@@ -11,6 +11,12 @@ body .ui-datatable thead th{
     padding: 5px !important;
     background: #f5fafa !important;
 }
+body .ui-button.ui-button-text-only .ui-button-text {
+    color: #fff !important;
+}
+body .ui-button.ui-button-text-only .ui-button-text {
+    color: #fff !important;
+}
 .ui-button{
     background-color: #01415B !important;
     color: #fff;

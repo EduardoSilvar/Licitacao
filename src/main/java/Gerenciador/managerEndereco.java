@@ -19,7 +19,7 @@ import modelo.Endereco;
  */
 @ManagedBean
 @ViewScoped
-public class EnderecoManager implements Serializable {
+public class managerEndereco implements Serializable {
 
     @EJB
     private EnderecoServico enderecoServico;

@@ -4,9 +4,17 @@
  */
 package Gerenciador;
 
+import Macro.ArquivoEstilizacaoPDF;
+import Macro.HeaderFooterPageEvent;
 import Macro.MacroNotaFiscal;
 import static Macro.MacroNotaFiscal.MacroNotaFiscal;
 import Macro.MacroNotaFiscalGestor;
+import com.itextpdf.html2pdf.HtmlConverter;
+import com.itextpdf.kernel.events.PdfDocumentEvent;
+import com.itextpdf.kernel.geom.PageSize;
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.layout.element.IBlockElement;
+import com.itextpdf.layout.element.IElement;
 import com.itextpdf.text.BadElementException;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -45,18 +53,22 @@ import javax.faces.context.FacesContext;
 import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import modelo.Acrescimo;
+import modelo.CabecalhoRodape;
 import modelo.Contratado;
 import modelo.Contrato;
+import modelo.ModeloDocumento;
 import modelo.NotaFiscal;
 import modelo.Repactuacao;
 import modelo.UnidadeOrganizacional;
 import modelo.Usuario;
+import util.Msg;
+import util.Utils;
 
 /**
  *
  * @author eduardo
  */
-public class RelatorioConfig {
+public class relatorioConfig {
 
     public static final String CSS = "resources/modelo-documento.css";
 
@@ -64,14 +76,14 @@ public class RelatorioConfig {
     private ImageProvider imProvider;
     private CSSResolver cssResolver;
 
-    public RelatorioConfig(InputStream is) throws TransformerConfigurationException, TransformerException {
+    public relatorioConfig(InputStream is) throws TransformerConfigurationException, TransformerException {
         this.is = is;
         //cssResolver = XMLWorkerHelper.getInstance().getDefaultCssResolver(true);
         this.cssResolver = getCssResolver();
         this.imProvider = new Base64ImageProvider();
     }
 
-    public RelatorioConfig(String html) throws TransformerException {
+    public relatorioConfig(String html) throws TransformerException {
         this(new ByteArrayInputStream(html.getBytes()));
 
     }
@@ -82,6 +94,145 @@ public class RelatorioConfig {
 
     public void addCss(String css) throws CssResolverException {
         cssResolver.addCss(css, Boolean.TRUE);
+    }
+
+    public void convertNotaFiscal(OutputStream file, String texto, ModeloDocumento modelo) throws DocumentException, IOException {
+
+//           String textoPDf = "";
+//        if (Utils.isNotEmpty(modelo)) {
+//            if (Utils.isNotEmpty(modelo.getTexto())) {
+//                textoPDf = ArquivoEstilizacaoPDF.corpoPDF(modelo.getTexto());
+//            } else {
+//                Msg.messagemError("O modelo de documento não tem corpo !");
+//            }
+//        } else {
+//            Msg.messagemError("Não tem modelo de documento !");
+//        }
+        String textoPDF = "";
+        if (Utils.isNotEmpty(texto)) {
+            textoPDF = ArquivoEstilizacaoPDF.corpoPDF(texto);
+
+        } else {
+            Msg.messagemError("O modelo de documento não tem corpo !");
+        }
+        com.itextpdf.kernel.pdf.PdfWriter writer = new com.itextpdf.kernel.pdf.PdfWriter(file);
+        PdfDocument pdfDoc = new PdfDocument(writer);
+        pdfDoc.setDefaultPageSize(PageSize.A4);
+        HeaderFooterPageEvent handler = new HeaderFooterPageEvent();
+//        handler = aplicarCabecahoRodape(modelo);
+
+        // Adicione o Evento de Cabeçalho e Rodapé ao PdfDocument
+        pdfDoc.addEventHandler(PdfDocumentEvent.START_PAGE, handler);
+
+        com.itextpdf.layout.Document doc = new com.itextpdf.layout.Document(pdfDoc);
+//        doc = aplicarMargensDocumento(doc, modelo);
+
+        List<IElement> elements = HtmlConverter.convertToElements(textoPDF);
+
+        // Adiciona os elementos ao Document
+        for (IElement element : elements) {
+            doc.add((IBlockElement) element);
+
+        }
+
+        doc.close();
+
+    }
+
+    public HeaderFooterPageEvent aplicarCabecahoRodape(CabecalhoRodape cabecalho, CabecalhoRodape rodape) {
+        HeaderFooterPageEvent handler = new HeaderFooterPageEvent();
+        handler.setMargemTopoCabecalho(30);
+        handler.setMargemBaixoRodape(10);
+
+        if (Utils.isNotEmpty(cabecalho)) {
+            if (Utils.isNotEmpty(cabecalho.getMargemEsquerda())) {
+                handler.setMargemEsquerdaCabecalho(cabecalho.getMargemEsquerda());
+            }
+            if (Utils.isNotEmpty(cabecalho.getMargemDireita())) {
+                handler.setMargemDireitaCabecalho(cabecalho.getMargemDireita());
+            }
+            if (Utils.isNotEmpty(cabecalho.getMargemTopo())) {
+                handler.setMargemTopoCabecalho(cabecalho.getMargemTopo());
+            }
+            if (Utils.isNotEmpty(cabecalho.getMargemBaixo())) {
+                handler.setMargemBaixoCabecalho(cabecalho.getMargemBaixo());
+            }
+            if (Utils.isNotEmpty(cabecalho.getTexto())) {
+                handler.setTextoCabecalho(cabecalho.getTexto());
+            }
+            if (Utils.isNotEmpty(cabecalho.isImagemEsquerda())) {
+                handler.setImagemCabecalhoEsquerda(cabecalho.isImagemEsquerda());
+            }
+            if (Utils.isNotEmpty(cabecalho.getImagem())) {
+                if (Utils.isNotEmpty(cabecalho.getImagem().getCaminho())) {
+                    handler.setUrlImagemCabecalho(cabecalho.getImagem().getCaminho().toString() + cabecalho.getImagem().getNome());
+                }
+            }
+            if (Utils.isNotEmpty(cabecalho.getFonSize())) {
+                handler.setFonSizeCabecalho(cabecalho.getFonSize());
+            }
+            if (Utils.isNotEmpty(cabecalho.getAlturaImagem())) {
+                handler.setAlturaImagemCabecalho(cabecalho.getAlturaImagem());
+            }
+            if (Utils.isNotEmpty(cabecalho.getMargemDireitaImagem())) {
+                handler.setMargemDireitaImagemCabecalho(cabecalho.getMargemDireitaImagem());
+            }
+            if (Utils.isNotEmpty(cabecalho.getMargemEsquerdaImagem())) {
+                handler.setMargemEsquerdaCabecalho(cabecalho.getMargemEsquerdaImagem());
+            }
+            if (Utils.isNotEmpty(cabecalho.getMargemEsquerdaTexto())) {
+                handler.setMargemEsquerdaTextoCabecalho(cabecalho.getMargemEsquerdaTexto());
+            }
+            if (Utils.isNotEmpty(cabecalho.getMargemDireitaTexto())) {
+                handler.setMargemDireitaTextoCabecalho(cabecalho.getMargemDireitaTexto());
+            }
+        }
+        if (Utils.isNotEmpty(rodape)) {
+            if (Utils.isNotEmpty(rodape.getMargemEsquerda())) {
+                handler.setMargemEsquerdaRodape(rodape.getMargemEsquerda());
+            }
+            if (Utils.isNotEmpty(rodape.getMargemDireita())) {
+                handler.setMargemDireitarodape(rodape.getMargemDireita());
+            }
+            if (Utils.isNotEmpty(rodape.getMargemTopo())) {
+                handler.setMargemTopoRodape(rodape.getMargemTopo());
+            }
+            if (Utils.isNotEmpty(rodape.getMargemBaixo())) {
+                handler.setMargemBaixoRodape(rodape.getMargemBaixo());
+            }
+            if (Utils.isNotEmpty(rodape.getTexto())) {
+                handler.setTextoRodapé(rodape.getTexto());
+            }
+            if (Utils.isNotEmpty(rodape.isImagemEsquerda())) {
+                handler.setImagemRodapeEsquerda(rodape.isImagemEsquerda());
+            }
+            if (Utils.isNotEmpty(rodape.getImagem())) {
+                if (Utils.isNotEmpty(rodape.getImagem().getCaminho())) {
+                    handler.setUrlImagemRodape(rodape.getImagem().getCaminho().toString() + rodape.getImagem().getNome());
+                }
+            }
+            if (Utils.isNotEmpty(rodape.getFonSize())) {
+                handler.setFonSizeRodape(rodape.getFonSize());
+            }
+            if (Utils.isNotEmpty(rodape.getAlturaImagem())) {
+                handler.setAlturaImagemRodape(rodape.getAlturaImagem());
+            }
+            if (Utils.isNotEmpty(rodape.getMargemDireitaImagem())) {
+                handler.setMargemDireitaImagemRodape(rodape.getMargemDireitaImagem());
+            }
+            if (Utils.isNotEmpty(rodape.getMargemEsquerdaImagem())) {
+                handler.setMargemEsquerdaRodape(rodape.getMargemEsquerdaImagem());
+            }
+            if (Utils.isNotEmpty(rodape.getMargemEsquerdaTexto())) {
+                handler.setMargemEsquerdaTextoRodape(rodape.getMargemEsquerdaTexto());
+            }
+            if (Utils.isNotEmpty(rodape.getMargemDireitaTexto())) {
+                handler.setMargemDireitaTextoRodape(rodape.getMargemDireitaTexto());
+            }
+
+        }
+
+        return handler;
     }
 
     public void convert(OutputStream file, Document document, List<String> textos) throws DocumentException, IOException {
@@ -172,37 +323,33 @@ public class RelatorioConfig {
     }
 
     public void converts(OutputStream file, Document document, Contratado contratado, Contrato contrato, NotaFiscal nota, UnidadeOrganizacional orgao, List<Acrescimo> acrescimos, List<Repactuacao> apostilamentos, Usuario usuario, List<NotaFiscal> notasFiscais) throws DocumentException, IOException {
-//document = new Document();
-        // step 2
-        PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream("/opt/Licitacao/uploads/2509202211291805571_memorial.pdf"));
-        // step 3
-        document.open();
-        // step 4        
 
-        // HTML
-        HtmlPipelineContext htmlContext = new HtmlPipelineContext(null);
-        htmlContext.setTagFactory(Tags.getHtmlTagProcessorFactory());
-        if (imProvider != null) {
-            htmlContext.setImageProvider(imProvider);
+        com.itextpdf.kernel.pdf.PdfWriter writer = new com.itextpdf.kernel.pdf.PdfWriter(file);
+        PdfDocument pdfDoc = new PdfDocument(writer);
+        pdfDoc.setDefaultPageSize(PageSize.A4);
+        HeaderFooterPageEvent handler = new HeaderFooterPageEvent();
+        if (Utils.isNotEmpty(orgao.getConfiguracao())) {
+            if (Utils.isNotEmpty(orgao.getConfiguracao())) {
+                if (Utils.isNotEmpty(orgao.getConfiguracao().getCabecalhoNotaFiscal()) && Utils.isNotEmpty(orgao.getConfiguracao().getRodapeNotaFiscal())) {
+                    handler = aplicarCabecahoRodape(orgao.getConfiguracao().getCabecalhoNotaFiscal(), orgao.getConfiguracao().getRodapeNotaFiscal());
 
+                }
+            }
         }
 
-        // Pipelines
-        PdfWriterPipeline pdf = new PdfWriterPipeline(document, writer);
-        HtmlPipeline html = new HtmlPipeline(htmlContext, pdf);
-        CssResolverPipeline css = new CssResolverPipeline(cssResolver, html);
+        // Adicione o Evento de Cabeçalho e Rodapé ao PdfDocument
+        pdfDoc.addEventHandler(PdfDocumentEvent.START_PAGE, handler);
 
-        // XML Worker
-        XMLWorker worker = new XMLWorker(css, true);
-        XMLParser p = new XMLParser(worker);
-        p.parse(is);
-        document = MacroNotaFiscalGestor.MacroNotaFiscal(document, contratado, contrato, nota, orgao, acrescimos, apostilamentos, usuario, notasFiscais);
+        com.itextpdf.layout.Document doc = new com.itextpdf.layout.Document(pdfDoc);
+//        doc = aplicarMargensDocumento(doc, modelo);
 
-        // step 5
-        document.close();
+        doc = MacroNotaFiscalGestor.MacroNotaFiscal(doc, contratado, contrato, nota, orgao, acrescimos, apostilamentos, usuario, notasFiscais);
+
+        doc.close();
+
     }
 
-    public void converts(OutputStream file,Document document, Contratado contratado, Contrato contrato, NotaFiscal nota, UnidadeOrganizacional orgao) throws DocumentException, IOException {
+    public void converts(OutputStream file, Document document, Contratado contratado, Contrato contrato, NotaFiscal nota, UnidadeOrganizacional orgao) throws DocumentException, IOException {
 //document = new Document();
         // step 2
         PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream("/opt/Licitacao/uploads/2509202211291805571_memorial.pdf"));
@@ -277,7 +424,7 @@ public class RelatorioConfig {
             CssFile cssFile = XMLWorkerHelper.getCSS(new FileInputStream(cssFileName));
             cr.addCss(cssFile);
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(RelatorioConfig.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(relatorioConfig.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return cr;

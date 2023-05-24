@@ -1,0 +1,63 @@
+<ui:composition template="/WEB-INF/template/layout.xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns="http://www.w3.org/1999/xhtml">
+    <ui:define name="acoes">
+        <h:panelGroup class="panelAcoes">
+
+           
+        </h:panelGroup>
+    </ui:define>
+    <ui:define name="barra">
+        <div class="row" id="stylebarra">
+            <i class="pi pi-file-o" id="icon"></i> <h5 style="color: #e1e6e5"> Dados Gerais</h5>
+        </div>
+    </ui:define>
+    <ui:define name="titulo">
+        <h4>Cadastro de Nota fiscal</h4>
+    </ui:define>
+
+    <ui:define name="corpo">
+        <p:growl id="messages" showDetail="true" />
+        <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <p:outputLabel value="Cabecalho" styleClass="control-label" for="cabecalhoAutoComplete" />
+                <p:autoComplete id="cabecalhoAutoComplete" dropdown="true" converter="cabecalhorodapeconverter"
+                                var="cabecalho" itemLabel="#{cabecalho.nome}"
+                                itemValue="#{cabecalho}" value="#{managerConfiguracaoNotaFiscal.cabecalho}"
+                                scrollHeight="200" forceSelection="true"
+                                inputStyleClass="form-control"
+                                style="display: flex;"
+                                emptyMessage="Usuario não encontrado" 
+                                completeMethod="#{managerConfiguracaoNotaFiscal.autocompletaCabecalho}"
+                                >
+                </p:autoComplete>
+            </div> 
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <p:outputLabel value="Rodape" styleClass="control-label" for="rodapeAutoComplete" />
+                <p:autoComplete id="rodapeAutoComplete" dropdown="true" converter="cabecalhorodapeconverter"
+                                var="rodape" itemLabel="#{rodape.nome}"
+                                itemValue="#{rodape}" value="#{managerConfiguracaoNotaFiscal.rodape}"
+                                scrollHeight="200" forceSelection="true"
+                                inputStyleClass="form-control"
+                                style="display: flex;"
+                                emptyMessage="Usuario não encontrado" 
+                                completeMethod="#{managerConfiguracaoNotaFiscal.autocompletaRodape}"
+                                >
+                </p:autoComplete>
+            </div> 
+        </div>
+            </div>
+        <center>
+            <p:commandButton value="Salvar" icon="pi pi-save" process="@this @form" actionListener="#{managerConfiguracaoNotaFiscal.salvarConfiguracao()}" update=" corpoInteiro:messages" style="margin: 0px 20px; background-color: #01415B; color: #fff; margin-bottom: 10px;"/>
+            <p:button value="Cancelar" href="notaFiscal.xhtml" icon="pi pi-ban"  style="background-color: #01415B; color: #fff;margin-bottom: 10px"/>
+
+        </center>
+    </ui:define>
+</ui:composition>

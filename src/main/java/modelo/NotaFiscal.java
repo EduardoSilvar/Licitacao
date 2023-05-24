@@ -80,10 +80,22 @@ public class NotaFiscal implements Serializable {
     private boolean diligenciaNecessariasSeAplica;
     private String garantiaContratual;
 
+    @Enumerated(EnumType.STRING)
+    private StatusCumprimento notificacaoExtrajudicial;
+
+    @Enumerated(EnumType.STRING)
+    private StatusCumprimento procedimentoPenalizacao;
+
+    @Enumerated(EnumType.STRING)
+    private StatusCumprimento suspensaoParalizacao;
+
+    @Enumerated(EnumType.STRING)
+    private StatusCumprimento necessidadeRescisao;
+
     public NotaFiscal() {
     }
 
-    public NotaFiscal(Long id, Long numero, String descricao, Contratado contratado, BigDecimal valor, Date dataPagamento, Usuario responsavel, Contrato contrato, List<Anexo> anexos, TipoRecebimentoEnum tipoRecebimento, UnidadeOrganizacional unidadeOrganizacional, String lotacao, String atoDesignacao, Date apartir, Date dataExtrato, Date periodoFiscalizado, Date inicioFiscalizado, Date finalFiscalizado, StatusCumprimento obrigacaoMensal, boolean obrigacaoMensalSeAplica, StatusCumprimento prazoEstabelecido, boolean prazoEstabelecidoSeAplica, StatusCumprimento documentoObrigatorio, boolean documentoObrigatorioSeAplica, StatusCumprimento relatorio, boolean relatorioSeAplica, StatusCumprimento qualidadeEsperada, boolean qualidadeEsperadaSeAplica, StatusCumprimento informouSituacao, boolean informouSituacaoSeAplica, StatusCumprimento diligenciaNecessarias, boolean diligenciaNecessariasSeAplica, String garantiaContratual) {
+    public NotaFiscal(Long id, Long numero, String descricao, Contratado contratado, BigDecimal valor, Date dataPagamento, Usuario responsavel, Contrato contrato, List<Anexo> anexos, TipoRecebimentoEnum tipoRecebimento, UnidadeOrganizacional unidadeOrganizacional, String lotacao, String atoDesignacao, Date apartir, Date dataExtrato, Date periodoFiscalizado, Date inicioFiscalizado, Date finalFiscalizado, StatusCumprimento obrigacaoMensal, boolean obrigacaoMensalSeAplica, StatusCumprimento prazoEstabelecido, boolean prazoEstabelecidoSeAplica, StatusCumprimento documentoObrigatorio, boolean documentoObrigatorioSeAplica, StatusCumprimento relatorio, boolean relatorioSeAplica, StatusCumprimento qualidadeEsperada, boolean qualidadeEsperadaSeAplica, StatusCumprimento informouSituacao, boolean informouSituacaoSeAplica, StatusCumprimento diligenciaNecessarias, boolean diligenciaNecessariasSeAplica, String garantiaContratual, StatusCumprimento notificacaoExtrajudicial, StatusCumprimento procedimentoPenalizacao, StatusCumprimento suspensaoParalizacao, StatusCumprimento necessidadeRescisao) {
         this.id = id;
         this.numero = numero;
         this.descricao = descricao;
@@ -117,6 +129,10 @@ public class NotaFiscal implements Serializable {
         this.diligenciaNecessarias = diligenciaNecessarias;
         this.diligenciaNecessariasSeAplica = diligenciaNecessariasSeAplica;
         this.garantiaContratual = garantiaContratual;
+        this.notificacaoExtrajudicial = notificacaoExtrajudicial;
+        this.procedimentoPenalizacao = procedimentoPenalizacao;
+        this.suspensaoParalizacao = suspensaoParalizacao;
+        this.necessidadeRescisao = necessidadeRescisao;
     }
 
     public Long getId() {
@@ -391,43 +407,79 @@ public class NotaFiscal implements Serializable {
         this.garantiaContratual = garantiaContratual;
     }
 
+    public StatusCumprimento getNotificacaoExtrajudicial() {
+        return notificacaoExtrajudicial;
+    }
+
+    public void setNotificacaoExtrajudicial(StatusCumprimento notificacaoExtrajudicial) {
+        this.notificacaoExtrajudicial = notificacaoExtrajudicial;
+    }
+
+    public StatusCumprimento getProcedimentoPenalizacao() {
+        return procedimentoPenalizacao;
+    }
+
+    public void setProcedimentoPenalizacao(StatusCumprimento procedimentoPenalizacao) {
+        this.procedimentoPenalizacao = procedimentoPenalizacao;
+    }
+
+    public StatusCumprimento getSuspensaoParalizacao() {
+        return suspensaoParalizacao;
+    }
+
+    public void setSuspensaoParalizacao(StatusCumprimento suspensaoParalizacao) {
+        this.suspensaoParalizacao = suspensaoParalizacao;
+    }
+
+    public StatusCumprimento getNecessidadeRescisao() {
+        return necessidadeRescisao;
+    }
+
+    public void setNecessidadeRescisao(StatusCumprimento necessidadeRescisao) {
+        this.necessidadeRescisao = necessidadeRescisao;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 37 * hash + Objects.hashCode(this.id);
-        hash = 37 * hash + Objects.hashCode(this.numero);
-        hash = 37 * hash + Objects.hashCode(this.descricao);
-        hash = 37 * hash + Objects.hashCode(this.contratado);
-        hash = 37 * hash + Objects.hashCode(this.valor);
-        hash = 37 * hash + Objects.hashCode(this.dataPagamento);
-        hash = 37 * hash + Objects.hashCode(this.responsavel);
-        hash = 37 * hash + Objects.hashCode(this.contrato);
-        hash = 37 * hash + Objects.hashCode(this.anexos);
-        hash = 37 * hash + Objects.hashCode(this.tipoRecebimento);
-        hash = 37 * hash + Objects.hashCode(this.unidadeOrganizacional);
-        hash = 37 * hash + Objects.hashCode(this.lotacao);
-        hash = 37 * hash + Objects.hashCode(this.atoDesignacao);
-        hash = 37 * hash + Objects.hashCode(this.apartir);
-        hash = 37 * hash + (this.ativo ? 1 : 0);
-        hash = 37 * hash + Objects.hashCode(this.dataExtrato);
-        hash = 37 * hash + Objects.hashCode(this.periodoFiscalizado);
-        hash = 37 * hash + Objects.hashCode(this.inicioFiscalizado);
-        hash = 37 * hash + Objects.hashCode(this.finalFiscalizado);
-        hash = 37 * hash + Objects.hashCode(this.obrigacaoMensal);
-        hash = 37 * hash + (this.obrigacaoMensalSeAplica ? 1 : 0);
-        hash = 37 * hash + Objects.hashCode(this.prazoEstabelecido);
-        hash = 37 * hash + (this.prazoEstabelecidoSeAplica ? 1 : 0);
-        hash = 37 * hash + Objects.hashCode(this.documentoObrigatorio);
-        hash = 37 * hash + (this.documentoObrigatorioSeAplica ? 1 : 0);
-        hash = 37 * hash + Objects.hashCode(this.relatorio);
-        hash = 37 * hash + (this.relatorioSeAplica ? 1 : 0);
-        hash = 37 * hash + Objects.hashCode(this.qualidadeEsperada);
-        hash = 37 * hash + (this.qualidadeEsperadaSeAplica ? 1 : 0);
-        hash = 37 * hash + Objects.hashCode(this.informouSituacao);
-        hash = 37 * hash + (this.informouSituacaoSeAplica ? 1 : 0);
-        hash = 37 * hash + Objects.hashCode(this.diligenciaNecessarias);
-        hash = 37 * hash + (this.diligenciaNecessariasSeAplica ? 1 : 0);
-        hash = 37 * hash + Objects.hashCode(this.garantiaContratual);
+        int hash = 7;
+        hash = 59 * hash + Objects.hashCode(this.id);
+        hash = 59 * hash + Objects.hashCode(this.numero);
+        hash = 59 * hash + Objects.hashCode(this.descricao);
+        hash = 59 * hash + Objects.hashCode(this.contratado);
+        hash = 59 * hash + Objects.hashCode(this.valor);
+        hash = 59 * hash + Objects.hashCode(this.dataPagamento);
+        hash = 59 * hash + Objects.hashCode(this.responsavel);
+        hash = 59 * hash + Objects.hashCode(this.contrato);
+        hash = 59 * hash + Objects.hashCode(this.anexos);
+        hash = 59 * hash + Objects.hashCode(this.tipoRecebimento);
+        hash = 59 * hash + Objects.hashCode(this.unidadeOrganizacional);
+        hash = 59 * hash + Objects.hashCode(this.lotacao);
+        hash = 59 * hash + Objects.hashCode(this.atoDesignacao);
+        hash = 59 * hash + Objects.hashCode(this.apartir);
+        hash = 59 * hash + (this.ativo ? 1 : 0);
+        hash = 59 * hash + Objects.hashCode(this.dataExtrato);
+        hash = 59 * hash + Objects.hashCode(this.periodoFiscalizado);
+        hash = 59 * hash + Objects.hashCode(this.inicioFiscalizado);
+        hash = 59 * hash + Objects.hashCode(this.finalFiscalizado);
+        hash = 59 * hash + Objects.hashCode(this.obrigacaoMensal);
+        hash = 59 * hash + (this.obrigacaoMensalSeAplica ? 1 : 0);
+        hash = 59 * hash + Objects.hashCode(this.prazoEstabelecido);
+        hash = 59 * hash + (this.prazoEstabelecidoSeAplica ? 1 : 0);
+        hash = 59 * hash + Objects.hashCode(this.documentoObrigatorio);
+        hash = 59 * hash + (this.documentoObrigatorioSeAplica ? 1 : 0);
+        hash = 59 * hash + Objects.hashCode(this.relatorio);
+        hash = 59 * hash + (this.relatorioSeAplica ? 1 : 0);
+        hash = 59 * hash + Objects.hashCode(this.qualidadeEsperada);
+        hash = 59 * hash + (this.qualidadeEsperadaSeAplica ? 1 : 0);
+        hash = 59 * hash + Objects.hashCode(this.informouSituacao);
+        hash = 59 * hash + (this.informouSituacaoSeAplica ? 1 : 0);
+        hash = 59 * hash + Objects.hashCode(this.diligenciaNecessarias);
+        hash = 59 * hash + (this.diligenciaNecessariasSeAplica ? 1 : 0);
+        hash = 59 * hash + Objects.hashCode(this.garantiaContratual);
+        hash = 59 * hash + Objects.hashCode(this.notificacaoExtrajudicial);
+        hash = 59 * hash + Objects.hashCode(this.procedimentoPenalizacao);
+        hash = 59 * hash + Objects.hashCode(this.suspensaoParalizacao);
+        hash = 59 * hash + Objects.hashCode(this.necessidadeRescisao);
         return hash;
     }
 
@@ -542,7 +594,19 @@ public class NotaFiscal implements Serializable {
         if (this.informouSituacao != other.informouSituacao) {
             return false;
         }
-        return this.diligenciaNecessarias == other.diligenciaNecessarias;
+        if (this.diligenciaNecessarias != other.diligenciaNecessarias) {
+            return false;
+        }
+        if (this.notificacaoExtrajudicial != other.notificacaoExtrajudicial) {
+            return false;
+        }
+        if (this.procedimentoPenalizacao != other.procedimentoPenalizacao) {
+            return false;
+        }
+        if (this.suspensaoParalizacao != other.suspensaoParalizacao) {
+            return false;
+        }
+        return this.necessidadeRescisao == other.necessidadeRescisao;
     }
 
     @Override

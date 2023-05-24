@@ -1,0 +1,38 @@
+<ui:composition
+    template="/WEB-INF/template/layout.xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns="http://www.w3.org/1999/xhtml">
+    <ui:define name="acoes">
+        <h:panelGroup class="panelAcoes">
+            <p:button value="Pesquisar"
+                      title="Pesquisar Cabeçalho"
+                      icon="pi pi-search"
+                      href="pesquisarCabecalho.xhtml"/>
+
+            <p:splitButton value="Ações"
+                           icon="pi pi-cog"
+                           rendered="#{managerCabecalhoRodape.visualizar}">
+
+                <p:menuitem value="Editar"
+                            icon="pi pi-pencil"
+                            process="@this"
+                            url="cabecalho.xhtml?editar=#{managerCabecalhoRodape.cabecalhoRodape.id}"
+                            rendered="#{managerCabecalhoRodape.visualizar}"/>
+
+            </p:splitButton>
+
+        </h:panelGroup>
+    </ui:define>
+    <ui:define name="barra">
+        <div class="row" id="stylebarra">
+            <i class="pi pi-file-o" id="icon"></i> <h5 style="color: #e1e6e5"> Cabeçalho</h5>
+        </div>
+    </ui:define>
+    <ui:define name="corpo">
+        <p:growl id="messages"/>
+        <ui:include src="cabecalhoForm.xhtml"/>
+    </ui:define>
+</ui:composition>

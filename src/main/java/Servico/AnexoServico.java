@@ -55,6 +55,30 @@ public class AnexoServico implements Serializable {
         return adicionarArquivo(arquivo, nome, REAL_PATH_OPT);
     }
 
+    public void salvar(Anexo anexo) {
+        em.persist(anexo);
+    }
+
+    public void salvar(Anexo anexo, String caminho) throws IOException, FileNotFoundException, SQLException {
+
+        if (anexo != null && anexo.getArquivo() != null) {
+
+            caminho = REAL_PATH_OPT + caminho;
+            anexo.setUrl(caminho);
+
+            if (anexo.getId() == null) {
+                em.persist(anexo);
+            } else {
+                em.merge(anexo);
+                em.flush();
+            }
+
+            adicionarArquivo(anexo.getArquivo(), anexo.getNome(), caminho);
+
+        }
+
+    }
+
     public Anexo adicionarArquivo(UploadedFile arquivo, String nome, String caminho) throws FileNotFoundException, SQLException, IOException {
         try {
 
@@ -85,6 +109,22 @@ public class AnexoServico implements Serializable {
             Msg.messagemError("Erro ao salvar anexo!");
             return null;
         }
+    }
+
+    public Anexo adicionarArquivoPermanente(UploadedFile arquivo, String caminho) throws FileNotFoundException, SQLException, IOException {
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy-HH-mm-ss-SSSS");
+        String data = dateFormat.format(new Date());
+
+        cont++;
+        String nome = data + (cont) + "_" + arquivo.getFileName();
+
+        nome = Caracteres.removeCaracterAnexo(nome);
+        nome = nome.trim();
+        nome = nome.toLowerCase();
+        nome = nome.replaceAll(" ", "_");
+
+        return adicionarArquivo(arquivo, nome, REAL_PATH_OPT + caminho);
     }
 
     private void adicionarArquivo(String caminho, byte[] arquivo) throws IOException {

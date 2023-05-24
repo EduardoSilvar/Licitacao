@@ -260,8 +260,6 @@ public class managerNotaFiscal extends managerPrincipal {
                 } else {
                     notaFiscalServico.imprimirModeloNotaFiscal(modelo, this.notaFiscal.getContrato().getContratado(), this.notaFiscal.getContrato(), this.notaFiscal, this.userLogado.getUnidadeOrganizacional());
                 }
-                System.err.println(userLogado.getGrupos().get(0).getNome());
-
             }
         }
     }

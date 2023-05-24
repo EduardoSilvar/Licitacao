@@ -12,7 +12,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 
@@ -33,9 +32,26 @@ public class UnidadeOrganizacional implements Serializable {
     private String email;
     @OneToOne(cascade = CascadeType.ALL)
     private Endereco endereco;
+    @OneToOne(cascade = CascadeType.ALL)
+    private Configuracao configuracao;
     private String whatsapp;
     private boolean ativo = true;
     private String cnpj;
+
+    public UnidadeOrganizacional(Long id, String nome, String NomeRepresentante, String telefone, String email, Endereco endereco, Configuracao configuracao, String whatsapp, String cnpj) {
+        this.id = id;
+        this.nome = nome;
+        this.NomeRepresentante = NomeRepresentante;
+        this.telefone = telefone;
+        this.email = email;
+        this.endereco = endereco;
+        this.configuracao = configuracao;
+        this.whatsapp = whatsapp;
+        this.cnpj = cnpj;
+    }
+
+    public UnidadeOrganizacional() {
+    }
 
     public Long getId() {
         return id;
@@ -43,22 +59,6 @@ public class UnidadeOrganizacional implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getWhatsapp() {
-        return whatsapp;
-    }
-
-    public void setWhatsapp(String whatsapp) {
-        this.whatsapp = whatsapp;
-    }
-
-    public String getCnpj() {
-        return cnpj;
-    }
-
-    public void setCnpj(String cnpj) {
-        this.cnpj = cnpj;
     }
 
     public String getNome() {
@@ -101,6 +101,22 @@ public class UnidadeOrganizacional implements Serializable {
         this.endereco = endereco;
     }
 
+    public Configuracao getConfiguracao() {
+        return configuracao;
+    }
+
+    public void setConfiguracao(Configuracao configuracao) {
+        this.configuracao = configuracao;
+    }
+
+    public String getWhatsapp() {
+        return whatsapp;
+    }
+
+    public void setWhatsapp(String whatsapp) {
+        this.whatsapp = whatsapp;
+    }
+
     public boolean isAtivo() {
         return ativo;
     }
@@ -109,18 +125,27 @@ public class UnidadeOrganizacional implements Serializable {
         this.ativo = ativo;
     }
 
+    public String getCnpj() {
+        return cnpj;
+    }
+
+    public void setCnpj(String cnpj) {
+        this.cnpj = cnpj;
+    }
+
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 19 * hash + Objects.hashCode(this.id);
-        hash = 19 * hash + Objects.hashCode(this.nome);
-        hash = 19 * hash + Objects.hashCode(this.NomeRepresentante);
-        hash = 19 * hash + Objects.hashCode(this.telefone);
-        hash = 19 * hash + Objects.hashCode(this.email);
-        hash = 19 * hash + Objects.hashCode(this.endereco);
-        hash = 19 * hash + Objects.hashCode(this.whatsapp);
-        hash = 19 * hash + (this.ativo ? 1 : 0);
-        hash = 19 * hash + Objects.hashCode(this.cnpj);
+        hash = 13 * hash + Objects.hashCode(this.id);
+        hash = 13 * hash + Objects.hashCode(this.nome);
+        hash = 13 * hash + Objects.hashCode(this.NomeRepresentante);
+        hash = 13 * hash + Objects.hashCode(this.telefone);
+        hash = 13 * hash + Objects.hashCode(this.email);
+        hash = 13 * hash + Objects.hashCode(this.endereco);
+        hash = 13 * hash + Objects.hashCode(this.configuracao);
+        hash = 13 * hash + Objects.hashCode(this.whatsapp);
+        hash = 13 * hash + (this.ativo ? 1 : 0);
+        hash = 13 * hash + Objects.hashCode(this.cnpj);
         return hash;
     }
 
@@ -160,14 +185,15 @@ public class UnidadeOrganizacional implements Serializable {
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }
-        return Objects.equals(this.endereco, other.endereco);
+        if (!Objects.equals(this.endereco, other.endereco)) {
+            return false;
+        }
+        return Objects.equals(this.configuracao, other.configuracao);
     }
-
-    
 
     @Override
     public String toString() {
-        return "UnidadeOrganizacional{" + "nome=" + nome + ", NomeRepresentante=" + NomeRepresentante + ", telefone=" + telefone + ", email=" + email + ", endereco=" + endereco + ", ativo=" + ativo + '}';
+        return "UnidadeOrganizacional{" + "id=" + id + ", nome=" + nome + ", NomeRepresentante=" + NomeRepresentante + ", telefone=" + telefone + ", email=" + email + ", endereco=" + endereco + ", configuracao=" + configuracao + ", whatsapp=" + whatsapp + ", ativo=" + ativo + ", cnpj=" + cnpj + '}';
     }
 
 }

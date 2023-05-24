@@ -1,0 +1,179 @@
+<ui:composition template="/WEB-INF/template/layout.xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns="http://www.w3.org/1999/xhtml">
+    <ui:define name="acoes">
+        <h:panelGroup class="panelAcoes">
+
+            <p:splitButton value="Ações" style="margin: 0px -8px !important"
+                           icon="pi pi-cog"
+                           >
+
+                <p:menuitem value="Cadastrar"
+                            icon="pi pi-save"
+                            url="rodape.xhtml"
+                            process="@this"/>
+
+            </p:splitButton>
+        </h:panelGroup>
+    </ui:define>
+    <ui:define name="barra">
+        <div class="row" id="stylebarra">
+            <i class="pi pi-file-o" id="icon"></i> <h5 style="color: #e1e6e5"> Pesquisar Rodapé</h5>
+        </div>
+    </ui:define>
+
+    <ui:define name="corpo">
+        <p:growl id="messages" />
+
+        <h:panelGroup id="pesquisaRodapePanelGroup" >
+
+            <div class="row">
+
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <p:outputLabel value="Nome" for="nomeRodapeInputText"/>
+                        <p:inputText id="nomeRodapeInputText" value="#{managerCabecalhoRodape.cabecalhoRodape.nome}"
+                                     styleClass="form-control"  disabled="#{managerCabecalhoRodape.visualizar}"/>
+                        <p:message for="nomeRodapeInputText" />
+                    </div>
+                </div>
+
+                <!--                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <p:outputLabel value="Tipo do Relatório"
+                                                           for="tipoRelatorioSelectOneMenu" />
+                                            <p:selectOneMenu id="tipoRelatorioSelectOneMenu"
+                                                             value="{managerCabecalhoRodape.cabecalhoRodape.tipoRelatorio}"
+                                                             filter="true"
+                                                             placeholder="Tipo de Relatório"
+                                                             styleClass="form-control"
+                                                             disabled="{managerCabecalhoRodape.visualizar}">
+                                                <f:selectItem itemLabel="Selecione..." noSelectionOption="true" />
+                                                <f:selectItems value="{managerEnums.tiposRelatorio}" />
+                                                <p:ajax update="tipoRelatorioSelectOneMenu" />
+                                            </p:selectOneMenu>
+                                        </div>
+                                    </div>-->
+
+            </div>
+
+        </h:panelGroup>
+
+        <div class="row">
+
+            <div class="col-md-12">
+                <center>
+                    <p:commandButton value="Pesquisar" icon="pi pi-search"
+                                     actionListener="#{managerCabecalhoRodape.pesquisar()}"
+                                     process="@this pesquisaRodapePanelGroup"
+                                     update="@form"/>
+
+                    <p:commandButton value="Limpar" icon="pi pi-ban"
+                                     actionListener="#{managerCabecalhoRodape.limparPesquisa()}"
+                                     process="@form"
+                                     update="@form"/>
+
+                </center>
+            </div>
+        </div>
+
+        <p:dataTable id="legitimadosDataTable"
+                     value="#{managerCabecalhoRodape.listcabecalhoRodape}"
+                     var="rodape"
+                     paginator="true"
+                     rows="10"
+                     paginatorPosition="bottom"
+                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                     currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} registros"
+                     rowsPerPageTemplate="5, 10, 20"
+                     emptyMessage="Nenhum relatorio encontrado..."
+                     styleClass="my-md-3">
+
+            <f:facet name="header">
+                <center>
+                    Rodapés(#{managerCabecalhoRodape.listcabecalhoRodape.size()})
+                </center>
+            </f:facet>
+
+            <p:column headerText="Ações" width="15%">
+                <p:button icon="pi pi-eye" href="rodape.xhtml?visualizar=#{rodape.id}" title="Visualizar"/>
+
+                <p:commandButton icon="pi pi-trash"
+                                 title="Remover Rodapé"
+                                 process="@this"
+                                 update="@form:removerRodapeConfirmDialog"
+                                 oncomplete="PF('removerRodapeConfirmDialog').show();"
+                                 styleClass="ml-md-1">
+                    <f:setPropertyActionListener value="#{rodape}"
+                                                 target="#{managerCabecalhoRodape.cabecalhoRodape}"/>
+                </p:commandButton>
+            </p:column>
+
+            <p:column headerText="Nome" >
+                <p:outputLabel value="#{rodape.nome}" />
+            </p:column>
+
+            <!--                <p:column headerText="Tipo" >
+                                <p:outputLabel value="{cabecalho.tipoRelatorio.nome}"/>
+                            </p:column>-->
+
+        </p:dataTable>
+
+        <p:dialog id="removerRodapeConfirmDialog"
+                  widgetVar="removerRodapeConfirmDialog"
+                  header="Atenção!"
+                  closeOnEscape="true"
+                  draggable="false"
+                  maximizable="false"
+                  minimizable="false"
+                  modal="true"
+                  showEffect="fade"
+                  hideEffect="fade">   
+            <div class="row">
+
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <h4>
+                            <i class="pi pi-exclamation-triangle"></i>
+                            Tem certeza de que deseja remover este Rodapé ?
+                        </h4>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+
+                    <center>
+
+                        <p:commandButton value="Sim"
+                                         title="Confirmar Remoção"
+                                         icon="pi pi-check"
+                                         process="@this"
+                                         update="@form"
+                                         actionListener="#{managerCabecalhoRodape.deletar()}"
+                                         oncomplete="PF('removerRodapeConfirmDialog').hide();"
+                                         styleClass="mr-md-1"/>
+
+                        <p:commandButton value="Não"
+                                         title="Cancelar Remoção"
+                                         icon="pi pi-ban"
+                                         process="@this"
+                                         update="@form"
+                                         oncomplete="PF('removerRodapeConfirmDialog').hide();"
+                                         styleClass="ml-md-1"/>
+
+                    </center>
+
+                </div>
+
+            </div>
+
+        </p:dialog>
+
+
+
+    </ui:define>
+
+</ui:composition>

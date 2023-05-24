@@ -24,7 +24,7 @@ import util.Utils;
  */
 @ManagedBean
 @ViewScoped
-public class ManagerUnidadeOrganizacional extends managerPrincipal implements Serializable {
+public class managerUnidadeOrganizacional extends managerPrincipal implements Serializable {
 
     @EJB
     UnidadeOrganizacionalServico unidadeServico;
