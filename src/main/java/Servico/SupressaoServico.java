@@ -47,6 +47,9 @@ public class SupressaoServico extends ServicoGenerico<Supressao> implements Seri
         if (Utils.isNotEmpty(supressao.getValor())) {
             sql += "and c.valor = :valor ";
         }
+        if (Utils.isNotEmpty(supressao.getDataAssinatura())) {
+            sql += "and c.dataAssinatura = :dataAssinatura ";
+        }
         sql += "and c.ativo = true";
         Query query = entityManager.createQuery(sql);
         query.setParameter("ct", contrato);
@@ -55,6 +58,9 @@ public class SupressaoServico extends ServicoGenerico<Supressao> implements Seri
         }
         if (Utils.isNotEmpty(supressao.getValor())) {
             query.setParameter("valor", supressao.getValor());
+        }
+        if (Utils.isNotEmpty(supressao.getDataAssinatura())) {
+            query.setParameter("dataAssinatura", supressao.getDataAssinatura());
         }
         return query.getResultList();
     }

@@ -46,6 +46,9 @@ public class RenovacaoServico extends ServicoGenerico<Renovacao> implements Seri
         if (Utils.isNotEmpty(renovacao.getValor())) {
             sql += "and c.valor = :valor ";
         }
+        if (Utils.isNotEmpty(renovacao.getDataAssinatura())) {
+            sql += "and c.dataAssinatura = :dataAssinatura ";
+        }
         sql += "and c.ativo = true";
         Query query = entityManager.createQuery(sql);
         query.setParameter("ct", contrato);
@@ -54,6 +57,9 @@ public class RenovacaoServico extends ServicoGenerico<Renovacao> implements Seri
         }
         if (Utils.isNotEmpty(renovacao.getValor())) {
             query.setParameter("valor", renovacao.getValor());
+        }
+        if (Utils.isNotEmpty(renovacao.getDataAssinatura())) {
+            query.setParameter("dataAssinatura", renovacao.getDataAssinatura());
         }
         return query.getResultList();
     }

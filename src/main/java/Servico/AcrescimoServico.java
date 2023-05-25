@@ -47,6 +47,9 @@ public class AcrescimoServico extends ServicoGenerico<Acrescimo> implements Seri
         if (Utils.isNotEmpty(acrescimo.getValor())) {
             sql += "and c.valor = :valor ";
         }
+        if (Utils.isNotEmpty(acrescimo.getDataAssinatura())) {
+            sql += "and c.dataAssinatura = :dataAssinatura ";
+        }
         sql += "and c.ativo = true";
         Query query = entityManager.createQuery(sql);
         query.setParameter("ct", contrato);
@@ -55,6 +58,9 @@ public class AcrescimoServico extends ServicoGenerico<Acrescimo> implements Seri
         }
         if (Utils.isNotEmpty(acrescimo.getValor())) {
             query.setParameter("valor", acrescimo.getValor());
+        }
+        if (Utils.isNotEmpty(acrescimo.getDataAssinatura())) {
+            query.setParameter("dataAssinatura", acrescimo.getDataAssinatura());
         }
         return query.getResultList();
     }

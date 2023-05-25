@@ -301,7 +301,7 @@
                                 <h:outputText value="#{fiscal.email}" />
                             </p:column>
                             <p:column headerText="Setor">
-                                <h:outputText value="#{fiscal.setor}" />
+                                <h:outputText value="#{fiscal.setor.nome}" />
                             </p:column>
                             <p:column headerText="Vigência">
                                 <h:outputText value="#{fiscal.telefone}"  />
@@ -530,383 +530,6 @@
                 <p:button value="cancelar" icon="pi pi-ban" href="index.xhtml"  style="background-color: #01415B; color: #fff;margin-bottom: 10px"/>
             </center>
 
-            <p:dialog id="removeraContratoConfirmDialog"
-                      widgetVar="removeraContratoConfirmDialog"
-                      header="Atenção!"
-                      closeOnEscape="true"
-                      draggable="false"
-                      maximizable="false"
-                      minimizable="false"
-                      modal="true"
-                      width="850"
-                      showEffect="fade"
-                      hideEffect="fade">
-
-                <div class="row">
-
-                    <div class="col-md-12">
-                        <div class="form-group" style="padding-left: 80px !important">
-                            <h4>
-                                <i class="pi pi-exclamation-triangle"></i>
-                                Tem certeza de que deseja remover este Contratado ?
-                            </h4>
-                        </div>
-                    </div>
-
-                    <div class="col-md-12">
-
-                        <center>
-
-                            <p:commandButton value="Sim"
-                                             title="Confirmar Remoção"
-                                             icon="pi pi-check"
-                                             update="corpoInteiro "
-                                             process="@this"
-                                             actionListener="#{managerContrato.deletar()}"
-                                             oncomplete="PF('removeraContratoConfirmDialog').hide();"
-                                             styleClass="mr-md-1"/>
-
-                            <p:commandButton value="Não"
-                                             title="Cancelar Remoção"
-                                             icon="pi pi-ban"
-                                             process="@this"
-                                             update="@form"
-                                             oncomplete="PF('removeraContratadoConfirmDialog').hide();"
-                                             styleClass="ml-md-1"/>
-
-                        </center>
-
-                    </div>
-
-                </div>
-
-
-            </p:dialog>
-
-            <p:dialog id="mensagemcontratadoDialog"
-                      widgetVar="mensagemcontratadoDialog"
-                      header="Atenção!"
-                      closeOnEscape="true"
-                      draggable="false"
-                      maximizable="false"
-                      minimizable="false"
-                      modal="true"
-                      width="850"
-                      showEffect="fade"
-                      hideEffect="fade">
-
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <p:outputLabel value="Assunto"
-                                           for="Assunto" />
-                            <p:inputText id="Assunto"
-                                         placeholder="Texto"
-                                         rendered="true"
-                                         value="#{managerContrato.assunto}"
-                                         requiredMessage="Este campo é obrigatório."
-                                         styleClass="form-control" 
-                                         />
-                            <p:message for="Assunto" />
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <p:outputLabel value="Mensagem"
-                                           for="Mensagem" />
-                            <p:inputTextarea id="Mensagem"
-                                             placeholder="Texto"
-                                             rendered="true"
-                                             value="#{managerContrato.textoMensagem}"
-                                             requiredMessage="Este campo é obrigatório."
-                                             styleClass="form-control" 
-                                             />
-                            <p:message for="Mensagem" />
-                        </div>
-                    </div>
-
-                    <div class="col-md-12">
-
-                        <center>
-
-                            <p:commandButton value="Enviar"
-                                             title="Enviar"
-                                             icon="pi pi-upload"
-                                             update="corpoInteiro @form"
-                                             process="@this Mensagem Assunto"
-                                             actionListener="#{managerContrato.enviarEmail()}"
-                                             oncomplete="PF('mensagemcontratadoDialog').hide();"
-                                             styleClass="mr-md-1"/>
-
-                            <p:commandButton value="Cancelar"
-                                             title="Cancelar Mensagem"
-                                             icon="pi pi-ban"
-                                             process="@this"
-                                             update="@form"
-                                             oncomplete="PF('mensagemcontratadoDialog').hide();"
-                                             styleClass="ml-md-1"/>
-
-                        </center>
-
-                    </div>
-
-                </div>
-
-
-            </p:dialog>
-
-
-            <p:dialog id="removerFiscalConfirmDialog"
-                      widgetVar="removerFiscalConfirmDialog"
-                      header="Atenção!"
-                      closeOnEscape="true"
-                      draggable="false"
-                      maximizable="false"
-                      minimizable="false"
-                      modal="true"
-                      showEffect="fade"
-                      hideEffect="fade">   
-                <div class="row">
-
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <h4>
-                                <i class="pi pi-exclamation-triangle"></i>
-                                Tem certeza de que deseja remover este Fiscal ?
-                            </h4>
-                        </div>
-                    </div>
-
-                    <div class="col-md-12">
-
-                        <center>
-
-                            <p:commandButton value="Sim"
-                                             title="Confirmar Remoção"
-                                             icon="pi pi-check"
-                                             actionListener="#{managerContrato.removerFiscal()}"
-                                             process="@this"
-                                             update="corpoInteiro:tabview:fiscalDatatable"
-                                             oncomplete="PF('removerFiscalConfirmDialog').hide();"
-                                             styleClass="mr-md-1"/>
-
-                            <p:commandButton value="Não"
-                                             title="Cancelar Remoção"
-                                             icon="pi pi-close"
-                                             process="@this"
-                                             update="corpoInteiro:tabview:fiscalDatatable"
-                                             oncomplete="PF('removerFiscalConfirmDialog').hide();"
-                                             styleClass="ml-md-1"/>
-
-                        </center>
-
-                    </div>
-
-                </div>
-
-            </p:dialog>
-
-            <p:dialog id="pesquisarFiscalDialog"
-                      widgetVar="pesquisarFiscalDialog"
-                      header="Pesquisar Fiscal"
-                      closeOnEscape="true"
-                      draggable="false"
-                      height="400"
-                      width="1000"
-                      maximizable="false"
-                      minimizable="false"
-                      modal="true"
-                      showEffect="fade"
-                      hideEffect="fade">   
-                <div class="row">
-
-                    <div class="col-md-12">
-                        <div class="form-group">
-
-                            <p:dataTable id="PesquisacontratoDatatable" var="fiscal" value="#{managerContrato.responsaveis}"
-                                         rowsPerPageTemplate="5, 10, 20"  paginator="true" style="margin-bottom: 7%"
-                                         rows="5" paginatorPosition="bottom"
-                                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                         currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} registros"
-                                         emptyMessage="Nenhum relatorio encontrado...">
-                                <f:facet name="header">
-                                    <center>
-                                        Fiscais
-                                    </center>
-                                </f:facet>
-                                <p:column headerText="Ações" width="15%">
-                                    <p:commandButton icon="pi pi-plus"
-                                                     title="Remover Relatório"
-                                                     process="@this"
-                                                     actionListener="#{managerContrato.adicionarFiscal(fiscal)}"
-                                                     update="@this corpoInteiro:messages corpoInteiro:tabview:fiscalDatatable"
-                                                     oncomplete="PF('pesquisarFiscalDialog').hide();"
-                                                     styleClass="ml-md-1">
-                                    </p:commandButton>
-                                </p:column>
-                                <p:column headerText="Nome">
-                                    <h:outputText value="#{fiscal.nome}" />
-                                </p:column>
-                                <p:column headerText="E-mail">
-                                    <h:outputText value="#{fiscal.email}" />
-                                </p:column>
-                                <p:column headerText="Setor">
-                                    <h:outputText value="#{fiscal.setor}" />
-                                </p:column>
-                                <p:column headerText="Vigência">
-                                    <h:outputText value="#{fiscal.telefone}"  />
-                                </p:column>
-                            </p:dataTable>
-
-                        </div>
-                    </div>
-                </div>
-            </p:dialog>
-            <p:dialog id="pesquisarContratadoDialog"
-                      widgetVar="pesquisarContratadoDialog"
-                      closeOnEscape="true"
-                      draggable="false"
-                      maximizable="false"
-                      minimizable="false"
-                      showEffect="fade"
-                      hideEffect="fade"
-                      width="1200"
-                      height="500">
-
-                <h4>
-                    <i class="fa fa-search"></i>
-                    Pesquisar Contratado
-                </h4>
-                <hr/>
-                <h:panelGroup id="selectorPanelGroup"  >
-
-
-                    <p:selectOneRadio id="console" value="#{managerContrato.contratado.natureza}"  unselectable="true"  style="margin: 10px">
-                        <f:selectItem itemLabel="Jurídica" itemValue="#{managerContrato.juridica}" />
-                        <f:selectItem itemLabel="Fisica" itemValue="#{managerContrato.fisica}"/>
-                        <p:ajax update="corpoInteiro:tabview:dadosContratado"  />
-                    </p:selectOneRadio>
-                </h:panelGroup>
-                <h:panelGroup id="dadosContratado">
-
-                    <div class="row">
-                        <h:panelGroup rendered="#{managerContrato.renderedCnpjPEssoa()}">
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <p:outputLabel value="CNPJ"
-                                                   for="cnpjPessoaJuriInput"  />
-                                    <p:inputMask id="cnpjPessoaJuriInput"
-                                                 placeholder="CNPJ"
-                                                 mask="99.999.999/9999-99"
-                                                 value="#{managerContrato.contratado.cnpj}"
-                                                 requiredMessage="Este campo é obrigatório."
-                                                 styleClass="form-control" 
-                                                 >
-                                    </p:inputMask>
-                                    <p:message for="cnpjPessoaJuriInput" />
-                                </div>
-                            </div>
-                        </h:panelGroup>
-                        <h:panelGroup rendered="#{managerContrato.renderedCpfPEssoa()}">
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <p:outputLabel value="CPF"
-                                                   for="cpfConjugeInputMaskPesquisarConjugeDialog" />
-                                    <p:inputMask id="cpfConjugeInputMaskPesquisarConjugeDialog"
-                                                 value="#{managerContrato.contratado.cpf}"
-                                                 placeholder="CPF"
-                                                 mask="999.999.999-99"
-                                                 styleClass="form-control" />
-                                </div>
-                            </div>
-                        </h:panelGroup>
-                        <div class="col-md-9">
-                            <div class="form-group">
-                                <p:outputLabel value="Nome"
-                                               for="nomeContratadoDialog" />
-                                <p:inputText id="nomeContratadoDialog"
-                                             value="#{managerContrato.contratado.nome}"
-                                             placeholder="Nome"
-                                             styleClass="form-control" />
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <div class="row">
-
-                        <div class="col-md-12">
-
-                            <center>
-                                <p:commandButton value="Pesquisar"
-                                                 id="pesquisarContratadoButton"
-                                                 title="Pesquisar Cônjuge"
-                                                 icon="pi pi-search"
-                                                 process="dadosContratado"
-                                                 update=" conjugesDataTable corpoInteiro:messages"
-                                                 actionListener="#{managerContrato.pesquisarContratados()}"
-                                                 styleClass="ml-md-1"
-                                                 style="width: 130px;"/>
-
-                                <p:commandButton value="Limpar"
-                                                 title="Limpar Pesquisa"
-                                                 icon="pi pi-eraser"
-                                                 process="@this"
-                                                 update="dadosContratado selectorPanelGroup"
-                                                 actionListener="#{managerContrato.instanciarPesquisaContratados()}"
-                                                 styleClass="mr-md-1"
-                                                 style="width: 130px;"/>
-
-
-                            </center>
-
-                        </div>
-
-                    </div>
-
-                    <p:dataTable id="conjugesDataTable"
-                                 value="#{managerContrato.contratados}"
-                                 var="contratado"
-                                 paginator="true"
-                                 rows="5"
-                                 paginatorPosition="bottom"
-                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                 currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} registros"
-                                 rowsPerPageTemplate="5, 10, 20"
-                                 emptyMessage="Nenhum registro encontrado..."
-                                 styleClass="my-md-3"
-                                 >
-
-                        <f:facet name="header">
-                            <center>
-                                contratados(#{managerContrato.contratados.size()})
-                            </center>
-                        </f:facet>
-
-                        <p:column headerText="" width="10%">
-
-                            <p:commandButton icon="pi pi-check"
-                                             title="Selecionar"
-                                             process="@this"
-                                             update="corpoInteiro:tabview:conjugesDataTable corpoInteiro:messages corpoInteiro:tabview:contratadoSelect"
-                                             actionListener="#{managerContrato.adicionarContratado(contratado)}"
-                                             oncomplete="PF('pesquisarContratadoDialog').hide();">
-                            </p:commandButton>
-
-                        </p:column>
-
-                        <p:column headerText="Nome" >
-                            <p:outputLabel value="#{contratado.nome}" />
-                        </p:column>
-                        <p:column headerText="Documento">
-                            <p:outputLabel value="#{contratado.cnpj != '' ?contratado.cnpj:contratado.cpf }" />
-                        </p:column>
-
-                    </p:dataTable>
-
-                </h:panelGroup>
-
-            </p:dialog>
         </p:tab>
         <p:tab title="Acréscimos" rendered="#{managerContrato.visualizar}">
             <ui:include src="pesquisaAcrescimo.xhtml"/>
@@ -924,6 +547,383 @@
             <ui:include src="mensagemForm.xhtml"/>
         </p:tab>
     </p:tabView>
+    <p:dialog id="removeraContratoConfirmDialog"
+              widgetVar="removeraContratoConfirmDialog"
+              header="Atenção!"
+              closeOnEscape="true"
+              draggable="false"
+              maximizable="false"
+              minimizable="false"
+              modal="true"
+              width="850"
+              showEffect="fade"
+              hideEffect="fade">
+
+        <div class="row">
+
+            <div class="col-md-12">
+                <div class="form-group" style="padding-left: 80px !important">
+                    <h4>
+                        <i class="pi pi-exclamation-triangle"></i>
+                        Tem certeza de que deseja remover este Contratado ?
+                    </h4>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+
+                <center>
+
+                    <p:commandButton value="Sim"
+                                     title="Confirmar Remoção"
+                                     icon="pi pi-check"
+                                     update="corpoInteiro "
+                                     process="@this"
+                                     actionListener="#{managerContrato.deletar()}"
+                                     oncomplete="PF('removeraContratoConfirmDialog').hide();"
+                                     styleClass="mr-md-1"/>
+
+                    <p:commandButton value="Não"
+                                     title="Cancelar Remoção"
+                                     icon="pi pi-ban"
+                                     process="@this"
+                                     update="@form"
+                                     oncomplete="PF('removeraContratadoConfirmDialog').hide();"
+                                     styleClass="ml-md-1"/>
+
+                </center>
+
+            </div>
+
+        </div>
+
+
+    </p:dialog>
+
+    <p:dialog id="mensagemcontratadoDialog"
+              widgetVar="mensagemcontratadoDialog"
+              header="Atenção!"
+              closeOnEscape="true"
+              draggable="false"
+              maximizable="false"
+              minimizable="false"
+              modal="true"
+              width="850"
+              showEffect="fade"
+              hideEffect="fade">
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <p:outputLabel value="Assunto"
+                                   for="Assunto" />
+                    <p:inputText id="Assunto"
+                                 placeholder="Texto"
+                                 rendered="true"
+                                 value="#{managerContrato.assunto}"
+                                 requiredMessage="Este campo é obrigatório."
+                                 styleClass="form-control" 
+                                 />
+                    <p:message for="Assunto" />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <p:outputLabel value="Mensagem"
+                                   for="Mensagem" />
+                    <p:inputTextarea id="Mensagem"
+                                     placeholder="Texto"
+                                     rendered="true"
+                                     value="#{managerContrato.textoMensagem}"
+                                     requiredMessage="Este campo é obrigatório."
+                                     styleClass="form-control" 
+                                     />
+                    <p:message for="Mensagem" />
+                </div>
+            </div>
+
+            <div class="col-md-12">
+
+                <center>
+
+                    <p:commandButton value="Enviar"
+                                     title="Enviar"
+                                     icon="pi pi-upload"
+                                     update="corpoInteiro @form"
+                                     process="@this Mensagem Assunto"
+                                     actionListener="#{managerContrato.enviarEmail()}"
+                                     oncomplete="PF('mensagemcontratadoDialog').hide();"
+                                     styleClass="mr-md-1"/>
+
+                    <p:commandButton value="Cancelar"
+                                     title="Cancelar Mensagem"
+                                     icon="pi pi-ban"
+                                     process="@this"
+                                     update="@form"
+                                     oncomplete="PF('mensagemcontratadoDialog').hide();"
+                                     styleClass="ml-md-1"/>
+
+                </center>
+
+            </div>
+
+        </div>
+
+
+    </p:dialog>
+
+
+    <p:dialog id="removerFiscalConfirmDialog"
+              widgetVar="removerFiscalConfirmDialog"
+              header="Atenção!"
+              closeOnEscape="true"
+              draggable="false"
+              maximizable="false"
+              minimizable="false"
+              modal="true"
+              showEffect="fade"
+              hideEffect="fade">   
+        <div class="row">
+
+            <div class="col-md-12">
+                <div class="form-group">
+                    <h4>
+                        <i class="pi pi-exclamation-triangle"></i>
+                        Tem certeza de que deseja remover este Fiscal ?
+                    </h4>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+
+                <center>
+
+                    <p:commandButton value="Sim"
+                                     title="Confirmar Remoção"
+                                     icon="pi pi-check"
+                                     actionListener="#{managerContrato.removerFiscal()}"
+                                     process="@this"
+                                     update="corpoInteiro:tabview:fiscalDatatable"
+                                     oncomplete="PF('removerFiscalConfirmDialog').hide();"
+                                     styleClass="mr-md-1"/>
+
+                    <p:commandButton value="Não"
+                                     title="Cancelar Remoção"
+                                     icon="pi pi-close"
+                                     process="@this"
+                                     update="corpoInteiro:tabview:fiscalDatatable"
+                                     oncomplete="PF('removerFiscalConfirmDialog').hide();"
+                                     styleClass="ml-md-1"/>
+
+                </center>
+
+            </div>
+
+        </div>
+
+    </p:dialog>
+
+    <p:dialog id="pesquisarFiscalDialog"
+              widgetVar="pesquisarFiscalDialog"
+              header="Pesquisar Fiscal"
+              closeOnEscape="true"
+              draggable="false"
+              height="400"
+              width="1000"
+              maximizable="false"
+              minimizable="false"
+              modal="true"
+              showEffect="fade"
+              hideEffect="fade">   
+        <div class="row">
+
+            <div class="col-md-12">
+                <div class="form-group">
+
+                    <p:dataTable id="PesquisacontratoDatatable" var="fiscal" value="#{managerContrato.responsaveis}"
+                                 rowsPerPageTemplate="5, 10, 20"  paginator="true" style="margin-bottom: 7%"
+                                 rows="5" paginatorPosition="bottom"
+                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                 currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} registros"
+                                 emptyMessage="Nenhum relatorio encontrado...">
+                        <f:facet name="header">
+                            <center>
+                                Fiscais
+                            </center>
+                        </f:facet>
+                        <p:column headerText="Ações" width="15%">
+                            <p:commandButton icon="pi pi-plus"
+                                             title="Remover Relatório"
+                                             process="@this"
+                                             actionListener="#{managerContrato.adicionarFiscal(fiscal)}"
+                                             update="@this corpoInteiro:messages corpoInteiro:tabview:fiscalDatatable"
+                                             oncomplete="PF('pesquisarFiscalDialog').hide();"
+                                             styleClass="ml-md-1">
+                            </p:commandButton>
+                        </p:column>
+                        <p:column headerText="Nome">
+                            <h:outputText value="#{fiscal.nome}" />
+                        </p:column>
+                        <p:column headerText="E-mail">
+                            <h:outputText value="#{fiscal.email}" />
+                        </p:column>
+                        <p:column headerText="Setor">
+                            <h:outputText value="#{fiscal.setor.nome}" />
+                        </p:column>
+                        <p:column headerText="Vigência">
+                            <h:outputText value="#{fiscal.telefone}"  />
+                        </p:column>
+                    </p:dataTable>
+
+                </div>
+            </div>
+        </div>
+    </p:dialog>
+    <p:dialog id="pesquisarContratadoDialog"
+              widgetVar="pesquisarContratadoDialog"
+              closeOnEscape="true"
+              draggable="false"
+              maximizable="false"
+              minimizable="false"
+              showEffect="fade"
+              hideEffect="fade"
+              width="1200"
+              height="500">
+
+        <h4>
+            <i class="fa fa-search"></i>
+            Pesquisar Contratado
+        </h4>
+        <hr/>
+        <h:panelGroup id="selectorPanelGroup"  >
+
+
+            <p:selectOneRadio id="console" value="#{managerContrato.contratado.natureza}"  unselectable="true"  style="margin: 10px">
+                <f:selectItem itemLabel="Jurídica" itemValue="#{managerContrato.juridica}" />
+                <f:selectItem itemLabel="Fisica" itemValue="#{managerContrato.fisica}"/>
+                <p:ajax update="corpoInteiro:dadosContratado"  />
+            </p:selectOneRadio>
+        </h:panelGroup>
+        <h:panelGroup id="dadosContratado">
+
+            <div class="row">
+                <h:panelGroup rendered="#{managerContrato.renderedCnpjPEssoa()}">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <p:outputLabel value="CNPJ"
+                                           for="cnpjPessoaJuriInput"  />
+                            <p:inputMask id="cnpjPessoaJuriInput"
+                                         placeholder="CNPJ"
+                                         mask="99.999.999/9999-99"
+                                         value="#{managerContrato.contratado.cnpj}"
+                                         requiredMessage="Este campo é obrigatório."
+                                         styleClass="form-control" 
+                                         >
+                            </p:inputMask>
+                            <p:message for="cnpjPessoaJuriInput" />
+                        </div>
+                    </div>
+                </h:panelGroup>
+                <h:panelGroup rendered="#{managerContrato.renderedCpfPEssoa()}">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <p:outputLabel value="CPF"
+                                           for="cpfConjugeInputMaskPesquisarConjugeDialog" />
+                            <p:inputMask id="cpfConjugeInputMaskPesquisarConjugeDialog"
+                                         value="#{managerContrato.contratado.cpf}"
+                                         placeholder="CPF"
+                                         mask="999.999.999-99"
+                                         styleClass="form-control" />
+                        </div>
+                    </div>
+                </h:panelGroup>
+                <div class="col-md-9">
+                    <div class="form-group">
+                        <p:outputLabel value="Nome"
+                                       for="nomeContratadoDialog" />
+                        <p:inputText id="nomeContratadoDialog"
+                                     value="#{managerContrato.contratado.nome}"
+                                     placeholder="Nome"
+                                     styleClass="form-control" />
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+
+                <div class="col-md-12">
+
+                    <center>
+                        <p:commandButton value="Pesquisar"
+                                         id="pesquisarContratadoButton"
+                                         title="Pesquisar Cônjuge"
+                                         icon="pi pi-search"
+                                         process="dadosContratado"
+                                         update=" corpoInteiro:conjugesDataTable corpoInteiro:messages"
+                                         actionListener="#{managerContrato.pesquisarContratados()}"
+                                         styleClass="ml-md-1"
+                                         style="width: 130px;"/>
+
+                        <p:commandButton value="Limpar"
+                                         title="Limpar Pesquisa"
+                                         icon="pi pi-eraser"
+                                         process="@this"
+                                         update="dadosContratado selectorPanelGroup"
+                                         actionListener="#{managerContrato.instanciarPesquisaContratados()}"
+                                         styleClass="mr-md-1"
+                                         style="width: 130px;"/>
+
+
+                    </center>
+
+                </div>
+
+            </div>
+
+            <p:dataTable id="conjugesDataTable"
+                         value="#{managerContrato.contratados}"
+                         var="contratado"
+                         paginator="true"
+                         rows="5"
+                         paginatorPosition="bottom"
+                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} registros"
+                         rowsPerPageTemplate="5, 10, 20"
+                         emptyMessage="Nenhum registro encontrado..."
+                         styleClass="my-md-3"
+                         >
+
+                <f:facet name="header">
+                    <center>
+                        contratados(#{managerContrato.contratados.size()})
+                    </center>
+                </f:facet>
+
+                <p:column headerText="" width="10%">
+
+                    <p:commandButton icon="pi pi-check"
+                                     title="Selecionar"
+                                     process="@this"
+                                     update="corpoInteiro:conjugesDataTable corpoInteiro:messages corpoInteiro:tabview:contratadoSelect"
+                                     actionListener="#{managerContrato.adicionarContratado(contratado)}"
+                                     oncomplete="PF('pesquisarContratadoDialog').hide();">
+                    </p:commandButton>
+
+                </p:column>
+
+                <p:column headerText="Nome" >
+                    <p:outputLabel value="#{contratado.nome}" />
+                </p:column>
+                <p:column headerText="Documento">
+                    <p:outputLabel value="#{contratado.cnpj != '' ?contratado.cnpj:contratado.cpf }" />
+                </p:column>
+
+            </p:dataTable>
+
+        </h:panelGroup>
+
+    </p:dialog>
     <script src="WEB-INF/template/autoNumeric.js" type="text/javascript"></script>
     <script>
                                             var buttonClicked = false;

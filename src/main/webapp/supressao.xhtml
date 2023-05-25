@@ -65,7 +65,7 @@
                                              styleClass="form-control"
                                              converter="contratoconverter">
                                 <f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
-                                <f:selectItems value="#{managerSupressao.contratos}" var="contrato" itemLabel="#{contrato.numeroContrato}" itemValue="#{contrato}" />
+                                <f:selectItems value="#{managerSupressao.contratos}" var="contrato" itemLabel="#{contrato.numeroProcesso}" itemValue="#{contrato}" />
                                 <p:ajax update="fiscalSelectSupressao" listener="#{managerSupressao.selecionarContrato()}"/>
                             </p:selectOneMenu>
                         </div>

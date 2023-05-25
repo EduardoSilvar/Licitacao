@@ -175,6 +175,11 @@ public class managerSupressao extends managerPrincipal implements Serializable {
 
     public void pesquisar(Contrato contrato) {
         this.supressoes = supressaoServico.pesquisarSupressaoPorContrato(contrato, this.supressao);
+        if (Utils.isNotEmpty(supressoes)) {
+            Msg.messagemInfo("pesquisa realizada com sucesso !");
+        } else {
+            Msg.messagemError("Nenhuma supressão encontrada !");
+        }
     }
 
     public void selecionarAnexo(FileUploadEvent event) {

@@ -269,6 +269,11 @@ public class managerAcrescimo extends managerPrincipal implements Serializable {
 
     public void pesquisar(Contrato contrato) {
         this.acrescimos = acrescimoServico.pesquisarAcrescimoPorContrato(contrato, this.acrescimo);
+        if (Utils.isNotEmpty(acrescimos)) {
+            Msg.messagemInfo("pesquisa realizada com sucesso !");
+        } else {
+            Msg.messagemError("Nenhum acréscimo encontrado !");
+        }
     }
 
     public void deletar() {
