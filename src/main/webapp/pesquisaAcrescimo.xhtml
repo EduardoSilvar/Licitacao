@@ -41,7 +41,6 @@
                                 disabled="#{managerAcrescimo.visualizar}"
                                 mask="true"
                                 style="display: flex; flex-direction: row"
-                                required="true"
                                 requiredMessage="Este campo é obrigatório."
                                 inputStyleClass="form-control"
                                 showOn="button"
@@ -51,7 +50,7 @@
             </div>
         </h:panelGroup>
         <center>
-            <p:commandButton value="Pesquisar" id="pesquisarButton" icon="pi pi-search" process="@this acrescimoSubPanel" update="acrescimoDatatable" actionListener="#{managerAcrescimo.pesquisar(managerContrato.contrato)}" />
+            <p:commandButton value="Pesquisar" icon="pi pi-search" process="@this acrescimoSubPanel" update="acrescimoDatatable corpoInteiro:messages" actionListener="#{managerAcrescimo.pesquisar(managerContrato.contrato)}" />
         </center>
         <hr/>
         <p:dataTable id="acrescimoDatatable" var="acrescimo" value="#{managerAcrescimo.acrescimos}"
@@ -139,17 +138,4 @@
 
         </p:dialog>
     </h:panelGroup>
-    <script>
-        document.addEventListener("keydown", function (event) {
-            if (event.keyCode === 13) { // 13 é o código da tecla Enter
-                var form = document.getElementById("corpoInteiro");
-                var button;
-                if (document.getElementById("pesquisarButton").style.display !== "none") {
-                    button = document.getElementById("pesquisarButton");
-                }
-                button.click();
-                event.preventDefault();
-            }
-        });
-    </script>
 </ui:composition>

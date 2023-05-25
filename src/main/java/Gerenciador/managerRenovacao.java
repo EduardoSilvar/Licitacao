@@ -215,6 +215,11 @@ public class managerRenovacao extends managerPrincipal implements Serializable {
 
     public void pesquisar(Contrato contrato) {
         this.renovacoes = renovacaoServico.pesquisarRenovacaoPorContrato(contrato, this.renovacao);
+        if (Utils.isNotEmpty(renovacoes)) {
+            Msg.messagemInfo("pesquisa realizada com sucesso !");
+        } else {
+            Msg.messagemError("Nenhuma renovação encontrada !");
+        }
     }
 
     public void verificarData() {

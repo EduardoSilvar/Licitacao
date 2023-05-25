@@ -210,7 +210,12 @@ public class managerRepactuacao extends managerPrincipal implements Serializable
     }
 
     public void pesquisar(Contrato contrato) {
-        this.repactuacoes = repactuacaoServico.pesquisarAcrescimoPorContrato(contrato, this.repactuacao);
+        this.repactuacoes = repactuacaoServico.pesquisarRepactuacaoPorContrato(contrato, this.repactuacao);
+        if (Utils.isNotEmpty(repactuacoes)) {
+            Msg.messagemInfo("pesquisa realizada com sucesso !");
+        } else {
+            Msg.messagemError("Nenhuma repactuação encontrada !");
+        }
     }
 
     public void deletar() {

@@ -23,28 +23,41 @@
                         <p:message for="numeroTermoApostilamento" />
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <p:outputLabel value="Valor"
-                                   for="novoValorRepactuacao" />
-                    <p:inputMask id="novoValorRepactuacao"
-                                 style="display: flex; flex-direction: row"
-                                 value="#{managerRepactuacao.repactuacao.valor}"
-                                 styleClass="form-control" 
-                                 placeholder="Valor"
-                                 requiredMessage="Este campo é obrigatório." />
-                    <p:message for="novoValorRepactuacao" />
+                <div class="col-md-3">
+                    <div class="form-group" style="display: flex;flex-direction: column" >
+                        <p:outputLabel value="Valor"
+                                       for="novoValorRepactuacao" />
+                        <p:inputNumber id="novoValorRepactuacao"   value="#{managerRepactuacao.repactuacao.valor}" symbol="R$"
+                                       symbolPosition="p" emptyValue="always" requiredMessage="Este campo é obrigatório." style="width: 100%"/>
+                        <p:message for="novoValorRepactuacao" />
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <p:outputLabel value="Data de assinatura"
+                                   for="dataAssinaturaRepactuacao" />
+                    <p:calendar id="dataAssinaturaRepactuacao"
+                                rendered="true"
+                                value="#{managerRepactuacao.repactuacao.dataAssinatura}"
+                                mask="true"
+                                style="display: flex; flex-direction: row"
+                                disabled="#{managerRepactuacao.visualizar}"
+                                requiredMessage="Este campo é obrigatório."
+                                inputStyleClass="form-control"
+                                showOn="button"
+                                />
+                    <p:message for="dataAssinaturaRepactuacao" />
                 </div>
             </div>
         </h:panelGroup>
         <center>
-            <p:commandButton value="Pesquisar" icon="pi pi-search" process="@this repactuacaoSubPanel" update="repactuacaoDatatable" actionListener="#{managerRepactuacao.pesquisar(managerContrato.contrato)}" />
+            <p:commandButton value="Pesquisar" icon="pi pi-search" process="@this repactuacaoSubPanel" update="repactuacaoDatatable corpoInteiro:messages" actionListener="#{managerRepactuacao.pesquisar(managerContrato.contrato)}" />
         </center>
         <hr/>
         <p:dataTable id="repactuacaoDatatable" var="repactuacao" value="#{managerRepactuacao.repactuacoes}"
                      resizeMode="5">
             <f:facet name="header">
                 <center>
-                    Histórico de reajuste
+                    Histórico de Repactuação
                 </center>
             </f:facet>
             <p:column headerText="Ações" width="200">

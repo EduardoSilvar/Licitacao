@@ -39,13 +39,16 @@ public class RepactuacaoServico extends ServicoGenerico<Repactuacao> implements 
         }
     }
 
-    public List<Repactuacao> pesquisarAcrescimoPorContrato(Contrato contrato, Repactuacao repactuacao) {
+    public List<Repactuacao> pesquisarRepactuacaoPorContrato(Contrato contrato, Repactuacao repactuacao) {
         String sql = "select c from Repactuacao c where c.contrato = :ct ";
         if (Utils.isNotEmpty(repactuacao.getNumeroTermo())) {
             sql += "and c.numeroTermo = :nt ";
         }
         if (Utils.isNotEmpty(repactuacao.getValor())) {
             sql += "and c.valor = :valor ";
+        }
+        if (Utils.isNotEmpty(repactuacao.getDataAssinatura())) {
+            sql += "and c.dataAssinatura = :dataAssinatura ";
         }
         sql += "and c.ativo = true";
         Query query = entityManager.createQuery(sql);
@@ -55,6 +58,9 @@ public class RepactuacaoServico extends ServicoGenerico<Repactuacao> implements 
         }
         if (Utils.isNotEmpty(repactuacao.getValor())) {
             query.setParameter("valor", repactuacao.getValor());
+        }
+        if (Utils.isNotEmpty(repactuacao.getDataAssinatura())) {
+            query.setParameter("dataAssinatura", repactuacao.getDataAssinatura());
         }
         return query.getResultList();
     }

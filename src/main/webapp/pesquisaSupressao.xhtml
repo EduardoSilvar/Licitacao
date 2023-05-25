@@ -1,5 +1,5 @@
 <ui:composition
-    
+
     xmlns:ui="http://java.sun.com/jsf/facelets"
     xmlns:h="http://xmlns.jcp.org/jsf/html"
     xmlns:p="http://primefaces.org/ui"
@@ -13,32 +13,45 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <p:outputLabel value="Número do termo aditivo*"
-                                           for="numeroTermoAditivoSupressao" />
-                            <p:inputText id="numeroTermoAditivoSupressao"
-                                         value="#{managerSupressao.supressao.numeroTermo}"
-                                         placeholder="Número"
-                                         rendered="true"
-                                         requiredMessage="Este campo é obrigatório."
-                                         styleClass="form-control" 
-                                         />
-                            <p:message for="numeroTermoAditivoSupressao" />
+                                       for="numeroTermoAditivoSupressao" />
+                        <p:inputText id="numeroTermoAditivoSupressao"
+                                     value="#{managerSupressao.supressao.numeroTermo}"
+                                     placeholder="Número"
+                                     rendered="true"
+                                     requiredMessage="Este campo é obrigatório."
+                                     styleClass="form-control" 
+                                     />
+                        <p:message for="numeroTermoAditivoSupressao" />
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-3">
+                    <div class="form-group" style="display: flex;flex-direction: column" >
                         <p:outputLabel value="Valor"
                                        for="supressaoValor" />
-                        <p:inputMask id="supressaoValor"
-                                     style="display: flex; flex-direction: row"
-                                     styleClass="form-control" 
-                                     value="#{managerSupressao.supressao.valor}"
-                                     placeholder="Valor"
-                                     requiredMessage="Este campo é obrigatório." />
+                        <p:inputNumber id="supressaoValor"   value="#{managerSupressao.supressao.valor}" symbol="R$"
+                                       symbolPosition="p" emptyValue="always" requiredMessage="Este campo é obrigatório." style="width: 100%"/>
                         <p:message for="supressaoValor" />
                     </div>
+                </div>
+                <div class="col-md-3">
+                    <p:outputLabel value="Data de assinatura"
+                                   for="dataassinaturaSupressao" />
+                    <p:calendar id="dataassinaturaSupressao"
+                                value="#{managerSupressao.supressao.dataAssinatura}"
+                                rendered="true"
+                                disabled="#{managerSupressao.visualizar}"
+                                mask="true"
+                                style="display: flex; flex-direction: row"
+                                requiredMessage="Este campo é obrigatório."
+                                inputStyleClass="form-control"
+                                showOn="button"
+                                />
+                    <p:message for="dataassinaturaSupressao" />
+                </div>
             </div>
         </h:panelGroup>
         <center>
-            <p:commandButton value="Pesquisar" icon="pi pi-search" process="@this supressaoSubPanel" update="supressaoDatatable" actionListener="#{managerSupressao.pesquisar(managerContrato.contrato)}" />
+            <p:commandButton value="Pesquisar" icon="pi pi-search" process="@this supressaoSubPanel" update="supressaoDatatable corpoInteiro:messages" actionListener="#{managerSupressao.pesquisar(managerContrato.contrato)}" />
         </center>
         <hr/>
         <p:dataTable id="supressaoDatatable" var="supressao" value="#{managerSupressao.supressoes}"
@@ -49,14 +62,14 @@
                 </center>
             </f:facet>
             <p:column headerText="Ações" width="200">
-                    <p:commandButton  icon="pi pi-trash" 
-                                      process="@this"
-                                      oncomplete="PF('removeraSupressaoConfirmDialog').show();" title="exluir" >
-                        <f:setPropertyActionListener value="#{supressao}"
-                                                     target="#{managerSupressao.supressao}"/>
-                    </p:commandButton>
+                <p:commandButton  icon="pi pi-trash" 
+                                  process="@this"
+                                  oncomplete="PF('removeraSupressaoConfirmDialog').show();" title="exluir" >
+                    <f:setPropertyActionListener value="#{supressao}"
+                                                 target="#{managerSupressao.supressao}"/>
+                </p:commandButton>
                 <p:button  icon="pi pi-eye" title="visualizar" href="supressao.xhtml?visualizar=#{supressao.id}" />
-                </p:column>
+            </p:column>
             <p:column headerText="N° do Termo Aditivo">
                 <h:outputText value="#{supressao.numeroTermo}" />
             </p:column>

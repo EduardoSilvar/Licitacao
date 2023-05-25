@@ -24,21 +24,34 @@
                         <p:message for="numeroTermoAditivoRenovacao" />
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <p:outputLabel value="Valor"
-                                   for="novoValorRenovacao" />
-                    <p:inputMask id="novoValorRenovacao"
-                                 value="#{managerRenovacao.renovacao.valor}"
-                                 style="display: flex; flex-direction: row"
-                                 styleClass="form-control"
-                                 placeholder="Valor"
-                                 requiredMessage="Este campo é obrigatório." />
-                    <p:message for="novoValorRenovacao" />
+                <div class="col-md-3">
+                    <div class="form-group" style="display: flex;flex-direction: column" >
+                        <p:outputLabel value="Valor"
+                                       for="novoValorRenovacao" />
+                        <p:inputNumber id="novoValorRenovacao"   value="#{managerRenovacao.renovacao.valor}" symbol="R$"
+                                       symbolPosition="p" emptyValue="always" requiredMessage="Este campo é obrigatório." style="width: 100%"/>
+                        <p:message for="novoValorRenovacao" />
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <p:outputLabel value="Data de assinatura"
+                                   for="dataAssinaturaRenovacao" />
+                    <p:calendar id="dataAssinaturaRenovacao"
+                                rendered="true"
+                                value="#{managerRenovacao.renovacao.dataAssinatura}"
+                                mask="true"
+                                style="display: flex; flex-direction: row"
+                                disabled="#{managerRenovacao.visualizar}"
+                                requiredMessage="Este campo é obrigatório."
+                                inputStyleClass="form-control"
+                                showOn="button"
+                                />
+                    <p:message for="dataAssinaturaRenovacao" />
                 </div>
             </div>
         </h:panelGroup>
         <center>
-            <p:commandButton value="Pesquisar" icon="pi pi-search" process="@this renovacaoSubPanel" update="renovacaoDatatable" actionListener="#{managerRenovacao.pesquisar(managerContrato.contrato)}" />
+            <p:commandButton value="Pesquisar" icon="pi pi-search" process="@this renovacaoSubPanel" update="renovacaoDatatable corpoInteiro:messages" actionListener="#{managerRenovacao.pesquisar(managerContrato.contrato)}" />
         </center>
         <hr/>
         <p:dataTable id="renovacaoDatatable" var="renovacao" value="#{managerRenovacao.renovacoes}"
