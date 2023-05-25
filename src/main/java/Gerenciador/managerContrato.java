@@ -368,6 +368,7 @@ public class managerContrato extends managerPrincipal implements Serializable {
     }
 
     public void deletar() {
+        System.out.println("Ativando o delete do contrato");
         try {
             Contrato novoContrato = contratoServico.find(this.contrato.getId());
             novoContrato.setAtivo(false);
