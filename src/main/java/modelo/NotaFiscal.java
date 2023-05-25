@@ -91,11 +91,13 @@ public class NotaFiscal implements Serializable {
 
     @Enumerated(EnumType.STRING)
     private StatusCumprimento necessidadeRescisao;
+    
+    private String consideracoes;
 
     public NotaFiscal() {
     }
 
-    public NotaFiscal(Long id, Long numero, String descricao, Contratado contratado, BigDecimal valor, Date dataPagamento, Usuario responsavel, Contrato contrato, List<Anexo> anexos, TipoRecebimentoEnum tipoRecebimento, UnidadeOrganizacional unidadeOrganizacional, String lotacao, String atoDesignacao, Date apartir, Date dataExtrato, Date periodoFiscalizado, Date inicioFiscalizado, Date finalFiscalizado, StatusCumprimento obrigacaoMensal, boolean obrigacaoMensalSeAplica, StatusCumprimento prazoEstabelecido, boolean prazoEstabelecidoSeAplica, StatusCumprimento documentoObrigatorio, boolean documentoObrigatorioSeAplica, StatusCumprimento relatorio, boolean relatorioSeAplica, StatusCumprimento qualidadeEsperada, boolean qualidadeEsperadaSeAplica, StatusCumprimento informouSituacao, boolean informouSituacaoSeAplica, StatusCumprimento diligenciaNecessarias, boolean diligenciaNecessariasSeAplica, String garantiaContratual, StatusCumprimento notificacaoExtrajudicial, StatusCumprimento procedimentoPenalizacao, StatusCumprimento suspensaoParalizacao, StatusCumprimento necessidadeRescisao) {
+    public NotaFiscal(Long id, Long numero, String descricao, Contratado contratado, BigDecimal valor, Date dataPagamento, Usuario responsavel, Contrato contrato, List<Anexo> anexos, TipoRecebimentoEnum tipoRecebimento, UnidadeOrganizacional unidadeOrganizacional, String lotacao, String atoDesignacao, Date apartir, Date dataExtrato, Date periodoFiscalizado, Date inicioFiscalizado, Date finalFiscalizado, StatusCumprimento obrigacaoMensal, boolean obrigacaoMensalSeAplica, StatusCumprimento prazoEstabelecido, boolean prazoEstabelecidoSeAplica, StatusCumprimento documentoObrigatorio, boolean documentoObrigatorioSeAplica, StatusCumprimento relatorio, boolean relatorioSeAplica, StatusCumprimento qualidadeEsperada, boolean qualidadeEsperadaSeAplica, StatusCumprimento informouSituacao, boolean informouSituacaoSeAplica, StatusCumprimento diligenciaNecessarias, boolean diligenciaNecessariasSeAplica, String garantiaContratual, StatusCumprimento notificacaoExtrajudicial, StatusCumprimento procedimentoPenalizacao, StatusCumprimento suspensaoParalizacao, StatusCumprimento necessidadeRescisao, String observacoes) {
         this.id = id;
         this.numero = numero;
         this.descricao = descricao;
@@ -133,7 +135,17 @@ public class NotaFiscal implements Serializable {
         this.procedimentoPenalizacao = procedimentoPenalizacao;
         this.suspensaoParalizacao = suspensaoParalizacao;
         this.necessidadeRescisao = necessidadeRescisao;
+        this.consideracoes = observacoes;
     }
+
+    public String getConsideracoes() {
+        return consideracoes;
+    }
+
+    public void setConsideracoes(String consideracoes) {
+        this.consideracoes = consideracoes;
+    }
+
 
     public Long getId() {
         return id;

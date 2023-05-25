@@ -385,7 +385,7 @@ public class MacroNotaFiscal {
         tableMaePai.setPaddingTop(50);
         tableMaePai.getDefaultCell().setPadding(3);
         tableMaePai.setWidthPercentage(95);
-        paragraphGlobal = new Paragraph("Observações sobre as ocorrências :", fonte);
+        paragraphGlobal = new Paragraph("Observações sobre as ocorrências :" + nota.getDescricao(), fonte);
         tableMaePai.addCell(paragraphGlobal);
         document.add(tableMaePai);
 

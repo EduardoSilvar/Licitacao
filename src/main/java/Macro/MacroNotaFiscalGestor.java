@@ -39,7 +39,7 @@ import util.Utils;
 public class MacroNotaFiscalGestor {
 
     public static Document MacroNotaFiscal(Document document, Contratado contratado, Contrato contrato, NotaFiscal nota, UnidadeOrganizacional orgao, List<Acrescimo> acrescimo, List<Repactuacao> termosApostilamentos, Usuario user, List<NotaFiscal> notas) throws DocumentException, IOException {
-       document.setMargins(100, 25, 100, 25);
+        document.setMargins(100, 25, 100, 25);
         Table table1 = new Table(1);
         PdfFont font = PdfFontFactory.createFont(FontConstants.TIMES_BOLD);
         PdfFont font2 = PdfFontFactory.createFont(FontConstants.HELVETICA);
@@ -461,7 +461,12 @@ public class MacroNotaFiscalGestor {
             cell = new Cell();
             cell.add(paragraphGlobal).setBorder(Border.NO_BORDER);
             notaTable.addCell(cell);
-            paragraphGlobal = new Paragraph("Considerações : ").setFont(font2).setFontSize(9);
+            if (Utils.isNotEmpty(nota.getConsideracoes())) {
+                paragraphGlobal = new Paragraph("Considerações : " + nota.getConsideracoes()).setFont(font2).setFontSize(9);
+            } else {
+                paragraphGlobal = new Paragraph("Considerações : ").setFont(font2).setFontSize(9);
+
+            }
             cell = new Cell();
             cell.add(paragraphGlobal).setBorder(Border.NO_BORDER);
             notaTable.addCell(cell);
@@ -481,7 +486,12 @@ public class MacroNotaFiscalGestor {
             Table decimaTable = new Table(1);
             decimaTable.setPadding(3);
             decimaTable.setWidth(550);
-            paragraphGlobal = new Paragraph("OBSERVAÇÕES: ").setFont(font2).setFontSize(10);
+            if (Utils.isNotEmpty(nota.getDescricao())) {
+                paragraphGlobal = new Paragraph("OBSERVAÇÕES: " + nota.getDescricao()).setFont(font2).setFontSize(10);
+            } else {
+                paragraphGlobal = new Paragraph("OBSERVAÇÕES: ").setFont(font2).setFontSize(10);
+
+            }
             decimaTable.addCell(paragraphGlobal);
 
             document.add(decimaTable);

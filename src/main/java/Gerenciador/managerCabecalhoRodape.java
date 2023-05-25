@@ -146,7 +146,7 @@ public class managerCabecalhoRodape extends managerPrincipal implements Serializ
             if (Utils.isNotEmpty(userLogado.getUnidadeOrganizacional())) {
                 this.cabecalhoRodape.setImagem(anexoServico.adicionarAnexo(this.anexo.getArquivo(), TipoAnexo.CABECALHO_RODAPE, userLogado.getUnidadeOrganizacional().getId()));
             } else {
-                this.cabecalhoRodape.setImagem(anexoServico.adicionarAnexo(this.anexo.getArquivo(), 000l));
+                this.cabecalhoRodape.setImagem(anexoServico.adicionarAnexo(this.anexo.getArquivo(),TipoAnexo.CABECALHO_RODAPE, 000l));
             }
 //            this.contrato.getAnexos().get(posicao - 1).setTipo(anexo.getTipo());
             this.cabecalhoRodape.getImagem().setArquivo(anexo.getArquivo());

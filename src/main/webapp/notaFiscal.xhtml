@@ -212,28 +212,28 @@
                         <p:message for="inicioFiscalizacaoNotaFiscal" />
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <p:outputLabel value="Data final da fiscalização "
-                                       for="finalFiscalizacaoNotaFiscal"  />
-                        <p:calendar id="finalFiscalizacaoNotaFiscal"
-                                    rendered="true"
-                                    locale="pt"
-                                    pattern="dd/MM/yyyy"
-                                    mask="true"
-                                    mindate="#{managerNotaFiscal.notaFiscal.inicioFiscalizado}"
-                                    disabled="#{managerNotaFiscal.visualizar}"
-                                    style="display: flex; flex-direction: row"
-                                    requiredMessage="Este campo é obrigatório."
-                                    value="#{managerNotaFiscal.notaFiscal.finalFiscalizado}"
-                                    inputStyleClass="form-control"
-                                    showOn="button"
-                                    >
-                            <p:ajax listener="#{managerContrato.verificarData()}" event="blur" update="corpoInteiro:messages" />
-                        </p:calendar>
-                        <p:message for="finalFiscalizacaoNotaFiscal" />
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <p:outputLabel value="Data final da fiscalização "
+                                           for="finalFiscalizacaoNotaFiscal"  />
+                            <p:calendar id="finalFiscalizacaoNotaFiscal"
+                                        rendered="true"
+                                        locale="pt"
+                                        pattern="dd/MM/yyyy"
+                                        mask="true"
+                                        mindate="#{managerNotaFiscal.notaFiscal.inicioFiscalizado}"
+                                        disabled="#{managerNotaFiscal.visualizar}"
+                                        style="display: flex; flex-direction: row"
+                                        requiredMessage="Este campo é obrigatório."
+                                        value="#{managerNotaFiscal.notaFiscal.finalFiscalizado}"
+                                        inputStyleClass="form-control"
+                                        showOn="button"
+                                        >
+                                <p:ajax listener="#{managerNotaFiscal.verificarData()}" process="@this inicioFiscalizacaoNotaFiscal finalFiscalizacaoNotaFiscal" event="blur" update="corpoInteiro:messages" />
+                            </p:calendar>
+                            <p:message for="finalFiscalizacaoNotaFiscal" />
+                        </div>
                     </div>
-                </div>
                 <div class="col-md-4">
                     <div class="form-group">
                         <p:outputLabel value="Compriu as obrigações mensais ?"/>
@@ -534,6 +534,21 @@
                                          styleClass="form-control" 
                                          />
                         <p:message for="garantiaContratualNotaFiscal" />
+                    </div>
+                </div>
+                 <div class="col-md-12">
+                    <div class="form-group">
+                        <p:outputLabel value="Observações"
+                                       for="observacoesContratualNotaFiscal" />
+                        <p:inputTextarea id="observacoesContratualNotaFiscal"
+                                         placeholder="Observações"
+                                         rendered="true"
+                                         disabled="#{managerNotaFiscal.visualizar}"
+                                         value="#{managerNotaFiscal.notaFiscal.observacoes}"
+                                         requiredMessage="Este campo é obrigatório."
+                                         styleClass="form-control" 
+                                         />
+                        <p:message for="observacoesContratualNotaFiscal" />
                     </div>
                 </div>
             </div>

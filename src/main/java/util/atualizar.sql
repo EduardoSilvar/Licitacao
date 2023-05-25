@@ -144,12 +144,17 @@ alter table notaFiscal add column diligenciaNecessarias varchar(250);
 alter table relatorio add column logo_id bigint;
 ALTER TABLE relatorio ADD CONSTRAINT fk_logo_id FOREIGN KEY (logo_id) REFERENCES anexo (id);
 
-alter table relatorio add column marginDireitaCabecalho int;
-alter table relatorio add column margineEsquerdaCabecalho int;
-alter table relatorio add column marginDireitaRodape int;
-alter table relatorio add column margineEsquerdaRodape int;
+alter table relatorio add column margemDireitaCabecalho int;
+alter table relatorio add column margemEsquerdaCabecalho int;
+alter table relatorio add column margemDireitaRodape int;
+alter table relatorio add column margemEsquerdaRodape int;
 alter table relatorio add column fontSizeRodape int;
 alter table relatorio add column fontSizeCabecalho int;
+alter table relatorio add column posicaoImagemCabecalho boolean default true;
+alter table relatorio add column posicaoImagemrodape boolean default true;
+alter table relatorio add column ativo boolean default true;
+
+
 
 alter table relatorio add column urlImagem varchar(250);
 alter table relatorio add column urlImagemrodape varchar(250);
@@ -168,3 +173,10 @@ alter table notaFiscal add column procedimentoPenalizacao varchar(250);
 alter table notaFiscal add column suspensaoParalizacao varchar(250);
 alter table notaFiscal add column necessidadeRescisao varchar(250);
 
+alter table configuracao add column cabecalhoNotaFiscal_id bigint;
+ALTER TABLE configuracao ADD CONSTRAINT fk_cabecalhoNotaFiscal_id FOREIGN KEY (cabecalhoNotaFiscal_id) REFERENCES cabecalhorodape (id);
+
+alter table configuracao add column rodapeNotaFiscal_id bigint;
+ALTER TABLE configuracao ADD CONSTRAINT fk_rodapeNotaFiscal_id FOREIGN KEY (rodapeNotaFiscal_id) REFERENCES cabecalhorodape (id);
+
+alter table notaFiscal add column observacoes varchar(250);

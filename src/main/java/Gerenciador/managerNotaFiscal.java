@@ -90,14 +90,16 @@ public class managerNotaFiscal extends managerPrincipal {
 
     public void verificarData() {
         if (Utils.isNotEmpty(notaFiscal.getInicioFiscalizado())) {
-            if (this.notaFiscal.getInicioFiscalizado().before(this.notaFiscal.getFinalFiscalizado())) {
+            if (!this.notaFiscal.getFinalFiscalizado().before(this.notaFiscal.getInicioFiscalizado())) {
+                System.err.println("entrou aqui no primeiro");
                 Msg.messagemError("A data final deve ser posterior à data inicial.");
             }
         } else {
+            System.err.println("entrou aqui no segundo");
             Msg.messagemError("A data final deve ser posterior à data inicial.");
         }
     }
-
+    
     public void deletar() {
         NotaFiscal nt = notaFiscalServico.find(this.notaFiscal.getId());
         nt.setAtivo(false);
@@ -137,7 +139,11 @@ public class managerNotaFiscal extends managerPrincipal {
     public void adicionarAnexo() {
 
         try {
-            this.notaFiscal.getAnexos().add(anexoServico.adicionarAnexo(this.anexo.getArquivo(),TipoAnexo.NOTAFISCAL, userLogado.getUnidadeOrganizacional().getId()));
+            if (Utils.isNotEmpty(userLogado.getUnidadeOrganizacional())) {
+                this.notaFiscal.getAnexos().add(anexoServico.adicionarAnexo(this.anexo.getArquivo(), TipoAnexo.NOTAFISCAL, userLogado.getUnidadeOrganizacional().getId()));
+            } else {
+                this.notaFiscal.getAnexos().add(anexoServico.adicionarAnexo(this.anexo.getArquivo(), TipoAnexo.NOTAFISCAL, 000l));
+            }
             int posicao = notaFiscal.getAnexos().size();
 //            this.contrato.getAnexos().get(posicao - 1).setTipo(anexo.getTipo());
             this.notaFiscal.getAnexos().get(posicao - 1).setArquivo(anexo.getArquivo());
