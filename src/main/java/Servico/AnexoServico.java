@@ -19,6 +19,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import modelo.Anexo;
+import modelo.TipoAnexo;
 import net.coobird.thumbnailator.Thumbnails;
 import net.coobird.thumbnailator.geometry.Positions;
 import net.coobird.thumbnailator.name.Rename;
@@ -39,7 +40,7 @@ public class AnexoServico implements Serializable {
     public static final String REAL_PATH_TMP = "/tmp/Licitacao/uploads/";
     public String REAL_PATH_OPT = "/opt/Licitacao/uploads/";
 
-    public Anexo adicionarAnexo(UploadedFile arquivo) throws FileNotFoundException, SQLException, IOException {
+    public Anexo adicionarAnexo(UploadedFile arquivo, TipoAnexo tipoAnexo, Long idUnidade) throws FileNotFoundException, SQLException, IOException {
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy-HH-mm-ss-SSSS");
         String data = dateFormat.format(new Date());
@@ -52,7 +53,7 @@ public class AnexoServico implements Serializable {
         nome = nome.toLowerCase();
         nome = nome.replaceAll(" ", "_");
 
-        return adicionarArquivo(arquivo, nome, REAL_PATH_OPT);
+        return adicionarArquivo(arquivo, nome, REAL_PATH_OPT + "/" + idUnidade + "/" + tipoAnexo.getUrl());
     }
 
     public void salvar(Anexo anexo) {

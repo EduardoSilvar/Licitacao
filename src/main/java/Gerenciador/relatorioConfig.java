@@ -141,8 +141,6 @@ public class relatorioConfig {
 
     public HeaderFooterPageEvent aplicarCabecahoRodape(CabecalhoRodape cabecalho, CabecalhoRodape rodape) {
         HeaderFooterPageEvent handler = new HeaderFooterPageEvent();
-        handler.setMargemTopoCabecalho(30);
-        handler.setMargemBaixoRodape(10);
 
         if (Utils.isNotEmpty(cabecalho)) {
             if (Utils.isNotEmpty(cabecalho.getMargemEsquerda())) {
@@ -165,7 +163,7 @@ public class relatorioConfig {
             }
             if (Utils.isNotEmpty(cabecalho.getImagem())) {
                 if (Utils.isNotEmpty(cabecalho.getImagem().getCaminho())) {
-                    handler.setUrlImagemCabecalho(cabecalho.getImagem().getCaminho().toString() + cabecalho.getImagem().getNome());
+                    handler.setUrlImagemCabecalho(cabecalho.getImagem().getUrl() + cabecalho.getImagem().getNome());
                 }
             }
             if (Utils.isNotEmpty(cabecalho.getFonSize())) {
@@ -208,7 +206,7 @@ public class relatorioConfig {
             }
             if (Utils.isNotEmpty(rodape.getImagem())) {
                 if (Utils.isNotEmpty(rodape.getImagem().getCaminho())) {
-                    handler.setUrlImagemRodape(rodape.getImagem().getCaminho().toString() + rodape.getImagem().getNome());
+                    handler.setUrlImagemRodape(rodape.getImagem().getUrl() + rodape.getImagem().getNome());
                 }
             }
             if (Utils.isNotEmpty(rodape.getFonSize())) {

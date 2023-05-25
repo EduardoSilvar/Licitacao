@@ -65,6 +65,8 @@ public class managerCabecalhoRodape extends managerPrincipal implements Serializ
         this.cabecalhoRodape = cabecalhoRodapeServico.find(Long.parseLong(param));
         userLogado = userServico.getCurrentUser();
         verificarUrl();
+        instanciarAnexo();
+
     }
 
     @Override
@@ -98,7 +100,7 @@ public class managerCabecalhoRodape extends managerPrincipal implements Serializ
 
     public void selecionarLogo(FileUploadEvent event) {
         try {
-            Anexo logo = anexoServico.adicionarAnexo(event.getFile());
+            Anexo logo = anexoServico.adicionarAnexo(event.getFile(), TipoAnexo.CABECALHO_RODAPE, userLogado.getUnidadeOrganizacional().getId());
             logo.setArquivo(event.getFile());
             this.cabecalhoRodape.setImagem(logo);
         } catch (IOException | SQLException ex) {
@@ -141,7 +143,11 @@ public class managerCabecalhoRodape extends managerPrincipal implements Serializ
     public void adicionarAnexo() {
 
         try {
-            this.cabecalhoRodape.setImagem(anexoServico.adicionarAnexo(this.anexo.getArquivo()));
+            if (Utils.isNotEmpty(userLogado.getUnidadeOrganizacional())) {
+                this.cabecalhoRodape.setImagem(anexoServico.adicionarAnexo(this.anexo.getArquivo(), TipoAnexo.CABECALHO_RODAPE, userLogado.getUnidadeOrganizacional().getId()));
+            } else {
+                this.cabecalhoRodape.setImagem(anexoServico.adicionarAnexo(this.anexo.getArquivo(), 000l));
+            }
 //            this.contrato.getAnexos().get(posicao - 1).setTipo(anexo.getTipo());
             this.cabecalhoRodape.getImagem().setArquivo(anexo.getArquivo());
             this.cabecalhoRodape.getImagem().setCaminho(TipoAnexo.CABECALHO_RODAPE);

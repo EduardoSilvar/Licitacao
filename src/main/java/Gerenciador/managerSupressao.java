@@ -136,9 +136,9 @@ public class managerSupressao extends managerPrincipal implements Serializable {
             }
         }
     }
-    
-    public void selecionarContrato(){
-        if(this.supressao.getContrato().getTipoFiscalizacao().equals(TipoFiscalizacaoEnum.INDIVIDUAL)){
+
+    public void selecionarContrato() {
+        if (this.supressao.getContrato().getTipoFiscalizacao().equals(TipoFiscalizacaoEnum.INDIVIDUAL)) {
             this.supressao.setFiscal(new Usuario());
             this.supressao.setFiscal(this.supressao.getContrato().getFiscal());
         }
@@ -193,7 +193,11 @@ public class managerSupressao extends managerPrincipal implements Serializable {
             if (Utils.isEmpty(this.supressao.getAnexos())) {
                 this.supressao.setAnexos(new ArrayList<Anexo>());
             }
-            this.supressao.getAnexos().add(anexoServico.adicionarAnexo(this.anexo.getArquivo()));
+            if (Utils.isNotEmpty(user.getUnidadeOrganizacional())) {
+                this.supressao.getAnexos().add(anexoServico.adicionarAnexo(this.anexo.getArquivo(), TipoAnexo.SUPRESSAO, user.getUnidadeOrganizacional().getId()));
+            } else {
+                this.supressao.getAnexos().add(anexoServico.adicionarAnexo(this.anexo.getArquivo(), TipoAnexo.SUPRESSAO, 000l));
+            }
             int posicao = supressao.getAnexos().size();
             this.supressao.getAnexos().get(posicao - 1).setArquivo(anexo.getArquivo());
             this.supressao.getAnexos().get(posicao - 1).setCaminho(TipoAnexo.SUPRESSAO);

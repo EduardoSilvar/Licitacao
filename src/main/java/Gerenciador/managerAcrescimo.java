@@ -17,11 +17,8 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
@@ -131,9 +128,9 @@ public class managerAcrescimo extends managerPrincipal implements Serializable {
         this.anexo.setTipoAnexo(TipoAnexo.ACRESCIMO);
         adicionarAnexo();
     }
-    
-    public void selecionarContrato(){
-        if(this.acrescimo.getContrato().getTipoFiscalizacao().equals(TipoFiscalizacaoEnum.INDIVIDUAL)){
+
+    public void selecionarContrato() {
+        if (this.acrescimo.getContrato().getTipoFiscalizacao().equals(TipoFiscalizacaoEnum.INDIVIDUAL)) {
             this.acrescimo.setFiscal(new Usuario());
             this.acrescimo.setFiscal(this.acrescimo.getContrato().getFiscal());
         }
@@ -142,10 +139,15 @@ public class managerAcrescimo extends managerPrincipal implements Serializable {
     public void adicionarAnexo() {
 
         try {
-            if(Utils.isEmpty(this.acrescimo.getAnexos())){
-            this.acrescimo.setAnexos(new ArrayList<Anexo>());
+            if (Utils.isEmpty(this.acrescimo.getAnexos())) {
+                this.acrescimo.setAnexos(new ArrayList<Anexo>());
             }
-            this.acrescimo.getAnexos().add(anexoServico.adicionarAnexo(this.anexo.getArquivo()));
+            if (Utils.isNotEmpty(user.getUnidadeOrganizacional())) {
+                this.acrescimo.getAnexos().add(anexoServico.adicionarAnexo(this.anexo.getArquivo(), TipoAnexo.ACRESCIMO, user.getUnidadeOrganizacional().getId()));
+            } else {
+                this.acrescimo.getAnexos().add(anexoServico.adicionarAnexo(this.anexo.getArquivo(), TipoAnexo.ACRESCIMO, 000l));
+
+            }
             int posicao = acrescimo.getAnexos().size();
             this.acrescimo.getAnexos().get(posicao - 1).setArquivo(anexo.getArquivo());
             this.acrescimo.getAnexos().get(posicao - 1).setCaminho(TipoAnexo.ACRESCIMO);

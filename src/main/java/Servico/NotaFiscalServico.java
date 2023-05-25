@@ -95,7 +95,7 @@ public class NotaFiscalServico extends ServicoGenerico<NotaFiscal> implements Se
 
         float cima = 10;
 
-        float baixo = 30;
+        float baixo = 10;
 
         Document document = new Document(PageSize.A4, esquerda, direita, cima, baixo);
 

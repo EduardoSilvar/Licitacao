@@ -39,6 +39,7 @@ import util.Utils;
 public class MacroNotaFiscalGestor {
 
     public static Document MacroNotaFiscal(Document document, Contratado contratado, Contrato contrato, NotaFiscal nota, UnidadeOrganizacional orgao, List<Acrescimo> acrescimo, List<Repactuacao> termosApostilamentos, Usuario user, List<NotaFiscal> notas) throws DocumentException, IOException {
+       document.setMargins(100, 25, 100, 25);
         Table table1 = new Table(1);
         PdfFont font = PdfFontFactory.createFont(FontConstants.TIMES_BOLD);
         PdfFont font2 = PdfFontFactory.createFont(FontConstants.HELVETICA);

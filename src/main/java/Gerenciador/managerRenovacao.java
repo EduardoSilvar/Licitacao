@@ -262,7 +262,11 @@ public class managerRenovacao extends managerPrincipal implements Serializable {
             if (Utils.isEmpty(this.renovacao.getAnexos())) {
                 this.renovacao.setAnexos(new ArrayList<Anexo>());
             }
-            this.renovacao.getAnexos().add(anexoServico.adicionarAnexo(this.anexo.getArquivo()));
+            if (Utils.isNotEmpty(user.getUnidadeOrganizacional())) {
+                this.renovacao.getAnexos().add(anexoServico.adicionarAnexo(this.anexo.getArquivo(), TipoAnexo.RENOVACAO, user.getUnidadeOrganizacional().getId()));
+            } else {
+                this.renovacao.getAnexos().add(anexoServico.adicionarAnexo(this.anexo.getArquivo(), TipoAnexo.RENOVACAO, 000l));
+            }
             int posicao = renovacao.getAnexos().size();
             this.renovacao.getAnexos().get(posicao - 1).setArquivo(anexo.getArquivo());
             this.renovacao.getAnexos().get(posicao - 1).setCaminho(TipoAnexo.RENOVACAO);

@@ -18,23 +18,17 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.component.UIComponent;
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-import javax.faces.validator.ValidatorException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import modelo.Acrescimo;
 import modelo.Anexo;
-import modelo.Contratado;
 import modelo.Contrato;
 import modelo.ModeloDocumento;
 import modelo.NotaFiscal;
@@ -127,12 +121,6 @@ public class managerNotaFiscal extends managerPrincipal {
         adicionarAnexo();
     }
 
-//    public void validateSecondDate(FacesContext context, UIComponent component, Object value) {
-//        Date secondDate = (Date) value;
-//        if (secondDate != null && secondDate.before(notaFiscal.getInicioFiscalizado())) {
-//            throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "A data inicial deve ser preenchida primeiro", null));
-//        }
-//    }
     public List<Contrato> autocompletaContrato(String nome) {
         return contratoServico.findContrato(nome, userLogado.getUnidadeOrganizacional());
     }
@@ -149,7 +137,7 @@ public class managerNotaFiscal extends managerPrincipal {
     public void adicionarAnexo() {
 
         try {
-            this.notaFiscal.getAnexos().add(anexoServico.adicionarAnexo(this.anexo.getArquivo()));
+            this.notaFiscal.getAnexos().add(anexoServico.adicionarAnexo(this.anexo.getArquivo(),TipoAnexo.NOTAFISCAL, userLogado.getUnidadeOrganizacional().getId()));
             int posicao = notaFiscal.getAnexos().size();
 //            this.contrato.getAnexos().get(posicao - 1).setTipo(anexo.getTipo());
             this.notaFiscal.getAnexos().get(posicao - 1).setArquivo(anexo.getArquivo());

@@ -123,15 +123,15 @@ public class managerRelatorio extends managerPrincipal implements Serializable {
         Msg.messagemInfoRedirect(Msg.SuccessFull, "pesquisarRelatorio.xhtml");
     }
 
-    public void selecionarLogo(FileUploadEvent event) {
-        try {
-            Anexo logo = anexoServico.adicionarAnexo(event.getFile());
-            logo.setArquivo(event.getFile());
-            this.relatorio.setLogo(logo);
-        } catch (IOException | SQLException ex) {
-            Logger.getLogger(managerRelatorio.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+//    public void selecionarLogo(FileUploadEvent event) {
+//        try {
+//            Anexo logo = anexoServico.adicionarAnexo(event.getFile(),);
+//            logo.setArquivo(event.getFile());
+//            this.relatorio.setLogo(logo);
+//        } catch (IOException | SQLException ex) {
+//            Logger.getLogger(managerRelatorio.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//    }
 
     public boolean isPDF(Anexo anexo) {
         if (Utils.isNotEmpty(anexo)) {
@@ -157,32 +157,32 @@ public class managerRelatorio extends managerPrincipal implements Serializable {
         }
     }
 
-    public void selecionarAnexo(FileUploadEvent event) {
-        if (Utils.isNotEmpty(event)) {
-            if (Utils.isNotEmpty(event.getFile())) {
-                this.anexo.setArquivo(event.getFile());
-            }
-        }
-        this.anexo.setTipoAnexo(TipoAnexo.CONTRATO);
-        adicionarAnexo();
-    }
+//    public void selecionarAnexo(FileUploadEvent event) {
+//        if (Utils.isNotEmpty(event)) {
+//            if (Utils.isNotEmpty(event.getFile())) {
+//                this.anexo.setArquivo(event.getFile());
+//            }
+//        }
+//        this.anexo.setTipoAnexo(TipoAnexo.CONTRATO);
+//        adicionarAnexo();
+//    }
 
-    public void adicionarAnexo() {
-
-        try {
-            this.relatorio.setLogo(anexoServico.adicionarAnexo(this.anexo.getArquivo()));
-//            this.contrato.getAnexos().get(posicao - 1).setTipo(anexo.getTipo());
-            this.relatorio.getLogo().setArquivo(anexo.getArquivo());
-            this.relatorio.getLogo().setCaminho(TipoAnexo.CABECALHO_RODAPE);
-            this.relatorio.getLogo().setTipoAnexo(this.anexo.getTipoAnexo());
-        } catch (SQLException | IOException ex) {
-            Logger.getLogger(managerContrato.class
-                    .getName()).log(Level.SEVERE, null, ex);
-        }
-        instanciarAnexo();
-        Msg.messagemInfo(Msg.SuccessFull);
-
-    }
+//    public void adicionarAnexo() {
+//
+//        try {
+//            this.relatorio.setLogo(anexoServico.adicionarAnexo(this.anexo.getArquivo()));
+////            this.contrato.getAnexos().get(posicao - 1).setTipo(anexo.getTipo());
+//            this.relatorio.getLogo().setArquivo(anexo.getArquivo());
+//            this.relatorio.getLogo().setCaminho(TipoAnexo.CABECALHO_RODAPE);
+//            this.relatorio.getLogo().setTipoAnexo(this.anexo.getTipoAnexo());
+//        } catch (SQLException | IOException ex) {
+//            Logger.getLogger(managerContrato.class
+//                    .getName()).log(Level.SEVERE, null, ex);
+//        }
+//        instanciarAnexo();
+//        Msg.messagemInfo(Msg.SuccessFull);
+//
+//    }
 
     public void instanciarAnexo() {
         this.anexo = new Anexo();

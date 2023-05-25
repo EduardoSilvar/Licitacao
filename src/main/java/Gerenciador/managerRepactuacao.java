@@ -121,13 +121,13 @@ public class managerRepactuacao extends managerPrincipal implements Serializable
         return repactuacao.getValorMudou();
     }
 
-    public void selecionarContrato(){
-        if(this.repactuacao.getContrato().getTipoFiscalizacao().equals(TipoFiscalizacaoEnum.INDIVIDUAL)){
+    public void selecionarContrato() {
+        if (this.repactuacao.getContrato().getTipoFiscalizacao().equals(TipoFiscalizacaoEnum.INDIVIDUAL)) {
             this.repactuacao.setFiscal(new Usuario());
             this.repactuacao.setFiscal(this.repactuacao.getContrato().getFiscal());
         }
     }
-    
+
     public void salvar() {
         if (Utils.isNotEmpty(this.repactuacao.getNumeroTermo())) {
             if (repactuacaoServico.existNumero(this.repactuacao.getNumeroTermo())) {
@@ -249,7 +249,11 @@ public class managerRepactuacao extends managerPrincipal implements Serializable
             if (Utils.isEmpty(this.repactuacao.getAnexos())) {
                 this.repactuacao.setAnexos(new ArrayList<Anexo>());
             }
-            this.repactuacao.getAnexos().add(anexoServico.adicionarAnexo(this.anexo.getArquivo()));
+            if (Utils.isNotEmpty(user.getUnidadeOrganizacional())) {
+                this.repactuacao.getAnexos().add(anexoServico.adicionarAnexo(this.anexo.getArquivo(), TipoAnexo.REPACTUACAO, user.getUnidadeOrganizacional().getId()));
+            } else {
+                this.repactuacao.getAnexos().add(anexoServico.adicionarAnexo(this.anexo.getArquivo(), TipoAnexo.REPACTUACAO, 000l));
+            }
             int posicao = repactuacao.getAnexos().size();
             this.repactuacao.getAnexos().get(posicao - 1).setArquivo(anexo.getArquivo());
             this.repactuacao.getAnexos().get(posicao - 1).setCaminho(TipoAnexo.REPACTUACAO);
