@@ -7,7 +7,23 @@
     <ui:define name="acoes">
         <h:panelGroup class="panelAcoes">
 
-           
+            <p:splitButton value="Ações" style="margin: 0px -8px !important"
+                           icon="pi pi-cog"
+                           >
+
+                <p:menuitem value="Cadastrar Cabeçalho" 
+                            icon="pi pi-plus"
+                            url="cabecalho.xhtml"
+                            process="@this"
+                            />
+                <p:menuitem value="Cadastrar Rodapé" 
+                            icon="pi pi-plus"
+                            url="rodape.xhtml"
+                            process="@this"
+                            />
+
+            </p:splitButton>
+
         </h:panelGroup>
     </ui:define>
     <ui:define name="barra">
@@ -22,38 +38,38 @@
     <ui:define name="corpo">
         <p:growl id="messages" showDetail="true" />
         <div class="row">
-        <div class="col-md-6">
-            <div class="form-group">
-                <p:outputLabel value="Cabecalho" styleClass="control-label" for="cabecalhoAutoComplete" />
-                <p:autoComplete id="cabecalhoAutoComplete" dropdown="true" converter="cabecalhorodapeconverter"
-                                var="cabecalho" itemLabel="#{cabecalho.nome}"
-                                itemValue="#{cabecalho}" value="#{managerConfiguracaoNotaFiscal.cabecalho}"
-                                scrollHeight="200" forceSelection="true"
-                                inputStyleClass="form-control"
-                                style="display: flex;"
-                                emptyMessage="Usuario não encontrado" 
-                                completeMethod="#{managerConfiguracaoNotaFiscal.autocompletaCabecalho}"
-                                >
-                </p:autoComplete>
-            </div> 
-        </div>
-
-        <div class="col-md-6">
-            <div class="form-group">
-                <p:outputLabel value="Rodape" styleClass="control-label" for="rodapeAutoComplete" />
-                <p:autoComplete id="rodapeAutoComplete" dropdown="true" converter="cabecalhorodapeconverter"
-                                var="rodape" itemLabel="#{rodape.nome}"
-                                itemValue="#{rodape}" value="#{managerConfiguracaoNotaFiscal.rodape}"
-                                scrollHeight="200" forceSelection="true"
-                                inputStyleClass="form-control"
-                                style="display: flex;"
-                                emptyMessage="Usuario não encontrado" 
-                                completeMethod="#{managerConfiguracaoNotaFiscal.autocompletaRodape}"
-                                >
-                </p:autoComplete>
-            </div> 
-        </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <p:outputLabel value="Cabecalho" styleClass="control-label" for="cabecalhoAutoComplete" />
+                    <p:autoComplete id="cabecalhoAutoComplete" dropdown="true" converter="cabecalhorodapeconverter"
+                                    var="cabecalho" itemLabel="#{cabecalho.nome}"
+                                    itemValue="#{cabecalho}" value="#{managerConfiguracaoNotaFiscal.cabecalho}"
+                                    scrollHeight="200" forceSelection="true"
+                                    inputStyleClass="form-control"
+                                    style="display: flex;"
+                                    emptyMessage="Usuario não encontrado" 
+                                    completeMethod="#{managerConfiguracaoNotaFiscal.autocompletaCabecalho}"
+                                    >
+                    </p:autoComplete>
+                </div> 
             </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <p:outputLabel value="Rodape" styleClass="control-label" for="rodapeAutoComplete" />
+                    <p:autoComplete id="rodapeAutoComplete" dropdown="true" converter="cabecalhorodapeconverter"
+                                    var="rodape" itemLabel="#{rodape.nome}"
+                                    itemValue="#{rodape}" value="#{managerConfiguracaoNotaFiscal.rodape}"
+                                    scrollHeight="200" forceSelection="true"
+                                    inputStyleClass="form-control"
+                                    style="display: flex;"
+                                    emptyMessage="Usuario não encontrado" 
+                                    completeMethod="#{managerConfiguracaoNotaFiscal.autocompletaRodape}"
+                                    >
+                    </p:autoComplete>
+                </div> 
+            </div>
+        </div>
         <center>
             <p:commandButton value="Salvar" icon="pi pi-save" process="@this @form" actionListener="#{managerConfiguracaoNotaFiscal.salvarConfiguracao()}" update=" corpoInteiro:messages" style="margin: 0px 20px; background-color: #01415B; color: #fff; margin-bottom: 10px;"/>
             <p:button value="Cancelar" href="notaFiscal.xhtml" icon="pi pi-ban"  style="background-color: #01415B; color: #fff;margin-bottom: 10px"/>

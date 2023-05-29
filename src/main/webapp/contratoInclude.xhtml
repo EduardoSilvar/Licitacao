@@ -211,7 +211,7 @@
                                             value="#{managerContrato.contrato.dataFinal}"
                                             showOn="button"
                                             >
-                                    <p:ajax listener="#{managerContrato.verificarData()}" event="blur" update="corpoInteiro:messages" />
+                                    <p:ajax listener="#{managerContrato.verificarData()}" event="blur" process="@this" update="corpoInteiro:messages" />
                                 </p:calendar>
                                 <p:message for="dataFinalContrato" />
                             </div>
@@ -540,7 +540,7 @@
         <p:tab title="Renovações" rendered="#{managerContrato.visualizar}">
             <ui:include src="pesquisaRenovacao.xhtml"/>
         </p:tab>
-        <p:tab title="Repactuações" rendered="#{managerContrato.visualizar}">
+        <p:tab title="Reajuste" rendered="#{managerContrato.visualizar}">
             <ui:include src="pesquisaRepactuacao.xhtml"/>
         </p:tab>
         <p:tab title="Mensagens" rendered="#{managerContrato.mensagensEmail.size() > 0}" >

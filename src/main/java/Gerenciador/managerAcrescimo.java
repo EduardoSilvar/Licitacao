@@ -225,16 +225,16 @@ public class managerAcrescimo extends managerPrincipal implements Serializable {
 
     public void salvar() {
         if (Utils.isNotEmpty(this.acrescimo.getNumeroTermo())) {
-            if (acrescimoServico.existNumero(this.acrescimo.getNumeroTermo())) {
-                Msg.messagemError("Número de termo aditivo já registrado !");
-            } else {
-                Contrato contrato = this.acrescimo.getContrato();
-                contrato.setValor(this.acrescimo.getValor().add(contrato.getValor()));
-                contrato.setValorRestante(contrato.getValorRestante().add(this.acrescimo.getValor()));
-                contratoServico.Update(contrato);
-                acrescimoServico.Save(this.acrescimo);
-                Msg.messagemInfoRedirect("Operação realizada com sucesso !", "acrescimo.xhtml?visualizar=" + this.acrescimo.getId() + "&acrescimo=TRUE");
-            }
+//            if (acrescimoServico.existNumero(this.acrescimo.getNumeroTermo())) {
+//                Msg.messagemError("Número de termo aditivo já registrado !");
+//            } else {
+            Contrato contrato = this.acrescimo.getContrato();
+            contrato.setValor(this.acrescimo.getValor().add(contrato.getValor()));
+            acrescimoServico.Save(this.acrescimo);
+            contrato.setValorRestante(contrato.getValorRestante().add(this.acrescimo.getValor()));
+            contratoServico.Update(contrato);
+            Msg.messagemInfoRedirect("Operação realizada com sucesso !", "acrescimo.xhtml?visualizar=" + this.acrescimo.getId() + "&acrescimo=TRUE");
+//            }
         }
     }
 

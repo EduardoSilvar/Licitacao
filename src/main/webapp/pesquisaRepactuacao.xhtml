@@ -60,7 +60,7 @@
                     Histórico de Repactuação
                 </center>
             </f:facet>
-            <p:column headerText="Ações" width="200">
+            <p:column headerText="Ações" width="15%">
                 <p:commandButton  icon="pi pi-trash" 
                                   process="@this"
                                   oncomplete="PF('removeraRepactuacaoConfirmDialog').show();" title="exluir" >
@@ -70,9 +70,6 @@
                 <p:button  icon="pi pi-eye" title="visualizar" href="repactuacao.xhtml?visualizar=#{repactuacao.id}" />
             </p:column>
 
-            <p:column headerText="N° do Termo de Apostilamento" width="300px">
-                <h:outputText value="#{repactuacao.numeroTermo}" />
-            </p:column>
             <p:column headerText="Valor alterado">
                 <h:outputText value="#{managerRepactuacao.boString(repactuacao.valorMudou)}"  />
             </p:column>

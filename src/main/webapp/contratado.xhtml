@@ -18,6 +18,12 @@
                             process="@this"
                             url="pesquisarContratado.xhtml"
                             />
+                 <p:menuitem value="Editar" 
+                            rendered="#{!managerContratado.cadastrar}"
+                            icon="pi pi-pencil"
+                            url="contratado.xhtml?editar=#{managerContratado.contratado.id}"
+                            process="@this"
+                            />
                 <p:menuitem value="Excluir" rendered="#{managerContratado.visualizar}"
                             icon="pi pi-trash"
                             oncomplete="PF('removeraContratadoConfirmDialog').show();"
@@ -210,21 +216,7 @@
 
             <h:panelGroup id="enderecoPanelGroup">
                 <div class="row">
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <p:outputLabel value="Logradouro"
-                                           for="logradouroPessoaJuriInput" />
-                            <p:inputText id="logradouroPessoaJuriInput"
-                                         value="#{managerContratado.contratado.endereco.logradouro}"
-                                         disabled="#{managerContratado.visualizar}"
-                                         placeholder="Logradouro"
-                                         requiredMessage="Este campo é obrigatório."
-                                         styleClass="form-control" 
-                                         />
-                            <p:message for="numeroPessoaJuriInput" />
-                        </div>
-                    </div>
-                    <div class="col-md-1">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <p:outputLabel value="Número"
                                            for="numeroPessoaJuriInput" />
@@ -238,11 +230,11 @@
                             <p:message for="numeroPessoaJuriInput" />
                         </div>
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <p:outputLabel value="Estado"
                                            for="estadoSelectOneMenu" />
-                            <p:selectOneMenu id="estadoSelectOneMenu"
+                            <p:selectOneMenu id="estadoSelectOneMenu" style="margin-right: 10px"
                                              filter="true" 
                                              placeholder="Estado"
                                              styleClass="form-control"
@@ -256,7 +248,7 @@
                             <p:message for="estadoSelectOneMenu" />
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <p:outputLabel value="Cidade"
                                            for="CidadePessoaJuriInput" />
@@ -271,7 +263,10 @@
                             <p:message for="CidadePessoaJuriInput" />
                         </div>
                     </div>
-                    <div class="col-md-3">
+
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
                         <div class="form-group">
                             <p:outputLabel value="Bairro"
                                            for="bairroPessoaJuriInput" />
@@ -285,7 +280,22 @@
                             <p:message for="bairroPessoaJuriInput" />
                         </div>
                     </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <p:outputLabel value="Logradouro"
+                                           for="logradouroPessoaJuriInput" />
+                            <p:inputText id="logradouroPessoaJuriInput"
+                                         value="#{managerContratado.contratado.endereco.logradouro}"
+                                         disabled="#{managerContratado.visualizar}"
+                                         placeholder="Logradouro"
+                                         requiredMessage="Este campo é obrigatório."
+                                         styleClass="form-control" 
+                                         />
+                            <p:message for="numeroPessoaJuriInput" />
+                        </div>
+                    </div>
                 </div>
+
             </h:panelGroup>
 
             <h4>Dados bancários</h4>
@@ -380,7 +390,7 @@
             </div>
 
             <center>
-                <p:commandButton value="Salvar" icon="pi pi-save" process="contratadoPanelGroup @this" update="corpoInteiro:messages" actionListener="#{managerContratado.salvar()}" rendered="#{managerContratado.cadastrar}" />
+                <p:commandButton value="Salvar" icon="pi pi-save" process="contratadoPanelGroup @this" update="corpoInteiro:messages @form" actionListener="#{managerContratado.salvar()}" rendered="#{managerContratado.cadastrar}" />
                 <p:button value="Editar" icon="pi pi-pencil"  rendered="#{managerContratado.visualizar}" href="contratado.xhtml?editar=#{managerContratado.contratado.id}" />
                 <p:commandButton value="Atualizar" icon="pi pi-sync" process="corpoInteiro:contratadoPanelGroup" update="@this corpoInteiro:messages" actionListener="#{managerContratado.atualizar()}" rendered="#{managerContratado.editar}"  />
                 <p:button value="Cancelar" icon="pi pi-ban"  href="contratado.xhtml" rendered="#{managerContratado.visualizar}" />

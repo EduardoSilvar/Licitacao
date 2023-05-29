@@ -180,3 +180,7 @@ alter table configuracao add column rodapeNotaFiscal_id bigint;
 ALTER TABLE configuracao ADD CONSTRAINT fk_rodapeNotaFiscal_id FOREIGN KEY (rodapeNotaFiscal_id) REFERENCES cabecalhorodape (id);
 
 alter table notaFiscal add column observacoes varchar(250);
+alter table notaFiscal add column consideracoes varchar(1050);
+
+
+

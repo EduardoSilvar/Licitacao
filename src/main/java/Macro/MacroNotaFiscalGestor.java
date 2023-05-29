@@ -114,7 +114,7 @@ public class MacroNotaFiscalGestor {
         Table sextaTable = new Table(1);
         sextaTable.setPadding(3);
         sextaTable.setWidth(550);
-        paragraphGlobal = new Paragraph("Período fiscalizado: de " + DateUtils.format(DateUtils.DD_MM_YYYY, nota.getInicioFiscalizado()) + " a " + DateUtils.format(DateUtils.DD_MM_YYYY, nota.getFinalFiscalizado()) + ".");
+        paragraphGlobal = new Paragraph("Período fiscalizado: de " + DateUtils.format(DateUtils.DD_MM_YYYY, nota.getInicioFiscalizado()) + " a " + DateUtils.format(DateUtils.DD_MM_YYYY, nota.getFinalFiscalizado()) + ".").setFontSize(9).setFont(font2);
         sextaTable.addCell(paragraphGlobal);
         document.add(sextaTable);
 
@@ -448,7 +448,11 @@ public class MacroNotaFiscalGestor {
             cell = new Cell();
             cell.add(paragraphGlobal).setBorder(Border.NO_BORDER);
             notaTable.addCell(cell);
-            paragraphGlobal = new Paragraph("Considerações : ").setFont(font2).setFontSize(9);
+            if (Utils.isNotEmpty(nota.getConsideracoes())) {
+                paragraphGlobal = new Paragraph("Considerações : " + nota.getConsideracoes()).setFont(font2).setFontSize(9);
+            } else {
+                paragraphGlobal = new Paragraph("Considerações : " ).setFont(font2).setFontSize(9);
+            }
             cell = new Cell();
             cell.add(paragraphGlobal).setBorder(Border.NO_BORDER);
             notaTable.addCell(cell);
@@ -486,8 +490,8 @@ public class MacroNotaFiscalGestor {
             Table decimaTable = new Table(1);
             decimaTable.setPadding(3);
             decimaTable.setWidth(550);
-            if (Utils.isNotEmpty(nota.getDescricao())) {
-                paragraphGlobal = new Paragraph("OBSERVAÇÕES: " + nota.getDescricao()).setFont(font2).setFontSize(10);
+            if (Utils.isNotEmpty(nota.getObservacoes())) {
+                paragraphGlobal = new Paragraph("OBSERVAÇÕES: " + nota.getObservacoes()).setFont(font2).setFontSize(10);
             } else {
                 paragraphGlobal = new Paragraph("OBSERVAÇÕES: ").setFont(font2).setFontSize(10);
 

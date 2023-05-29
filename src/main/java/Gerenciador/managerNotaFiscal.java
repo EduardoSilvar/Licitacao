@@ -99,7 +99,7 @@ public class managerNotaFiscal extends managerPrincipal {
             Msg.messagemError("A data final deve ser posterior à data inicial.");
         }
     }
-    
+
     public void deletar() {
         NotaFiscal nt = notaFiscalServico.find(this.notaFiscal.getId());
         nt.setAtivo(false);
@@ -249,11 +249,11 @@ public class managerNotaFiscal extends managerPrincipal {
         modelo.setTexto("");
         if (Utils.isNotEmpty(userLogado)) {
             if (Utils.isNotEmpty(userLogado.getGrupos())) {
-                if (userLogado.getGrupos().get(0).getNome().equals("gestor")) {
-                    notaFiscalServico.imprimirModeloNotaFiscal(modelo, this.notaFiscal.getContrato().getContratado(), this.notaFiscal.getContrato(), this.notaFiscal, this.userLogado.getUnidadeOrganizacional(), listAcrescimo(this.notaFiscal.getContrato()), listRepactuacao(this.notaFiscal.getContrato()), userLogado, listNotasFiscais(this.notaFiscal.getContrato()));
-                } else {
-                    notaFiscalServico.imprimirModeloNotaFiscal(modelo, this.notaFiscal.getContrato().getContratado(), this.notaFiscal.getContrato(), this.notaFiscal, this.userLogado.getUnidadeOrganizacional());
-                }
+//                if (userLogado.getGrupos().get(0).getNome().equals("gestor")) {
+                notaFiscalServico.imprimirModeloNotaFiscal(modelo, this.notaFiscal.getContrato().getContratado(), this.notaFiscal.getContrato(), this.notaFiscal, this.userLogado.getUnidadeOrganizacional(), listAcrescimo(this.notaFiscal.getContrato()), listRepactuacao(this.notaFiscal.getContrato()), userLogado, listNotasFiscais(this.notaFiscal.getContrato()));
+//                } else {
+//                    notaFiscalServico.imprimirModeloNotaFiscal(modelo, this.notaFiscal.getContrato().getContratado(), this.notaFiscal.getContrato(), this.notaFiscal, this.userLogado.getUnidadeOrganizacional());
+//                }
             }
         }
     }

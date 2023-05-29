@@ -60,7 +60,7 @@
                     Histórico de acréscimos
                 </center>
             </f:facet>
-            <p:column headerText="Ações" width="200">
+            <p:column headerText="Ações" width="15%">
                 <p:commandButton  icon="pi pi-trash" 
                                   process="@this"
                                   oncomplete="PF('removeraAcrescimoConfirmDialog').show();" title="exluir" >
@@ -68,9 +68,6 @@
                                                  target="#{managerAcrescimo.acrescimo}"/>
                 </p:commandButton>
                 <p:button  icon="pi pi-eye" title="visualizar" href="acrescimo.xhtml?visualizar=#{acrescimo.id}" />
-            </p:column>
-            <p:column headerText="N° do Termo Aditivo">
-                <h:outputText value="#{acrescimo.numeroTermo}" />
             </p:column>
             <p:column headerText="Valor">
                 <h:outputText value="#{acrescimo.valor}" />

@@ -99,39 +99,66 @@ public class UsuarioServico extends ServicoGenerico<Usuario> implements Serializ
 
     }
 
-    public List<Usuario> pesquisar(Usuario user,UnidadeOrganizacional unidade) {
+    public List<Usuario> pesquisar(Usuario user, UnidadeOrganizacional unidade) {
         String sql = "select u from Usuario u where u.ativo = true";
-        if (Utils.isNotEmpty(user.getEmail())) {
-            sql += " and u.email = :email";
-        }
-          if (Utils.isNotEmpty(unidade)) {
+
+        if (Utils.isNotEmpty(unidade)) {
             sql += " and u.unidadeOrganizacional = :unidade";
         }
         if (Utils.isNotEmpty(user.getNome())) {
             sql += " and UPPER(u.nome) LIKE UPPER(:nome)";
         }
+        if (Utils.isNotEmpty(user.getEmail())) {
+            sql += " and UPPER(u.email) LIKE UPPER(:email)";
+        }
+        if (Utils.isNotEmpty(user.getCpf())) {
+            sql += " and u.cpf = :cpf";
+        }
+        if (Utils.isNotEmpty(user.getLogin())) {
+            sql += " and UPPER(u.login) LIKE UPPER(:login)";
+        }
+        if (Utils.isNotEmpty(user.getWhatsapp())) {
+            sql += " and u.whatsapp = :whats";
+        }
+
         Query query = getEntityManager().createQuery(sql);
 
-        if (Utils.isNotEmpty(user.getEmail())) {
-            query.setParameter("email", user.getEmail());
-        }
         if (Utils.isNotEmpty(user.getNome())) {
-            query.setParameter("nome", "%"+user.getNome().trim()+"%");
+            query.setParameter("nome", "%" + user.getNome().trim() + "%");
         }
-           if (Utils.isNotEmpty(unidade)) {
-           query.setParameter("unidade", unidade);
+        if (Utils.isNotEmpty(user.getEmail())) {
+            query.setParameter("email", "%" + user.getEmail().trim() + "%");
+        }
+        if (Utils.isNotEmpty(user.getLogin())) {
+            query.setParameter("login", "%" + user.getLogin().trim() + "%");
+        }
+        if (Utils.isNotEmpty(user.getWhatsapp())) {
+            query.setParameter("whats", user.getWhatsapp());
+        }
+        if (Utils.isNotEmpty(unidade)) {
+            query.setParameter("unidade", unidade);
+        }
+        if (Utils.isNotEmpty(user.getCpf())) {
+            query.setParameter("cpf", user.getCpf());
         }
         return query.getResultList();
     }
 
     public boolean existEmail(Usuario user) {
+        System.err.println(user.getUnidadeOrganizacional());
         String sql = "select u from Usuario u where u.ativo = true ";
         if (Utils.isNotEmpty(user.getEmail())) {
             sql += "and u.email = :email";
         }
+        if (Utils.isNotEmpty(user.getUnidadeOrganizacional())) {
+            sql += " and u.unidadeOrganizacional = :unidade";
+        }
         Query query = getEntityManager().createQuery(sql);
         if (Utils.isNotEmpty(user.getEmail())) {
             query.setParameter("email", user.getEmail());
+        }
+        if (Utils.isNotEmpty(user.getUnidadeOrganizacional())) {
+            query.setParameter("unidade", user.getUnidadeOrganizacional());
         }
         if (query.getResultList().size() > 0) {
             return true;
@@ -184,10 +211,16 @@ public class UsuarioServico extends ServicoGenerico<Usuario> implements Serializ
         if (Utils.isNotEmpty(user.getCpf())) {
             sql += "and u.cpf = :cpf";
         }
+        if (Utils.isNotEmpty(user.getUnidadeOrganizacional())) {
+            sql += " and u.unidadeOrganizacional = :unidade";
+        }
         Query query = getEntityManager().createQuery(sql);
 
         if (Utils.isNotEmpty(user.getCpf())) {
             query.setParameter("cpf", user.getCpf());
+        }
+        if (Utils.isNotEmpty(user.getUnidadeOrganizacional())) {
+            query.setParameter("unidade", user.getUnidadeOrganizacional());
         }
         if (query.getResultList().size() > 0) {
             return true;

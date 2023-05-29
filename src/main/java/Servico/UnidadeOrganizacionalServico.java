@@ -35,10 +35,10 @@ public class UnidadeOrganizacionalServico extends ServicoGenerico<UnidadeOrganiz
             sql += " and u.cnpj = :cnpj";
         }
         if (Utils.isNotEmpty(unidade.getEndereco().getBairro())) {
-            sql += " and u.endereco.bairro = :bairro";
+            sql += " and UPPER(u.endereco.bairro) LIKE UPPER(:bairro)";
         }
         if (Utils.isNotEmpty(unidade.getEndereco().getCidade())) {
-            sql += " and u.endereco.cidade = :cidade";
+            sql += " and UPPER(u.endereco.cidade) LIKE UPPER(:cidade)";
         }
 
         Query query = getEntityManager().createQuery(sql);
@@ -52,10 +52,10 @@ public class UnidadeOrganizacionalServico extends ServicoGenerico<UnidadeOrganiz
             query.setParameter("cnpj", unidade.getCnpj());
         }
         if (Utils.isNotEmpty(unidade.getEndereco().getBairro())) {
-            query.setParameter("bairro", unidade.getEndereco().getBairro());
+            query.setParameter("bairro", "%"+unidade.getEndereco().getBairro().trim()+"%");
         }
         if (Utils.isNotEmpty(unidade.getEndereco().getCidade())) {
-            query.setParameter("cidade", unidade.getEndereco().getCidade());
+            query.setParameter("cidade", "%"+unidade.getEndereco().getCidade().trim()+"%");
         }
 
         return query.getResultList();

@@ -22,6 +22,7 @@ import com.itextpdf.layout.element.Image;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
 import com.itextpdf.layout.property.HorizontalAlignment;
+import com.itextpdf.layout.property.TextAlignment;
 import com.itextpdf.layout.property.VerticalAlignment;
 import util.Utils;
 
@@ -123,6 +124,7 @@ public class HeaderFooterPageEvent implements IEventHandler {
                     if (Utils.isNotEmpty(margemTopoCabecalho)) {
                         table.setMarginTop(margemTopoCabecalho);
                     }
+                    table.setFontSize(9);
                     if (imagemCabecalhoEsquerda) {
 
                         //Configuração da imagem do cabeçalho 
@@ -326,7 +328,7 @@ public class HeaderFooterPageEvent implements IEventHandler {
                         } else {
                             celulaTextoRodape.setFontSize(12);
                         }
-                        celulaTextoRodape.add(new Paragraph(textoRodapé));
+                        celulaTextoRodape.add(new Paragraph(textoRodapé).setFontSize(9).setTextAlignment(TextAlignment.CENTER));
                         celulaTextoRodape.setBorder(Border.NO_BORDER);
                         if (Utils.isNotEmpty(margemEsquerdaTextoRodape)) {
                             celulaTextoRodape.setPaddingLeft(margemEsquerdaTextoRodape);
@@ -347,7 +349,7 @@ public class HeaderFooterPageEvent implements IEventHandler {
                         } else {
                             celulaTextoRodape.setFontSize(12);
                         }
-                        celulaTextoRodape.add(new Paragraph(textoRodapé));
+                        celulaTextoRodape.add(new Paragraph(textoRodapé).setFontSize(9).setTextAlignment(TextAlignment.CENTER));
                         celulaTextoRodape.setBorder(Border.NO_BORDER);
                         if (Utils.isNotEmpty(margemEsquerdaTextoRodape)) {
                             celulaTextoRodape.setPaddingLeft(margemEsquerdaTextoRodape);
@@ -391,7 +393,7 @@ public class HeaderFooterPageEvent implements IEventHandler {
                     } else {
                         celulaTextoRodaPe.setFontSize(12);
                     }
-                    celulaTextoRodaPe.add(new Paragraph(textoRodapé));
+                    celulaTextoRodaPe.add(new Paragraph(textoRodapé).setFontSize(9).setTextAlignment(TextAlignment.CENTER));
                     celulaTextoRodaPe.setBorder(Border.NO_BORDER);
                     if (Utils.isNotEmpty(margemEsquerdaTextoRodape)) {
                         celulaTextoRodaPe.setPaddingLeft(margemEsquerdaTextoRodape);
@@ -404,7 +406,7 @@ public class HeaderFooterPageEvent implements IEventHandler {
                     table.addCell(celulaTextoRodaPe);
                 }
             }
-            table.setMarginTop(795);
+            table.setMarginTop(755);
             table.setHorizontalAlignment(HorizontalAlignment.CENTER);
 
             pdfCanvas.saveState();

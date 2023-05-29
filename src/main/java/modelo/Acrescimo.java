@@ -42,7 +42,7 @@ public class Acrescimo implements Serializable{
     @ManyToOne
     private Usuario fiscal;
     private String descricao;
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Anexo> anexos;
     private boolean ativo = true;
 

@@ -303,7 +303,11 @@ public class managerContrato extends managerPrincipal implements Serializable {
     public void adicionarAnexo() {
 
         try {
-            this.contrato.getAnexos().add(anexoServico.adicionarAnexo(this.anexo.getArquivo(), TipoAnexo.CONTRATO, userLogado.getUnidadeOrganizacional().getId()));
+            if (Utils.isNotEmpty(userLogado.getUnidadeOrganizacional())) {
+                this.contrato.getAnexos().add(anexoServico.adicionarAnexo(this.anexo.getArquivo(), TipoAnexo.CONTRATO, userLogado.getUnidadeOrganizacional().getId()));
+            } else {
+                this.contrato.getAnexos().add(anexoServico.adicionarAnexo(this.anexo.getArquivo(), TipoAnexo.CONTRATO, 000l));
+            }
             int posicao = contrato.getAnexos().size();
 //            this.contrato.getAnexos().get(posicao - 1).setTipo(anexo.getTipo());
             this.contrato.getAnexos().get(posicao - 1).setArquivo(anexo.getArquivo());

@@ -91,8 +91,9 @@ public class NotaFiscal implements Serializable {
 
     @Enumerated(EnumType.STRING)
     private StatusCumprimento necessidadeRescisao;
-    
+
     private String consideracoes;
+    private String observacoes;
 
     public NotaFiscal() {
     }
@@ -145,7 +146,6 @@ public class NotaFiscal implements Serializable {
     public void setConsideracoes(String consideracoes) {
         this.consideracoes = consideracoes;
     }
-
 
     public Long getId() {
         return id;
@@ -333,6 +333,14 @@ public class NotaFiscal implements Serializable {
 
     public StatusCumprimento getDocumentoObrigatorio() {
         return documentoObrigatorio;
+    }
+
+    public String getObservacoes() {
+        return observacoes;
+    }
+
+    public void setObservacoes(String observacoes) {
+        this.observacoes = observacoes;
     }
 
     public void setDocumentoObrigatorio(StatusCumprimento documentoObrigatorio) {

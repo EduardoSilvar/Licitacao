@@ -118,7 +118,6 @@ public class managerUsuario extends managerPrincipal implements Serializable {
                                     userServico.Save(this.user);
                                     Msg.messagemInfoRedirect("Operação realizada com sucesso !", "usuario.xhtml?visualizar=" + this.user.getId());
                                 } else {
-                                    this.user.setUnidadeOrganizacional(userlogado.getUnidadeOrganizacional());
                                     this.user.setSenha(Usuario.encryptPassword(repetirSenha));
                                     userServico.Save(this.user);
                                     Msg.messagemInfoRedirect("Operação realizada com sucesso !", "usuario.xhtml?visualizar=" + this.user.getId());

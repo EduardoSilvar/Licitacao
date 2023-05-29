@@ -78,7 +78,7 @@ public class managerContratado extends managerPrincipal implements Serializable 
     public void salvar() {
         if (Utils.isNotEmpty(contratado.getCpf())) {
             if (contratadoServico.valida(contratado.getCpf())) {
-                if (contratadoServico.existCpf(contratado.getCpf())) {
+                if (contratadoServico.existCpf(contratado.getCpf(), userLogado)) {
                     Msg.messagemError("CPF ja esta sendo usado !");
                 } else {
                     if (Utils.isNotEmpty(userLogado)) {
@@ -95,7 +95,7 @@ public class managerContratado extends managerPrincipal implements Serializable 
             }
         } else {
             if (Utils.validarCNPJ(Caracteres.removecaracter(this.contratado.getCnpj()))) {
-                if (contratadoServico.existCnpj(contratado.getCnpj())) {
+                if (contratadoServico.existCnpj(contratado.getCnpj(), userLogado)) {
                     Msg.messagemError("CNPJ ja esta sendo usado !");
                 } else {
                     if (Utils.isNotEmpty(userLogado)) {

@@ -61,7 +61,7 @@
                     Histórico de renovação
                 </center>
             </f:facet>
-            <p:column headerText="Ações" width="200">
+            <p:column headerText="Ações" width="15%">
                 <p:commandButton  icon="pi pi-trash" 
                                   process="@this"
 
@@ -71,14 +71,8 @@
                 </p:commandButton>
                 <p:button  icon="pi pi-eye" title="visualizar" href="renovacao.xhtml?visualizar=#{renovacao.id}" />
             </p:column>
-            <p:column headerText="N° do Termo Aditivo">
-                <h:outputText value="#{renovacao.numeroTermo}" />
-            </p:column>
             <p:column headerText="Valor foi alterado">
                 <h:outputText value="#{managerRenovacao.boString(renovacao.valorMudou)}"  />
-            </p:column>
-            <p:column headerText="Valor" width="100px">
-                <h:outputText value="#{renovacao.valor}" />
             </p:column>
             <p:column headerText="Fiscal responsável">
                 <h:outputText value="#{renovacao.fiscal.nome}" />
@@ -88,12 +82,6 @@
             </p:column>
             <p:column headerText="Nova vigência">
                 <h:outputText value="#{managerRenovacao.dataFormatada(renovacao.dataFinal)}"  />
-            </p:column>
-            <p:column headerText="Vigência anterior">
-                <h:outputText value="#{managerRenovacao.dataFormatada(renovacao.vigenciaAnterior)}"  />
-            </p:column>
-            <p:column headerText="Próxima renovação">
-                <h:outputText value="#{renovacao.proximaRenovacao}"  />
             </p:column>
         </p:dataTable>
         <p:dialog id="removeraRenovacaoConfirmDialog"

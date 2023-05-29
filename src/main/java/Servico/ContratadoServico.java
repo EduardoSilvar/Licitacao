@@ -107,7 +107,7 @@ public class ContratadoServico extends ServicoGenerico<Contratado> implements Se
             query.setParameter("especialidade", contratado.getEspecialidade());
         }
         if (Utils.isNotEmpty(contratado.getNome())) {
-            query.setParameter("nome", "%"+contratado.getNome().trim()+"%");
+            query.setParameter("nome", "%" + contratado.getNome().trim() + "%");
         }
         if (Utils.isNotEmpty(contratado.getNatureza())) {
             query.setParameter("nt", contratado.getNatureza());
@@ -120,14 +120,24 @@ public class ContratadoServico extends ServicoGenerico<Contratado> implements Se
         return query.getResultList();
     }
 
-    public boolean existCpf(String cpf) {
+    public boolean existCpf(String cpf, Usuario user) {
         String sql = "select c from Contratado c where c.ativo = true ";
         if (Utils.isNotEmpty(cpf)) {
             sql += "and c.cpf = :cpf ";
         }
+        if (Utils.isNotEmpty(user)) {
+            if (Utils.isNotEmpty(user.getUnidadeOrganizacional())) {
+                sql += "and c.unidadeOrganizacional = :unidade ";
+            }
+        }
         Query query = getEntityManager().createQuery(sql);
         if (Utils.isNotEmpty(cpf)) {
             query.setParameter("cpf", cpf);
+        }
+        if (Utils.isNotEmpty(user)) {
+            if (Utils.isNotEmpty(user.getUnidadeOrganizacional())) {
+                query.setParameter("unidade", user.getUnidadeOrganizacional());
+            }
         }
         if (query.getResultList().size() > 0) {
             return true;
@@ -135,15 +145,25 @@ public class ContratadoServico extends ServicoGenerico<Contratado> implements Se
             return false;
         }
     }
-     public boolean existCnpj(String cnpj) {
+
+    public boolean existCnpj(String cnpj, Usuario user) {
         String sql = "select c from Contratado c where c.ativo = true ";
         if (Utils.isNotEmpty(cnpj)) {
             sql += "and c.cnpj = :cnpj ";
+        }
+        if (Utils.isNotEmpty(user)) {
+            if (Utils.isNotEmpty(user.getUnidadeOrganizacional())) {
+                sql += "and c.unidadeOrganizacional = :unidade ";
+            }
         }
         Query query = getEntityManager().createQuery(sql);
         if (Utils.isNotEmpty(cnpj)) {
             query.setParameter("cnpj", cnpj);
         }
+        if (Utils.isNotEmpty(user)) {
+            if (Utils.isNotEmpty(user.getUnidadeOrganizacional())) {
+            query.setParameter("unidade", user.getUnidadeOrganizacional());
+        }}
         if (query.getResultList().size() > 0) {
             return true;
         } else {
