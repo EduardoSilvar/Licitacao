@@ -77,15 +77,24 @@ public class managerNotaFiscal extends managerPrincipal {
     }
 
     public void salvar() {
-        if (Utils.isNotEmpty(userLogado.getUnidadeOrganizacional())) {
-            this.notaFiscal.setUnidadeOrganizacional(userLogado.getUnidadeOrganizacional());
-        }
+        if (notaFiscal.getContrato().getValor().compareTo(notaFiscal.getValor()) == 1) {
+            if (Utils.isNotEmpty(userLogado.getUnidadeOrganizacional())) {
+                this.notaFiscal.setUnidadeOrganizacional(userLogado.getUnidadeOrganizacional());
+            }
 
-        Contrato contrato = this.notaFiscal.getContrato();
-        contrato.setValorRestante(contrato.getValorRestante().subtract(new BigDecimal(this.notaFiscal.getValor().toString())));
-        contratoServico.Update(contrato);
-        notaFiscalServico.Save(this.notaFiscal);
-        Msg.messagemInfoRedirect("Operação realizada com sucesso !", "notaFiscal.xhtml?visualizar=" + this.notaFiscal.getId());
+            Contrato contrato = this.notaFiscal.getContrato();
+
+            contrato.setValorRestante(contrato.getValorRestante().subtract(new BigDecimal(this.notaFiscal.getValor().toString())));
+            if (contrato.getValorRestante().compareTo(new BigDecimal("0")) == 1) {
+                contratoServico.Update(contrato);
+                notaFiscalServico.Save(this.notaFiscal);
+                Msg.messagemInfoRedirect("Operação realizada com sucesso !", "notaFiscal.xhtml?visualizar=" + this.notaFiscal.getId());
+            } else {
+                Msg.messagemError("O contrato já foi pago !");
+            }
+        } else {
+            Msg.messagemError("O valor da nota fiscal é maior que do contrato !");
+        }
     }
 
     public void verificarData() {

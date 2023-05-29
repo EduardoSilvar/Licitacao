@@ -326,11 +326,13 @@ public class relatorioConfig {
         PdfDocument pdfDoc = new PdfDocument(writer);
         pdfDoc.setDefaultPageSize(PageSize.A4);
         HeaderFooterPageEvent handler = new HeaderFooterPageEvent();
-        if (Utils.isNotEmpty(orgao.getConfiguracao())) {
+        if (Utils.isNotEmpty(orgao)) {
             if (Utils.isNotEmpty(orgao.getConfiguracao())) {
-                if (Utils.isNotEmpty(orgao.getConfiguracao().getCabecalhoNotaFiscal()) && Utils.isNotEmpty(orgao.getConfiguracao().getRodapeNotaFiscal())) {
-                    handler = aplicarCabecahoRodape(orgao.getConfiguracao().getCabecalhoNotaFiscal(), orgao.getConfiguracao().getRodapeNotaFiscal());
+                if (Utils.isNotEmpty(orgao.getConfiguracao())) {
+                    if (Utils.isNotEmpty(orgao.getConfiguracao().getCabecalhoNotaFiscal()) && Utils.isNotEmpty(orgao.getConfiguracao().getRodapeNotaFiscal())) {
+                        handler = aplicarCabecahoRodape(orgao.getConfiguracao().getCabecalhoNotaFiscal(), orgao.getConfiguracao().getRodapeNotaFiscal());
 
+                    }
                 }
             }
         }
