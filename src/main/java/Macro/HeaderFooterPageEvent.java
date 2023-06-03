@@ -31,7 +31,7 @@ import util.Utils;
  * @author eduardo
  */
 public class HeaderFooterPageEvent implements IEventHandler {
-    
+
     private int margemTopoCabecalho;
     private int margemBaixoCabecalho;
     private int margemEsquerdaCabecalho;
@@ -72,6 +72,7 @@ public class HeaderFooterPageEvent implements IEventHandler {
             PdfDocument pdfDoc = docEvent.getDocument();
             PdfPage page = docEvent.getPage();
             PdfCanvas pdfCanvas = new PdfCanvas(page.newContentStreamBefore(), page.getResources(), pdfDoc);
+
             com.itextpdf.kernel.geom.Rectangle pageSize = page.getPageSize();
 
             Table table = new Table(1);
@@ -130,6 +131,8 @@ public class HeaderFooterPageEvent implements IEventHandler {
                         //Configuração da imagem do cabeçalho 
                         ImageData imageData = ImageDataFactory.create(urlImagemCabecalho);
                         Image imagemCabecalho = new Image(imageData);
+                        pdfCanvas.addImage(imageData, pageSize, true);
+
                         if (Utils.isNotEmpty(alturaImagemCabecalho)) {
                             imagemCabecalho.setHeight(alturaImagemCabecalho);
                         } else {
