@@ -182,5 +182,5 @@ ALTER TABLE configuracao ADD CONSTRAINT fk_rodapeNotaFiscal_id FOREIGN KEY (roda
 alter table notaFiscal add column observacoes varchar(250);
 alter table notaFiscal add column consideracoes varchar(1050);
 
-
+alter table tipodocumentoanexo add column codigo varchar(250);
 

@@ -63,7 +63,7 @@
                                         emptyMessage="Contrato não encontrado" 
                                         completeMethod="#{managerNotaFiscal.autocompletaContrato}"
                                         required="true" disabled="#{managerNotaFiscal.visualizar}">
-                            <p:ajax event="itemSelect" />
+                            <p:ajax event="itemSelect" listener="#{managerNotaFiscal.setarValorRestante()}" update="valorNotaFiscal"/>
                         </p:autoComplete>
                     </div> 
                 </div>

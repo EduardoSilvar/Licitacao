@@ -121,6 +121,12 @@ public class managerNotaFiscal extends managerPrincipal {
         Msg.messagemInfoRedirect("Operação realizada com sucesso !", "notaFiscal.xhtml?visualizar=" + this.notaFiscal.getId());
     }
 
+    public void setarValorRestante() {
+        if (Utils.isNotEmpty(notaFiscal.getContrato().getValorRestante())) {
+            this.notaFiscal.setValor(notaFiscal.getContrato().getValorRestante());
+        }
+    }
+
     public void selecionarAnexo(FileUploadEvent event) {
         if (Utils.isNotEmpty(event)) {
             if (Utils.isNotEmpty(event.getFile())) {
