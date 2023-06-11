@@ -53,8 +53,10 @@ public class Configuracao implements Serializable {
     private CabecalhoRodape cabecalhoNotaFiscal;
     @OneToOne
     private CabecalhoRodape rodapeNotaFiscal;
+    @OneToOne
+    private Anexo timbrado;
 
-    public Configuracao(Long id, UnidadeOrganizacional unidadeOrganizacional, Long diasPraExpirar, StatusContrato primeiroStatus, StatusContrato SegundoStatus, StatusContrato terceiroStatus, List<PedidoRenovacao> pedidosRenovacao, GraficoEnum primeiroGrafico, GraficoEnum segundoGrafico, GraficoEnum terceiroGrafico, CabecalhoRodape cabecalhoNotaFiscal, CabecalhoRodape rodapeNotaFiscal) {
+    public Configuracao(Long id, UnidadeOrganizacional unidadeOrganizacional, Long diasPraExpirar, StatusContrato primeiroStatus, StatusContrato SegundoStatus, StatusContrato terceiroStatus, List<PedidoRenovacao> pedidosRenovacao, GraficoEnum primeiroGrafico, GraficoEnum segundoGrafico, GraficoEnum terceiroGrafico, CabecalhoRodape cabecalhoNotaFiscal, CabecalhoRodape rodapeNotaFiscal, Anexo timbrado) {
         this.id = id;
         this.unidadeOrganizacional = unidadeOrganizacional;
         this.diasPraExpirar = diasPraExpirar;
@@ -67,6 +69,7 @@ public class Configuracao implements Serializable {
         this.terceiroGrafico = terceiroGrafico;
         this.cabecalhoNotaFiscal = cabecalhoNotaFiscal;
         this.rodapeNotaFiscal = rodapeNotaFiscal;
+        this.timbrado = timbrado;
     }
 
     public Configuracao() {
@@ -80,32 +83,16 @@ public class Configuracao implements Serializable {
         this.id = id;
     }
 
-    public CabecalhoRodape getCabecalhoNotaFiscal() {
-        return cabecalhoNotaFiscal;
-    }
-
-    public void setCabecalhoNotaFiscal(CabecalhoRodape cabecalhoNotaFiscal) {
-        this.cabecalhoNotaFiscal = cabecalhoNotaFiscal;
-    }
-
-    public CabecalhoRodape getRodapeNotaFiscal() {
-        return rodapeNotaFiscal;
-    }
-
-    public void setRodapeNotaFiscal(CabecalhoRodape rodapeNotaFiscal) {
-        this.rodapeNotaFiscal = rodapeNotaFiscal;
-    }
-
-    public Long getDiasPraExpirar() {
-        return diasPraExpirar;
-    }
-
     public UnidadeOrganizacional getUnidadeOrganizacional() {
         return unidadeOrganizacional;
     }
 
     public void setUnidadeOrganizacional(UnidadeOrganizacional unidadeOrganizacional) {
         this.unidadeOrganizacional = unidadeOrganizacional;
+    }
+
+    public Long getDiasPraExpirar() {
+        return diasPraExpirar;
     }
 
     public void setDiasPraExpirar(Long diasPraExpirar) {
@@ -176,22 +163,47 @@ public class Configuracao implements Serializable {
         this.ativo = ativo;
     }
 
+    public CabecalhoRodape getCabecalhoNotaFiscal() {
+        return cabecalhoNotaFiscal;
+    }
+
+    public void setCabecalhoNotaFiscal(CabecalhoRodape cabecalhoNotaFiscal) {
+        this.cabecalhoNotaFiscal = cabecalhoNotaFiscal;
+    }
+
+    public CabecalhoRodape getRodapeNotaFiscal() {
+        return rodapeNotaFiscal;
+    }
+
+    public void setRodapeNotaFiscal(CabecalhoRodape rodapeNotaFiscal) {
+        this.rodapeNotaFiscal = rodapeNotaFiscal;
+    }
+
+    public Anexo getTimbrado() {
+        return timbrado;
+    }
+
+    public void setTimbrado(Anexo timbrado) {
+        this.timbrado = timbrado;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 97 * hash + Objects.hashCode(this.id);
-        hash = 97 * hash + Objects.hashCode(this.unidadeOrganizacional);
-        hash = 97 * hash + Objects.hashCode(this.diasPraExpirar);
-        hash = 97 * hash + Objects.hashCode(this.primeiroStatus);
-        hash = 97 * hash + Objects.hashCode(this.SegundoStatus);
-        hash = 97 * hash + Objects.hashCode(this.terceiroStatus);
-        hash = 97 * hash + Objects.hashCode(this.pedidosRenovacao);
-        hash = 97 * hash + Objects.hashCode(this.primeiroGrafico);
-        hash = 97 * hash + Objects.hashCode(this.segundoGrafico);
-        hash = 97 * hash + Objects.hashCode(this.terceiroGrafico);
-        hash = 97 * hash + (this.ativo ? 1 : 0);
-        hash = 97 * hash + Objects.hashCode(this.cabecalhoNotaFiscal);
-        hash = 97 * hash + Objects.hashCode(this.rodapeNotaFiscal);
+        int hash = 3;
+        hash = 37 * hash + Objects.hashCode(this.id);
+        hash = 37 * hash + Objects.hashCode(this.unidadeOrganizacional);
+        hash = 37 * hash + Objects.hashCode(this.diasPraExpirar);
+        hash = 37 * hash + Objects.hashCode(this.primeiroStatus);
+        hash = 37 * hash + Objects.hashCode(this.SegundoStatus);
+        hash = 37 * hash + Objects.hashCode(this.terceiroStatus);
+        hash = 37 * hash + Objects.hashCode(this.pedidosRenovacao);
+        hash = 37 * hash + Objects.hashCode(this.primeiroGrafico);
+        hash = 37 * hash + Objects.hashCode(this.segundoGrafico);
+        hash = 37 * hash + Objects.hashCode(this.terceiroGrafico);
+        hash = 37 * hash + (this.ativo ? 1 : 0);
+        hash = 37 * hash + Objects.hashCode(this.cabecalhoNotaFiscal);
+        hash = 37 * hash + Objects.hashCode(this.rodapeNotaFiscal);
+        hash = 37 * hash + Objects.hashCode(this.timbrado);
         return hash;
     }
 
@@ -243,7 +255,15 @@ public class Configuracao implements Serializable {
         if (!Objects.equals(this.cabecalhoNotaFiscal, other.cabecalhoNotaFiscal)) {
             return false;
         }
-        return Objects.equals(this.rodapeNotaFiscal, other.rodapeNotaFiscal);
+        if (!Objects.equals(this.rodapeNotaFiscal, other.rodapeNotaFiscal)) {
+            return false;
+        }
+        return Objects.equals(this.timbrado, other.timbrado);
+    }
+
+    @Override
+    public String toString() {
+        return "Configuracao{" + "id=" + id + ", unidadeOrganizacional=" + unidadeOrganizacional + ", diasPraExpirar=" + diasPraExpirar + ", primeiroStatus=" + primeiroStatus + ", SegundoStatus=" + SegundoStatus + ", terceiroStatus=" + terceiroStatus + ", pedidosRenovacao=" + pedidosRenovacao + ", primeiroGrafico=" + primeiroGrafico + ", segundoGrafico=" + segundoGrafico + ", terceiroGrafico=" + terceiroGrafico + ", ativo=" + ativo + ", cabecalhoNotaFiscal=" + cabecalhoNotaFiscal + ", rodapeNotaFiscal=" + rodapeNotaFiscal + ", timbrado=" + timbrado + '}';
     }
 
 }

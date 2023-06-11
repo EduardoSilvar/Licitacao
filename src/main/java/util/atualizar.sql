@@ -184,3 +184,7 @@ alter table notaFiscal add column consideracoes varchar(1050);
 
 alter table tipodocumentoanexo add column codigo varchar(250);
 
+alter table configuracao add column timbrado_id bigint;
+ALTER TABLE configuracao ADD CONSTRAINT fk_timbrado_id FOREIGN KEY (timbrado_id) REFERENCES anexo (id);
+
+alter table unidadeorganizacional add column usatimbrado boolean default true;

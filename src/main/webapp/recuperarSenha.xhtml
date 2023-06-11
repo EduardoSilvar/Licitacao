@@ -6,7 +6,8 @@ and open the template in the editor.
 -->
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>Login</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -21,6 +22,7 @@ and open the template in the editor.
     </h:head>
     <h:body style="background-color: #e6e6e6">
         <h:form>
+             <p:growl id="messages"/>
             <div style="width: 960px;
                  background: #fff;
                  border-radius: 10px;display: flex;
@@ -41,7 +43,7 @@ and open the template in the editor.
                     <div style="margin-top: 20px; margin-left: 30px">
                         <span class="ui-input-icon-left">
                             <i class="pi pi-envelope" style="margin-left: 10px;" />
-                            <h:inputText  class="form-control" id="exampleInputUsername1" value="#{managerEmail.email}"  style=" background-color: #E6E6E6 !important; border-radius: 40px; font-family: Poppins-Medium;
+                            <h:inputText   class="form-control" id="exampleInputUsername1" value="#{managerEmail.email}"  style=" background-color: #E6E6E6 !important; border-radius: 40px; font-family: Poppins-Medium;
                                           font-size: 15px;
                                           line-height: 1.5;
                                           color: #666666;
@@ -67,7 +69,7 @@ and open the template in the editor.
                                                            border-radius: 25px;
                                                            padding: 0 30px 0 44px;"  />
                                                 </span>-->
-                        <h:commandButton  value="Acessar"  actionListener="#{managerEmail.enviarEmail()}" style="font-family: Montserrat-Bold;
+                        <p:commandButton  value="Acessar" update="@this @form:messages" process="@this @form:exampleInputUsername1" actionListener="#{managerEmail.enviarEmail()}" style="font-family: Montserrat-Bold;
                                          font-size: 15px;
                                          line-height: 1.5;
                                          color: #fff;
@@ -80,7 +82,7 @@ and open the template in the editor.
                                          border-radius: 25px;display: flex;
                                          justify-content: center;
                                          align-items: center;
-                                         padding: 0 25px;transition: all 0.4s; " class="btn btn-primary"  > </h:commandButton>
+                                         padding: 0 25px;transition: all 0.4s; " class="btn btn-primary"  > </p:commandButton>
                     </div>
                      <div style="text-align: left; width: 100%;">
 

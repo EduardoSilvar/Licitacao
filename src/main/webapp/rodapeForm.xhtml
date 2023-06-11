@@ -6,7 +6,7 @@
     xmlns="http://www.w3.org/1999/xhtml">
 
 
-    <h:panelGroup>
+    <h:panelGroup id="panelRodapeGroup">
 
             <h5>
                  Dados Gerais
@@ -18,11 +18,11 @@
 
             <div class="col-md-6">
                 <div class="form-group">
-                    <p:outputLabel value="Nome" for="nomeCabecalhoInputText"/>
-                    <p:inputText id="nomeCabecalhoInputText" value="#{managerCabecalhoRodape.cabecalhoRodape.nome}"
+                    <p:outputLabel value="Nome" for="nomeRodapeInputText"/>
+                    <p:inputText id="nomeRodapeInputText" value="#{managerUnidadeOrganizacional.rodape.nome}"
                                  required="true" requiredMessage="Este campo é obrigatório."
-                                 styleClass="form-control"  disabled="#{managerCabecalhoRodape.visualizar}"/>
-                    <p:message for="nomeCabecalhoInputText" />
+                                 styleClass="form-control"  disabled="#{managerUnidadeOrganizacional.visualizar}"/>
+                    <p:message for="nomeRodapeInputText" />
                 </div>
             </div>
 
@@ -47,58 +47,58 @@
         <div class="row">
             <div class="col-md-4">
                 <div class="form-group">
-                    <p:outputLabel value="Tamanho da letra" for="fontCabecalhoInputText"/>
-                    <p:inputText id="fontCabecalhoInputText" value="#{managerCabecalhoRodape.cabecalhoRodape.fonSize}"
-                                 required="true"     styleClass="form-control" disabled="#{managerCabecalhoRodape.visualizar}" />
-                    <p:message for="fontCabecalhoInputText" />
+                    <p:outputLabel value="Tamanho da letra" for="fontRodapeInputText"/>
+                    <p:inputText id="fontRodapeInputText" value="#{managerUnidadeOrganizacional.rodape.fonSize}"
+                                 required="true"     styleClass="form-control" disabled="#{managerUnidadeOrganizacional.visualizar}" />
+                    <p:message for="fontRodapeInputText" />
                 </div>
             </div>
             <div class="col-md-8">
                 <div class="form-group">
-                    <p:outputLabel value="Texto cabeçalho " for="textoCabecalhoInputText"/>
-                    <p:inputTextarea id="textoCabecalhoInputText" value="#{managerCabecalhoRodape.cabecalhoRodape.texto}"
-                                     required="true"  styleClass="form-control" disabled="#{managerCabecalhoRodape.visualizar}" />
-                    <p:message for="textoCabecalhoInputText" />
+                    <p:outputLabel value="Texto rodapé " for="textoRodapeInputText"/>
+                    <p:inputTextarea id="textoRodapeInputText" value="#{managerUnidadeOrganizacional.rodape.texto}"
+                                     required="true"  styleClass="form-control" disabled="#{managerUnidadeOrganizacional.visualizar}" />
+                    <p:message for="textoRodapeInputText" />
                 </div>
             </div>
         </div>
     </h:panelGroup>
         <h5>
-            <i class="fa fa-home"></i> Margens do Cabeçalho
+            <i class="fa fa-home"></i> Margens do Rodapé
 
         </h5>
     <hr/>
     <div class="row"> 
         <div class="col-md-3">
             <div class="form-group">
-                <p:outputLabel value="Margem da esquerda" for="margemEsquerdaInputText"/>
-                <p:inputText id="margemEsquerdaInputText" value="#{managerCabecalhoRodape.cabecalhoRodape.margemEsquerda}"
-                             required="true"           styleClass="form-control" disabled="#{managerCabecalhoRodape.visualizar}" />
-                <p:message for="margemEsquerdaInputText" />
+                <p:outputLabel value="Margem da esquerda" for="margemEsquerdaRodapeInputText"/>
+                <p:inputText id="margemEsquerdaRodapeInputText" value="#{managerUnidadeOrganizacional.rodape.margemEsquerda}"
+                             required="true"           styleClass="form-control" disabled="#{managerUnidadeOrganizacional.visualizar}" />
+                <p:message for="margemEsquerdaRodapeInputText" />
             </div>
         </div>
         <div class="col-md-3">
             <div class="form-group">
-                <p:outputLabel value="Margem da direita" for="margemDireitaInputText"/>
-                <p:inputText id="margemDireitaInputText" value="#{managerCabecalhoRodape.cabecalhoRodape.margemDireita}"
-                             required="true"      styleClass="form-control" disabled="#{managerCabecalhoRodape.visualizar}" />
-                <p:message for="margemDireitaInputText" />
+                <p:outputLabel value="Margem da direita" for="margemDireitaRodapeInputText"/>
+                <p:inputText id="margemDireitaRodapeInputText" value="#{managerUnidadeOrganizacional.rodape.margemDireita}"
+                             required="true"      styleClass="form-control" disabled="#{managerUnidadeOrganizacional.visualizar}" />
+                <p:message for="margemDireitaRodapeInputText" />
             </div>
         </div>
         <div class="col-md-3">
             <div class="form-group">
-                <p:outputLabel value="Margem de baixo" for="margemBaixoInputText"/>
-                <p:inputText id="margemBaixoInputText" value="#{managerCabecalhoRodape.cabecalhoRodape.margemBaixo}"
-                             required="true"      styleClass="form-control" disabled="#{managerCabecalhoRodape.visualizar}" />
-                <p:message for="margemBaixoInputText" />
+                <p:outputLabel value="Margem de baixo" for="margemBaixoRodapeInputText"/>
+                <p:inputText id="margemBaixoRodapeInputText" value="#{managerUnidadeOrganizacional.rodape.margemBaixo}"
+                             required="true"      styleClass="form-control" disabled="#{managerUnidadeOrganizacional.visualizar}" />
+                <p:message for="margemBaixoRodapeInputText" />
             </div>
         </div>
         <div class="col-md-3">
             <div class="form-group">
-                <p:outputLabel value="Margem de Cima" for="margemCimaInputText"/>
-                <p:inputText id="margemCimaInputText" value="#{managerCabecalhoRodape.cabecalhoRodape.margemTopo}"
-                             required="true"      styleClass="form-control" disabled="#{managerCabecalhoRodape.visualizar}" />
-                <p:message for="margemCimaInputText" />
+                <p:outputLabel value="Margem de Cima" for="margemCimaRodapeInputText"/>
+                <p:inputText id="margemCimaRodapeInputText" value="#{managerUnidadeOrganizacional.rodape.margemTopo}"
+                             required="true"      styleClass="form-control" disabled="#{managerUnidadeOrganizacional.visualizar}" />
+                <p:message for="margemCimaRodapeInputText" />
             </div>
         </div>
     </div>
@@ -109,18 +109,18 @@
     <div class="row"> 
         <div class="col-md-6">
             <div class="form-group">
-                <p:outputLabel value="Margem da esquerda" for="margemEsquerdaTextoInputText"/>
-                <p:inputText id="margemEsquerdaTextoInputText" value="#{managerCabecalhoRodape.cabecalhoRodape.margemEsquerdaTexto}"
-                             required="true"           styleClass="form-control" disabled="#{managerCabecalhoRodape.visualizar}" />
-                <p:message for="margemEsquerdaTextoInputText" />
+                <p:outputLabel value="Margem da esquerda" for="margemEsquerdaTextoRodapeInputText"/>
+                <p:inputText id="margemEsquerdaTextoRodapeInputText" value="#{managerUnidadeOrganizacional.rodape.margemEsquerdaTexto}"
+                             required="true"           styleClass="form-control" disabled="#{managerUnidadeOrganizacional.visualizar}" />
+                <p:message for="margemEsquerdaTextoRodapeInputText" />
             </div>
         </div>
         <div class="col-md-6">
             <div class="form-group">
-                <p:outputLabel value="Margem da direita" for="margemDireitaTextoInputText"/>
-                <p:inputText id="margemDireitaTextoInputText" value="#{managerCabecalhoRodape.cabecalhoRodape.margemDireitaTexto}"
-                             required="true"      styleClass="form-control" disabled="#{managerCabecalhoRodape.visualizar}" />
-                <p:message for="margemDireitaTextoInputText" />
+                <p:outputLabel value="Margem da direita" for="margemDireitaRodapeTextoInputText"/>
+                <p:inputText id="margemDireitaRodapeTextoInputText" value="#{managerUnidadeOrganizacional.rodape.margemDireitaTexto}"
+                             required="true"      styleClass="form-control" disabled="#{managerUnidadeOrganizacional.visualizar}" />
+                <p:message for="margemDireitaRodapeTextoInputText" />
             </div>
         </div>
     </div>
@@ -131,17 +131,17 @@
             <p:outputLabel value="Possui Imagem ?"
                            for="possuiImagemSelectBooleanButton"/>
             <div class="ui-inputgroup">
-                <p:selectBooleanButton id="possuiImagemSelectBooleanButton"
-                                       value="#{managerCabecalhoRodape.cabecalhoRodape.possuiImagem}"
+                <p:selectBooleanButton id="possuiImagemRodapeSelectBooleanButton"
+                                       value="#{managerUnidadeOrganizacional.rodape.possuiImagem}"
                                        onLabel="Sim"  
-                                       disabled="#{managerCabecalhoRodape.visualizar}"
+                                       disabled="#{managerUnidadeOrganizacional.visualizar}"
                                        offLabel="Não">
-                    <p:ajax update="possuiImagemSelectBooleanButton panelImagemCabecalho" />
+                    <p:ajax update="possuiImagemRodapeSelectBooleanButton panelImagemRodape" />
                 </p:selectBooleanButton>    
             </div>
         </div>
-        <h:panelGroup id="panelImagemCabecalho">
-            <h:panelGroup  rendered="#{managerCabecalhoRodape.cabecalhoRodape.possuiImagem}">
+        <h:panelGroup id="panelImagemRodape">
+            <h:panelGroup  rendered="#{managerUnidadeOrganizacional.rodape.possuiImagem}">
                     <h5>
                         <i class="fa fa-home"></i> Margens da Imagem
                     </h5>
@@ -150,52 +150,52 @@
 
                     <div class="col-md-6">
                         <div class="form-group">
-                            <p:outputLabel value="Altura da Imagem" for="alturaImagemInputText"/>
-                            <p:inputText id="alturaImagemInputText" value="#{managerCabecalhoRodape.cabecalhoRodape.alturaImagem}"
-                                         required="true"      styleClass="form-control" disabled="#{managerCabecalhoRodape.visualizar}" />
-                            <p:message for="alturaImagemInputText" />
+                            <p:outputLabel value="Altura da Imagem" for="alturaImagemRodapeInputText"/>
+                            <p:inputText id="alturaImagemRodapeInputText" value="#{managerUnidadeOrganizacional.rodape.alturaImagem}"
+                                         required="true"      styleClass="form-control" disabled="#{managerUnidadeOrganizacional.visualizar}" />
+                            <p:message for="alturaImagemRodapeInputText" />
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <p:outputLabel value="Posição da imagem"
-                                           for="utilizarDiagnosticoSelectBooleanButton"/>
+                                           for="utilizarDiagnosticoSelectBooleanButtonRodape"/>
                             <div class="ui-inputgroup">
-                                <p:selectBooleanButton id="utilizarDiagnosticoSelectBooleanButton"
-                                                       value="#{managerCabecalhoRodape.cabecalhoRodape.imagemEsquerda}"
+                                <p:selectBooleanButton id="utilizarDiagnosticoSelectBooleanButtonRodape"
+                                                       value="#{managerUnidadeOrganizacional.rodape.imagemEsquerda}"
                                                        onLabel="Esquerda"  
-                                                       disabled="#{managerCabecalhoRodape.visualizar}"
+                                                       disabled="#{managerUnidadeOrganizacional.visualizar}"
                                                        offLabel="Direita">
-                                    <p:ajax update="utilizarDiagnosticoSelectBooleanButton" />
+                                    <p:ajax update="utilizarDiagnosticoSelectBooleanButtonRodape" />
                                 </p:selectBooleanButton>    
                             </div>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <p:outputLabel value="Margem da esquerda" for="margemEsquerdaImagemInputText"/>
-                            <p:inputText id="margemEsquerdaImagemInputText" value="#{managerCabecalhoRodape.cabecalhoRodape.margemEsquerdaImagem}"
-                                         required="true"           styleClass="form-control" disabled="#{managerCabecalhoRodape.visualizar}" />
-                            <p:message for="margemEsquerdaImagemInputText" />
+                            <p:outputLabel value="Margem da esquerda" for="margemEsquerdaImagemRodapeInputText"/>
+                            <p:inputText id="margemEsquerdaImagemRodapeInputText" value="#{managerUnidadeOrganizacional.rodape.margemEsquerdaImagem}"
+                                         required="true"           styleClass="form-control" disabled="#{managerUnidadeOrganizacional.visualizar}" />
+                            <p:message for="margemEsquerdaImagemRodapeInputText" />
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <p:outputLabel value="Margem da direita" for="margemDireitaImagemInputText"/>
-                            <p:inputText id="margemDireitaImagemInputText" value="#{managerCabecalhoRodape.cabecalhoRodape.margemDireitaImagem}"
-                                         required="true"      styleClass="form-control" disabled="#{managerCabecalhoRodape.visualizar}" />
-                            <p:message for="margemDireitaImagemInputText" />
+                            <p:outputLabel value="Margem da direita" for="margemDireitaImagemInputTextRodape"/>
+                            <p:inputText id="margemDireitaImagemInputTextRodape" value="#{managerUnidadeOrganizacional.rodape.margemDireitaImagem}"
+                                         required="true"      styleClass="form-control" disabled="#{managerUnidadeOrganizacional.visualizar}" />
+                            <p:message for="margemDireitaImagemInputTextRodape" />
                         </div>
                     </div>
                 </div>
-                <h:panelGroup id="anexoProtocoloPanelGroup">
+                <h:panelGroup id="anexoRodapePanelGroup">
                     <p:fileUpload
                         required="true"
                         requiredMessage="Os Documentos de Anexo devem ser enviados"
                         auto="true"
                         mode="advanced"
                         label="Anexar"
-                        listener="#{ managerCabecalhoRodape.selecionarAnexo }"
+                        listener="#{ managerUnidadeOrganizacional.selecionarAnexoRodape }"
                         uploadLabel="Enviar"
                         cancelLabel="Cancelar"
                         multiple="true"
@@ -204,27 +204,27 @@
                         invalidFileMessage="Tipo de arquivo não suportado."
                         invalidSizeMessage="Tamanho do arquivo não é suportado"
                         process="@this @form"
-                        update="@this, anexoProtocoloPanelGroup anexosPanelGroup" 
-                        rendered="#{not managerCabecalhoRodape.visualizar}"/>
+                        update="@this, anexoRodapePanelGroup anexosRodapePanelGroup" 
+                        rendered="#{not managerUnidadeOrganizacional.visualizar}"/>
                 </h:panelGroup>
-                <h:panelGroup id="anexosPanelGroup">
+                <h:panelGroup id="anexosRodapePanelGroup">
                     <div style="display: flex; flex-direction: row">
-                        <ui:repeat value="#{managerCabecalhoRodape.cabecalhoRodape.anexos}" var="anexo" >
+                        <ui:repeat value="#{managerUnidadeOrganizacional.rodape.anexos}" var="anexo" >
                             <div style="display: flex; flex-direction: row">
                                 <div style="display: flex; flex-direction: column;background: #e1e6e5;width: 200px; padding: 5px 10px; margin: 10px 30px ">
                                     <div style="display: flex; flex-direction: row;width: 200px">
-                                        <p:commandButton style="width: 25px; height: 30px;" icon="pi pi-eye" rendered="#{managerRelatorio.isPDF(anexo)}" onclick="target = '_blank'" ajax="false"  actionListener="#{managerCabecalhoRodape.visualizarAnexo(anexo)}"/>
+                                        <p:commandButton style="width: 25px; height: 30px;" icon="pi pi-eye" rendered="#{managerUnidadeOrganizacional.isPDF(anexo)}" onclick="target = '_blank'" ajax="false"  actionListener="#{managerUnidadeOrganizacional.visualizarAnexo(anexo)}"/>
 
-                                        <h:panelGroup rendered="#{!managerCabecalhoRodape.isPDF(anexo)}">
-                                            <a href="#{managerCabecalhoRodape.anexoUrl(anexo)}" target="_blank">
+                                        <h:panelGroup rendered="#{!managerUnidadeOrganizacional.isPDF(anexo)}">
+                                            <a href="#{managerUnidadeOrganizacional.anexoUrl(anexo)}" target="_blank">
                                                 <i  style="border-radius: 3px;border: 1px solid #08c1cf ; width: 25px;justify-content: center;padding-top: 7px;color: #ffffff;text-align: center; height: 30px;background: #01415B !important" class="pi pi-eye"></i>
                                             </a> 
                                         </h:panelGroup>
-                                        <p:commandButton actionListener="#{managerCabecalhoRodape.deletarAnexo(anexo)}" 
-                                                         update="corpoInteiro:messages corpoInteiro" disabled="#{managerCabecalhoRodape.visualizar}" icon="pi pi-trash" style="width: 25px; height: 30px;" />
-                                        <p:outputLabel value="Contrato" style="font-weight: bold;margin-left: 10px;"/>
+                                        <p:commandButton actionListener="#{managerUnidadeOrganizacional.deletarAnexoRodape(anexo)}" 
+                                                         update="corpoInteiro:messages corpoInteiro" disabled="#{managerUnidadeOrganizacional.visualizar}" icon="pi pi-trash" style="width: 25px; height: 30px;" />
+                                        <p:outputLabel value="Rodapé" style="font-weight: bold;margin-left: 10px;"/>
                                     </div>
-                                    <img  src="#{managerCabecalhoRodape.anexoUrl(anexo)}" style="width: 180px;height: 180px" />
+                                    <img  src="#{managerUnidadeOrganizacional.anexoUrl(anexo)}" style="width: 180px;height: 180px" />
                                 </div>
                             </div>
                         </ui:repeat>
@@ -245,23 +245,5 @@
             </div>-->
 
 
-
-    <div class="row">
-        <div class="col-md-12">
-            <center>
-
-                <p:commandButton value="Salvar"
-                                 icon="pi pi-save"
-                                 process="@form"
-                                 update="@form"
-                                 actionListener="#{managerCabecalhoRodape.salvarCabecalho()}"
-                                 rendered="#{not managerCabecalhoRodape.visualizar}"/>
-
-                <p:button href="#{managerCabecalhoRodape.urlAposCancelar}"
-                          value="Cancelar" icon="pi pi-ban"/>
-
-            </center>
-        </div>
-    </div>
 
 </ui:composition>

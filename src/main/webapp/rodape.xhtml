@@ -47,5 +47,22 @@
     <ui:define name="corpo">
         <p:growl id="messages"/>
         <ui:include src="rodapeForm.xhtml"/>
+        <div class="row">
+            <div class="col-md-12">
+                <center>
+
+                    <p:commandButton value="Salvar"
+                                     icon="pi pi-save"
+                                     process="@form"
+                                     update="@form"
+                                     actionListener="#{managerCabecalhoRodape.salvarCabecalho()}"
+                                     rendered="#{not managerCabecalhoRodape.visualizar}"/>
+
+                    <p:button href="#{managerCabecalhoRodape.urlAposCancelar}"
+                              value="Cancelar" icon="pi pi-ban"/>
+
+                </center>
+            </div>
+        </div>
     </ui:define>
 </ui:composition>

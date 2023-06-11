@@ -139,6 +139,12 @@ public class relatorioConfig {
 
     }
 
+    public HeaderFooterPageEvent aplicarTimbrado(String url) {
+        HeaderFooterPageEvent handler = new HeaderFooterPageEvent();
+        handler.setUrlTimbrado(url);
+        return handler;
+    }
+
     public HeaderFooterPageEvent aplicarCabecahoRodape(CabecalhoRodape cabecalho, CabecalhoRodape rodape) {
         HeaderFooterPageEvent handler = new HeaderFooterPageEvent();
 
@@ -328,11 +334,12 @@ public class relatorioConfig {
         HeaderFooterPageEvent handler = new HeaderFooterPageEvent();
         if (Utils.isNotEmpty(orgao)) {
             if (Utils.isNotEmpty(orgao.getConfiguracao())) {
-                if (Utils.isNotEmpty(orgao.getConfiguracao())) {
+                if (!Utils.isNotEmpty(orgao.getConfiguracao().getTimbrado())) {
                     if (Utils.isNotEmpty(orgao.getConfiguracao().getCabecalhoNotaFiscal()) && Utils.isNotEmpty(orgao.getConfiguracao().getRodapeNotaFiscal())) {
                         handler = aplicarCabecahoRodape(orgao.getConfiguracao().getCabecalhoNotaFiscal(), orgao.getConfiguracao().getRodapeNotaFiscal());
-
                     }
+                } else {
+                    handler = aplicarTimbrado(orgao.getConfiguracao().getTimbrado().getUrl() + orgao.getConfiguracao().getTimbrado().getNome());
                 }
             }
         }

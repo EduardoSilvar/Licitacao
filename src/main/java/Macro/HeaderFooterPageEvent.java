@@ -50,6 +50,8 @@ public class HeaderFooterPageEvent implements IEventHandler {
     private String textoRodapé;
 
     private String urlImagemCabecalho;
+    private String urlTimbrado;
+
     private int alturaImagemCabecalho;
     private boolean imagemCabecalhoEsquerda;
     private int margemDireitaImagemCabecalho;
@@ -96,6 +98,11 @@ public class HeaderFooterPageEvent implements IEventHandler {
             } else {
                 table.setPaddingRight(10);
             }
+            if (Utils.isNotEmpty(urlTimbrado)) {
+                ImageData imageData = ImageDataFactory.create(urlTimbrado);
+                Image imagemCabecalho = new Image(imageData);
+                pdfCanvas.addImage(imageData, pageSize, true);
+            }
             // Criando o cabeçalho do PDF
             if (Utils.isNotEmpty(textoCabecalho)) {
                 if (Utils.isNotEmpty(urlImagemCabecalho)) {
@@ -131,7 +138,6 @@ public class HeaderFooterPageEvent implements IEventHandler {
                         //Configuração da imagem do cabeçalho 
                         ImageData imageData = ImageDataFactory.create(urlImagemCabecalho);
                         Image imagemCabecalho = new Image(imageData);
-                        pdfCanvas.addImage(imageData, pageSize, true);
 
                         if (Utils.isNotEmpty(alturaImagemCabecalho)) {
                             imagemCabecalho.setHeight(alturaImagemCabecalho);
@@ -632,6 +638,14 @@ public class HeaderFooterPageEvent implements IEventHandler {
 
     public void setMargemEsquerdaImagemRodape(int margemEsquerdaImagemRodape) {
         this.margemEsquerdaImagemRodape = margemEsquerdaImagemRodape;
+    }
+
+    public String getUrlTimbrado() {
+        return urlTimbrado;
+    }
+
+    public void setUrlTimbrado(String urlTimbrado) {
+        this.urlTimbrado = urlTimbrado;
     }
 
 }

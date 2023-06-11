@@ -6,7 +6,8 @@ and open the template in the editor.
 -->
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>Login</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -20,6 +21,9 @@ and open the template in the editor.
         </style>
     </h:head>
     <h:body style="background-color: #e6e6e6">
+        <h:form >
+              <p:growl id="messages"/>
+        </h:form>
         <form action="j_security_check" method="POST">
             <div style="width: 960px;
                  background: #fff;

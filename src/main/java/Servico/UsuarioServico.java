@@ -62,7 +62,7 @@ public class UsuarioServico extends ServicoGenerico<Usuario> implements Serializ
         query.setParameter("email", email);
         List result = query.getResultList();
         try {
-            if (result != null && !result.isEmpty()) {
+            if (Utils.isNotEmpty(result)) {
                 usuario = (Usuario) result.get(0);
             } else {
                 usuario = null;

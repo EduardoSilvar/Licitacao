@@ -37,8 +37,9 @@ public class UnidadeOrganizacional implements Serializable {
     private String whatsapp;
     private boolean ativo = true;
     private String cnpj;
+    private boolean usaTimbrado;
 
-    public UnidadeOrganizacional(Long id, String nome, String NomeRepresentante, String telefone, String email, Endereco endereco, Configuracao configuracao, String whatsapp, String cnpj) {
+    public UnidadeOrganizacional(Long id, String nome, String NomeRepresentante, String telefone, String email, Endereco endereco, Configuracao configuracao, String whatsapp, String cnpj, boolean usaTimbrado) {
         this.id = id;
         this.nome = nome;
         this.NomeRepresentante = NomeRepresentante;
@@ -48,6 +49,7 @@ public class UnidadeOrganizacional implements Serializable {
         this.configuracao = configuracao;
         this.whatsapp = whatsapp;
         this.cnpj = cnpj;
+        this.usaTimbrado = usaTimbrado;
     }
 
     public UnidadeOrganizacional() {
@@ -133,19 +135,28 @@ public class UnidadeOrganizacional implements Serializable {
         this.cnpj = cnpj;
     }
 
+    public boolean isUsaTimbrado() {
+        return usaTimbrado;
+    }
+
+    public void setUsaTimbrado(boolean usaTimbrado) {
+        this.usaTimbrado = usaTimbrado;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 13 * hash + Objects.hashCode(this.id);
-        hash = 13 * hash + Objects.hashCode(this.nome);
-        hash = 13 * hash + Objects.hashCode(this.NomeRepresentante);
-        hash = 13 * hash + Objects.hashCode(this.telefone);
-        hash = 13 * hash + Objects.hashCode(this.email);
-        hash = 13 * hash + Objects.hashCode(this.endereco);
-        hash = 13 * hash + Objects.hashCode(this.configuracao);
-        hash = 13 * hash + Objects.hashCode(this.whatsapp);
-        hash = 13 * hash + (this.ativo ? 1 : 0);
-        hash = 13 * hash + Objects.hashCode(this.cnpj);
+        int hash = 7;
+        hash = 79 * hash + Objects.hashCode(this.id);
+        hash = 79 * hash + Objects.hashCode(this.nome);
+        hash = 79 * hash + Objects.hashCode(this.NomeRepresentante);
+        hash = 79 * hash + Objects.hashCode(this.telefone);
+        hash = 79 * hash + Objects.hashCode(this.email);
+        hash = 79 * hash + Objects.hashCode(this.endereco);
+        hash = 79 * hash + Objects.hashCode(this.configuracao);
+        hash = 79 * hash + Objects.hashCode(this.whatsapp);
+        hash = 79 * hash + (this.ativo ? 1 : 0);
+        hash = 79 * hash + Objects.hashCode(this.cnpj);
+        hash = 79 * hash + (this.usaTimbrado ? 1 : 0);
         return hash;
     }
 
@@ -162,6 +173,9 @@ public class UnidadeOrganizacional implements Serializable {
         }
         final UnidadeOrganizacional other = (UnidadeOrganizacional) obj;
         if (this.ativo != other.ativo) {
+            return false;
+        }
+        if (this.usaTimbrado != other.usaTimbrado) {
             return false;
         }
         if (!Objects.equals(this.nome, other.nome)) {
@@ -193,7 +207,8 @@ public class UnidadeOrganizacional implements Serializable {
 
     @Override
     public String toString() {
-        return "UnidadeOrganizacional{" + "id=" + id + ", nome=" + nome + ", NomeRepresentante=" + NomeRepresentante + ", telefone=" + telefone + ", email=" + email + ", endereco=" + endereco + ", configuracao=" + configuracao + ", whatsapp=" + whatsapp + ", ativo=" + ativo + ", cnpj=" + cnpj + '}';
+        return "UnidadeOrganizacional{" + "id=" + id + ", nome=" + nome + ", NomeRepresentante=" + NomeRepresentante + ", telefone=" + telefone + ", email=" + email + ", endereco=" + endereco + ", configuracao=" + configuracao + ", whatsapp=" + whatsapp + ", ativo=" + ativo + ", cnpj=" + cnpj + ", usaTimbrado=" + usaTimbrado + '}';
     }
 
+    
 }
