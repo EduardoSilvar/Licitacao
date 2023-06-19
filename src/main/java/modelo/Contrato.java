@@ -94,6 +94,7 @@ public class Contrato implements Serializable {
     private List<Repactuacao> repactuacoes;
     @OneToMany(cascade = CascadeType.ALL)
     private List<NotaFiscal> notasFiscais;
+    private String portariaNomeacao;
 
     public Contrato() {
     }
@@ -391,6 +392,16 @@ public class Contrato implements Serializable {
     public void setTipoFiscalizacao(TipoFiscalizacaoEnum tipoFiscalizacao) {
         this.tipoFiscalizacao = tipoFiscalizacao;
     }
+
+    public String getPortariaNomeacao() {
+        return portariaNomeacao;
+    }
+
+    public void setPortariaNomeacao(String portariaNomeacao) {
+        this.portariaNomeacao = portariaNomeacao;
+    }
+
+    
 
     @Override
     public int hashCode() {

@@ -188,3 +188,6 @@ alter table configuracao add column timbrado_id bigint;
 ALTER TABLE configuracao ADD CONSTRAINT fk_timbrado_id FOREIGN KEY (timbrado_id) REFERENCES anexo (id);
 
 alter table unidadeorganizacional add column usatimbrado boolean default true;
+
+
+alter table contrato add column portariaNomeacao varchar(250);

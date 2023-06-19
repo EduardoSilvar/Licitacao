@@ -4,6 +4,7 @@
  */
 package Gerenciador;
 
+import Enum.TipoRecebimentoEnum;
 import Servico.AcrescimoServico;
 import Servico.AnexoServico;
 import Servico.ContratoServico;
@@ -68,12 +69,14 @@ public class managerNotaFiscal extends managerPrincipal {
     private List<NotaFiscal> notasFiscais;
     private Anexo anexo;
     private Usuario userLogado;
+    private BigDecimal valorPagoAnterior;
 
     @Override
     public void carregar(String param) {
         userLogado = userServico.getCurrentUser();
         instanciarAnexo();
         this.notaFiscal = notaFiscalServico.find(Long.parseLong(param));
+        valorPagoAnterior = notaFiscal.getValor();
     }
 
     public void salvar() {
@@ -85,12 +88,12 @@ public class managerNotaFiscal extends managerPrincipal {
             Contrato contrato = this.notaFiscal.getContrato();
 
             contrato.setValorRestante(contrato.getValorRestante().subtract(new BigDecimal(this.notaFiscal.getValor().toString())));
-            if (contrato.getValorRestante().compareTo(new BigDecimal("0")) == 1) {
+            if (contrato.getValorRestante().compareTo(new BigDecimal("-1")) == 1) {
                 contratoServico.Update(contrato);
                 notaFiscalServico.Save(this.notaFiscal);
                 Msg.messagemInfoRedirect("Operação realizada com sucesso !", "notaFiscal.xhtml?visualizar=" + this.notaFiscal.getId());
             } else {
-                Msg.messagemError("O contrato já foi pago !");
+                Msg.messagemError("O valor da nota fiscal é maior que do contrato !");
             }
         } else {
             Msg.messagemError("O valor da nota fiscal é maior que do contrato !");
@@ -111,14 +114,33 @@ public class managerNotaFiscal extends managerPrincipal {
 
     public void deletar() {
         NotaFiscal nt = notaFiscalServico.find(this.notaFiscal.getId());
+        Contrato contrato = contratoServico.find(nt.getContrato().getId());
+        contrato.setValorRestante(contrato.getValorRestante().add(nt.getValor()));
+        contratoServico.Update(contrato);
+        this.notasFiscais.remove(nt);
         nt.setAtivo(false);
         notaFiscalServico.Update(nt);
         Msg.messagemInfo("Operação realizada com sucesso !");
     }
 
     public void atualizar() {
-        notaFiscalServico.Update(this.notaFiscal);
-        Msg.messagemInfoRedirect("Operação realizada com sucesso !", "notaFiscal.xhtml?visualizar=" + this.notaFiscal.getId());
+        if (valorPagoAnterior.equals(this.notaFiscal.getValor())) {
+            notaFiscalServico.Update(this.notaFiscal);
+            Msg.messagemInfoRedirect("Operação realizada com sucesso !", "notaFiscal.xhtml?visualizar=" + this.notaFiscal.getId());
+        } else {
+            Contrato contrato = this.notaFiscal.getContrato();
+            BigDecimal valorRestante = contrato.getValorRestante();
+            contrato.setValorRestante(contrato.getValorRestante().subtract(new BigDecimal(this.notaFiscal.getValor().toString())));
+            System.err.println(contrato.getValorRestante());
+            if (contrato.getValorRestante().compareTo(new BigDecimal("-1")) == 1) {
+                contratoServico.Update(contrato);
+                notaFiscalServico.Update(this.notaFiscal);
+                Msg.messagemInfoRedirect("Operação realizada com sucesso !", "notaFiscal.xhtml?visualizar=" + this.notaFiscal.getId());
+            } else {
+                contrato.setValorRestante(valorRestante);
+                Msg.messagemError("O valor da nota fiscal é maior que do contrato !");
+            }
+        }
     }
 
     public void setarValorRestante() {
@@ -164,6 +186,7 @@ public class managerNotaFiscal extends managerPrincipal {
             this.notaFiscal.getAnexos().get(posicao - 1).setArquivo(anexo.getArquivo());
             this.notaFiscal.getAnexos().get(posicao - 1).setCaminho(TipoAnexo.NOTAFISCAL);
             this.notaFiscal.getAnexos().get(posicao - 1).setTipoAnexo(this.anexo.getTipoAnexo());
+
         } catch (SQLException | IOException ex) {
             Logger.getLogger(managerContrato.class
                     .getName()).log(Level.SEVERE, null, ex);
@@ -211,7 +234,8 @@ public class managerNotaFiscal extends managerPrincipal {
             ouputStream.close();
 
         } catch (DocumentException ex) {
-            Logger.getLogger(managerNotaFiscal.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(managerNotaFiscal.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -262,10 +286,19 @@ public class managerNotaFiscal extends managerPrincipal {
     public void gerarDocumentacaoNotaFiscal() throws IOException, DocumentException {
         ModeloDocumento modelo = new ModeloDocumento();
         modelo.setTexto("");
+        List<NotaFiscal> notasProvisorias = new ArrayList<>();
         if (Utils.isNotEmpty(userLogado)) {
             if (Utils.isNotEmpty(userLogado.getGrupos())) {
 //                if (userLogado.getGrupos().get(0).getNome().equals("gestor")) {
-                notaFiscalServico.imprimirModeloNotaFiscal(modelo, this.notaFiscal.getContrato().getContratado(), this.notaFiscal.getContrato(), this.notaFiscal, this.userLogado.getUnidadeOrganizacional(), listAcrescimo(this.notaFiscal.getContrato()), listRepactuacao(this.notaFiscal.getContrato()), userLogado, listNotasFiscais(this.notaFiscal.getContrato()));
+                if (this.notaFiscal.getTipoRecebimento().equals(TipoRecebimentoEnum.DEFINITIVO)) {
+                    notasProvisorias = listNotasFiscais(this.notaFiscal.getContrato());
+                }
+                notaFiscalServico.imprimirModeloNotaFiscal(modelo, this.notaFiscal.getContrato().getContratado(), this.notaFiscal.getContrato(), this.notaFiscal, this.userLogado.getUnidadeOrganizacional(), listAcrescimo(this.notaFiscal.getContrato()), listRepactuacao(this.notaFiscal.getContrato()), userLogado, notasProvisorias);
+            
+        
+    
+
+
 //                } else {
 //                    notaFiscalServico.imprimirModeloNotaFiscal(modelo, this.notaFiscal.getContrato().getContratado(), this.notaFiscal.getContrato(), this.notaFiscal, this.userLogado.getUnidadeOrganizacional());
 //                }

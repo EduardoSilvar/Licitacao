@@ -66,6 +66,22 @@
                                                         </p:selectOneMenu>-->
                         </div> 
                     </div>
+                     <div class="col-md-12">
+                        <div class="form-group">
+                            <p:outputLabel value="Portaria de nomeação"
+                                           for="portariaProcesso" />
+                            <p:inputText id="portariaProcesso"
+                                         placeholder="Portaria de nomeação"
+                                         rendered="true"
+                                         required="true"
+                                         disabled="#{managerContrato.visualizar}"
+                                         requiredMessage="Este campo é obrigatório."
+                                         styleClass="form-control" 
+                                         value="#{managerContrato.contrato.portariaNomeacao}"
+                                         />
+                            <p:message for="portariaProcesso" />
+                        </div>
+                    </div>
                 </div>
                 <!--                <div class="row">
                                     <div class="col-md-6">

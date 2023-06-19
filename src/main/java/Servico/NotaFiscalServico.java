@@ -4,6 +4,7 @@
  */
 package Servico;
 
+import Enum.TipoRecebimentoEnum;
 import Gerenciador.relatorioConfig;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -72,7 +73,7 @@ public class NotaFiscalServico extends ServicoGenerico<NotaFiscal> implements Se
     }
 
     public List<NotaFiscal> listNotaFiscalContrato(Contrato contrato) {
-        String sql = "select n from NotaFiscal n where n.ativo = true ";
+        String sql = "select n from NotaFiscal n where n.ativo = true and n.tipoRecebimento = :tipo ";
         if (Utils.isNotEmpty(contrato)) {
             if (Utils.isNotEmpty(contrato.getId())) {
                 sql += "and n.contrato.id = :id ";
@@ -84,6 +85,7 @@ public class NotaFiscalServico extends ServicoGenerico<NotaFiscal> implements Se
                 query.setParameter("id", contrato.getId());
             }
         }
+        query.setParameter("tipo", TipoRecebimentoEnum.PROVISORIO);
 
         return query.getResultList();
     }

@@ -111,46 +111,43 @@
                                      actionListener="#{managerNotaFiscal.instanciar()}"/>
                 </center>
                 <hr/>
+                <h:panelGroup id="panelGroupDataTable">
+                    <p:dataTable id="tipoNotaFiscalDatatable" var="nota" value="#{managerNotaFiscal.notasFiscais}"
+                                 resizeMode="5">
+                        <f:facet name="header">
+                            <center>
+                                Notas Fiscais(#{managerNotaFiscal.notasFiscais.size()}) 
+                            </center>
+                        </f:facet>
+                        <p:column headerText="Ações" width="200">
+                            <p:commandButton  icon="pi pi-trash" 
+                                              process="@this"
+                                              update="@form:removerNotaFiscalConfirmDialog"
+                                              oncomplete="PF('removerNotaFiscalConfirmDialog').show();" title="exluir" >
+                                <f:setPropertyActionListener value="#{nota}"
+                                                             target="#{managerNotaFiscal.notaFiscal}"/>
+                            </p:commandButton>
+                            <p:button  icon="pi pi-eye" title="visualizar" href="notaFiscal.xhtml?visualizar=#{nota.id}" />
+                        </p:column>
+                        <p:column headerText="Data">
+                            <h:outputText value="#{managerNotaFiscal.dataFormatada(nota.dataPagamento)}" />
+                        </p:column>
 
-                <p:dataTable id="tipoNotaFiscalDatatable" var="nota" value="#{managerNotaFiscal.notasFiscais}"
-                             resizeMode="5">
-                    <f:facet name="header">
-                        <center>
-                            Notas Fiscais(#{managerNotaFiscal.notasFiscais.size()}) 
-                        </center>
-                    </f:facet>
-                    <p:column headerText="Ações" width="200">
-                        <p:commandButton  icon="pi pi-trash" 
-                                          process="@this"
-                                          update="@form:removerNotaFiscalConfirmDialog"
-                                          oncomplete="PF('removerNotaFiscalConfirmDialog').show();" title="exluir" >
-                            <f:setPropertyActionListener value="#{nota}"
-                                                         target="#{managerNotaFiscal.notaFiscal}"/>
-                        </p:commandButton>
-                        <p:button  icon="pi pi-eye" title="visualizar" href="notaFiscal.xhtml?visualizar=#{nota.id}" />
-                    </p:column>
-                    <p:column headerText="Data">
-                        <h:outputText value="#{managerNotaFiscal.dataFormatada(nota.dataPagamento)}" />
-                    </p:column>
+                        <p:column headerText="Contratado">
+                            <h:outputText value="#{nota.contrato.contratado}" />
+                        </p:column>
+                        <p:column headerText="Contrato">
+                            <h:outputText value="#{nota.contrato.numeroProcesso}" />
+                        </p:column>
+                        <p:column headerText="Valor pago">
+                            <h:outputText value="#{nota.valor}" />
+                        </p:column>
+                        <p:column headerText="Valor contratual">
+                            <h:outputText value="#{nota.contrato.valor}" />
+                        </p:column>
 
-                    <p:column headerText="Contratado">
-                        <h:outputText value="#{nota.contrato.contratado}" />
-                    </p:column>
-                    <p:column headerText="Contrato">
-                        <h:outputText value="#{nota.contrato.numeroContrato}" />
-                    </p:column>
-                    <p:column headerText="Valor pago">
-                        <h:outputText value="#{nota.valor}" />
-                    </p:column>
-                    <p:column headerText="Valor contratual">
-                        <h:outputText value="#{nota.contrato.valor}" />
-                    </p:column>
-                    <p:column headerText="Saldo contratual">
-                        <h:outputText value="#{nota.contrato.valorRestante}" />
-                    </p:column>
-
-
-                </p:dataTable>
+                    </p:dataTable>
+                </h:panelGroup>
             </h:panelGroup>
             <p:dialog id="removerNotaFiscalConfirmDialog"
                       widgetVar="removerNotaFiscalConfirmDialog"
@@ -182,7 +179,7 @@
                             <p:commandButton value="Sim"
                                              title="Confirmar Remoção"
                                              icon="pi pi-check"
-                                             update="tipoNotaFiscalDatatable messages"
+                                             update="@form:panelGroupDataTable messages"
                                              process="@this pesquisaPanel"
                                              actionListener="#{managerNotaFiscal.deletar()}"
                                              oncomplete="PF('removerNotaFiscalConfirmDialog').hide();"
