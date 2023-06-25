@@ -128,6 +128,12 @@ public class managerRenovacao extends managerPrincipal implements Serializable {
                 Msg.messagemError("Número de termo aditivo já registrado !");
             } else {
                 Contrato contrato = this.renovacao.getContrato();
+                if (this.renovacao.getValorMudou()) {
+                    System.out.println("Entrou aqui");
+                    this.renovacao.setVariacaoValor(contrato.getValor().subtract(this.renovacao.getValor()));
+                } else {
+                    this.renovacao.setVariacaoValor(BigDecimal.ZERO);
+                }
                 BigDecimal valorFinal = BigDecimal.ZERO;
                 if (this.renovacao.getValorMudou()) {
                     contrato.setValor(this.renovacao.getValor());
@@ -149,7 +155,7 @@ public class managerRenovacao extends managerPrincipal implements Serializable {
                 if (this.renovacao.getDataFinal().before(this.renovacao.getDataInicial())) {
                     Msg.messagemError("A data final deve ser posterior à data inicial.");
                 } else {
-                    contratoServico.Update(this.renovacao.getContrato());
+                    contratoServico.Update(contrato);
                     renovacaoServico.Save(this.renovacao);
                     Msg.messagemInfoRedirect("Operação realizada com sucesso !", "renovacao.xhtml?visualizar=" + this.renovacao.getId() + "&renovacao=TRUE");
                 }
@@ -165,6 +171,11 @@ public class managerRenovacao extends managerPrincipal implements Serializable {
         BigDecimal valorBD = renovacaoBD.getValor();
         BigDecimal valorCampo = this.renovacao.getValor();
         BigDecimal valorFinal = BigDecimal.ZERO;
+        if (this.renovacao.getValorMudou()) {
+            this.renovacao.setVariacaoValor(contrato.getValor().subtract(this.renovacao.getValor()));
+        } else {
+            this.renovacao.setVariacaoValor(BigDecimal.ZERO);
+        }
         if (contratoBD.equals(this.renovacao.getContrato())) {
             if (this.renovacao.getValorMudou()) {
                 contrato.setValor(this.renovacao.getValor());
@@ -183,24 +194,25 @@ public class managerRenovacao extends managerPrincipal implements Serializable {
                 valorFinal = renovacaoBD.getContrato().getValorRestante();
             }
 
-        } else {
-            if (this.renovacao.getValorMudou()) {
-                contrato.setValor(this.renovacao.getValor());
-                if (this.renovacao.getContrato().getValor().compareTo(this.renovacao.getValor()) == 1) {
-                    BigDecimal valorDiferenca = BigDecimal.ZERO;
-                    valorDiferenca = this.renovacao.getContrato().getValor().subtract(this.renovacao.getValor());
-                    valorFinal = contrato.getValorRestante().subtract(valorDiferenca);
-                } else if (this.renovacao.getValor().compareTo(this.renovacao.getContrato().getValor()) == 1) {
-                    BigDecimal valorDiferenca = BigDecimal.ZERO;
-                    valorDiferenca = this.renovacao.getValor().subtract(this.renovacao.getContrato().getValor());
-                    valorFinal = contrato.getValorRestante().add(valorDiferenca);
-                } else {
-                    valorFinal = contrato.getValorRestante();
-                }
-            } else {
-                valorFinal = contrato.getValorRestante();
-            }
-        }
+        } 
+//        else {
+//            if (this.renovacao.getValorMudou()) {
+//                contrato.setValor(this.renovacao.getValor());
+//                if (this.renovacao.getContrato().getValor().compareTo(this.renovacao.getValor()) == 1) {
+//                    BigDecimal valorDiferenca = BigDecimal.ZERO;
+//                    valorDiferenca = this.renovacao.getContrato().getValor().subtract(this.renovacao.getValor());
+//                    valorFinal = contrato.getValorRestante().subtract(valorDiferenca);
+//                } else if (this.renovacao.getValor().compareTo(this.renovacao.getContrato().getValor()) == 1) {
+//                    BigDecimal valorDiferenca = BigDecimal.ZERO;
+//                    valorDiferenca = this.renovacao.getValor().subtract(this.renovacao.getContrato().getValor());
+//                    valorFinal = contrato.getValorRestante().add(valorDiferenca);
+//                } else {
+//                    valorFinal = contrato.getValorRestante();
+//                }
+//            } else {
+//                valorFinal = contrato.getValorRestante();
+//            }
+//        }
         contrato.setValorRestante(valorFinal);
         if (this.renovacao.getDataFinal().before(this.renovacao.getDataInicial())) {
             Msg.messagemError("A data final deve ser posterior à data inicial.");
@@ -352,6 +364,14 @@ public class managerRenovacao extends managerPrincipal implements Serializable {
             Renovacao NovaRenovacao = renovacaoServico.find(this.renovacao.getId());
             NovaRenovacao.setAtivo(false);
             renovacaoServico.Update(NovaRenovacao);
+            Contrato contrato = this.renovacao.getContrato();
+            contrato.setValorRestante(this.renovacao.getValor().subtract(contrato.getValorRestante()));
+            if (Utils.isNotEmpty(this.renovacao.getVariacaoValor())) {
+                contrato.setValor(contrato.getValor().add(this.renovacao.getVariacaoValor()));
+            } else {
+                contrato.setValor(contrato.getValorRestante());
+            }
+            contratoServico.Update(contrato);
             renovacoes.remove(NovaRenovacao);
             if (Utils.isNotEmpty(renovacao)) {
                 this.renovacoes = renovacaoServico.findPesquisa(this.renovacao);

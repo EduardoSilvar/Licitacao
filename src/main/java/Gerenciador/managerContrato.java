@@ -340,6 +340,7 @@ public class managerContrato extends managerPrincipal implements Serializable {
         }
         this.contrato.setCorStatus(cores(this.contrato.getStatus()));
         this.contrato.setValorRestante(this.contrato.getValor());
+        this.contrato.setValorAnterior(this.contrato.getValor());
         if (this.contrato.getDataFinal().before(this.contrato.getDataInicio())) {
             Msg.messagemError("A data final deve ser posterior à data inicial.");
         } else {
@@ -402,6 +403,7 @@ public class managerContrato extends managerPrincipal implements Serializable {
             valorFinal = contratoBD.getValorRestante();
         }
         this.contrato.setValorRestante(valorFinal);
+        this.contrato.setValorAnterior(valorFinal);
         if (this.contrato.getDataFinal().before(this.contrato.getDataInicio())) {
             Msg.messagemError("A data final deve ser posterior à data inicial.");
         } else {

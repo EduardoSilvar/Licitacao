@@ -36,6 +36,7 @@ public class Repactuacao implements Serializable{
     private Date dataAssinatura;
     private Boolean valorMudou = false;
     private BigDecimal valor;
+    private BigDecimal variacaoValor;
     @ManyToOne
     private Usuario fiscal;
     private String descricao;
@@ -46,12 +47,13 @@ public class Repactuacao implements Serializable{
     public Repactuacao() {
     }
 
-    public Repactuacao(Long id, Contrato contrato, Long numeroTermo, Date dataAssinatura, BigDecimal valor, Usuario fiscal, String descricao, List<Anexo> anexos) {
+    public Repactuacao(Long id, Contrato contrato, Long numeroTermo, Date dataAssinatura, BigDecimal valor, BigDecimal variacaoValor, Usuario fiscal, String descricao, List<Anexo> anexos) {
         this.id = id;
         this.contrato = contrato;
         this.numeroTermo = numeroTermo;
         this.dataAssinatura = dataAssinatura;
         this.valor = valor;
+        this.variacaoValor = variacaoValor;
         this.fiscal = fiscal;
         this.descricao = descricao;
         this.anexos = anexos;
@@ -129,8 +131,6 @@ public class Repactuacao implements Serializable{
         this.descricao = descricao;
     }
 
-   
-
     public boolean isAtivo() {
         return ativo;
     }
@@ -139,19 +139,28 @@ public class Repactuacao implements Serializable{
         this.ativo = ativo;
     }
 
+    public BigDecimal getVariacaoValor() {
+        return variacaoValor;
+    }
+
+    public void setVariacaoValor(BigDecimal variacaoValor) {
+        this.variacaoValor = variacaoValor;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 19 * hash + Objects.hashCode(this.id);
-        hash = 19 * hash + Objects.hashCode(this.contrato);
-        hash = 19 * hash + Objects.hashCode(this.numeroTermo);
-        hash = 19 * hash + Objects.hashCode(this.dataAssinatura);
-        hash = 19 * hash + Objects.hashCode(this.valorMudou);
-        hash = 19 * hash + Objects.hashCode(this.valor);
-        hash = 19 * hash + Objects.hashCode(this.fiscal);
-        hash = 19 * hash + Objects.hashCode(this.descricao);
-        hash = 19 * hash + Objects.hashCode(this.anexos);
-        hash = 19 * hash + (this.ativo ? 1 : 0);
+        int hash = 5;
+        hash = 23 * hash + Objects.hashCode(this.id);
+        hash = 23 * hash + Objects.hashCode(this.contrato);
+        hash = 23 * hash + Objects.hashCode(this.numeroTermo);
+        hash = 23 * hash + Objects.hashCode(this.dataAssinatura);
+        hash = 23 * hash + Objects.hashCode(this.valorMudou);
+        hash = 23 * hash + Objects.hashCode(this.valor);
+        hash = 23 * hash + Objects.hashCode(this.variacaoValor);
+        hash = 23 * hash + Objects.hashCode(this.fiscal);
+        hash = 23 * hash + Objects.hashCode(this.descricao);
+        hash = 23 * hash + Objects.hashCode(this.anexos);
+        hash = 23 * hash + (this.ativo ? 1 : 0);
         return hash;
     }
 
@@ -191,6 +200,9 @@ public class Repactuacao implements Serializable{
         if (!Objects.equals(this.valor, other.valor)) {
             return false;
         }
+        if (!Objects.equals(this.variacaoValor, other.variacaoValor)) {
+            return false;
+        }
         if (!Objects.equals(this.fiscal, other.fiscal)) {
             return false;
         }
@@ -199,8 +211,8 @@ public class Repactuacao implements Serializable{
 
     @Override
     public String toString() {
-        return "Repactuacao{" + "id=" + id + ", contrato=" + contrato + ", numeroTermo=" + numeroTermo + ", dataAssinatura=" + dataAssinatura + ", valorMudou=" + valorMudou + ", valor=" + valor + ", fiscal=" + fiscal + ", descricao=" + descricao + ", anexos=" + anexos + ", ativo=" + ativo + '}';
+        return "Repactuacao{" + "id=" + id + ", contrato=" + contrato + ", numeroTermo=" + numeroTermo + ", dataAssinatura=" + dataAssinatura + ", valorMudou=" + valorMudou + ", valor=" + valor + ", variacaoValor=" + variacaoValor + ", fiscal=" + fiscal + ", descricao=" + descricao + ", anexos=" + anexos + ", ativo=" + ativo + '}';
     }
-
+    
     
 }

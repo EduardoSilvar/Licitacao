@@ -135,6 +135,11 @@ public class managerRepactuacao extends managerPrincipal implements Serializable
             } else {
                 Contrato contrato = this.repactuacao.getContrato();
                 BigDecimal valorFinal = BigDecimal.ZERO;
+                 if (this.repactuacao.getValorMudou()) {
+                    this.repactuacao.setVariacaoValor(contrato.getValor().subtract(this.repactuacao.getValor()));
+                } else {
+                    this.repactuacao.setVariacaoValor(BigDecimal.ZERO);
+                }
                 if (this.repactuacao.getValorMudou()) {
                     contrato.setValor(this.repactuacao.getValor());
                     if (this.repactuacao.getContrato().getValor().compareTo(this.repactuacao.getValor()) == 1) {
@@ -152,7 +157,7 @@ public class managerRepactuacao extends managerPrincipal implements Serializable
                     valorFinal = contrato.getValorRestante();
                 }
                 contrato.setValorRestante(valorFinal);
-                contratoServico.Update(this.repactuacao.getContrato());
+                contratoServico.Update(contrato);
                 repactuacaoServico.Save(this.repactuacao);
                 Msg.messagemInfoRedirect("Operação realizada com sucesso !", "repactuacao.xhtml?visualizar=" + this.repactuacao.getId() + "&repactuacao=TRUE");
             }
@@ -166,6 +171,11 @@ public class managerRepactuacao extends managerPrincipal implements Serializable
         BigDecimal valorBD = repactuacaoBD.getValor();
         BigDecimal valorCampo = this.repactuacao.getValor();
         BigDecimal valorFinal = BigDecimal.ZERO;
+        if (this.repactuacao.getValorMudou()) {
+            this.repactuacao.setVariacaoValor(contrato.getValor().subtract(this.repactuacao.getValor()));
+        } else {
+            this.repactuacao.setVariacaoValor(BigDecimal.ZERO);
+        }
         if (contratoBD.equals(this.repactuacao.getContrato())) {
             if (this.repactuacao.getValorMudou()) {
                 contrato.setValor(this.repactuacao.getValor());
@@ -184,25 +194,26 @@ public class managerRepactuacao extends managerPrincipal implements Serializable
                 valorFinal = repactuacaoBD.getContrato().getValorRestante();
             }
 
-        } else {
-            if (this.repactuacao.getValorMudou()) {
-                contrato.setValor(this.repactuacao.getValor());
-                if (this.repactuacao.getContrato().getValor().compareTo(this.repactuacao.getValor()) == 1) {
-                    BigDecimal valorDiferenca = BigDecimal.ZERO;
-                    valorDiferenca = this.repactuacao.getContrato().getValor().subtract(this.repactuacao.getValor());
-                    valorFinal = contrato.getValorRestante().subtract(valorDiferenca);
-                } else if (this.repactuacao.getValor().compareTo(this.repactuacao.getContrato().getValor()) == 1) {
-                    BigDecimal valorDiferenca = BigDecimal.ZERO;
-                    valorDiferenca = this.repactuacao.getValor().subtract(this.repactuacao.getContrato().getValor());
-                    valorFinal = contrato.getValorRestante().add(valorDiferenca);
-                } else {
-                    valorFinal = contrato.getValorRestante();
-                }
-            } else {
-                valorFinal = contrato.getValorRestante();
-            }
-
         }
+//        else {
+//            if (this.repactuacao.getValorMudou()) {
+//                contrato.setValor(this.repactuacao.getValor());
+//                if (this.repactuacao.getContrato().getValor().compareTo(this.repactuacao.getValor()) == 1) {
+//                    BigDecimal valorDiferenca = BigDecimal.ZERO;
+//                    valorDiferenca = this.repactuacao.getContrato().getValor().subtract(this.repactuacao.getValor());
+//                    valorFinal = contrato.getValorRestante().subtract(valorDiferenca);
+//                } else if (this.repactuacao.getValor().compareTo(this.repactuacao.getContrato().getValor()) == 1) {
+//                    BigDecimal valorDiferenca = BigDecimal.ZERO;
+//                    valorDiferenca = this.repactuacao.getValor().subtract(this.repactuacao.getContrato().getValor());
+//                    valorFinal = contrato.getValorRestante().add(valorDiferenca);
+//                } else {
+//                    valorFinal = contrato.getValorRestante();
+//                }
+//            } else {
+//                valorFinal = contrato.getValorRestante();
+//            }
+//
+//        }
         contrato.setValorRestante(valorFinal);
         contratoServico.Update(contrato);
         repactuacaoServico.Update(repactuacao);
@@ -223,6 +234,14 @@ public class managerRepactuacao extends managerPrincipal implements Serializable
             Repactuacao NovaRepactuacao = repactuacaoServico.find(this.repactuacao.getId());
             NovaRepactuacao.setAtivo(false);
             repactuacaoServico.Update(NovaRepactuacao);
+            Contrato contrato = this.repactuacao.getContrato();
+            contrato.setValorRestante(this.repactuacao.getValor().subtract(contrato.getValorRestante()));
+            if (Utils.isNotEmpty(this.repactuacao.getVariacaoValor())) {
+                contrato.setValor(contrato.getValor().add(this.repactuacao.getVariacaoValor()));
+            } else {
+                contrato.setValor(contrato.getValorRestante());
+            }
+            contratoServico.Update(contrato);
             repactuacoes.remove(NovaRepactuacao);
             if (Utils.isNotEmpty(repactuacao)) {
                 this.repactuacoes = repactuacaoServico.findPesquisa(this.repactuacao);

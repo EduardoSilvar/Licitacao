@@ -281,6 +281,10 @@ public class managerAcrescimo extends managerPrincipal implements Serializable {
             Acrescimo NovoAcrescimo = acrescimoServico.find(this.acrescimo.getId());
             NovoAcrescimo.setAtivo(false);
             acrescimoServico.Update(NovoAcrescimo);
+            Contrato contrato = this.acrescimo.getContrato();
+            contrato.setValorRestante(contrato.getValorRestante().subtract(this.acrescimo.getValor()));
+            contrato.setValor(contrato.getValor().subtract(this.acrescimo.getValor()));
+            contratoServico.Update(contrato);
             acrescimos.remove(NovoAcrescimo);
             if (Utils.isNotEmpty(acrescimo)) {
                 this.acrescimos = acrescimoServico.findPesquisa(this.acrescimo);

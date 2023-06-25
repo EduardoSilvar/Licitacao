@@ -191,3 +191,8 @@ alter table unidadeorganizacional add column usatimbrado boolean default true;
 
 
 alter table contrato add column portariaNomeacao varchar(250);
+
+
+alter table renovacao ADD column variacaoValor numeric(10,2);
+alter table repactuacao ADD column variacaoValor numeric(10,2);
+alter table contrato ADD column valorAnterior numeric(10,2);

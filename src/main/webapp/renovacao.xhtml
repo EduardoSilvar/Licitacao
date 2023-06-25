@@ -60,7 +60,7 @@
                                              value="#{managerRenovacao.renovacao.contrato}"
                                              filter="true" 
                                              placeholder="Contrato"
-                                             disabled="#{managerRenovacao.visualizar}"
+                                             disabled="#{!managerRenovacao.cadastrar}"
                                              styleClass="form-control" 
                                              converter="contratoconverter">
                                 <f:selectItem itemLabel="Selecione..." itemValue="#{null}" />

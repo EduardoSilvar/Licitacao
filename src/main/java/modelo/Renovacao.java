@@ -41,6 +41,7 @@ public class Renovacao implements Serializable{
     private Long proximaRenovacao;
     private Boolean valorMudou = false;
     private BigDecimal valor;
+    private BigDecimal variacaoValor;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date vigenciaAnterior;
     @ManyToOne
@@ -52,7 +53,7 @@ public class Renovacao implements Serializable{
     public Renovacao() {
     }
 
-    public Renovacao(Long id, Contrato contrato, Long numeroTermo, Date dataInicial, Date dataFinal, Date dataAssinatura, Long proximaRenovacao, BigDecimal valor, Date vigenciaAnterior, Usuario fiscal, List<Anexo> anexo) {
+    public Renovacao(Long id, Contrato contrato, Long numeroTermo, Date dataInicial, Date dataFinal, Date dataAssinatura, Long proximaRenovacao, BigDecimal valor, BigDecimal variacaoValor, Date vigenciaAnterior, Usuario fiscal, List<Anexo> anexos) {
         this.id = id;
         this.contrato = contrato;
         this.numeroTermo = numeroTermo;
@@ -61,9 +62,10 @@ public class Renovacao implements Serializable{
         this.dataAssinatura = dataAssinatura;
         this.proximaRenovacao = proximaRenovacao;
         this.valor = valor;
+        this.variacaoValor = variacaoValor;
         this.vigenciaAnterior = vigenciaAnterior;
         this.fiscal = fiscal;
-        this.anexos = anexo;
+        this.anexos = anexos;
     }
 
     public Long getId() {
@@ -171,22 +173,31 @@ public class Renovacao implements Serializable{
         this.ativo = ativo;
     }
 
+    public BigDecimal getVariacaoValor() {
+        return variacaoValor;
+    }
+
+    public void setVariacaoValor(BigDecimal variacaoValor) {
+        this.variacaoValor = variacaoValor;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 43 * hash + Objects.hashCode(this.id);
-        hash = 43 * hash + Objects.hashCode(this.contrato);
-        hash = 43 * hash + Objects.hashCode(this.numeroTermo);
-        hash = 43 * hash + Objects.hashCode(this.dataInicial);
-        hash = 43 * hash + Objects.hashCode(this.dataFinal);
-        hash = 43 * hash + Objects.hashCode(this.dataAssinatura);
-        hash = 43 * hash + Objects.hashCode(this.proximaRenovacao);
-        hash = 43 * hash + Objects.hashCode(this.valorMudou);
-        hash = 43 * hash + Objects.hashCode(this.valor);
-        hash = 43 * hash + Objects.hashCode(this.vigenciaAnterior);
-        hash = 43 * hash + Objects.hashCode(this.fiscal);
-        hash = 43 * hash + Objects.hashCode(this.anexos);
-        hash = 43 * hash + (this.ativo ? 1 : 0);
+        int hash = 7;
+        hash = 89 * hash + Objects.hashCode(this.id);
+        hash = 89 * hash + Objects.hashCode(this.contrato);
+        hash = 89 * hash + Objects.hashCode(this.numeroTermo);
+        hash = 89 * hash + Objects.hashCode(this.dataInicial);
+        hash = 89 * hash + Objects.hashCode(this.dataFinal);
+        hash = 89 * hash + Objects.hashCode(this.dataAssinatura);
+        hash = 89 * hash + Objects.hashCode(this.proximaRenovacao);
+        hash = 89 * hash + Objects.hashCode(this.valorMudou);
+        hash = 89 * hash + Objects.hashCode(this.valor);
+        hash = 89 * hash + Objects.hashCode(this.variacaoValor);
+        hash = 89 * hash + Objects.hashCode(this.vigenciaAnterior);
+        hash = 89 * hash + Objects.hashCode(this.fiscal);
+        hash = 89 * hash + Objects.hashCode(this.anexos);
+        hash = 89 * hash + (this.ativo ? 1 : 0);
         return hash;
     }
 
@@ -232,6 +243,9 @@ public class Renovacao implements Serializable{
         if (!Objects.equals(this.valor, other.valor)) {
             return false;
         }
+        if (!Objects.equals(this.variacaoValor, other.variacaoValor)) {
+            return false;
+        }
         if (!Objects.equals(this.vigenciaAnterior, other.vigenciaAnterior)) {
             return false;
         }
@@ -243,7 +257,7 @@ public class Renovacao implements Serializable{
 
     @Override
     public String toString() {
-        return "Renovacao{" + "id=" + id + ", contrato=" + contrato + ", numeroTermo=" + numeroTermo + ", dataInicial=" + dataInicial + ", dataFinal=" + dataFinal + ", dataAssinatura=" + dataAssinatura + ", proximaRenovacao=" + proximaRenovacao + ", valorMudou=" + valorMudou + ", valor=" + valor + ", vigenciaAnterior=" + vigenciaAnterior + ", fiscal=" + fiscal + ", anexo=" + anexos + ", ativo=" + ativo + '}';
+        return "Renovacao{" + "id=" + id + ", contrato=" + contrato + ", numeroTermo=" + numeroTermo + ", dataInicial=" + dataInicial + ", dataFinal=" + dataFinal + ", dataAssinatura=" + dataAssinatura + ", proximaRenovacao=" + proximaRenovacao + ", valorMudou=" + valorMudou + ", valor=" + valor + ", variacaoValor=" + variacaoValor + ", vigenciaAnterior=" + vigenciaAnterior + ", fiscal=" + fiscal + ", anexos=" + anexos + ", ativo=" + ativo + '}';
     }
     
 }

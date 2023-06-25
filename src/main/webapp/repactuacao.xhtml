@@ -59,7 +59,7 @@
                         <p:selectOneMenu id="contratoRepactuacao"
                                          value="#{managerRepactuacao.repactuacao.contrato}"
                                          filter="true" 
-                                         disabled="#{managerRepactuacao.visualizar}"
+                                         disabled="#{!managerRepactuacao.cadastrar}"
                                          placeholder="Contrato"
                                          styleClass="form-control" 
                                          converter="contratoconverter">

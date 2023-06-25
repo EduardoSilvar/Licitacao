@@ -283,6 +283,10 @@ public class managerSupressao extends managerPrincipal implements Serializable {
             Supressao NovaSupressao = supressaoServico.find(this.supressao.getId());
             NovaSupressao.setAtivo(false);
             supressaoServico.Update(NovaSupressao);
+            Contrato contrato = this.supressao.getContrato();
+            contrato.setValorRestante(contrato.getValorRestante().add(this.supressao.getValor()));
+            contrato.setValor(contrato.getValor().add(this.supressao.getValor()));
+            contratoServico.Update(contrato);
             supressoes.remove(NovaSupressao);
             if (Utils.isNotEmpty(supressao)) {
                 this.supressoes = supressaoServico.findPesquisa(this.supressao);
