@@ -10,9 +10,17 @@ import Servico.ContratadoServico;
 import Servico.ContratoServico;
 import Servico.SetorServico;
 import Servico.UsuarioServico;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -23,6 +31,7 @@ import modelo.Contrato;
 import modelo.ContratoVo;
 import modelo.Setor;
 import modelo.Usuario;
+import org.primefaces.PrimeFaces;
 import org.primefaces.model.charts.ChartData;
 import org.primefaces.model.charts.axes.cartesian.CartesianScales;
 import org.primefaces.model.charts.axes.cartesian.linear.CartesianLinearAxes;
@@ -44,6 +53,8 @@ import org.primefaces.model.charts.polar.PolarAreaChartDataSet;
 import org.primefaces.model.charts.polar.PolarAreaChartModel;
 import org.primefaces.model.charts.radar.RadarChartDataSet;
 import org.primefaces.model.charts.radar.RadarChartModel;
+import util.Base64j;
+import util.DateUtils;
 import util.Utils;
 
 /**
@@ -86,7 +97,7 @@ public class GraficoPie implements Serializable {
         createRadarModel();
         createBarModel();
     }
-
+    
     public void createCartesianLinerModel() {
         cartesianLinerModel = new LineChartModel();
         ChartData data = new ChartData();

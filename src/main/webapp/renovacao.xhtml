@@ -97,6 +97,7 @@
                                     rendered="true"
                                     disabled="#{managerRenovacao.visualizar}"
                                     mask="true"
+                                    pattern="dd/MM/yyyy"
                                     required="true"
                                     style="display: flex; flex-direction: row"
                                     requiredMessage="Este campo é obrigatório."
@@ -116,6 +117,7 @@
                                     required="true"
                                     disabled="#{managerRenovacao.visualizar}"
                                     mask="true"
+                                    pattern="dd/MM/yyyy"
                                     onblur="checkDate()"
                                     mindate="#{managerRenovacao.renovacao.dataInicial}"
                                     style="display: flex; flex-direction: row"
@@ -123,7 +125,7 @@
                                     inputStyleClass="form-control"
                                     showOn="button"
                                     >
-                            <p:ajax listener="#{managerRenovacao.verificarData()}" event="blur"  update="corpoInteiro:messages" />
+                            <p:ajax listener="#{managerRenovacao.verificarData()}" event="blur" process="@this dataInicialRenovacao dataFinalRenovacao"  update="corpoInteiro:messages" />
                         </p:calendar>
                         <p:message for="dataFinalRenovacao" />
                     </div>
@@ -182,6 +184,7 @@
                                     rendered="true"
                                     value="#{managerRenovacao.renovacao.dataAssinatura}"
                                     mask="true"
+                                    pattern="dd/MM/yyyy"
                                     style="display: flex; flex-direction: row"
                                     required="true"
                                     disabled="#{managerRenovacao.visualizar}"
@@ -200,6 +203,7 @@
                                 rendered="true"
                                 disabled="#{managerRenovacao.visualizar}"
                                 mask="true"
+                                pattern="dd/MM/yyyy"
                                 style="display: flex; flex-direction: row"
                                 required="true"
                                 requiredMessage="Este campo é obrigatório."

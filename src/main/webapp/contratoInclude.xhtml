@@ -66,7 +66,7 @@
                                                         </p:selectOneMenu>-->
                         </div> 
                     </div>
-                     <div class="col-md-12">
+                    <div class="col-md-12">
                         <div class="form-group">
                             <p:outputLabel value="Portaria de nomeação"
                                            for="portariaProcesso" />
@@ -200,6 +200,7 @@
                                 <p:calendar id="dataInicialContrato"
                                             rendered="true"
                                             required="true"
+                                            pattern="dd/MM/yyyy"
                                             disabled="#{managerContrato.visualizar}"
                                             mask="true"
                                             style="display: flex; flex-direction: row"
@@ -208,7 +209,7 @@
                                             value="#{managerContrato.contrato.dataInicio}"
                                             showOn="button"
                                             >
-                                    <p:ajax event="dateSelect" update="dataFinalContrato"/>
+                                    <p:ajax  update="dataFinalContrato" event="dateSelect"/>
                                 </p:calendar>
                                 <p:message for="dataInicialContrato" />
                             </div>
@@ -219,6 +220,7 @@
                                             rendered="true"
                                             required="true"
                                             mask="true"
+                                            pattern="dd/MM/yyyy"
                                             mindate="#{managerContrato.contrato.dataInicio}"
                                             disabled="#{managerContrato.visualizar}"
                                             style="display: flex; flex-direction: row"
@@ -227,9 +229,9 @@
                                             value="#{managerContrato.contrato.dataFinal}"
                                             showOn="button"
                                             >
-                                    <p:ajax listener="#{managerContrato.verificarData()}" event="blur" process="@this" update="corpoInteiro:messages" />
+                                    <p:ajax listener="#{managerContrato.verificarData()}" event="blur" process="@this dataFinalContrato dataInicialContrato" update="corpoInteiro:messages" />
                                 </p:calendar>
-                                <p:message for="dataFinalContrato" />
+                                <!--<p:message for="dataFinalContrato" />-->
                             </div>
                         </div>
                     </div>

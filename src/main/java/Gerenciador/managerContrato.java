@@ -17,10 +17,14 @@ import com.itextpdf.text.DocumentException;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.SQLException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -28,6 +32,8 @@ import java.util.Properties;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -52,7 +58,9 @@ import modelo.Usuario;
 import org.primefaces.event.FileUploadEvent;
 import util.Msg;
 import org.apache.commons.io.FileUtils;
+import org.primefaces.PrimeFaces;
 import util.Base64j;
+import util.DateUtils;
 import util.Utils;
 
 /**
@@ -177,6 +185,7 @@ public class managerContrato extends managerPrincipal implements Serializable {
     }
 
     public void verificarData() {
+        imwe();
         if (Utils.isNotEmpty(contrato.getDataInicio())) {
             if (this.contrato.getDataFinal().before(this.contrato.getDataInicio())) {
                 Msg.messagemError("A data final deve ser posterior à data inicial.");
@@ -184,6 +193,12 @@ public class managerContrato extends managerPrincipal implements Serializable {
         } else {
             Msg.messagemError("A data final deve ser posterior à data inicial.");
         }
+    }
+
+    public void imwe() {
+        System.err.println(this.contrato.getDataInicio());
+        System.err.println(this.contrato.getDataFinal());
+
     }
 
     public void instanciarVerificacaoRendered() {
@@ -313,6 +328,7 @@ public class managerContrato extends managerPrincipal implements Serializable {
             this.contrato.getAnexos().get(posicao - 1).setArquivo(anexo.getArquivo());
             this.contrato.getAnexos().get(posicao - 1).setCaminho(TipoAnexo.CONTRATO);
             this.contrato.getAnexos().get(posicao - 1).setTipoAnexo(this.anexo.getTipoAnexo());
+
         } catch (SQLException | IOException ex) {
             Logger.getLogger(managerContrato.class
                     .getName()).log(Level.SEVERE, null, ex);
@@ -630,7 +646,8 @@ public class managerContrato extends managerPrincipal implements Serializable {
             ouputStream.close();
 
         } catch (DocumentException ex) {
-            Logger.getLogger(managerNotaFiscal.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(managerNotaFiscal.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
     }
 

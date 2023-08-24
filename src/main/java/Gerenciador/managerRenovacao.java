@@ -235,7 +235,7 @@ public class managerRenovacao extends managerPrincipal implements Serializable {
     }
 
     public void verificarData() {
-        System.err.println("entrou aqui ");
+        System.out.println("entrou aqui ");
         if (Utils.isNotEmpty(this.renovacao.getDataFinal())) {
             if (this.renovacao.getDataInicial().before(this.renovacao.getDataFinal())) {
                 Msg.messagemError("A data final deve ser posterior à data inicial.");

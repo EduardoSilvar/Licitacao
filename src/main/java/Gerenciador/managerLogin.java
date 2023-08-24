@@ -7,8 +7,16 @@ package Gerenciador;
 
 import Servico.ChatServico;
 import Servico.UsuarioServico;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.Serializable;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.security.Principal;
+import java.util.Date;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -16,6 +24,9 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 import modelo.Usuario;
+import org.primefaces.PrimeFaces;
+import util.Base64j;
+import util.DateUtils;
 import util.Utils;
 
 /**
@@ -58,6 +69,78 @@ public class managerLogin implements Serializable {
             return chatServico.totalChatNaoLido(usuarioLogado);
         }
         return 0;
+    }
+
+    public void testeBackup() throws IOException {
+        String[] command = {
+            "bash",
+            "-c",
+            "export PGPASSWORD=@@licitacao@@#7@2023 && pg_dump -h localhost -p 5432 -U postgres -F c -b -v -f /opt/backup/licitacao.backup licitacao"
+        };
+        ProcessBuilder processBuilder = new ProcessBuilder(command);
+
+        try {
+            Process process = processBuilder.start();
+            int exitCode = process.waitFor();
+
+            if (exitCode == 0) {
+                System.out.println("Backup do banco de dados concluído com sucesso.");
+            } else {
+                System.err.println("Falha ao fazer backup do banco de dados.");
+            }
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        compactarDossie("/opt/backup", "/opt/backup.zip");
+        downloadBackup("/opt/backup.zip");
+
+    }
+
+    public void downloadBackup(String caminho) throws IOException {
+        File originalFile = new File("/opt/backup.zip");
+        String encodedBase64 = null;
+        try {
+            FileInputStream fileInputStreamReader = new FileInputStream(originalFile);
+            byte[] bytes = new byte[(int) originalFile.length()];
+            fileInputStreamReader.read(bytes);
+            encodedBase64 = new String(Base64j.encodeBytes(bytes));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+//        return encodedBase64;
+
+        PrimeFaces.current().executeScript(
+                String.format("saveFile('%s', '%s', '%s')", encodedBase64, "application/xzip", "backup" + DateUtils.format(DateUtils.YYYY_MM_DD, new Date()) + ".zip")
+        );
+        Path diretoriozip = Paths.get("/opt/backup.zip");
+        File file = new File("/opt/backup");
+
+        Files.deleteIfExists(diretoriozip);
+    }
+
+    public void compactarDossie(String pastaParaCompactar, String arquivoCompactado) throws IOException {
+
+        try {
+            // Cria o comando para compactar a pasta usando o comando "zip"
+            ProcessBuilder processBuilder = new ProcessBuilder("zip", "-r", arquivoCompactado, pastaParaCompactar);
+
+            // Executa o comando
+            Process process = processBuilder.start();
+
+            // Aguarda o término do comando
+            int exitCode = process.waitFor();
+
+            if (exitCode == 0) {
+                System.out.println("Pasta compactada com sucesso!");
+            } else {
+                System.out.println("Falha ao compactar a pasta.");
+            }
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     public void iniciarPagina() {

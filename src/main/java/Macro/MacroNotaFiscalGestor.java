@@ -540,7 +540,7 @@ public class MacroNotaFiscalGestor {
             Table decimaPrimeiraTable = new Table(1);
             decimaPrimeiraTable.setPadding(3);
             decimaPrimeiraTable.setWidth(550);
-            paragraphGlobal = new Paragraph(orgao.getEndereco().getCidade() + " - " + orgao.getEndereco().getEstado() + ", " + DateUtils.format(DateUtils.DD_DE_MMMM_DE_YYYY, new Date())).setFont(font2).setPaddingTop(10).setFontSize(10);
+            paragraphGlobal = new Paragraph(orgao.getEndereco().getCidade() + " - " + orgao.getEndereco().getEstado() + ", " + DateUtils.format(DateUtils.DD_DE_MMMM_DE_YYYY, nota.getFinalFiscalizado())).setFont(font2).setPaddingTop(10).setFontSize(10);
             cell = new Cell();
             cell.add(paragraphGlobal);
             cell.setBorder(Border.NO_BORDER);
@@ -638,6 +638,8 @@ public class MacroNotaFiscalGestor {
         text2.setFont(font2);
         text2.setFontSize(9);
         text2.setFontColor(fontColor);
+        paragraphGlobal.add(text2);
+
         if (Utils.isNotEmpty(contrato.getPortariaNomeacao())) {
             text2 = new Text(contrato.getPortariaNomeacao());
             text2.setFont(font2);
@@ -1047,7 +1049,7 @@ public class MacroNotaFiscalGestor {
         Table decimaPrimeiraTable = new Table(1);
         decimaPrimeiraTable.setPadding(3);
         decimaPrimeiraTable.setWidth(550);
-        paragraphGlobal = new Paragraph(orgao.getEndereco().getCidade() + " - " + orgao.getEndereco().getEstado() + ", " + DateUtils.format(DateUtils.DD_DE_MMMM_DE_YYYY, new Date())).setFont(font2).setPaddingTop(10).setFontSize(10);
+        paragraphGlobal = new Paragraph(orgao.getEndereco().getCidade() + " - " + orgao.getEndereco().getEstado() + ", " + DateUtils.format(DateUtils.DD_DE_MMMM_DE_YYYY, nota.getFinalFiscalizado())).setFont(font2).setPaddingTop(10).setFontSize(10);
         cell = new Cell();
         cell.add(paragraphGlobal);
         cell.setBorder(Border.NO_BORDER);

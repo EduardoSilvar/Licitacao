@@ -101,15 +101,16 @@ public class managerNotaFiscal extends managerPrincipal {
     }
 
     public void verificarData() {
-        if (Utils.isNotEmpty(notaFiscal.getInicioFiscalizado())) {
-            if (!this.notaFiscal.getFinalFiscalizado().before(this.notaFiscal.getInicioFiscalizado())) {
-                System.err.println("entrou aqui no primeiro");
+        
+        
+        if (Utils.isNotEmpty(this.notaFiscal.getInicioFiscalizado())) {
+            if (this.notaFiscal.getFinalFiscalizado().before(this.notaFiscal.getInicioFiscalizado())) {
                 Msg.messagemError("A data final deve ser posterior à data inicial.");
             }
         } else {
-            System.err.println("entrou aqui no segundo");
             Msg.messagemError("A data final deve ser posterior à data inicial.");
         }
+        
     }
 
     public void deletar() {
