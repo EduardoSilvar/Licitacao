@@ -404,22 +404,14 @@ public class managerContrato extends managerPrincipal implements Serializable {
 
     public void atualizar() {
         Contrato contratoBD = contratoServico.find(this.contrato.getId());
-        BigDecimal valorBD = contratoBD.getValor();
-        BigDecimal valorCampo = this.contrato.getValor();
-        BigDecimal valorFinal = BigDecimal.ZERO;
-        if (valorBD.compareTo(valorCampo) == 1) {
-            BigDecimal valorDiferenca = BigDecimal.ZERO;
-            valorDiferenca = valorBD.subtract(valorCampo);
-            valorFinal = contratoBD.getValorRestante().subtract(valorDiferenca);
-        } else if (valorCampo.compareTo(valorBD) == 1) {
-            BigDecimal valorDiferenca = BigDecimal.ZERO;
-            valorDiferenca = valorCampo.subtract(valorBD);
-            valorFinal = contratoBD.getValorRestante().add(valorDiferenca);
-        } else {
-            valorFinal = contratoBD.getValorRestante();
+        if(contratoBD.getValor().compareTo(contratoBD.getValorRestante()) == 0){
+            BigDecimal valorCampo = this.contrato.getValor();
+            this.contrato.setValorRestante(valorCampo);
+            this.contrato.setValorAnterior(this.contrato.getValor());
+        }else{
+            Msg.messagemError("O valor do contrato não pode ser alterado,pois já possui parcelas pagas !!");
+            return;
         }
-        this.contrato.setValorRestante(valorFinal);
-        this.contrato.setValorAnterior(valorFinal);
         if (this.contrato.getDataFinal().before(this.contrato.getDataInicio())) {
             Msg.messagemError("A data final deve ser posterior à data inicial.");
         } else {
