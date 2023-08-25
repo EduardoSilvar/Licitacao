@@ -260,8 +260,9 @@ public class managerAcrescimo extends managerPrincipal implements Serializable {
         } else {
             valorFinal = this.acrescimo.getContrato().getValorRestante().add(this.acrescimo.getValor());
         }
-        contrato.setValor(this.acrescimo.getValor().add(contrato.getValor()));
         contrato.setValorRestante(valorFinal);
+        contrato.setValor(contrato.getValor().subtract(acrescimoBD.getValor()));
+        contrato.setValor(this.acrescimo.getValor().add(contrato.getValor()));
         contratoServico.Update(contrato);
         acrescimoServico.Update(this.acrescimo);
         Msg.messagemInfoRedirect("Operação realizada com sucesso !", "acrescimo.xhtml?visualizar=" + this.acrescimo.getId() + "&acrescimo=TRUE");

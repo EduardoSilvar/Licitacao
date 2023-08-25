@@ -130,7 +130,16 @@ public class managerRenovacao extends managerPrincipal implements Serializable {
                 Contrato contrato = this.renovacao.getContrato();
                 if (this.renovacao.getValorMudou()) {
                     System.out.println("Entrou aqui");
-                    this.renovacao.setVariacaoValor(contrato.getValor().subtract(this.renovacao.getValor()));
+                    if (contrato.getValor().compareTo(this.renovacao.getValor()) == 1) {
+                        this.renovacao.setVariacaoValor(contrato.getValor().subtract(this.renovacao.getValor()));
+                        if (this.renovacao.getVariacaoValor().signum() == 1) {
+                            this.renovacao.getVariacaoValor().negate();
+                        }
+                    } else if (this.renovacao.getValor().compareTo(contrato.getValor()) == 1) {
+                        this.renovacao.setVariacaoValor(contrato.getValor().subtract(this.renovacao.getValor()));
+                    } else {
+                        this.renovacao.setVariacaoValor(BigDecimal.ZERO);
+                    }
                 } else {
                     this.renovacao.setVariacaoValor(BigDecimal.ZERO);
                 }
@@ -142,6 +151,7 @@ public class managerRenovacao extends managerPrincipal implements Serializable {
                         valorDiferenca = this.renovacao.getContrato().getValor().subtract(this.renovacao.getValor());
                         valorFinal = contrato.getValorRestante().subtract(valorDiferenca);
                     } else if (this.renovacao.getValor().compareTo(this.renovacao.getContrato().getValor()) == 1) {
+                        System.out.println("Entrou no segundo if");
                         BigDecimal valorDiferenca = BigDecimal.ZERO;
                         valorDiferenca = this.renovacao.getValor().subtract(this.renovacao.getContrato().getValor());
                         valorFinal = contrato.getValorRestante().add(valorDiferenca);
@@ -172,29 +182,94 @@ public class managerRenovacao extends managerPrincipal implements Serializable {
         BigDecimal valorCampo = this.renovacao.getValor();
         BigDecimal valorFinal = BigDecimal.ZERO;
         if (this.renovacao.getValorMudou()) {
-            this.renovacao.setVariacaoValor(contrato.getValor().subtract(this.renovacao.getValor()));
+            if (contrato.getValor().compareTo(this.renovacao.getValor()) == 1) {
+                this.renovacao.setVariacaoValor(contrato.getValor().subtract(this.renovacao.getValor()));
+                if (this.renovacao.getVariacaoValor().signum() == 1) {
+                    this.renovacao.getVariacaoValor().negate();
+                }
+            } else if (this.renovacao.getValor().compareTo(contrato.getValor()) == 1) {
+                this.renovacao.setVariacaoValor(contrato.getValor().subtract(this.renovacao.getValor()));
+            } else {
+                this.renovacao.setVariacaoValor(BigDecimal.ZERO);
+            }
         } else {
             this.renovacao.setVariacaoValor(BigDecimal.ZERO);
         }
-        if (contratoBD.equals(this.renovacao.getContrato())) {
-            if (this.renovacao.getValorMudou()) {
-                contrato.setValor(this.renovacao.getValor());
-                if (valorBD.compareTo(valorCampo) == 1) {
-                    BigDecimal valorDiferenca = BigDecimal.ZERO;
-                    valorDiferenca = valorBD.subtract(valorCampo);
-                    valorFinal = renovacaoBD.getContrato().getValorRestante().subtract(valorDiferenca);
-                } else if (valorCampo.compareTo(valorBD) == 1) {
-                    BigDecimal valorDiferenca = BigDecimal.ZERO;
-                    valorDiferenca = valorCampo.subtract(valorBD);
-                    valorFinal = renovacaoBD.getContrato().getValorRestante().add(valorDiferenca);
-                } else {
-                    valorFinal = renovacaoBD.getContrato().getValorRestante();
-                }
+        if (!renovacaoBD.getValorMudou()) {
+            contrato.setValor(this.renovacao.getValor());
+            if (this.renovacao.getContrato().getValor().compareTo(this.renovacao.getValor()) == 1) {
+                BigDecimal valorDiferenca = BigDecimal.ZERO;
+                valorDiferenca = this.renovacao.getContrato().getValor().subtract(this.renovacao.getValor());
+                valorFinal = contrato.getValorRestante().subtract(valorDiferenca);
+            } else if (this.renovacao.getValor().compareTo(this.renovacao.getContrato().getValor()) == 1) {
+                BigDecimal valorDiferenca = BigDecimal.ZERO;
+                valorDiferenca = this.renovacao.getValor().subtract(this.renovacao.getContrato().getValor());
+                valorFinal = contrato.getValorRestante().add(valorDiferenca);
             } else {
-                valorFinal = renovacaoBD.getContrato().getValorRestante();
+                valorFinal = contrato.getValorRestante();
             }
+        } else {
+            if (this.renovacao.getVariacaoValor().signum() == 1) {
+                renovacaoBD.getContrato().setValor(renovacaoBD.getContrato().getValor().subtract(this.renovacao.getVariacaoValor()));
+                contrato.setValorRestante(renovacaoBD.getContrato().getValorRestante().subtract(this.renovacao.getVariacaoValor()));
+                if (this.renovacao.getContrato().getValor().compareTo(this.renovacao.getValor()) == 1) {
+                    BigDecimal valorDiferenca = BigDecimal.ZERO;
+                    valorDiferenca = this.renovacao.getContrato().getValor().subtract(this.renovacao.getValor());
+                    valorFinal = contrato.getValorRestante().subtract(valorDiferenca);
+                } else if (this.renovacao.getValor().compareTo(this.renovacao.getContrato().getValor()) == 1) {
+                    BigDecimal valorDiferenca = BigDecimal.ZERO;
+                    valorDiferenca = this.renovacao.getValor().subtract(this.renovacao.getContrato().getValor());
+                    valorFinal = contrato.getValorRestante().add(valorDiferenca);
+                } else {
+                    valorFinal = contrato.getValorRestante();
+                }
+                contrato.setValor(this.renovacao.getValor());
+                contrato.setValorRestante(valorFinal);
+            } else if (this.renovacao.getVariacaoValor().signum() == -1) {
+                this.renovacao.getVariacaoValor().abs();
+                renovacaoBD.getContrato().setValor(renovacaoBD.getContrato().getValor().add(this.renovacao.getVariacaoValor()));
+                contrato.setValorRestante(renovacaoBD.getContrato().getValorRestante().add(this.renovacao.getVariacaoValor()));
+                if (this.renovacao.getContrato().getValor().compareTo(this.renovacao.getValor()) == 1) {
+                    BigDecimal valorDiferenca = BigDecimal.ZERO;
+                    valorDiferenca = this.renovacao.getContrato().getValor().subtract(this.renovacao.getValor());
+                    valorFinal = contrato.getValorRestante().subtract(valorDiferenca);
+                } else if (this.renovacao.getValor().compareTo(this.renovacao.getContrato().getValor()) == 1) {
+                    BigDecimal valorDiferenca = BigDecimal.ZERO;
+                    valorDiferenca = this.renovacao.getValor().subtract(this.renovacao.getContrato().getValor());
+                    valorFinal = contrato.getValorRestante().add(valorDiferenca);
+                } else {
+                    valorFinal = contrato.getValorRestante();
+                }
+                contrato.setValor(this.renovacao.getValor());
+                contrato.setValorRestante(valorFinal);
+            }
+        }
 
-        } 
+//            if (valorBD.compareTo(valorCampo) == 1) {
+//                BigDecimal valorDiferenca = BigDecimal.ZERO;
+//                valorDiferenca = valorBD.subtract(valorCampo);
+//                valorFinal = renovacaoBD.getContrato().getValorRestante().subtract(valorDiferenca);
+//            } else if (valorCampo.compareTo(valorBD) == 1) {
+//                BigDecimal valorDiferenca = BigDecimal.ZERO;
+//                valorDiferenca = valorCampo.subtract(valorBD);
+//                valorFinal = renovacaoBD.getContrato().getValorRestante().add(valorDiferenca);
+//            } else {
+//                valorFinal = renovacaoBD.getContrato().getValorRestante();
+//            }
+//        }
+//        contrato.setValor(this.renovacao.getValor());
+//        if (valorBD.compareTo(valorCampo) == 1) {
+//            BigDecimal valorDiferenca = BigDecimal.ZERO;
+//            valorDiferenca = valorBD.subtract(valorCampo);
+//            valorFinal = renovacaoBD.getContrato().getValorRestante().subtract(valorDiferenca);
+//        } else if (valorCampo.compareTo(valorBD) == 1) {
+//            BigDecimal valorDiferenca = BigDecimal.ZERO;
+//            valorDiferenca = valorCampo.subtract(valorBD);
+//            valorFinal = renovacaoBD.getContrato().getValorRestante().add(valorDiferenca);
+//        } else {
+//            valorFinal = renovacaoBD.getContrato().getValorRestante();
+//        }
+//        valorFinal = renovacaoBD.getContrato().getValorRestante();
 //        else {
 //            if (this.renovacao.getValorMudou()) {
 //                contrato.setValor(this.renovacao.getValor());
@@ -213,7 +288,6 @@ public class managerRenovacao extends managerPrincipal implements Serializable {
 //                valorFinal = contrato.getValorRestante();
 //            }
 //        }
-        contrato.setValorRestante(valorFinal);
         if (this.renovacao.getDataFinal().before(this.renovacao.getDataInicial())) {
             Msg.messagemError("A data final deve ser posterior à data inicial.");
         } else {
@@ -223,6 +297,19 @@ public class managerRenovacao extends managerPrincipal implements Serializable {
             Msg.messagemInfoRedirect("Operação realizada com sucesso !", "renovacao.xhtml?visualizar=" + this.renovacao.getId() + "&renovacao=TRUE");
         }
 
+    }
+
+    public boolean valorMudouDisable() {
+        if (Utils.isNotEmpty(this.renovacao.getId())) {
+            Renovacao renovacaoBD = renovacaoServico.find(this.renovacao.getId());
+            if (renovacaoBD.getValorMudou()) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
     }
 
     public void pesquisar(Contrato contrato) {
