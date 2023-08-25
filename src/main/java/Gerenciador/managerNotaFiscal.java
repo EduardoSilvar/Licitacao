@@ -131,6 +131,8 @@ public class managerNotaFiscal extends managerPrincipal {
         } else {
             Contrato contrato = this.notaFiscal.getContrato();
             BigDecimal valorRestante = contrato.getValorRestante();
+            NotaFiscal notaFiscalBD = notaFiscalServico.find(this.notaFiscal.getId());
+            contrato.setValorRestante(contrato.getValorRestante().add(notaFiscalBD.getValor()));
             contrato.setValorRestante(contrato.getValorRestante().subtract(new BigDecimal(this.notaFiscal.getValor().toString())));
             System.err.println(contrato.getValorRestante());
             if (contrato.getValorRestante().compareTo(new BigDecimal("-1")) == 1) {
