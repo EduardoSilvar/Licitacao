@@ -1060,17 +1060,17 @@ public class MacroNotaFiscalGestor {
 
         decimaTerceira.setPadding(3);
         decimaTerceira.setWidth(550);
-        paragraphGlobal = new Paragraph("FISCAL DE CONTRATOS").setFont(font).setFontSize(9).setTextAlignment(TextAlignment.CENTER);
+        paragraphGlobal = new Paragraph(contrato.getFiscal().getNome()).setFont(font).setFontSize(9).setTextAlignment(TextAlignment.CENTER);
         cell = new Cell();
         cell.add(paragraphGlobal).setPaddingTop(40);
         cell.setBorder(Border.NO_BORDER);
         decimaTerceira.addCell(cell);
-        paragraphGlobal = new Paragraph(orgao.getNome()).setFont(font).setFontSize(9).setTextAlignment(TextAlignment.CENTER);
+        paragraphGlobal = new Paragraph("FISCAL DE CONTRATOS").setFont(font).setFontSize(9).setTextAlignment(TextAlignment.CENTER);
         cell = new Cell();
         cell.add(paragraphGlobal);
         cell.setBorder(Border.NO_BORDER);
         decimaTerceira.addCell(cell);
-        paragraphGlobal = new Paragraph(contrato.getFiscal().getNome()).setFont(font).setFontSize(9).setTextAlignment(TextAlignment.CENTER);
+        paragraphGlobal = new Paragraph(orgao.getNome()).setFont(font).setFontSize(9).setTextAlignment(TextAlignment.CENTER);
         cell = new Cell();
         cell.add(paragraphGlobal);
         cell.setBorder(Border.NO_BORDER);
