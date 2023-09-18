@@ -131,26 +131,27 @@ public class managerUnidadeOrganizacional extends managerPrincipal implements Se
             salvarRodape();
             if (Utils.isNotEmpty(unidade.getConfiguracao())) {
                 Configuracao config = unidade.getConfiguracao();
-                System.err.println("o id do cabecalho é " + cabecalho.getId());
                 config.setCabecalhoNotaFiscal(cabecalho);
                 config.setRodapeNotaFiscal(rodape);
                 config.setTimbrado(timbrado);
+                if (Utils.isEmpty(timbrado.getId())) {
+                    anexoServico.salvar(timbrado);
+                }
                 configService.Update(config);
             } else {
-                System.err.println("o id do cabecalho é " + cabecalho.getId());
 
                 Configuracao config = new Configuracao();
                 config.setCabecalhoNotaFiscal(cabecalho);
                 config.setRodapeNotaFiscal(rodape);
                 config.setTimbrado(timbrado);
+                if (Utils.isEmpty(timbrado.getId())) {
+                    anexoServico.salvar(timbrado);
+                }
                 configService.Save(config);
                 unidade.setConfiguracao(config);
                 unidadeServico.Update(unidade);
             }
-        } else {
-            System.err.println("o id do cabecalho é vazio pq é null ");
-
-        }
+        } 
         Msg.messagemInfoRedirect("Operação realizada com sucesso !", "orgao.xhtml?visualizar=" + this.unidade.getId());
     }
 
