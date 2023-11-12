@@ -59,7 +59,7 @@ public class MacroNotaFiscalGestor {
             LocalDate data = LocalDate.parse(dataString, formatter);
             int ano = data.getYear();
             segundaTable.addCell(new Paragraph("RELATÓRIO " + notaFiscal.getTipoRecebimento().getNome().toUpperCase() + " DE FISCALIZAÇÃO DE CONTRATOS\n"
-                    + "EXERCÍCIO FINANDEIRO " + ano)).setBackgroundColor(lightGray).setTextAlignment(TextAlignment.CENTER).setFontSize(9).setFont(font);
+                    + "EXERCÍCIO FINANCEIRO " + ano)).setBackgroundColor(lightGray).setTextAlignment(TextAlignment.CENTER).setFontSize(9).setFont(font);
             segundaTable.setPadding(3);
             segundaTable.setWidth(550);
 
@@ -586,7 +586,7 @@ public class MacroNotaFiscalGestor {
         LocalDate data = LocalDate.parse(dataString, formatter);
         int ano = data.getYear();
         segundaTable.addCell(new Paragraph("RELATÓRIO " + nota.getTipoRecebimento().getNome().toUpperCase() + " DE FISCALIZAÇÃO DE CONTRATOS\n"
-                + "EXERCÍCIO FINANDEIRO " + ano)).setBackgroundColor(lightGray).setTextAlignment(TextAlignment.CENTER).setFontSize(9).setFont(font);
+                + "EXERCÍCIO FINANCEIRO " + ano)).setBackgroundColor(lightGray).setTextAlignment(TextAlignment.CENTER).setFontSize(9).setFont(font);
         segundaTable.setPadding(3);
         segundaTable.setWidth(550);
 

@@ -173,8 +173,9 @@ public class managerRenovacao extends managerPrincipal implements Serializable {
                     valorFinal = contrato.getValorRestante();
                 }
                 contrato.setValorRestante(valorFinal);
-
-                contrato.setValor(this.renovacao.getValor());
+                if (this.renovacao.getValorMudou()) {
+                    contrato.setValor(this.renovacao.getValor());
+                }
                 if (this.renovacao.getDataFinal().before(this.renovacao.getDataInicial())) {
                     Msg.messagemError("A data final deve ser posterior à data inicial.");
                 } else {
@@ -184,6 +185,8 @@ public class managerRenovacao extends managerPrincipal implements Serializable {
                 }
 
             }
+        } else {
+            Msg.messagemError("Número de termo aditivo já registrado !");
         }
     }
 
